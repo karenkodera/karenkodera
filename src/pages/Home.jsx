@@ -27,8 +27,8 @@ const projects = [
     subtitle: 'Kroger Internship',
     image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
     link: null,
-    tags: ['Handed Off', '2023'],
-    year: '2023',
+    tags: ['Handed off', '2024'],
+    year: '2024',
   },
   {
     id: 4,

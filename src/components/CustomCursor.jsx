@@ -73,9 +73,16 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   const dotCursorPos = getDotCursorPosition();
 
-  // View project pill position (dot is inside the pill, header-style)
+  // View project pill position - only update while over card so pill doesn't follow cursor to corner on leave
   const projectPillX = mousePosition.x - 50;
   const projectPillY = mousePosition.y - 20;
+  const [pillPosition, setPillPosition] = useState({ x: projectPillX, y: projectPillY });
+
+  useEffect(() => {
+    if (isProjectVariant) {
+      setPillPosition({ x: projectPillX, y: projectPillY });
+    }
+  }, [isProjectVariant, projectPillX, projectPillY]);
 
   return (
     <>
@@ -147,27 +154,29 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - appears where mouse enters, disappears when cursor leaves */}
+      {/* View Project cursor - stays at card position, disappears in place when cursor leaves */}
       <AnimatePresence>
         {isProjectVariant && (
           <motion.div
             className="custom-cursor project-cursor"
             initial={{
-              x: projectPillX,
-              y: projectPillY,
+              x: pillPosition.x,
+              y: pillPosition.y,
               opacity: 0,
               scale: 0.5,
             }}
             animate={{
-              x: projectPillX,
-              y: projectPillY,
+              x: pillPosition.x,
+              y: pillPosition.y,
               opacity: 1,
               scale: 1,
             }}
             exit={{
+              x: pillPosition.x,
+              y: pillPosition.y,
               opacity: 0,
               scale: 0.5,
-              transition: { duration: 0.15 },
+              transition: { duration: 0 },
             }}
             transition={{
               type: 'spring',
