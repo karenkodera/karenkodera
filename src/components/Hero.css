@@ -77,18 +77,7 @@
   transition: transform 0.2s ease;
 }
 
-.karengpt-btn:hover .karengpt-icon:not(.karengpt-icon-spin-down) {
-  animation: karengpt-spin 1.2s linear infinite;
-}
-
-.karengpt-icon.karengpt-icon-spin-down {
-  animation: karengpt-spin 1.8s linear 1;
-}
-
-@keyframes karengpt-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+/* Spin is driven by Framer Motion in Hero.jsx for smooth stop on leave */
 
 .karengpt-icon svg {
   width: 14px;
