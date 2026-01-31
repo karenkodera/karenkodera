@@ -2,6 +2,9 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './Thesis.css';
 
+// Images from thesis case study (same as home card; add more URLs from karenkodera.com/thesis as needed)
+const THESIS_HERO_IMAGE = 'https://framerusercontent.com/images/2TieXjM5ufkozZ2D7pZO9dXGvA.jpg';
+
 const Thesis = ({ setCursorVariant }) => {
   const handleMouseEnter = () => setCursorVariant('hover');
   const handleMouseLeave = () => setCursorVariant('default');
@@ -31,6 +34,13 @@ const Thesis = ({ setCursorVariant }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <div className="thesis-hero-image-wrap">
+            <img
+              src={THESIS_HERO_IMAGE}
+              alt="Bridg — minimizing overproduction in fashion retail"
+              className="thesis-hero-image"
+            />
+          </div>
           <h1 className="thesis-title">Bridg</h1>
           <p className="thesis-tagline">
             A B2B2C feedback service to help retail brands produce only what customers really want and reduce overproduction as a result.
@@ -63,6 +73,7 @@ const Thesis = ({ setCursorVariant }) => {
           label="PROBLEM"
           heading="The fashion industry is in the top 5 most polluting industries in the world..."
           body="Fast fashion items are created out of low quality materials called synthetic fibers. Not only do these pieces fall apart after 1–2 uses, synthetic fibers contain tiny pieces of plastic. When these fast fashion pieces are put through the wash, they release plastic into the water, which end up in our oceans."
+          images={[{ src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200', alt: 'Fashion industry and sustainability', caption: 'Fast fashion and environmental impact' }]}
         />
 
         <ThesisSection
@@ -116,6 +127,7 @@ const Thesis = ({ setCursorVariant }) => {
             'Pre-Order Platform: A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.',
             'Brand-Side Dashboard: A platform for businesses to see the analytics behind customer-facing games and make smart production decisions.',
           ]}
+          images={[{ src: THESIS_HERO_IMAGE, alt: 'Bridg three-part system', caption: 'Gathering feedback, placing orders, factory production' }]}
         />
 
         <ThesisSection
@@ -150,6 +162,7 @@ const Thesis = ({ setCursorVariant }) => {
           label="FINAL OUTCOME"
           heading="Learning to own the process!"
           body="Tackling this project solo was my biggest design challenge yet. Over the course of six months, I learned how to manage my time, stay accountable, and keep momentum without external pressure. Meeting my own goals and holding myself to them became just as important as the final outcome. Here is an image from the big presentation day!"
+          images={[{ src: THESIS_HERO_IMAGE, alt: 'Thesis presentation day', caption: 'Big presentation day' }]}
         />
 
         <motion.section
@@ -162,12 +175,20 @@ const Thesis = ({ setCursorVariant }) => {
           <p className="thesis-email">
             <a href="mailto:karen@kodera.us" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>karen@kodera.us</a>
           </p>
-          <div className="thesis-links">
+          <div className="thesis-other-cases">
             <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Work</Link>
+            <span className="thesis-cta-sep">·</span>
             <Link to="/play" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Play</Link>
+            <span className="thesis-cta-sep">·</span>
             <Link to="/about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
+            <span className="thesis-cta-sep">·</span>
             <a href="/karengpt" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>RESUME</a>
           </div>
+          <p className="thesis-more-cases">
+            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>YETI Case Study</Link>
+            {' · '}
+            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>DICK&apos;s Sporting Goods Case Study</Link>
+          </p>
         </motion.section>
       </article>
     </div>
@@ -183,6 +204,7 @@ function ThesisSection({
   quote,
   quoteAttribution,
   twoColumns,
+  images,
 }) {
   return (
     <motion.section
@@ -195,6 +217,16 @@ function ThesisSection({
       <span className="thesis-section-label">{label}</span>
       <h2 className="thesis-section-heading">{heading}</h2>
       {body && <p className="thesis-section-body">{body}</p>}
+      {images && images.length > 0 && (
+        <div className="thesis-section-images">
+          {images.map((img, i) => (
+            <figure key={i} className="thesis-figure">
+              <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
+              {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      )}
       {quote && (
         <blockquote className="thesis-quote">
           "{quote}"
