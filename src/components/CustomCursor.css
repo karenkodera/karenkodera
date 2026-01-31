@@ -1,0 +1,70 @@
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform, width, height, border-radius, opacity;
+}
+
+.custom-cursor.cursor-hidden {
+  mix-blend-mode: difference;
+}
+
+/* Nav dot cursor variant - when cursor becomes the selection dot */
+.custom-cursor.nav-dot-cursor {
+  /* No additional styling needed - cursor becomes the dot */
+}
+
+.custom-cursor.hover-cursor {
+  background-color: rgba(25, 25, 25, 0.05);
+  border: 1.5px solid #191919;
+  border-radius: 50%;
+}
+
+.custom-cursor.text-cursor {
+  background-color: rgba(25, 25, 25, 0.04);
+  border: 2px solid #191919;
+  border-radius: 12px;
+}
+
+.custom-cursor.project-cursor {
+  background-color: #191919;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+* {
+  cursor: none !important;
+}
+
+/* Text highlight hover effect for interactive text elements */
+[data-cursor-text] {
+  position: relative;
+  transition: transform 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+[data-cursor-text]:hover {
+  transform: scale(1.02);
+}
+
+@media (max-width: 768px) {
+  .custom-cursor {
+    display: none;
+  }
+  
+  * {
+    cursor: auto !important;
+  }
+
+  [data-cursor-text]:hover {
+    transform: none;
+  }
+}

@@ -1,0 +1,109 @@
+.play-page {
+  min-height: 100vh;
+  padding-top: 120px;
+  background: var(--bg-color);
+}
+
+.play-hero {
+  text-align: center;
+  padding: 60px 40px;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.play-title {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-color);
+  letter-spacing: -0.02em;
+}
+
+.play-description {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: var(--text-secondary);
+}
+
+.play-grid-section {
+  padding: 0 40px 80px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.play-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.play-card {
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease;
+}
+
+.play-card:hover {
+  border-color: #c5c5c5;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+.play-card-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+}
+
+.play-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.play-card:hover .play-card-image img {
+  transform: scale(1.03);
+}
+
+.play-card-content {
+  padding: 20px 24px;
+  border-top: 1px solid var(--border-color);
+}
+
+.play-card-content h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+.play-card-content p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 768px) {
+  .play-page {
+    padding-top: 100px;
+  }
+
+  .play-hero {
+    padding: 40px 20px;
+  }
+
+  .play-grid-section {
+    padding: 0 20px 60px;
+  }
+
+  .play-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .play-card-content {
+    padding: 16px 20px;
+  }
+}
