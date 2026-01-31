@@ -32,6 +32,7 @@
   aspect-ratio: 16 / 10;
   overflow: hidden;
   background: var(--hover-bg);
+  border-radius: 0 0 10px 10px;
 }
 
 .project-image {
@@ -42,14 +43,21 @@
 }
 
 .project-info {
-  padding: 18px 20px 20px;
+  padding: 14px 0 12px;
+}
+
+.project-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 6px;
 }
 
 .project-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 10px;
 }
 
 .project-tag {
@@ -66,10 +74,16 @@
 .project-title {
   font-size: 1.05rem;
   font-weight: 600;
-  margin-bottom: 6px;
+  margin-bottom: 0;
   line-height: 1.35;
   color: var(--text-color);
   letter-spacing: -0.01em;
+}
+
+.project-meta .project-subtitle {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
 }
 
 .project-subtitle {
@@ -85,7 +99,7 @@
   }
 
   .project-info {
-    padding: 14px 16px 16px;
+    padding: 12px 0 10px;
   }
 
   .project-title {
