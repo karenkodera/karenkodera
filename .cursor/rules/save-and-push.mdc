@@ -1,0 +1,14 @@
+---
+description: When the user wants to save changes, create a commit and push to remote
+alwaysApply: true
+---
+
+# Save Changes: Commit and Push
+
+When the user asks to save changes (e.g. "save my changes", "save this", "save and push"):
+
+1. Stage all modified and new files: `git add -A` (or stage specific files if that's clearly intended).
+2. Create a commit with a clear, concise message describing the changes.
+3. Push to the remote: `git push` (or `git push origin <branch>` if a branch is specified).
+
+Do not ask for permission before pushing; the user has requested this as their default save workflow.

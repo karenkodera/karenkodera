@@ -13,8 +13,8 @@ A React-based clone of Karen Kodera's portfolio website with custom cursor, anim
 
 ## Tech Stack
 
-- React 18
-- Vite
+- React 19
+- Vite 7
 - Framer Motion
 - React Router DOM
 
