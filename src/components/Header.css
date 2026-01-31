@@ -241,6 +241,7 @@
 
   .menu-toggle {
     display: flex;
+    margin-left: auto;
   }
 
   .nav {
