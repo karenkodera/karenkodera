@@ -52,7 +52,7 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
         <motion.div 
           className="project-card-content"
           animate={{ 
-            padding: isHovered ? 16 : 0,
+            padding: isHovered ? '16px 16px 8px 16px' : 0,
           }}
           transition={{ 
             type: "spring",
