@@ -44,16 +44,13 @@ const Footer = ({ setCursorVariant }) => {
             </motion.a>
           </div>
 
-          <motion.span
-            className="made-with made-with-center"
-            whileHover={{ scale: 1.05 }}
-          >
+          <span className="made-with made-with-center">
             Made with <motion.span
               className="heart"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1.5 }}
             >♥</motion.span> in Chicago
-          </motion.span>
+          </span>
 
           <motion.button
             className="back-to-top"
