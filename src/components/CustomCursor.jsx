@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence, useSpring } from 'framer-motion';
 import './CustomCursor.css';
 
@@ -7,6 +7,8 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [elementBounds, setElementBounds] = useState(null);
   const [dotTarget, setDotTarget] = useState(null);
+  const [pillKey, setPillKey] = useState(0);
+  const prevProjectRef = useRef(false);
   
   // Smooth spring physics for organic cursor movement
   const springConfig = { stiffness: 400, damping: 28, mass: 0.5 };
@@ -154,17 +156,17 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - follows cursor when over card so it always appears on enter */}
-      <AnimatePresence>
+      {/* View Project cursor - fresh mount on every enter (key), no opacity override so it always shows */}
+      <AnimatePresence mode="wait">
         {isProjectVariant && (
           <motion.div
             className="custom-cursor project-cursor"
-            key="view-project-pill"
+            key={`view-project-${pillKey}`}
             initial={{
               x: projectPillX,
               y: projectPillY,
-              opacity: 0,
-              scale: 0.5,
+              opacity: 1,
+              scale: 1,
             }}
             animate={{
               x: projectPillX,
@@ -184,9 +186,6 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
               stiffness: 400,
               damping: 30,
               mass: 0.8,
-            }}
-            style={{
-              opacity: isVisible ? undefined : 0,
             }}
           >
             <span className="project-cursor-dot" />
