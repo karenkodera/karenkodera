@@ -73,29 +73,35 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   const dotCursorPos = getDotCursorPosition();
 
+  // When hovering a project card: dot hops to left of "view project" pill and becomes white (header-style)
+  const projectDotSize = 6;
+  const projectDotX = mousePosition.x - 37 - projectDotSize / 2; // center dot at x-37
+  const projectDotY = mousePosition.y - 20 + 10 - projectDotSize / 2; // vertically center in pill (pill ~40px tall)
+  const projectPillX = mousePosition.x - 37 + projectDotSize / 2 + 8; // pill starts after dot + 8px gap
+  const projectPillY = mousePosition.y - 20;
+
   return (
     <>
-      {/* Default cursor dot - morphs into nav dot when hovering nav items */}
+      {/* Default cursor dot - morphs into nav dot, or hops into project pill as white dot */}
       <motion.div
-        className={`custom-cursor ${isTextVariant ? 'cursor-hidden' : ''} ${isNavDotVariant ? 'nav-dot-cursor' : ''}`}
+        className={`custom-cursor ${isTextVariant ? 'cursor-hidden' : ''} ${isNavDotVariant ? 'nav-dot-cursor' : ''} ${isProjectVariant ? 'project-dot' : ''}`}
         animate={{
-          x: dotCursorPos.x,
-          y: dotCursorPos.y,
-          width: 8,
-          height: 8,
-          opacity: isProjectVariant ? 0 : 1,
+          x: isProjectVariant ? projectDotX : dotCursorPos.x,
+          y: isProjectVariant ? projectDotY : dotCursorPos.y,
+          width: isProjectVariant ? 6 : 8,
+          height: isProjectVariant ? 6 : 8,
+          opacity: isVisible ? 1 : 0,
           scale: isNavDotVariant ? 1.1 : 1,
+          backgroundColor: isProjectVariant ? '#fff' : '#191919',
         }}
         transition={{
           type: 'spring',
-          stiffness: isNavDotVariant ? 300 : 400,
-          damping: isNavDotVariant ? 22 : 30,
-          mass: isNavDotVariant ? 0.6 : 0.8,
+          stiffness: isProjectVariant ? 500 : isNavDotVariant ? 300 : 400,
+          damping: isProjectVariant ? 28 : isNavDotVariant ? 22 : 30,
+          mass: isProjectVariant ? 0.5 : isNavDotVariant ? 0.6 : 0.8,
         }}
         style={{
-          backgroundColor: '#191919',
           borderRadius: '50%',
-          opacity: isVisible ? 1 : 0,
         }}
       />
 
@@ -144,15 +150,15 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor */}
+      {/* View Project cursor - pill to the right of the dot (header-style) */}
       <AnimatePresence>
         {isProjectVariant && (
           <motion.div
             className="custom-cursor project-cursor"
             initial={{ opacity: 0, scale: 0.5 }}
             animate={{
-              x: mousePosition.x - 50,
-              y: mousePosition.y - 20,
+              x: projectPillX,
+              y: projectPillY,
               opacity: 1,
               scale: 1,
             }}

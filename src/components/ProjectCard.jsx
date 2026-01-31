@@ -52,7 +52,7 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
         <motion.div 
           className="project-card-content"
           animate={{ 
-            padding: isHovered ? 8 : 0,
+            padding: isHovered ? 16 : 0,
           }}
           transition={{ 
             type: "spring",
@@ -73,8 +73,8 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
             <div className="project-info">
               <h3 className="project-title">{project.title}</h3>
               <div className="project-meta">
-                <span className="project-tag">{project.tags.slice(0, 2).join(' ')}</span>
                 <p className="project-subtitle">{project.subtitle}</p>
+                <span className="project-tag">{project.tags.slice(0, 2).join(' ')}</span>
               </div>
             </div>
           </div>

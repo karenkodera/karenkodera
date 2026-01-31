@@ -54,6 +54,10 @@
   margin-top: 6px;
 }
 
+.project-meta .project-tag {
+  margin-left: auto;
+}
+
 .project-tags {
   display: flex;
   flex-wrap: wrap;
