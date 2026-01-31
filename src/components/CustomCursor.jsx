@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useSpring } from 'framer-motion';
 import './CustomCursor.css';
 
@@ -7,8 +7,6 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [elementBounds, setElementBounds] = useState(null);
   const [dotTarget, setDotTarget] = useState(null);
-  const [pillKey, setPillKey] = useState(0);
-  const prevProjectRef = useRef(false);
   
   // Smooth spring physics for organic cursor movement
   const springConfig = { stiffness: 400, damping: 28, mass: 0.5 };
@@ -75,16 +73,8 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   const dotCursorPos = getDotCursorPosition();
 
-  // View project pill - use current mouse so pill appears every time you enter; freeze position only for exit
   const projectPillX = mousePosition.x - 50;
   const projectPillY = mousePosition.y - 20;
-  const [exitPosition, setExitPosition] = useState({ x: projectPillX, y: projectPillY });
-
-  useEffect(() => {
-    if (isProjectVariant) {
-      setExitPosition({ x: projectPillX, y: projectPillY });
-    }
-  }, [isProjectVariant, projectPillX, projectPillY]);
 
   return (
     <>
@@ -156,43 +146,20 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - fresh mount on every enter (key), no opacity override so it always shows */}
-      <AnimatePresence mode="wait">
-        {isProjectVariant && (
-          <motion.div
-            className="custom-cursor project-cursor"
-            key={`view-project-${pillKey}`}
-            initial={{
-              x: projectPillX,
-              y: projectPillY,
-              opacity: 1,
-              scale: 1,
-            }}
-            animate={{
-              x: projectPillX,
-              y: projectPillY,
-              opacity: 1,
-              scale: 1,
-            }}
-            exit={{
-              x: exitPosition.x,
-              y: exitPosition.y,
-              opacity: 0,
-              scale: 0.5,
-              transition: { duration: 0 },
-            }}
-            transition={{
-              type: 'spring',
-              stiffness: 400,
-              damping: 30,
-              mass: 0.8,
-            }}
-          >
-            <span className="project-cursor-dot" />
-            view project
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* View project pill - show when hovering a case study, hide when not */}
+      {isProjectVariant && (
+        <motion.div
+          className="custom-cursor project-cursor"
+          animate={{
+            x: projectPillX,
+            y: projectPillY,
+          }}
+          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+        >
+          <span className="project-cursor-dot" />
+          view project
+        </motion.div>
+      )}
     </>
   );
 };
