@@ -74,6 +74,16 @@
   align-items: center;
   justify-content: center;
   line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.karengpt-btn:hover .karengpt-icon {
+  animation: karengpt-spin 0.5s linear infinite;
+}
+
+@keyframes karengpt-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 .karengpt-icon svg {

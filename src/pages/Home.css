@@ -4,7 +4,7 @@
 }
 
 .projects-section {
-  padding: 20px 40px 80px;
+  padding: 20px 40px 32px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -62,7 +62,7 @@
 
 @media (max-width: 768px) {
   .projects-section {
-    padding: 16px 16px 60px;
+    padding: 16px 16px 24px;
   }
 
   .section-header {

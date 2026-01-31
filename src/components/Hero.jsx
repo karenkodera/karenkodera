@@ -1,17 +1,8 @@
 import { motion } from 'framer-motion';
-import { useCallback, useState, useEffect } from 'react';
+import { useCallback } from 'react';
 import './Hero.css';
 
 const Hero = ({ setCursorVariant, handleCursorChange }) => {
-  const [sparkleKey, setSparkleKey] = useState(0);
-
-  // Randomize sparkle animation periodically
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSparkleKey(prev => prev + 1);
-    }, 2000);
-    return () => clearInterval(interval);
-  }, []);
   const handleTextEnter = useCallback((e) => {
     if (handleCursorChange) {
       handleCursorChange('text', e.currentTarget);
@@ -95,25 +86,11 @@ const Hero = ({ setCursorVariant, handleCursorChange }) => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            <motion.span 
-              className="karengpt-icon"
-              key={sparkleKey}
-              animate={{ 
-                scale: [1, 1.3, 1],
-                opacity: [1, 0.7, 1],
-                rotate: [0, 180, 360]
-              }}
-              transition={{ 
-                duration: 2,
-                ease: "easeInOut",
-                repeat: Infinity,
-                repeatDelay: 0.5
-              }}
-            >
+            <span className="karengpt-icon">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 0L13.5 9L22 7L15 12L22 17L13.5 15L12 24L10.5 15L2 17L9 12L2 7L10.5 9L12 0Z" fill="currentColor"/>
               </svg>
-            </motion.span>
+            </span>
             ask karengpt
           </motion.a>
         </motion.div>

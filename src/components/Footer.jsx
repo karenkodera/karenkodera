@@ -12,8 +12,7 @@ const Footer = ({ setCursorVariant }) => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        {/* Top row: Links (left) + Back to top (right) */}
-        <motion.div 
+        <motion.div
           className="footer-row"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
@@ -45,6 +44,17 @@ const Footer = ({ setCursorVariant }) => {
             </motion.a>
           </div>
 
+          <motion.span
+            className="made-with made-with-center"
+            whileHover={{ scale: 1.05 }}
+          >
+            Made with <motion.span
+              className="heart"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1.5 }}
+            >♥</motion.span> in Chicago
+          </motion.span>
+
           <motion.button
             className="back-to-top"
             onClick={scrollToTop}
@@ -62,27 +72,6 @@ const Footer = ({ setCursorVariant }) => {
             </motion.span>
             Back to top
           </motion.button>
-        </motion.div>
-
-        {/* Bottom row: Copyright (left) + Made with love (right) */}
-        <motion.div 
-          className="footer-row footer-bottom"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-        >
-          <span className="copyright">© 2026 Karen Kodera</span>
-          <motion.span 
-            className="made-with"
-            whileHover={{ scale: 1.05 }}
-          >
-            Made with <motion.span
-              className="heart"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1.5 }}
-            >♥</motion.span> in Chicago
-          </motion.span>
         </motion.div>
       </div>
     </footer>
