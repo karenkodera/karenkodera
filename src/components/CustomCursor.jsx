@@ -73,14 +73,14 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   const dotCursorPos = getDotCursorPosition();
 
-  // View project pill position - only update while over card so pill doesn't follow cursor to corner on leave
+  // View project pill - use current mouse so pill appears every time you enter; freeze position only for exit
   const projectPillX = mousePosition.x - 50;
   const projectPillY = mousePosition.y - 20;
-  const [pillPosition, setPillPosition] = useState({ x: projectPillX, y: projectPillY });
+  const [exitPosition, setExitPosition] = useState({ x: projectPillX, y: projectPillY });
 
   useEffect(() => {
     if (isProjectVariant) {
-      setPillPosition({ x: projectPillX, y: projectPillY });
+      setExitPosition({ x: projectPillX, y: projectPillY });
     }
   }, [isProjectVariant, projectPillX, projectPillY]);
 
@@ -154,26 +154,27 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - stays at card position, disappears in place when cursor leaves */}
+      {/* View Project cursor - follows cursor when over card so it always appears on enter */}
       <AnimatePresence>
         {isProjectVariant && (
           <motion.div
             className="custom-cursor project-cursor"
+            key="view-project-pill"
             initial={{
-              x: pillPosition.x,
-              y: pillPosition.y,
+              x: projectPillX,
+              y: projectPillY,
               opacity: 0,
               scale: 0.5,
             }}
             animate={{
-              x: pillPosition.x,
-              y: pillPosition.y,
+              x: projectPillX,
+              y: projectPillY,
               opacity: 1,
               scale: 1,
             }}
             exit={{
-              x: pillPosition.x,
-              y: pillPosition.y,
+              x: exitPosition.x,
+              y: exitPosition.y,
               opacity: 0,
               scale: 0.5,
               transition: { duration: 0 },
