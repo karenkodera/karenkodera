@@ -38,7 +38,7 @@ const Hero = ({ setCursorVariant, handleCursorChange }) => {
     isHoveredRef.current = false;
     if (spinStopRef.current) spinStopRef.current.stop();
     spinStopRef.current = animate(rotation, rotation.get() + 360, {
-      duration: 1.8,
+      duration: 1,
       ease: [0.25, 0.1, 0.25, 1],
     });
   }, [handleCursorChange, setCursorVariant, rotation]);
