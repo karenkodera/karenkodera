@@ -147,7 +147,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - appears where mouse enters, not from corner */}
+      {/* View Project cursor - appears where mouse enters, disappears when cursor leaves */}
       <AnimatePresence>
         {isProjectVariant && (
           <motion.div
@@ -164,7 +164,11 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
               opacity: 1,
               scale: 1,
             }}
-            exit={{ opacity: 0, scale: 0.5 }}
+            exit={{
+              opacity: 0,
+              scale: 0.5,
+              transition: { duration: 0.15 },
+            }}
             transition={{
               type: 'spring',
               stiffness: 400,

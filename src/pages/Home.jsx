@@ -9,8 +9,8 @@ const projects = [
     subtitle: "Northwestern Master's Thesis",
     image: 'https://framerusercontent.com/images/2TieXjM5ufkozZ2D7pZO9dXGvA.jpg',
     link: '/thesis',
-    tags: ['Shipped', '2024'],
-    year: '2024',
+    tags: ['Concept', '2025'],
+    year: '2025',
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const projects = [
     subtitle: "Dick's Sporting Goods",
     image: 'https://framerusercontent.com/images/tQwaUHTuNBtjPuTDXDbT0SsxXf8.jpg',
     link: null,
-    tags: ['Handed Off', '2023'],
+    tags: ['Shipped', '2023'],
     year: '2023',
   },
 ];
