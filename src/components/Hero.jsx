@@ -1,9 +1,23 @@
 import { motion } from 'framer-motion';
-import { useCallback } from 'react';
+import { useCallback, useState, useRef, useEffect } from 'react';
 import './Hero.css';
 
 const Hero = ({ setCursorVariant, handleCursorChange }) => {
+  const [spinDown, setSpinDown] = useState(false);
+  const spinDownTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (spinDownTimeoutRef.current) clearTimeout(spinDownTimeoutRef.current);
+    };
+  }, []);
+
   const handleTextEnter = useCallback((e) => {
+    if (spinDownTimeoutRef.current) {
+      clearTimeout(spinDownTimeoutRef.current);
+      spinDownTimeoutRef.current = null;
+    }
+    setSpinDown(false);
     if (handleCursorChange) {
       handleCursorChange('text', e.currentTarget);
     } else {
@@ -17,6 +31,12 @@ const Hero = ({ setCursorVariant, handleCursorChange }) => {
     } else {
       setCursorVariant('default');
     }
+    setSpinDown(true);
+    if (spinDownTimeoutRef.current) clearTimeout(spinDownTimeoutRef.current);
+    spinDownTimeoutRef.current = setTimeout(() => {
+      setSpinDown(false);
+      spinDownTimeoutRef.current = null;
+    }, 1800);
   }, [handleCursorChange, setCursorVariant]);
 
   const containerVariants = {
@@ -86,7 +106,7 @@ const Hero = ({ setCursorVariant, handleCursorChange }) => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.98 }}
           >
-            <span className="karengpt-icon">
+            <span className={`karengpt-icon${spinDown ? ' karengpt-icon-spin-down' : ''}`}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M12 0L13.5 9L22 7L15 12L22 17L13.5 15L12 24L10.5 15L2 17L9 12L2 7L10.5 9L12 0Z" fill="currentColor"/>
               </svg>

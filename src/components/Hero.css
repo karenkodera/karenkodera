@@ -77,8 +77,12 @@
   transition: transform 0.2s ease;
 }
 
-.karengpt-btn:hover .karengpt-icon {
-  animation: karengpt-spin 0.5s linear infinite;
+.karengpt-btn:hover .karengpt-icon:not(.karengpt-icon-spin-down) {
+  animation: karengpt-spin 1.2s linear infinite;
+}
+
+.karengpt-icon.karengpt-icon-spin-down {
+  animation: karengpt-spin 1.8s linear 1;
 }
 
 @keyframes karengpt-spin {
