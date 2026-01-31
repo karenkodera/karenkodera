@@ -147,17 +147,12 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - pill with white dot inside (appears at cursor, not from corner) */}
+      {/* View Project cursor - pill with white dot inside (header work-button style) */}
       <AnimatePresence>
         {isProjectVariant && (
           <motion.div
             className="custom-cursor project-cursor"
-            initial={{
-              x: projectPillX,
-              y: projectPillY,
-              opacity: 0,
-              scale: 0.5,
-            }}
+            initial={{ opacity: 0, scale: 0.5 }}
             animate={{
               x: projectPillX,
               y: projectPillY,
@@ -172,7 +167,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
               mass: 0.8,
             }}
             style={{
-              opacity: isVisible ? undefined : 0,
+              opacity: isVisible ? 1 : 0,
             }}
           >
             <span className="project-cursor-dot" />

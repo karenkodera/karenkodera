@@ -1,18 +1,10 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import './ProjectCard.css';
 
 const ProjectCard = ({ project, index, setCursorVariant }) => {
-  const [isHovered, setIsHovered] = useState(false);
-  const handleMouseEnter = () => {
-    setCursorVariant('project');
-    setIsHovered(true);
-  };
-  const handleMouseLeave = () => {
-    setCursorVariant('default');
-    setIsHovered(false);
-  };
+  const handleMouseEnter = () => setCursorVariant('project');
+  const handleMouseLeave = () => setCursorVariant('default');
 
   const cardVariants = {
     hidden: { 
@@ -66,7 +58,7 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
               </div>
             </div>
           </div>
-        </motion.div>
+        </div>
       </CardWrapper>
     </motion.div>
   );
