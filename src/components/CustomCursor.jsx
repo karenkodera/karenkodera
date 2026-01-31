@@ -146,10 +146,11 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View project pill - show when hovering a case study, hide when not */}
+      {/* View project pill - show when hovering a case study, appear at cursor not from corner */}
       {isProjectVariant && (
         <motion.div
           className="custom-cursor project-cursor"
+          initial={{ x: projectPillX, y: projectPillY }}
           animate={{
             x: projectPillX,
             y: projectPillY,
