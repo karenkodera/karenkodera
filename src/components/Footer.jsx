@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import './Footer.css';
 
 const Footer = ({ setCursorVariant }) => {
+  const [isBackToTopHovered, setIsBackToTopHovered] = useState(false);
   const handleMouseEnter = () => setCursorVariant('hover');
   const handleMouseLeave = () => setCursorVariant('default');
 
@@ -55,15 +57,26 @@ const Footer = ({ setCursorVariant }) => {
           <motion.button
             className="back-to-top"
             onClick={scrollToTop}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+            onMouseEnter={() => {
+              handleMouseEnter();
+              setIsBackToTopHovered(true);
+            }}
+            onMouseLeave={() => {
+              handleMouseLeave();
+              setIsBackToTopHovered(false);
+            }}
             whileHover={{ y: -3 }}
             whileTap={{ scale: 0.95 }}
           >
             <motion.span
               className="arrow-up"
-              animate={{ y: [0, -3, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
+              animate={{
+                y: isBackToTopHovered ? [0, -3, 0] : 0,
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: isBackToTopHovered ? Infinity : 0,
+              }}
             >
               ↑
             </motion.span>

@@ -49,7 +49,10 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
       >
         <motion.div
           className="project-card-content"
-          animate={{ padding: isHovered ? 8 : 0 }}
+          animate={{
+            padding: isHovered ? 8 : 0,
+            margin: isHovered ? -8 : 0,
+          }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         >
           <div className="project-card-inner">
