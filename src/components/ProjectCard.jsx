@@ -72,7 +72,7 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
             
             <div className="project-info">
               <div className="project-tags">
-                <span className="project-tag">{project.tags.slice(0, 2).join(' · ')}</span>
+                <span className="project-tag">{project.tags.slice(0, 2).join(' ')}</span>
               </div>
               <h3 className="project-title">{project.title}</h3>
               <p className="project-subtitle">{project.subtitle}</p>
