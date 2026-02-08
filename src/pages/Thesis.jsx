@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import './Thesis.css';
@@ -5,29 +6,89 @@ import './Thesis.css';
 // Images from thesis case study (same as home card; add more URLs from karenkodera.com/thesis as needed)
 const THESIS_HERO_IMAGE = 'https://framerusercontent.com/images/2TieXjM5ufkozZ2D7pZO9dXGvA.jpg';
 
+const THESIS_NAV_SECTIONS = [
+  { label: 'Problem', id: 'problem' },
+  { label: 'User', id: 'user' },
+  { label: 'Research Methods', id: 'research-methods' },
+  { label: 'Insight', id: 'insight' },
+  { label: 'Question to Answer', id: 'question-to-answer' },
+  { label: 'Competitive Analysis', id: 'competitive-analysis' },
+  { label: 'Problem Solving', id: 'problem-solving' },
+  { label: 'Solution', id: 'solution' },
+  { label: 'Existing Brand Integration', id: 'existing-brand-integration' },
+  { label: 'User Testing & Research', id: 'user-testing-and-returning-to-research' },
+  { label: 'Impact', id: 'impact' },
+  { label: 'Final Outcome', id: 'final-outcome' },
+];
+
+const SCROLL_SPY_TOP_OFFSET = 160;
+
 const Thesis = ({ setCursorVariant }) => {
+  const [activeSectionId, setActiveSectionId] = useState(null);
+
   const handleMouseEnter = () => setCursorVariant('hover');
   const handleMouseLeave = () => setCursorVariant('default');
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
+    const sectionIds = THESIS_NAV_SECTIONS.map((s) => s.id);
+    const updateActiveSection = () => {
+      const trigger = SCROLL_SPY_TOP_OFFSET;
+      for (const id of sectionIds) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const { top, bottom } = el.getBoundingClientRect();
+        if (top <= trigger && bottom >= trigger) {
+          setActiveSectionId(id);
+          return;
+        }
+      }
+      const first = document.getElementById(sectionIds[0]);
+      if (first && first.getBoundingClientRect().bottom < trigger) {
+        setActiveSectionId(sectionIds[sectionIds.length - 1]);
+      } else {
+        setActiveSectionId(sectionIds[0]);
+      }
+    };
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    return () => window.removeEventListener('scroll', updateActiveSection);
+  }, []);
+
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
     <div className="thesis-page">
-      <motion.header
-        className="thesis-header"
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.4 }}
-      >
-        <Link
-          to="/"
-          className="thesis-back"
-          onMouseEnter={handleMouseEnter}
-          onMouseLeave={handleMouseLeave}
-        >
-          ← Back
+      <nav className="thesis-nav" aria-label="Case study sections">
+        <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+          <span className="thesis-nav-back-arrow" aria-hidden>←</span>
+          back to home
         </Link>
-      </motion.header>
+        <ul className="thesis-nav-list">
+          {THESIS_NAV_SECTIONS.map(({ label, id }) => (
+            <li key={id} className="thesis-nav-item">
+              <button
+                type="button"
+                className={`thesis-nav-link${activeSectionId === id ? ' thesis-nav-link-active' : ''}`}
+                onClick={() => scrollToSection(id)}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                {label}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
-      <article className="thesis-article">
+      <div className="thesis-main">
+        <article className="thesis-article">
         <motion.section
           className="thesis-hero"
           initial={{ opacity: 0, y: 24 }}
@@ -77,6 +138,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="user"
           label="USER"
           heading="The main offender of fashion trends is the avid female shopper aged 18–35."
           body="As proven by a survey by Vogue Business, these people are early in their career, they aren't making a lot of money yet so they want to spend less to stay on trend."
@@ -93,6 +155,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="insight"
           label="INSIGHT"
           heading="Style First, Sustainability Second."
           body="While many consumers feel guilt over shopping fast fashion, these feelings rarely translate into action."
@@ -105,6 +168,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="competitive-analysis"
           label="COMPETITIVE ANALYSIS"
           heading="Most successful competitors focus on rewear, but that model fails for fast fashion that isn't made to last."
           body="Ideally, what we want for a perfectly sustainable world is a circular fashion economy. Items are recycled so that we don't need to keep making new products. Competitors that are successful at hitting people's needs for affordability, trendiness and sustainability that are on the market right now focus on getting the most wears out of items before being sent to landfill. But, this doesn't work for fast fashion items that are so low quality that they fall apart and can't be resold."
@@ -119,6 +183,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="solution"
           label="SOLUTION"
           heading="INTRODUCING BRIDG: A three part system for gathering feedback, placing orders and factory production."
           body="This gamified feedback service helps brands produce only what is desired by integrating a series of games directly into their websites. By understanding consumer demand, brands can cut down on unsold inventory and save money on production, leading to less clothing being made and sent to landfill."
@@ -137,6 +202,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="user-testing-and-returning-to-research"
           label="USER TESTING AND RETURNING TO RESEARCH"
           heading="A pre-order model can work if customers are given incentive."
           body="Since Bridg sells with pre-order, this means that users must wait a little longer for their items to get them. Traditional model: Items arrive at door in around 2–4 weeks. Bridg pre-order model: Items arrive at door in around 4–6 weeks. During user testing, a question that came up often was: In a world of instant gratification, are people really willing to wait for their items? I surveyed 24 young adult shoppers and found that they were! If given incentive."
@@ -159,6 +225,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="final-outcome"
           label="FINAL OUTCOME"
           heading="Learning to own the process!"
           body="Tackling this project solo was my biggest design challenge yet. Over the course of six months, I learned how to manage my time, stay accountable, and keep momentum without external pressure. Meeting my own goals and holding myself to them became just as important as the final outcome. Here is an image from the big presentation day!"
@@ -185,17 +252,19 @@ const Thesis = ({ setCursorVariant }) => {
             <a href="/karengpt" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>RESUME</a>
           </div>
           <p className="thesis-more-cases">
-            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>YETI Case Study</Link>
+            <Link to="/dsg" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Dick&apos;s Sporting Goods Case Study</Link>
             {' · '}
-            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>DICK&apos;s Sporting Goods Case Study</Link>
+            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Back to Work</Link>
           </p>
         </motion.section>
-      </article>
+        </article>
+      </div>
     </div>
   );
 };
 
 function ThesisSection({
+  id,
   label,
   heading,
   body,
@@ -208,6 +277,7 @@ function ThesisSection({
 }) {
   return (
     <motion.section
+      id={id}
       className="thesis-section"
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}

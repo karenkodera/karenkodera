@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Home from './pages/Home';
 import Thesis from './pages/Thesis';
+import DicksSportingGoods from './pages/DicksSportingGoods';
 import Play from './pages/Play';
 import About from './pages/About';
 import './App.css';
@@ -37,6 +38,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
             <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
+            <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
             <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
             <Route path="/about" element={<About setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
           </Routes>

@@ -22,6 +22,74 @@
   color: var(--text-color);
 }
 
+/* Dick's Sporting Goods: left nav + main content */
+.thesis-page:has(.thesis-nav) {
+  display: flex;
+  padding-top: 0;
+}
+
+.thesis-nav {
+  width: 200px;
+  flex-shrink: 0;
+  padding: 120px 24px 40px 40px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+
+.thesis-nav-back {
+  display: inline-block;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.2s ease;
+}
+
+.thesis-nav-back:hover {
+  color: var(--text-color);
+}
+
+.thesis-nav-back-arrow {
+  margin-right: 4px;
+}
+
+.thesis-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.thesis-nav-item {
+  margin-bottom: 4px;
+}
+
+.thesis-nav-link {
+  display: block;
+  width: 100%;
+  padding: 6px 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: color 0.2s ease;
+}
+
+.thesis-nav-link:hover,
+.thesis-nav-link-active {
+  color: var(--text-color);
+}
+
+.thesis-main {
+  flex: 1;
+  min-width: 0;
+}
+
 .thesis-article {
   max-width: 800px;
   margin: 0 auto;
@@ -46,6 +114,40 @@
   display: block;
   aspect-ratio: 16 / 10;
   object-fit: cover;
+}
+
+.thesis-hero-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-color);
+  margin-bottom: 8px;
+}
+
+.thesis-hero-meta-row {
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 24px;
+  margin-top: 24px;
+  align-items: start;
+}
+
+.thesis-background-col .thesis-section-label {
+  margin-bottom: 8px;
+}
+
+.thesis-meta-box {
+  padding: 16px 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.thesis-meta-box .thesis-meta {
+  border: none;
+  padding: 0;
+  margin: 0;
+  gap: 12px;
 }
 
 .thesis-title {
@@ -101,6 +203,7 @@
 
 .thesis-section {
   margin-bottom: 56px;
+  scroll-margin-top: 100px;
 }
 
 .thesis-section-label {
@@ -235,6 +338,45 @@
   color: var(--text-color);
 }
 
+/* Context section with image on right (Dick's Sporting Goods) */
+.thesis-section-context-with-image {
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  grid-template-rows: auto auto auto;
+  gap: 0 28px;
+  align-items: start;
+}
+
+.thesis-section-context-with-image .thesis-section-label {
+  grid-column: 1;
+  grid-row: 1;
+  margin-bottom: 4px;
+}
+
+.thesis-section-context-with-image .thesis-section-heading {
+  grid-column: 1;
+  grid-row: 2;
+  margin-bottom: 6px;
+}
+
+.thesis-section-context-with-image .thesis-section-body {
+  grid-column: 1;
+  grid-row: 3;
+  margin-bottom: 0;
+}
+
+.thesis-section-context-with-image .thesis-section-images {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  margin: 0;
+  max-width: 260px;
+  align-self: start;
+}
+
+.thesis-section-context-with-image .thesis-section-images .thesis-image {
+  border-radius: 12px;
+}
+
 .thesis-footer-cta {
   margin-top: 80px;
   padding-top: 48px;
@@ -310,6 +452,15 @@
     padding-top: 80px;
   }
 
+  .thesis-page:has(.thesis-nav) {
+    flex-direction: column;
+    padding-top: 80px;
+  }
+
+  .thesis-nav {
+    display: none;
+  }
+
   .thesis-header,
   .thesis-article {
     padding-left: 16px;
@@ -322,5 +473,26 @@
 
   .thesis-two-col {
     grid-template-columns: 1fr;
+  }
+
+  .thesis-hero-meta-row {
+    grid-template-columns: 1fr;
+  }
+
+  .thesis-section-context-with-image {
+    grid-template-columns: 1fr;
+  }
+
+  .thesis-section-context-with-image .thesis-section-label,
+  .thesis-section-context-with-image .thesis-section-heading,
+  .thesis-section-context-with-image .thesis-section-body,
+  .thesis-section-context-with-image .thesis-section-images {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .thesis-section-context-with-image .thesis-section-images {
+    max-width: 100%;
+    margin-top: 20px;
   }
 }
