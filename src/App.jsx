@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
 import Header from './components/Header';
@@ -11,10 +11,17 @@ import Play from './pages/Play';
 import About from './pages/About';
 import './App.css';
 
-function App() {
+function AppContent() {
+  const location = useLocation();
   const [cursorVariant, setCursorVariant] = useState('default');
   const [hoveredElement, setHoveredElement] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+
+  // Reset cursor to dot when navigating (e.g. after clicking a case study)
+  useEffect(() => {
+    setCursorVariant('default');
+    setHoveredElement(null);
+  }, [location.pathname]);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -31,22 +38,28 @@ function App() {
   }, []);
 
   return (
+    <div className="app">
+      {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
+      <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} hoveredElement={hoveredElement} />
+      <main>
+        <Routes>
+          <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
+          <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
+          <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
+          <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
+          <Route path="/play" element={<Play setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
+          <Route path="/about" element={<About setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
+        </Routes>
+      </main>
+      <Footer setCursorVariant={setCursorVariant} />
+    </div>
+  );
+}
+
+function App() {
+  return (
     <Router>
-      <div className="app">
-        {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
-        <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} hoveredElement={hoveredElement} />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
-            <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
-            <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
-            <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
-            <Route path="/play" element={<Play setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
-            <Route path="/about" element={<About setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
-          </Routes>
-        </main>
-        <Footer setCursorVariant={setCursorVariant} />
-      </div>
+      <AppContent />
     </Router>
   );
 }
