@@ -6,11 +6,11 @@ const projects = [
   {
     id: 1,
     title: 'Minimizing Overproduction in Fashion Retail',
-    subtitle: "Northwestern Master's Thesis",
-    image: 'https://framerusercontent.com/images/2TieXjM5ufkozZ2D7pZO9dXGvA.jpg',
+    subtitle: "Northwestern Design Master's Thesis",
+    image: '/thesis/thesis-hero.png',
     link: '/thesis',
-    tags: ['Shipped', '2024'],
-    year: '2024',
+    tags: ['Concept', '2025'],
+    year: '2025',
   },
   {
     id: 2,
@@ -24,11 +24,11 @@ const projects = [
   {
     id: 3,
     title: 'Reducing Paper in Grocery Delivery',
-    subtitle: 'Kroger Internship',
+    subtitle: 'Kroger Product Design Internship',
     image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
-    link: null,
-    tags: ['Handed Off', '2023'],
-    year: '2023',
+    link: '/kroger',
+    tags: ['Handed off', '2024'],
+    year: '2024',
   },
   {
     id: 4,

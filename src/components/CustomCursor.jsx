@@ -73,7 +73,6 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   const dotCursorPos = getDotCursorPosition();
 
-  // View project pill position (dot is inside the pill, header-style)
   const projectPillX = mousePosition.x - 50;
   const projectPillY = mousePosition.y - 20;
 
@@ -147,39 +146,21 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View Project cursor - appears where mouse enters, not from corner */}
-      <AnimatePresence>
-        {isProjectVariant && (
-          <motion.div
-            className="custom-cursor project-cursor"
-            initial={{
-              x: projectPillX,
-              y: projectPillY,
-              opacity: 0,
-              scale: 0.5,
-            }}
-            animate={{
-              x: projectPillX,
-              y: projectPillY,
-              opacity: 1,
-              scale: 1,
-            }}
-            exit={{ opacity: 0, scale: 0.5 }}
-            transition={{
-              type: 'spring',
-              stiffness: 400,
-              damping: 30,
-              mass: 0.8,
-            }}
-            style={{
-              opacity: isVisible ? undefined : 0,
-            }}
-          >
-            <span className="project-cursor-dot" />
-            view project
-          </motion.div>
-        )}
-      </AnimatePresence>
+      {/* View project pill - show when hovering a case study, appear at cursor not from corner */}
+      {isProjectVariant && (
+        <motion.div
+          className="custom-cursor project-cursor"
+          initial={{ x: projectPillX, y: projectPillY }}
+          animate={{
+            x: projectPillX,
+            y: projectPillY,
+          }}
+          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+        >
+          <span className="project-cursor-dot" />
+          view project
+        </motion.div>
+      )}
     </>
   );
 };

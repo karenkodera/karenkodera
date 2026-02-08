@@ -17,14 +17,16 @@
 }
 
 .custom-cursor.hover-cursor {
-  background-color: rgba(25, 25, 25, 0.05);
-  border: 1.5px solid #191919;
+  /* No visible box on hover - dot only */
+  background-color: transparent;
+  border: none;
   border-radius: 50%;
 }
 
 .custom-cursor.text-cursor {
-  background-color: rgba(25, 25, 25, 0.04);
-  border: 2px solid #191919;
+  /* No visible box on text hover */
+  background-color: transparent;
+  border: none;
   border-radius: 12px;
 }
 
@@ -39,6 +41,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 0;
+}
+
+.project-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #fff;
+  border-radius: 50%;
+  margin-right: 8px;
+  flex-shrink: 0;
 }
 
 * {

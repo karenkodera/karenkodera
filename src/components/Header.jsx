@@ -154,18 +154,19 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
             </Link>
           ))}
           <span className="nav-separator">|</span>
-          <Link
-            to="/karengpt"
+          <a
+            href="https://docs.google.com/document/d/1Yw1XcOwP67Qe86NQzIS3ThK7LGm7OG64/edit?usp=sharing&ouid=117267947988990753909&rtpof=true&sd=true"
+            target="_blank"
+            rel="noopener noreferrer"
             className="nav-link resume-link"
             onMouseEnter={handleOtherMouseEnter}
             onMouseLeave={handleOtherMouseLeave}
-            onClick={handleNavClick}
           >
             resume
             <svg className="external-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </Link>
+          </a>
         </nav>
       </motion.header>
 
@@ -211,18 +212,19 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
               </Link>
             ))}
             <span className="bubble-separator">|</span>
-            <Link
-              to="/karengpt"
+            <a
+              href="https://docs.google.com/document/d/1Yw1XcOwP67Qe86NQzIS3ThK7LGm7OG64/edit?usp=sharing&ouid=117267947988990753909&rtpof=true&sd=true"
+              target="_blank"
+              rel="noopener noreferrer"
               className="bubble-compact-link bubble-compact-resume"
               onMouseEnter={handleOtherMouseEnter}
               onMouseLeave={handleOtherMouseLeave}
-              onClick={handleNavClick}
             >
               resume
               <svg className="external-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
-            </Link>
+            </a>
           </motion.nav>
         )}
       </AnimatePresence>

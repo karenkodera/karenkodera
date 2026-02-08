@@ -97,7 +97,7 @@ const Hero = ({ setCursorVariant, handleCursorChange }) => {
           className="hero-description"
           variants={itemVariants}
         >
-          A product designer and strategic thinker with a background in architecture, turning complex problems into intuitive, human-centered solutions.
+          A product designer with a background in architecture, turning complex problems into intuitive, human-centered solutions.
         </motion.p>
 
         <motion.div className="hero-actions" variants={itemVariants}>

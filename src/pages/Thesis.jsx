@@ -1,11 +1,37 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import CaseStudySection from '../components/CaseStudySection';
 import './Thesis.css';
 
-// Images from thesis case study (same as home card; add more URLs from karenkodera.com/thesis as needed)
-const THESIS_HERO_IMAGE = 'https://framerusercontent.com/images/2TieXjM5ufkozZ2D7pZO9dXGvA.jpg';
+// Local images saved from https://karenkodera.com/thesis (same order as on the page)
+const THESIS_IMAGES = {
+  hero: '/thesis/thesis-hero.png',
+  problem: '/thesis/thesis-1.png',
+  garmentsLandfill: '/thesis/thesis-garments-landfill.png',
+  interviewing: '/thesis/thesis-interviewing.png',
+  wilson: '/thesis/thesis-wilson.png',
+  hm: '/thesis/thesis-hm.png',
+  venn: '/thesis/thesis-venn.png',
+  competitiveLandscape: '/thesis/thesis-competitive-landscape.png',
+  solution: '/thesis/thesis-5.jpg',
+  equation: '/thesis/thesis-equation.png',
+  gatherFeedback: '/thesis/thesis-gather-feedback.png',
+  ordersPlaced: '/thesis/thesis-orders-placed.png',
+  garmentProduction: '/thesis/thesis-garment-production.png',
+  game: '/thesis/thesis-game.png',
+  platformHome: '/thesis/thesis-platform-home.png',
+  brandDashboard: '/thesis/thesis-brand-dashboard.png',
+  existingBrand: '/thesis/thesis-10.png',
+  whiteLabelModel: '/thesis/thesis-white-label-model.png',
+  traditionalModel: '/thesis/thesis-traditional-model.png',
+  preOrderModel: '/thesis/thesis-pre-order-model.png',
+  finalOutcome: '/thesis/thesis-28.png',
+  brandsIcon: '/thesis/brands.svg',
+  consumersIcon: '/thesis/consumer.svg',
+};
 
+// Section labels for left nav (same order as on page)
 const THESIS_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
   { label: 'User', id: 'user' },
@@ -18,7 +44,7 @@ const THESIS_NAV_SECTIONS = [
   { label: 'Existing Brand Integration', id: 'existing-brand-integration' },
   { label: 'User Testing & Research', id: 'user-testing-and-returning-to-research' },
   { label: 'Impact', id: 'impact' },
-  { label: 'Final Outcome', id: 'final-outcome' },
+  { label: 'Conclusion', id: 'final-outcome' },
 ];
 
 const SCROLL_SPY_TOP_OFFSET = 160;
@@ -35,24 +61,22 @@ const Thesis = ({ setCursorVariant }) => {
 
   useEffect(() => {
     const sectionIds = THESIS_NAV_SECTIONS.map((s) => s.id);
+
     const updateActiveSection = () => {
-      const trigger = SCROLL_SPY_TOP_OFFSET;
+      let bestId = null;
+      let bestTop = -Infinity;
       for (const id of sectionIds) {
         const el = document.getElementById(id);
         if (!el) continue;
-        const { top, bottom } = el.getBoundingClientRect();
-        if (top <= trigger && bottom >= trigger) {
-          setActiveSectionId(id);
-          return;
+        const top = el.getBoundingClientRect().top;
+        if (top <= SCROLL_SPY_TOP_OFFSET && top > bestTop) {
+          bestTop = top;
+          bestId = id;
         }
       }
-      const first = document.getElementById(sectionIds[0]);
-      if (first && first.getBoundingClientRect().bottom < trigger) {
-        setActiveSectionId(sectionIds[sectionIds.length - 1]);
-      } else {
-        setActiveSectionId(sectionIds[0]);
-      }
+      setActiveSectionId(bestId ?? sectionIds[0]);
     };
+
     updateActiveSection();
     window.addEventListener('scroll', updateActiveSection, { passive: true });
     return () => window.removeEventListener('scroll', updateActiveSection);
@@ -66,7 +90,12 @@ const Thesis = ({ setCursorVariant }) => {
   return (
     <div className="thesis-page">
       <nav className="thesis-nav" aria-label="Case study sections">
-        <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+        <Link
+          to="/"
+          className="thesis-nav-back"
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+        >
           <span className="thesis-nav-back-arrow" aria-hidden>←</span>
           back to home
         </Link>
@@ -89,81 +118,83 @@ const Thesis = ({ setCursorVariant }) => {
 
       <div className="thesis-main">
         <article className="thesis-article">
-        <motion.section
-          className="thesis-hero"
-          initial={{ opacity: 0, y: 24 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 className="thesis-section-label thesis-hero-title">Bridg</h1>
-          <p className="thesis-tagline">
-            A B2B2C feedback service to help retail brands produce only what customers really want and reduce overproduction as a result.
-          </p>
-          <div className="thesis-hero-image-wrap">
-            <img
-              src={THESIS_HERO_IMAGE}
-              alt="Bridg — minimizing overproduction in fashion retail"
-              className="thesis-hero-image"
-            />
-          </div>
-          <div className="thesis-hero-meta-row">
-            <div className="thesis-background-col">
-              <span className="thesis-section-label">BACKGROUND</span>
-              <p className="thesis-summary">
-                The Earth has suffered long enough from rampant clothing overproduction. Bridg transforms customer feedback into smarter production decisions. Through interactive mini games, Bridg helps brands produce only what customers want, minimizing unsold inventory, and keeping excess clothing out of landfills. The result? A more sustainable fashion industry, driven by conscious creation.
-              </p>
+          <motion.section
+            className="thesis-hero"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="thesis-section-label thesis-hero-title">Bridg</h1>
+            <p className="thesis-tagline">
+              A feedback service to help retail brands reduce overproduction.
+            </p>
+            <div className="thesis-hero-image-wrap">
+              <img
+                src={THESIS_IMAGES.hero}
+                alt="Bridg — minimizing overproduction in fashion retail"
+                className="thesis-hero-image"
+              />
             </div>
-            <div className="thesis-meta-box">
-              <dl className="thesis-meta">
-                <div>
-                  <dt>Responsibilities</dt>
-                  <dd>Design Researcher, Product and Service Designer</dd>
-                  <dd className="meta-sub">UX Research, Competitive Analysis, User testing, Wireframing, Prototyping, Business Strategy</dd>
-                </div>
-                <div>
-                  <dt>Mentors</dt>
-                  <dd>Jim Wicks, Amy Schwartz, Susan Curtis</dd>
-                </div>
-                <div>
-                  <dt>Duration</dt>
-                  <dd>Sept 2024 – Mar 2025</dd>
-                </div>
-                <div>
-                  <dt>Tools</dt>
-                  <dd>Figma, Jitter</dd>
-                </div>
-              </dl>
+            <div className="thesis-hero-meta-row">
+              <div className="thesis-background-col">
+                <span className="thesis-section-label">BACKGROUND</span>
+                <p className="thesis-summary">
+                  Bridg transforms customer feedback into smarter production decisions. Through interactive mini games, Bridg helps brands produce only what customers want, minimizing unsold inventory, and keeping excess clothing out of landfills.
+                </p>
+              </div>
+              <div className="thesis-meta-box">
+                <dl className="thesis-meta">
+                  <div>
+                    <dt>Responsibilities</dt>
+                    <dd>Design Researcher, Product and Service Designer</dd>
+                  </div>
+                  <div>
+                    <dt>Mentors</dt>
+                    <dd>Jim Wicks, Amy Schwartz, Susan Curtis</dd>
+                  </div>
+                  <div>
+                    <dt>Duration</dt>
+                    <dd>Sept 2024 – Mar 2025</dd>
+                  </div>
+                  <div>
+                    <dt>Tools</dt>
+                    <dd>Figma</dd>
+                  </div>
+                </dl>
+              </div>
             </div>
-          </div>
-        </motion.section>
+          </motion.section>
 
-        <ThesisSection
-          id="problem"
+          <CaseStudySection
+            id="problem"
           label="PROBLEM"
           heading="The fashion industry is in the top 5 most polluting industries in the world..."
-          body="Fast fashion items are created out of low quality materials called synthetic fibers. Not only do these pieces fall apart after 1–2 uses, synthetic fibers contain tiny pieces of plastic. When these fast fashion pieces are put through the wash, they release plastic into the water, which end up in our oceans."
-          images={[{ src: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=1200', alt: 'Fashion industry and sustainability', caption: 'Fast fashion and environmental impact' }]}
-        />
+            body="Fast fashion items are created out of low quality materials called synthetic fibers. Not only do these pieces fall apart after 1–2 uses, synthetic fibers contain tiny pieces of plastic. When these fast fashion pieces are put through the wash, they release plastic into the water, which end up in our oceans."
+            images={[
+              { src: THESIS_IMAGES.garmentsLandfill, alt: 'Garments degrading to landfill', caption: '', flat: true }
+            ]}
+          />
 
-        <ThesisSection
-          id="user"
-          label="USER"
+          <CaseStudySection
+            id="user"
+            label="USER"
           heading="The main offender of fashion trends is the avid female shopper aged 18–35."
           body="As proven by a survey by Vogue Business, these people are early in their career, they aren't making a lot of money yet so they want to spend less to stay on trend."
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="research-methods"
           label="RESEARCH METHODS"
           heading="I conducted primary and secondary research to understand my user."
-          list={[
-            'interviewed/tested 30+ users',
-            'interviewed experts in retail — buyers, influencer marketing managers, fashion designers',
-            'worked at H&M as a sales advisor',
+          listWithImages={[
+            { src: THESIS_IMAGES.interviewing, alt: 'Interviewing and testing users', text: 'interviewed/tested 30+ users' },
+            { src: THESIS_IMAGES.wilson, alt: 'Interviewing experts in retail at Wilson', text: 'interviewed experts in retail' },
+            { src: THESIS_IMAGES.hm, alt: 'Worked at H&M as a sales advisor', text: 'worked at H&M as a sales advisor' },
           ]}
+          listWithImagesTitleLeft
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="insight"
           label="INSIGHT"
           heading="Style First, Sustainability Second."
@@ -171,53 +202,65 @@ const Thesis = ({ setCursorVariant }) => {
           quote="I think about sustainability, but then I think, eh it's cheaper"
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="question-to-answer"
           label="QUESTION TO ANSWER"
-          heading="How might we encourage mindful clothing consumption while keeping in mind the average consumer's focus on trends and budget?"
+          heading={<><em>HMW</em> encourage mindful clothing consumption while keeping in mind the average consumer's focus on trends and budget?</>}
+          images={[{ src: THESIS_IMAGES.venn, alt: 'Sustainable Venn diagram', compact: true }]}
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="competitive-analysis"
           label="COMPETITIVE ANALYSIS"
           heading="Most successful competitors focus on rewear, but that model fails for fast fashion that isn't made to last."
-          body="Ideally, what we want for a perfectly sustainable world is a circular fashion economy. Items are recycled so that we don't need to keep making new products. Competitors that are successful at hitting people's needs for affordability, trendiness and sustainability that are on the market right now focus on getting the most wears out of items before being sent to landfill. But, this doesn't work for fast fashion items that are so low quality that they fall apart and can't be resold."
+          body="Ideally, what we want is a circular fashion economy, items are recycled so that we don't need to keep making new products. Competitors that are successful at hitting people's needs for affordability, trendiness and sustainability focus on getting the most wears out of items before being sent to landfill. But, this doesn't work for fast fashion items that are so low quality that they fall apart and can't be resold."
+          images={[{ src: THESIS_IMAGES.competitiveLandscape, alt: 'Competitive landscape: sustainable, affordable, and fashionable', wide: true }]}
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="problem-solving"
           label="PROBLEM SOLVING"
           heading="The only way to stop the flow of items into landfill is to stop the flow of product production. Therefore, the solution has to target brands not consumers."
-          body="Ideally, what we want for a perfectly sustainable world is a circular fashion economy. Items are recycled so that we don't need to keep making new products. Competitors that are successful at hitting people's needs for affordability, trendiness and sustainability that are on the market right now focus on getting the most wears out of items before being sent to landfill. But, this doesn't work for fast fashion items that are so low quality that they fall apart and can't be resold."
           quote="Consumers have been trained to think you can get anything at all times. Responsibility ultimately falls to the brands to create mindfully rather than to the consumer to consume less."
           quoteAttribution="Amanda McFee, Director and Fashion Designer of Evoshield at Wilson Sporting Goods"
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="solution"
           label="SOLUTION"
           heading="INTRODUCING BRIDG: A three part system for gathering feedback, placing orders and factory production."
           body="This gamified feedback service helps brands produce only what is desired by integrating a series of games directly into their websites. By understanding consumer demand, brands can cut down on unsold inventory and save money on production, leading to less clothing being made and sent to landfill."
-          list={[
-            'Interactive Game: An engaging tool for customers to vote on their favorite designs, giving brands real-time insights into consumer preferences.',
-            'Pre-Order Platform: A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.',
-            'Brand-Side Dashboard: A platform for businesses to see the analytics behind customer-facing games and make smart production decisions.',
+          equationImage={{ src: THESIS_IMAGES.equation, alt: 'Gather feedback, orders placed, garment production equals less waste to landfill' }}
+          listWithIcons={[
+            { iconSrc: THESIS_IMAGES.gatherFeedback, iconAlt: 'Gather feedback', title: 'Interactive Game', text: 'An engaging tool for customers to vote on their favorite designs, giving brands real-time insights into consumer preferences.' },
+            { iconSrc: THESIS_IMAGES.ordersPlaced, iconAlt: 'Orders placed as needed', title: 'Pre-Order Platform', text: 'A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.' },
+            { iconSrc: THESIS_IMAGES.garmentProduction, iconAlt: 'Garment production', title: 'Brand-Side Dashboard', text: 'A platform for businesses to see the analytics behind customer-facing games and make smart production decisions.' },
           ]}
-          images={[{ src: THESIS_HERO_IMAGE, alt: 'Bridg three-part system', caption: 'Gathering feedback, placing orders, factory production' }]}
+          images={[
+            { src: THESIS_IMAGES.game, alt: 'Interactive game for gathering feedback' },
+            { src: THESIS_IMAGES.platformHome, alt: 'Pre-order platform' },
+            { src: THESIS_IMAGES.brandDashboard, alt: 'Brand-side dashboard' },
+          ]}
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="existing-brand-integration"
           label="EXISTING BRAND INTEGRATION"
           heading="Bridg integrates seamlessly into brand websites through using a white label model."
-          body="All these models have the same content and information but change depending on existing brand language. White label branding allows Bridg to integrate seamlessly into different retail brands' ecosystems without disrupting their existing identity which makes adoption easier for brands. It also increases scalability for Bridg, since it can be adapted across multiple brands without needing to reinvent the core experience each time."
+          body="White label branding allows Bridg to integrate into different retail brands' ecosystems without disrupting their existing identity which makes adoption easier. It also increases scalability, since it can be adapted across multiple brands without needing to reinvent the core experience each time."
+          images={[{ src: THESIS_IMAGES.whiteLabelModel, alt: 'White label model: Lululemon, Ralph Lauren, and Urban Outfitters brand integrations', whiteBg: true }]}
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="user-testing-and-returning-to-research"
           label="USER TESTING AND RETURNING TO RESEARCH"
           heading="A pre-order model can work if customers are given incentive."
-          body="Since Bridg sells with pre-order, this means that users must wait a little longer for their items to get them. Traditional model: Items arrive at door in around 2–4 weeks. Bridg pre-order model: Items arrive at door in around 4–6 weeks. During user testing, a question that came up often was: In a world of instant gratification, are people really willing to wait for their items? I surveyed 24 young adult shoppers and found that they were! If given incentive."
+          body="Since Bridg sells with pre-order, this means that users must wait a little longer for their items to get them."
+          comparisonPairs={[
+            { src: THESIS_IMAGES.traditionalModel, alt: 'Traditional model delivery timeline', text: 'Traditional model: Items arrive at door in around 2–4 weeks.' },
+            { src: THESIS_IMAGES.preOrderModel, alt: 'Pre-order model delivery timeline', text: 'Bridg pre-order model: Items arrive at door in around 4–6 weeks.' },
+          ]}
+          body2={<>During user testing, a question that came up often was: <strong>In a world of instant gratification, are people really willing to wait for their items?</strong> I surveyed 24 young adult shoppers and found that they were! If given incentive.</>}
           list={[
             'items are exclusive',
             'items are made with consumer input',
@@ -227,120 +270,49 @@ const Thesis = ({ setCursorVariant }) => {
           listTitle="Bridg's Incentives"
         />
 
-        <ThesisSection
+        <CaseStudySection
+          id="impact"
           label="IMPACT"
           heading="Both brands and consumers benefit, and as a result, the environment as well."
           twoColumns={[
-            { title: 'Brands', items: ['reduces unsold inventory', 'saves money on production', 'come off as eco-conscious to public eye'] },
-            { title: 'Consumers', items: ['receives early access', 'personal connection to brand', 'feels sustainable'] },
+            { title: 'Brands', iconSrc: THESIS_IMAGES.brandsIcon, iconAlt: 'Brands', items: ['reduces unsold inventory', 'saves money on production', 'come off as eco-conscious to public eye'] },
+            { title: 'Consumers', iconSrc: THESIS_IMAGES.consumersIcon, iconAlt: 'Consumers', items: ['receives early access', 'personal connection to brand', 'feels sustainable'] },
           ]}
         />
 
-        <ThesisSection
+        <CaseStudySection
           id="final-outcome"
-          label="FINAL OUTCOME"
+          label="CONCLUSION"
           heading="Learning to own the process!"
           body="Tackling this project solo was my biggest design challenge yet. Over the course of six months, I learned how to manage my time, stay accountable, and keep momentum without external pressure. Meeting my own goals and holding myself to them became just as important as the final outcome. Here is an image from the big presentation day!"
-          images={[{ src: THESIS_HERO_IMAGE, alt: 'Thesis presentation day', caption: 'Big presentation day' }]}
+          images={[{ src: THESIS_IMAGES.finalOutcome, alt: 'Thesis presentation day' }]}
         />
 
-        <motion.section
-          className="thesis-footer-cta"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <p className="thesis-thanks">Thanks for visiting!</p>
-          <p className="thesis-email">
-            <a href="mailto:karen@kodera.us" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>karen@kodera.us</a>
-          </p>
-          <div className="thesis-other-cases">
-            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Work</Link>
-            <span className="thesis-cta-sep">·</span>
-            <Link to="/play" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Play</Link>
-            <span className="thesis-cta-sep">·</span>
-            <Link to="/about" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>About</Link>
-            <span className="thesis-cta-sep">·</span>
-            <a href="/karengpt" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>RESUME</a>
-          </div>
-          <p className="thesis-more-cases">
-            <Link to="/dsg" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Dick&apos;s Sporting Goods Case Study</Link>
-            {' · '}
-            <Link to="/" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>Back to Work</Link>
-          </p>
-        </motion.section>
-        </article>
-      </div>
+        <footer className="thesis-case-nav">
+          <Link
+            to="/"
+            className="thesis-case-nav-link thesis-case-nav-prev"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            <span className="thesis-case-nav-arrow" aria-hidden>←</span>
+            Previous case study
+          </Link>
+          <Link
+            to="/#work"
+            className="thesis-case-nav-link thesis-case-nav-next"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            Next case study
+            <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+          </Link>
+        </footer>
+      </article>
     </div>
+  </div>
   );
 };
 
-function ThesisSection({
-  id,
-  label,
-  heading,
-  body,
-  list,
-  listTitle,
-  quote,
-  quoteAttribution,
-  twoColumns,
-  images,
-}) {
-  return (
-    <motion.section
-      id={id}
-      className="thesis-section"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.4 }}
-    >
-      <span className="thesis-section-label">{label}</span>
-      <h2 className="thesis-section-heading">{heading}</h2>
-      {body && <p className="thesis-section-body">{body}</p>}
-      {images && images.length > 0 && (
-        <div className="thesis-section-images">
-          {images.map((img, i) => (
-            <figure key={i} className="thesis-figure">
-              <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
-              {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
-            </figure>
-          ))}
-        </div>
-      )}
-      {quote && (
-        <blockquote className="thesis-quote">
-          "{quote}"
-          {quoteAttribution && <cite>— {quoteAttribution}</cite>}
-        </blockquote>
-      )}
-      {list && (
-        <div className="thesis-list-wrap">
-          {listTitle && <h3 className="thesis-list-title">{listTitle}</h3>}
-          <ul className="thesis-list">
-            {list.map((item, i) => (
-              <li key={i}>{item}</li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {twoColumns && (
-        <div className="thesis-two-col">
-          {twoColumns.map((col, i) => (
-            <div key={i} className="thesis-col">
-              <h3 className="thesis-col-title">{col.title}</h3>
-              <ul>
-                {col.items.map((item, j) => (
-                  <li key={j}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      )}
-    </motion.section>
-  );
-}
 
 export default Thesis;
