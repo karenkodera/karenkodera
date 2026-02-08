@@ -95,6 +95,10 @@ const Thesis = ({ setCursorVariant }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <h1 className="thesis-section-label thesis-hero-title">Bridg</h1>
+          <p className="thesis-tagline">
+            A B2B2C feedback service to help retail brands produce only what customers really want and reduce overproduction as a result.
+          </p>
           <div className="thesis-hero-image-wrap">
             <img
               src={THESIS_HERO_IMAGE}
@@ -102,35 +106,39 @@ const Thesis = ({ setCursorVariant }) => {
               className="thesis-hero-image"
             />
           </div>
-          <h1 className="thesis-title">Bridg</h1>
-          <p className="thesis-tagline">
-            A B2B2C feedback service to help retail brands produce only what customers really want and reduce overproduction as a result.
-          </p>
-          <dl className="thesis-meta">
-            <div>
-              <dt>Responsibilities</dt>
-              <dd>Design Researcher, Product and Service Designer</dd>
-              <dd className="meta-sub">UX Research, Competitive Analysis, User testing, Wireframing, Prototyping, Business Strategy</dd>
+          <div className="thesis-hero-meta-row">
+            <div className="thesis-background-col">
+              <span className="thesis-section-label">BACKGROUND</span>
+              <p className="thesis-summary">
+                The Earth has suffered long enough from rampant clothing overproduction. Bridg transforms customer feedback into smarter production decisions. Through interactive mini games, Bridg helps brands produce only what customers want, minimizing unsold inventory, and keeping excess clothing out of landfills. The result? A more sustainable fashion industry, driven by conscious creation.
+              </p>
             </div>
-            <div>
-              <dt>Mentors</dt>
-              <dd>Jim Wicks, Amy Schwartz, Susan Curtis</dd>
+            <div className="thesis-meta-box">
+              <dl className="thesis-meta">
+                <div>
+                  <dt>Responsibilities</dt>
+                  <dd>Design Researcher, Product and Service Designer</dd>
+                  <dd className="meta-sub">UX Research, Competitive Analysis, User testing, Wireframing, Prototyping, Business Strategy</dd>
+                </div>
+                <div>
+                  <dt>Mentors</dt>
+                  <dd>Jim Wicks, Amy Schwartz, Susan Curtis</dd>
+                </div>
+                <div>
+                  <dt>Duration</dt>
+                  <dd>Sept 2024 – Mar 2025</dd>
+                </div>
+                <div>
+                  <dt>Tools</dt>
+                  <dd>Figma, Jitter</dd>
+                </div>
+              </dl>
             </div>
-            <div>
-              <dt>Duration</dt>
-              <dd>Sept 2024 – Mar 2025</dd>
-            </div>
-            <div>
-              <dt>Tools</dt>
-              <dd>Figma, Jitter</dd>
-            </div>
-          </dl>
-          <p className="thesis-summary">
-            The Earth has suffered long enough from rampant clothing overproduction. Bridg transforms customer feedback into smarter production decisions. Through interactive mini games, Bridg helps brands produce only what customers want, minimizing unsold inventory, and keeping excess clothing out of landfills. The result? A more sustainable fashion industry, driven by conscious creation.
-          </p>
+          </div>
         </motion.section>
 
         <ThesisSection
+          id="problem"
           label="PROBLEM"
           heading="The fashion industry is in the top 5 most polluting industries in the world..."
           body="Fast fashion items are created out of low quality materials called synthetic fibers. Not only do these pieces fall apart after 1–2 uses, synthetic fibers contain tiny pieces of plastic. When these fast fashion pieces are put through the wash, they release plastic into the water, which end up in our oceans."
@@ -145,6 +153,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="research-methods"
           label="RESEARCH METHODS"
           heading="I conducted primary and secondary research to understand my user."
           list={[
@@ -163,6 +172,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="question-to-answer"
           label="QUESTION TO ANSWER"
           heading="How might we encourage mindful clothing consumption while keeping in mind the average consumer's focus on trends and budget?"
         />
@@ -175,6 +185,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="problem-solving"
           label="PROBLEM SOLVING"
           heading="The only way to stop the flow of items into landfill is to stop the flow of product production. Therefore, the solution has to target brands not consumers."
           body="Ideally, what we want for a perfectly sustainable world is a circular fashion economy. Items are recycled so that we don't need to keep making new products. Competitors that are successful at hitting people's needs for affordability, trendiness and sustainability that are on the market right now focus on getting the most wears out of items before being sent to landfill. But, this doesn't work for fast fashion items that are so low quality that they fall apart and can't be resold."
@@ -196,6 +207,7 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <ThesisSection
+          id="existing-brand-integration"
           label="EXISTING BRAND INTEGRATION"
           heading="Bridg integrates seamlessly into brand websites through using a white label model."
           body="All these models have the same content and information but change depending on existing brand language. White label branding allows Bridg to integrate seamlessly into different retail brands' ecosystems without disrupting their existing identity which makes adoption easier for brands. It also increases scalability for Bridg, since it can be adapted across multiple brands without needing to reinvent the core experience each time."
