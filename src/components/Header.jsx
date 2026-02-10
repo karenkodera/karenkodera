@@ -155,7 +155,7 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
           ))}
           <span className="nav-separator">|</span>
           <a
-            href="https://docs.google.com/document/d/1Yw1XcOwP67Qe86NQzIS3ThK7LGm7OG64/edit?usp=sharing&ouid=117267947988990753909&rtpof=true&sd=true"
+            href="https://drive.google.com/file/d/1Y3znbP0TRkg7HWIuc0sueCin9TuKyWom/view?usp=sharing"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link resume-link"
@@ -213,7 +213,7 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
             ))}
             <span className="bubble-separator">|</span>
             <a
-              href="https://docs.google.com/document/d/1Yw1XcOwP67Qe86NQzIS3ThK7LGm7OG64/edit?usp=sharing&ouid=117267947988990753909&rtpof=true&sd=true"
+              href="https://drive.google.com/file/d/1Y3znbP0TRkg7HWIuc0sueCin9TuKyWom/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="bubble-compact-link bubble-compact-resume"

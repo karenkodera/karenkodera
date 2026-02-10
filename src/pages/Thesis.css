@@ -364,6 +364,11 @@
   background: none;
 }
 
+/* No border */
+.thesis-figure-no-border .thesis-image {
+  border: none;
+}
+
 .thesis-figcaption {
   font-size: 0.875rem;
   color: var(--text-secondary);

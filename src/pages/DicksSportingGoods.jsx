@@ -142,7 +142,7 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="PROBLEM"
             heading="BOPIS and SDD audits are two separate processes that happen at different times and intervals, but have the same basic function: to check on order storage. There is opportunity to make the structure more efficient and less redundant."
             body="First, I worked in-store alongside store associates and interviewed them to understand the audit process. I quickly realized that it was a repetitive process and combining the two into one would significantly save time for associates."
-            images={[{ src: auditDiagramImg, alt: 'Current audit process (separate SDD and BOPIS flows) vs new proposed single audit process' }]}
+            images={[{ src: auditDiagramImg, alt: 'Current audit process (separate SDD and BOPIS flows) vs new proposed single audit process', noBorder: true }]}
           />
 
           <CaseStudySection

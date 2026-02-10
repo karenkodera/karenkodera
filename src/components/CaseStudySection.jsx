@@ -70,7 +70,7 @@ export default function CaseStudySection({
       {images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && (
         <div className="thesis-section-images">
           {images.map((img, i) => (
-            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}`}>
+            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}`}>
               <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
               {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
             </figure>
