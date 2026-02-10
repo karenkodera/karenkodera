@@ -17,7 +17,7 @@ const projects = [
     title: 'Unlocking HSA/FSA capabilities in Grocery Checkout',
     subtitle: 'Kroger',
     image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
-    link: null,
+    link: '/hsa-fsa',
     tags: ['Shipped', '2026'],
     year: '2026',
   },

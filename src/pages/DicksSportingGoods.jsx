@@ -167,6 +167,7 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="SOLUTION"
             heading="INTRODUCING The Front of House Audit"
             body="An agnostic audit process that combines the BOPIS and SDD flows into one, saving time for store associates."
+            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true }]}
           />
 
           <CaseStudySection
