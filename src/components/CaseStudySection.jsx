@@ -17,32 +17,79 @@ export default function CaseStudySection({
   quoteAttribution,
   twoColumns,
   images,
+  textInBox,
+  video,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
+  const hasMediaRight = !!video;
+
+  const labelEl = <span className="thesis-section-label">{label}</span>;
+  const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>;
+  const bodyEl = body ? <p className="thesis-section-body">{body}</p> : null;
+
+  const twoColumnsEl = twoColumns && (
+    <div className="thesis-two-col">
+      {twoColumns.map((col, i) => (
+        <div key={i} className="thesis-col">
+          <div className="thesis-col-header">
+            {col.iconSrc && (
+              <img src={col.iconSrc} alt={col.iconAlt ?? col.title} className="thesis-col-icon" loading="lazy" />
+            )}
+            <h3 className="thesis-col-title">{col.title}</h3>
+          </div>
+          <ul>
+            {col.items.map((item, j) => (
+              <li key={j}>{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  );
 
   return (
     <motion.section
       id={id}
-      className={`thesis-section${titleLeftClass}${solutionClass}`}
+      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.4 }}
     >
-      <span className="thesis-section-label">{label}</span>
       {equationImage ? (
         <>
+          <span className="thesis-section-label">{label}</span>
           <h2 className="thesis-section-heading thesis-solution-heading">{heading}</h2>
           {body && <p className="thesis-section-body thesis-solution-body">{body}</p>}
           <figure className="thesis-figure thesis-figure-equation">
             <img src={equationImage.src} alt={equationImage.alt} className="thesis-image" loading="lazy" />
           </figure>
         </>
+      ) : video ? (
+        <>
+          <div className="thesis-section-content-box">
+            {labelEl}
+            {headingEl}
+            {twoColumnsEl}
+          </div>
+          <figure className="thesis-section-media">
+            <video src={video} controls className="thesis-video" playsInline>
+              Your browser does not support the video tag.
+            </video>
+          </figure>
+        </>
+      ) : textInBox ? (
+        <div className="thesis-section-text-box">
+          {labelEl}
+          {headingEl}
+          {bodyEl}
+        </div>
       ) : (
         <>
-          <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>
-          {body && <p className="thesis-section-body">{body}</p>}
+          {labelEl}
+          {headingEl}
+          {bodyEl}
         </>
       )}
       {comparisonPairs && comparisonPairs.length > 0 && (
@@ -70,7 +117,7 @@ export default function CaseStudySection({
       {images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && (
         <div className="thesis-section-images">
           {images.map((img, i) => (
-            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}`}>
+            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}`}>
               <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
               {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
             </figure>
@@ -153,25 +200,7 @@ export default function CaseStudySection({
           </ul>
         </div>
       )}
-      {twoColumns && (
-        <div className="thesis-two-col">
-          {twoColumns.map((col, i) => (
-            <div key={i} className="thesis-col">
-              <div className="thesis-col-header">
-                {col.iconSrc && (
-                  <img src={col.iconSrc} alt={col.iconAlt ?? col.title} className="thesis-col-icon" loading="lazy" />
-                )}
-                <h3 className="thesis-col-title">{col.title}</h3>
-              </div>
-              <ul>
-                {col.items.map((item, j) => (
-                  <li key={j}>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      )}
+      {twoColumns && !video && twoColumnsEl}
     </motion.section>
   );
 }

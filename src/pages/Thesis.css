@@ -370,6 +370,47 @@
   background: none;
 }
 
+/* Slightly smaller width (e.g. first audit diagram) */
+.thesis-figure-small {
+  width: 70%;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.thesis-figure-small .thesis-image {
+  width: 100%;
+}
+
+/* Gray box with rounded corners (e.g. Front of House Audit screenshot) */
+.thesis-figure-gray-box {
+  background: #d0d0d0;
+  border-radius: 12px;
+  padding: 12px;
+  overflow: hidden;
+}
+
+.thesis-figure-gray-box .thesis-image {
+  border-radius: 8px;
+  display: block;
+}
+
+/* Square gray box (solution section) */
+#solution.thesis-section .thesis-figure-gray-box {
+  aspect-ratio: 1;
+  width: 100%;
+  max-width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#solution.thesis-section .thesis-figure-gray-box .thesis-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .thesis-figcaption {
   font-size: 0.875rem;
   color: var(--text-secondary);
@@ -377,38 +418,45 @@
   line-height: 1.35;
 }
 
-/* Context section with image: text block left, photo right (e.g. Dick's Sporting Goods) */
-#context.thesis-section:has(.thesis-section-images) {
+/* Multibox: image in one box, text in second box — text flows with correct vertical spacing */
+.thesis-section-text-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.thesis-section-text-box .thesis-section-label {
+  margin-bottom: 4px;
+}
+
+.thesis-section-text-box .thesis-section-heading {
+  margin-bottom: 6px;
+}
+
+.thesis-section-text-box .thesis-section-body {
+  margin-bottom: 0;
+}
+
+/* Context section: text box left, image box right */
+#context.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
   display: grid;
-  grid-template-columns: 1fr 260px;
-  grid-template-rows: auto auto auto;
+  grid-template-columns: 1fr 200px;
+  grid-template-rows: 1fr;
   gap: 0 28px;
   align-items: start;
 }
 
-#context.thesis-section:has(.thesis-section-images) .thesis-section-label {
+#context.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box {
   grid-column: 1;
   grid-row: 1;
-  margin-bottom: 4px;
 }
 
-#context.thesis-section:has(.thesis-section-images) .thesis-section-heading {
-  grid-column: 1;
-  grid-row: 2;
-  margin-bottom: 6px;
-}
-
-#context.thesis-section:has(.thesis-section-images) .thesis-section-body {
-  grid-column: 1;
-  grid-row: 3;
-  margin-bottom: 0;
-}
-
-#context.thesis-section:has(.thesis-section-images) .thesis-section-images {
+#context.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
   grid-column: 2;
-  grid-row: 1 / -1;
+  grid-row: 1;
   margin: 0;
-  max-width: 260px;
+  max-width: 200px;
   align-self: start;
 }
 
@@ -421,39 +469,72 @@
   border-radius: 12px;
 }
 
-/* Solution section: image left, paragraph right (e.g. Dick's Front of House Audit) */
-#solution.thesis-section:has(.thesis-section-images) {
+/* Solution section: image box left, text box right */
+#solution.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
   display: grid;
   grid-template-columns: 280px 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: 1fr;
   gap: 0 28px;
-  align-items: start;
+  align-items: center;
 }
 
-#solution.thesis-section:has(.thesis-section-images) .thesis-section-images {
+#solution.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
   grid-column: 1;
-  grid-row: 1 / -1;
+  grid-row: 1;
   margin: 0;
   max-width: 280px;
   align-self: start;
 }
 
-#solution.thesis-section:has(.thesis-section-images) .thesis-section-label {
+#solution.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box {
   grid-column: 2;
   grid-row: 1;
+  align-self: center;
+}
+
+/* Section with text in one box, video on right (e.g. Change #1 Bin by Bin) */
+.thesis-section-media-right {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 0 28px;
+  align-items: start;
+}
+
+.thesis-section-media-right .thesis-section-content-box {
+  grid-column: 1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.thesis-section-media-right .thesis-section-content-box .thesis-section-label {
   margin-bottom: 4px;
 }
 
-#solution.thesis-section:has(.thesis-section-images) .thesis-section-heading {
-  grid-column: 2;
-  grid-row: 2;
+.thesis-section-media-right .thesis-section-content-box .thesis-section-heading {
   margin-bottom: 6px;
 }
 
-#solution.thesis-section:has(.thesis-section-images) .thesis-section-body {
+.thesis-section-media-right .thesis-section-content-box .thesis-two-col {
+  margin-top: 16px;
+}
+
+.thesis-section-media-right .thesis-section-media {
   grid-column: 2;
-  grid-row: 3;
-  margin-bottom: 0;
+  grid-row: 1;
+  margin: 0;
+  width: 100%;
+  max-width: 320px;
+  align-self: start;
+}
+
+.thesis-section-media-right .thesis-section-media .thesis-video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  background: #000;
 }
 
 #solution.thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-figure {
@@ -1012,35 +1093,47 @@
     grid-template-columns: 1fr;
   }
 
-  #context.thesis-section:has(.thesis-section-images) {
+  .thesis-section-media-right {
     grid-template-columns: 1fr;
   }
 
-  #context.thesis-section:has(.thesis-section-images) .thesis-section-body,
-  #context.thesis-section:has(.thesis-section-images) .thesis-section-images {
+  .thesis-section-media-right .thesis-section-content-box,
+  .thesis-section-media-right .thesis-section-media {
     grid-column: 1;
     grid-row: auto;
   }
 
-  #context.thesis-section:has(.thesis-section-images) .thesis-section-images {
+  .thesis-section-media-right .thesis-section-media {
+    max-width: 100%;
+    margin-top: 16px;
+  }
+
+  #context.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
+    grid-template-columns: 1fr;
+  }
+
+  #context.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box,
+  #context.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  #context.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
     max-width: 100%;
     margin-top: 20px;
   }
 
-  #solution.thesis-section:has(.thesis-section-images) {
+  #solution.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
     grid-template-columns: 1fr;
   }
 
-  #solution.thesis-section:has(.thesis-section-images) .thesis-section-label,
-  #solution.thesis-section:has(.thesis-section-images) .thesis-section-heading,
-  #solution.thesis-section:has(.thesis-section-images) .thesis-section-body {
+  #solution.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box,
+  #solution.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
     grid-column: 1;
     grid-row: auto;
   }
 
-  #solution.thesis-section:has(.thesis-section-images) .thesis-section-images {
-    grid-column: 1;
-    grid-row: auto;
+  #solution.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
     max-width: 100%;
     margin-top: 20px;
   }

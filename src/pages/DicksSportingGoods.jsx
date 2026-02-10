@@ -134,7 +134,8 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="CONTEXT"
             heading="An audit is a process for checking order accuracy and location integrity of inline orders packed and stored in-store."
             body="Store associates scan each package and remove canceled/aged orders to keep holding areas accurate. BOPIS (Buy online pickup in store) and SDD (Same day delivery) orders are kept in holding areas together at the front of the store."
-            images={[{ src: '/dsg/dsg-context-storage.png', alt: 'Store holding area with numbered bins for BOPIS and SDD orders' }]}
+            images={[{ src: '/dsg/dsg-context-storage.png', alt: 'Store holding area with numbered bins for BOPIS and SDD orders', smaller: true }]}
+            textInBox
           />
 
           <CaseStudySection
@@ -167,14 +168,31 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="SOLUTION"
             heading="INTRODUCING The Front of House Audit"
             body="An agnostic audit process that combines the BOPIS and SDD flows into one, saving time for store associates."
-            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true }]}
+            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true, grayBox: true }]}
+            textInBox
           />
 
           <CaseStudySection
             id="change-1"
             label="CHANGE #1"
             heading="BIN BY BIN SCANNING"
-            body="BEFORE: The original screens were list-heavy. The lack of hierarchy makes it difficult to understand information on page. AFTER: The orders have been broken down location by location to decrease lost orders. BEFORE: Store associates don't know to set aside orders unless they look at their screen and see the notification. AFTER: Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
+            video="/dsg/binbybinbefore.mp4"
+            twoColumns={[
+              {
+                title: 'BEFORE',
+                items: [
+                  'The original screens were list-heavy. The lack of hierarchy makes it difficult to understand information on page.',
+                  'Store associates don\'t know to set aside orders unless they look at their screen and see the notification.',
+                ],
+              },
+              {
+                title: 'AFTER',
+                items: [
+                  'The orders have been broken down location by location to decrease lost orders.',
+                  'Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders.',
+                ],
+              },
+            ]}
           />
 
           <CaseStudySection
@@ -188,7 +206,20 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             id="change-3"
             label="CHANGE #3"
             heading="FEEDBACK WHEN TASKS ARE COMPLETED"
-            body="BEFORE: Store associates have to manually submit audits requiring them to check their screens to see when orders have been audited. AFTER: Automated process allows store associates to quickly move through audits, saving time."
+            twoColumns={[
+              {
+                title: 'BEFORE',
+                items: [
+                  'Store associates have to manually submit audits requiring them to check their screens to see when orders have been audited.',
+                ],
+              },
+              {
+                title: 'AFTER',
+                items: [
+                  'Automated process allows store associates to quickly move through audits, saving time.',
+                ],
+              },
+            ]}
           />
 
           <CaseStudySection
