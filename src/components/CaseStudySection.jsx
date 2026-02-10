@@ -19,10 +19,24 @@ export default function CaseStudySection({
   images,
   textInBox,
   video,
+  videoAfter,
+  videoLabel,
+  videoBody,
+  videoAfterLabel,
+  videoAfterBody,
+  videoLeft,
+  videoLeftAfter,
+  videoLeftLabel,
+  videoLeftBody,
+  videoLeftAfterLabel,
+  videoLeftAfterBody,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
-  const hasMediaRight = !!video;
+  const hasMediaRight = !!(video || videoAfter);
+  const hasTwoVideos = !!(video && videoAfter);
+  const hasMediaLeft = !!(videoLeft || videoLeftAfter);
+  const hasTwoVideosLeft = !!(videoLeft && videoLeftAfter);
 
   const labelEl = <span className="thesis-section-label">{label}</span>;
   const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>;
@@ -51,7 +65,7 @@ export default function CaseStudySection({
   return (
     <motion.section
       id={id}
-      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}`}
+      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -66,18 +80,109 @@ export default function CaseStudySection({
             <img src={equationImage.src} alt={equationImage.alt} className="thesis-image" loading="lazy" />
           </figure>
         </>
-      ) : video ? (
+      ) : videoLeft || videoLeftAfter ? (
+        <>
+          <div className="thesis-section-media thesis-section-media-wrap">
+            {videoLeft && (
+              <figure className="thesis-section-media-item">
+                {(videoLeftLabel || videoLeftBody) && (
+                  <div className="thesis-video-caption">
+                    {videoLeftLabel && <span className="thesis-video-label">{videoLeftLabel}</span>}
+                    {videoLeftBody && <p className="thesis-video-body">{videoLeftBody}</p>}
+                  </div>
+                )}
+                <video
+                  src={videoLeft}
+                  className="thesis-video"
+                  playsInline
+                  muted
+                  loop
+                  autoPlay
+                  aria-label="Video plays automatically"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </figure>
+            )}
+            {videoLeftAfter && (
+              <figure className="thesis-section-media-item">
+                {(videoLeftAfterLabel || videoLeftAfterBody) && (
+                  <div className="thesis-video-caption">
+                    {videoLeftAfterLabel && <span className="thesis-video-label">{videoLeftAfterLabel}</span>}
+                    {videoLeftAfterBody && <p className="thesis-video-body">{videoLeftAfterBody}</p>}
+                  </div>
+                )}
+                <video
+                  src={videoLeftAfter}
+                  className="thesis-video"
+                  playsInline
+                  muted
+                  loop
+                  autoPlay
+                  aria-label="After video plays automatically"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </figure>
+            )}
+          </div>
+          <div className="thesis-section-content-box">
+            {labelEl}
+            {headingEl}
+            {bodyEl}
+          </div>
+        </>
+      ) : video || videoAfter ? (
         <>
           <div className="thesis-section-content-box">
             {labelEl}
             {headingEl}
             {twoColumnsEl}
           </div>
-          <figure className="thesis-section-media">
-            <video src={video} controls className="thesis-video" playsInline>
-              Your browser does not support the video tag.
-            </video>
-          </figure>
+          <div className="thesis-section-media thesis-section-media-wrap">
+            {video && (
+              <figure className="thesis-section-media-item">
+                {(videoLabel || videoBody) && (
+                  <div className="thesis-video-caption">
+                    {videoLabel && <span className="thesis-video-label">{videoLabel}</span>}
+                    {videoBody && <p className="thesis-video-body">{videoBody}</p>}
+                  </div>
+                )}
+                <video
+                  src={video}
+                  className="thesis-video"
+                  playsInline
+                  muted
+                  loop
+                  autoPlay
+                  aria-label="Before video plays automatically"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </figure>
+            )}
+            {videoAfter && (
+              <figure className="thesis-section-media-item">
+                {(videoAfterLabel || videoAfterBody) && (
+                  <div className="thesis-video-caption">
+                    {videoAfterLabel && <span className="thesis-video-label">{videoAfterLabel}</span>}
+                    {videoAfterBody && <p className="thesis-video-body">{videoAfterBody}</p>}
+                  </div>
+                )}
+                <video
+                  src={videoAfter}
+                  className="thesis-video"
+                  playsInline
+                  muted
+                  loop
+                  autoPlay
+                  aria-label="After video plays automatically"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </figure>
+            )}
+          </div>
         </>
       ) : textInBox ? (
         <div className="thesis-section-text-box">

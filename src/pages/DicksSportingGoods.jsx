@@ -177,22 +177,11 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="CHANGE #1"
             heading="BIN BY BIN SCANNING"
             video="/dsg/binbybinbefore.mp4"
-            twoColumns={[
-              {
-                title: 'BEFORE',
-                items: [
-                  'The original screens were list-heavy. The lack of hierarchy makes it difficult to understand information on page.',
-                  'Store associates don\'t know to set aside orders unless they look at their screen and see the notification.',
-                ],
-              },
-              {
-                title: 'AFTER',
-                items: [
-                  'The orders have been broken down location by location to decrease lost orders.',
-                  'Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders.',
-                ],
-              },
-            ]}
+            videoAfter="/dsg/binbybinafter.mp4"
+            videoLabel="BEFORE"
+            videoBody="Store associates don't know to set aside orders unless they look at their screen and see the notification."
+            videoAfterLabel="AFTER"
+            videoAfterBody="Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
           />
 
           <CaseStudySection
@@ -200,6 +189,12 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="CHANGE #2"
             heading="CLEAR AUDIT ORDER HIERARCHY"
             body="The orders have been restructured to show clear hierarchy and make the audit process easier to follow."
+            videoLeft="/dsg/clearauditorderbefore.mp4"
+            videoLeftAfter="/dsg/clearauditorderafter.mp4"
+            videoLeftLabel="BEFORE"
+            videoLeftBody="Teammates don't know to set aside orders unless they look at their screen and see the notification."
+            videoLeftAfterLabel="AFTER"
+            videoLeftAfterBody="Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
           />
 
           <CaseStudySection

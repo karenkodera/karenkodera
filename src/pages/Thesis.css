@@ -500,6 +500,10 @@
   align-items: start;
 }
 
+.thesis-section-media-right.thesis-section-two-videos {
+  grid-template-columns: 1fr minmax(0, 576px);
+}
+
 .thesis-section-media-right .thesis-section-content-box {
   grid-column: 1;
   grid-row: 1;
@@ -521,20 +525,126 @@
   margin-top: 16px;
 }
 
-.thesis-section-media-right .thesis-section-media {
+.thesis-section-media-right .thesis-section-media-wrap {
   grid-column: 2;
   grid-row: 1;
   margin: 0;
-  width: 100%;
-  max-width: 320px;
   align-self: start;
 }
 
-.thesis-section-media-right .thesis-section-media .thesis-video {
+.thesis-section-media-right .thesis-section-media-wrap .thesis-section-media-item {
+  margin: 0;
+  width: 100%;
+  max-width: 320px;
+}
+
+.thesis-section-media-right.thesis-section-two-videos .thesis-section-media-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  max-width: none;
+}
+
+.thesis-section-media-right.thesis-section-two-videos .thesis-section-media-wrap .thesis-section-media-item {
+  flex: 1;
+  min-width: 0;
+  max-width: 280px;
+}
+
+.thesis-section-media-right .thesis-section-media-wrap .thesis-video {
   width: 100%;
   display: block;
   border-radius: 12px;
   background: #000;
+  pointer-events: none; /* no pause/controls, plays like a GIF */
+}
+
+.thesis-video-caption {
+  margin-bottom: 8px;
+}
+
+.thesis-video-label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-color);
+  margin-bottom: 4px;
+}
+
+.thesis-video-body {
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Section with video on left, text in box on right (e.g. Change #2) */
+.thesis-section-media-left {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 0 28px;
+  align-items: start;
+}
+
+.thesis-section-media-left .thesis-section-media-wrap {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  align-self: start;
+  max-width: 320px;
+}
+
+.thesis-section-media-left .thesis-section-media-wrap .thesis-section-media-item {
+  margin: 0;
+  width: 100%;
+}
+
+.thesis-section-media-left .thesis-section-media-wrap .thesis-video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  background: #000;
+  pointer-events: none;
+}
+
+.thesis-section-media-left .thesis-section-content-box {
+  grid-column: 2;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  min-width: 0;
+}
+
+.thesis-section-media-left .thesis-section-content-box .thesis-section-label {
+  margin-bottom: 4px;
+}
+
+.thesis-section-media-left .thesis-section-content-box .thesis-section-heading {
+  margin-bottom: 6px;
+}
+
+.thesis-section-media-left .thesis-section-content-box .thesis-section-body {
+  margin-bottom: 0;
+}
+
+.thesis-section-media-left.thesis-section-two-videos-left {
+  grid-template-columns: minmax(0, 576px) 1fr;
+}
+
+.thesis-section-media-left.thesis-section-two-videos-left .thesis-section-media-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  max-width: none;
+}
+
+.thesis-section-media-left.thesis-section-two-videos-left .thesis-section-media-wrap .thesis-section-media-item {
+  flex: 1;
+  min-width: 0;
+  max-width: 280px;
 }
 
 #solution.thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-figure {
@@ -1098,14 +1208,47 @@
   }
 
   .thesis-section-media-right .thesis-section-content-box,
-  .thesis-section-media-right .thesis-section-media {
+  .thesis-section-media-right .thesis-section-media-wrap {
     grid-column: 1;
     grid-row: auto;
   }
 
-  .thesis-section-media-right .thesis-section-media {
+  .thesis-section-media-right .thesis-section-media-wrap {
     max-width: 100%;
     margin-top: 16px;
+    flex-direction: column;
+  }
+
+  .thesis-section-media-right.thesis-section-two-videos .thesis-section-media-wrap .thesis-section-media-item {
+    max-width: 100%;
+  }
+
+  .thesis-section-media-left {
+    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .thesis-section-media-left .thesis-section-media-wrap {
+    order: 2;
+    max-width: 100%;
+    margin-top: 16px;
+  }
+
+  .thesis-section-media-left .thesis-section-content-box {
+    order: 1;
+  }
+
+  .thesis-section-media-left.thesis-section-two-videos-left {
+    grid-template-columns: 1fr;
+  }
+
+  .thesis-section-media-left.thesis-section-two-videos-left .thesis-section-media-wrap {
+    flex-direction: column;
+  }
+
+  .thesis-section-media-left.thesis-section-two-videos-left .thesis-section-media-wrap .thesis-section-media-item {
+    max-width: 100%;
   }
 
   #context.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
