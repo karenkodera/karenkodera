@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
+import { get_case_study_for_path } from '../data/caseStudies';
 import auditDiagramImg from '../assets/dsg/dsg-audit-diagram.png';
 import stakeholderNeedsImg from '../assets/dsg/dsg-stakeholder-needs.png';
 import './Thesis.css';
@@ -188,7 +189,6 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             id="change-2"
             label="CHANGE #2"
             heading="CLEAR AUDIT ORDER HIERARCHY"
-            body="The orders have been restructured to show clear hierarchy and make the audit process easier to follow."
             videoLeft="/dsg/clearauditorderbefore.mp4"
             videoLeftAfter="/dsg/clearauditorderafter.mp4"
             videoLeftLabel="BEFORE"
@@ -228,11 +228,18 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
 
           <footer className="thesis-case-nav">
             <Link to="/kroger" className="thesis-case-nav-link thesis-case-nav-prev" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              <span className="thesis-case-nav-arrow" aria-hidden>←</span>
-              Previous case study
+              <div className="thesis-case-nav-content">
+                <span className="thesis-case-nav-arrow" aria-hidden>←</span>
+                <span className="thesis-case-nav-label">Previous case study</span>
+              </div>
+              {get_case_study_for_path('/kroger') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/kroger').subtitle}</span>
+              )}
             </Link>
             <Link to="/" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              Next case study
+              <span className="thesis-case-nav-label-wrap">
+                Next case study
+              </span>
               <span className="thesis-case-nav-arrow" aria-hidden>→</span>
             </Link>
           </footer>

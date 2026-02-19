@@ -2,7 +2,13 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
+import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
+
+const KROGER_IMAGES = {
+  researchMethods: '/kroger/research-methods.png',
+  rideAlong: '/kroger/ride-along.png',
+};
 
 const KROGER_NAV_SECTIONS = [
   { label: 'Learning About the Space', id: 'learning-about-the-space' },
@@ -134,6 +140,13 @@ const Kroger = ({ setCursorVariant }) => {
             id="learning-about-the-space"
             label="LEARNING ABOUT THE SPACE"
             heading="I started discovery by conducting research through…"
+            images={[
+              {
+                src: KROGER_IMAGES.researchMethods,
+                alt: 'Discovery research methods: a truck ride-along, 2 team workshops, and a driver survey',
+                flat: true,
+              },
+            ]}
           />
 
           <CaseStudySection
@@ -145,6 +158,12 @@ const Kroger = ({ setCursorVariant }) => {
               'HMW make destaging clearer so orders don’t get forgotten',
               'HMW make destaging customizable for driver preferences?',
               'HMW reduce paper usage in the delivery process?',
+            ]}
+            images={[
+              {
+                src: KROGER_IMAGES.rideAlong,
+                alt: 'Kroger delivery driver pulling a utility wagon from a branded delivery truck',
+              },
             ]}
           />
 
@@ -202,12 +221,22 @@ const Kroger = ({ setCursorVariant }) => {
 
           <footer className="thesis-case-nav">
             <Link to="/thesis" className="thesis-case-nav-link thesis-case-nav-prev" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              <span className="thesis-case-nav-arrow" aria-hidden>←</span>
-              Previous case study
+              <div className="thesis-case-nav-content">
+                <span className="thesis-case-nav-arrow" aria-hidden>←</span>
+                <span className="thesis-case-nav-label">Previous case study</span>
+              </div>
+              {get_case_study_for_path('/thesis') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/thesis').subtitle}</span>
+              )}
             </Link>
             <Link to="/dsg" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              Next case study
-              <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+              <div className="thesis-case-nav-content">
+                <span className="thesis-case-nav-label">Next case study</span>
+                <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+              </div>
+              {get_case_study_for_path('/dsg') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/dsg').subtitle}</span>
+              )}
             </Link>
           </footer>
         </article>

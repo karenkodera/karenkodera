@@ -43,6 +43,7 @@ export default function CaseStudySection({
   videoLeftBody,
   videoLeftAfterLabel,
   videoLeftAfterBody,
+  imageRight,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -50,6 +51,7 @@ export default function CaseStudySection({
   const hasTwoVideos = !!(video && videoAfter);
   const hasMediaLeft = !!(videoLeft || videoLeftAfter);
   const hasTwoVideosLeft = !!(videoLeft && videoLeftAfter);
+  const hasImageRight = !!(imageRight && imageRight.src);
 
   const labelEl = <span className="thesis-section-label">{label}</span>;
   const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>;
@@ -95,7 +97,7 @@ export default function CaseStudySection({
   return (
     <motion.section
       id={id}
-      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}`}
+      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}${hasImageRight ? ' thesis-section-image-right' : ''}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -110,15 +112,37 @@ export default function CaseStudySection({
             <img src={equationImage.src} alt={equationImage.alt} className="thesis-image" loading="lazy" />
           </figure>
         </>
+      ) : hasImageRight ? (
+        <>
+          {labelEl}
+          <div className="thesis-section-content-image-wrap">
+            <div className="thesis-section-content-image-left">
+              {headingEl}
+              {bodyEl}
+              {list && (
+                <div className="thesis-list-wrap">
+                  <ul className="thesis-list">
+                    {list.map((item, i) => (
+                      <li key={i}>{item}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+            <figure className="thesis-section-content-image-right">
+              <img src={imageRight.src} alt={imageRight.alt} className="thesis-image" loading="lazy" />
+            </figure>
+          </div>
+        </>
       ) : videoLeft || videoLeftAfter ? (
         <>
           <div className="thesis-section-title-wrap">
             {labelEl}
             {headingEl}
           </div>
-          <div className="thesis-section-media thesis-section-media-wrap">
+          <div className="thesis-before-after-row">
             {videoLeft && (
-              <figure className="thesis-section-media-item">
+              <div className="thesis-change-video-box">
                 {(videoLeftLabel || videoLeftBody) && (
                   <div className="thesis-video-caption">
                     {videoLeftLabel && <span className="thesis-video-label">{videoLeftLabel}</span>}
@@ -138,10 +162,10 @@ export default function CaseStudySection({
                     Your browser does not support the video tag.
                   </video>
                 </VideoInDevice>
-              </figure>
+              </div>
             )}
             {videoLeftAfter && (
-              <figure className="thesis-section-media-item">
+              <div className="thesis-change-video-box">
                 {(videoLeftAfterLabel || videoLeftAfterBody) && (
                   <div className="thesis-video-caption">
                     {videoLeftAfterLabel && <span className="thesis-video-label">{videoLeftAfterLabel}</span>}
@@ -161,23 +185,24 @@ export default function CaseStudySection({
                     Your browser does not support the video tag.
                   </video>
                 </VideoInDevice>
-              </figure>
+              </div>
             )}
           </div>
-          <div className="thesis-section-content-box">
-            {bodyEl}
-          </div>
+          {body && (
+            <div className="thesis-section-content-box">
+              {bodyEl}
+            </div>
+          )}
         </>
       ) : video || videoAfter ? (
         <>
           <div className="thesis-section-content-box">
             {labelEl}
             {headingEl}
-            {twoColumnsEl}
           </div>
-          <div className="thesis-section-media thesis-section-media-wrap">
+          <div className="thesis-before-after-row">
             {video && (
-              <figure className="thesis-section-media-item">
+              <div className="thesis-change-video-box">
                 {(videoLabel || videoBody) && (
                   <div className="thesis-video-caption">
                     {videoLabel && <span className="thesis-video-label">{videoLabel}</span>}
@@ -197,10 +222,10 @@ export default function CaseStudySection({
                     Your browser does not support the video tag.
                   </video>
                 </VideoInDevice>
-              </figure>
+              </div>
             )}
             {videoAfter && (
-              <figure className="thesis-section-media-item">
+              <div className="thesis-change-video-box">
                 {(videoAfterLabel || videoAfterBody) && (
                   <div className="thesis-video-caption">
                     {videoAfterLabel && <span className="thesis-video-label">{videoAfterLabel}</span>}
@@ -220,7 +245,7 @@ export default function CaseStudySection({
                     Your browser does not support the video tag.
                   </video>
                 </VideoInDevice>
-              </figure>
+              </div>
             )}
           </div>
         </>
@@ -345,7 +370,33 @@ export default function CaseStudySection({
           </ul>
         </div>
       )}
-      {twoColumns && !video && twoColumnsEl}
+      {twoColumns && !video && (twoColumns.some(col => col.video) ? (
+        <div className="thesis-before-after-row">
+          {twoColumns.map((col, i) => (
+            <div key={i} className="thesis-change-video-box">
+              <div className="thesis-video-caption">
+                <span className="thesis-video-label">{col.title}</span>
+                {col.items && col.items.length > 0 && (
+                  <p className="thesis-video-body">{col.items.join(' ')}</p>
+                )}
+              </div>
+              <VideoInDevice>
+                <video
+                  src={col.video}
+                  className="thesis-video"
+                  playsInline
+                  muted
+                  loop
+                  autoPlay
+                  aria-label={`${col.title} video plays automatically`}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </VideoInDevice>
+            </div>
+          ))}
+        </div>
+      ) : twoColumnsEl)}
     </motion.section>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
+import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
 // Local images saved from https://karenkodera.com/thesis (same order as on the page)
@@ -295,8 +296,10 @@ const Thesis = ({ setCursorVariant }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            <span className="thesis-case-nav-arrow" aria-hidden>←</span>
-            Previous case study
+            <div className="thesis-case-nav-content">
+              <span className="thesis-case-nav-arrow" aria-hidden>←</span>
+              <span className="thesis-case-nav-label">Previous case study</span>
+            </div>
           </Link>
           <Link
             to="/#work"
@@ -304,8 +307,13 @@ const Thesis = ({ setCursorVariant }) => {
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
           >
-            Next case study
-            <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+            <div className="thesis-case-nav-content">
+              <span className="thesis-case-nav-label">Next case study</span>
+              <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+            </div>
+            {get_case_study_for_path('/hsa-fsa') && (
+              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/hsa-fsa').subtitle}</span>
+            )}
           </Link>
         </footer>
       </article>
