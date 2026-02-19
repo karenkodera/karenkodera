@@ -1,5 +1,18 @@
 import { motion } from 'framer-motion';
 
+const ZEBRA_DEVICE_FRAME = '/dsg/zebra-device.png';
+
+function VideoInDevice({ children }) {
+  return (
+    <div className="thesis-video-device-wrap">
+      <div className="thesis-video-screen">
+        {children}
+      </div>
+      <img className="thesis-device-frame" src={ZEBRA_DEVICE_FRAME} alt="" role="presentation" />
+    </div>
+  );
+}
+
 export default function CaseStudySection({
   id,
   label,
@@ -57,6 +70,23 @@ export default function CaseStudySection({
               <li key={j}>{item}</li>
             ))}
           </ul>
+          {col.video && (
+            <figure className="thesis-col-video">
+              <VideoInDevice>
+                <video
+                  src={col.video}
+                  className="thesis-video"
+                  playsInline
+                  muted
+                  loop
+                  autoPlay
+                  aria-label={`${col.title} video plays automatically`}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </VideoInDevice>
+            </figure>
+          )}
         </div>
       ))}
     </div>
@@ -82,6 +112,10 @@ export default function CaseStudySection({
         </>
       ) : videoLeft || videoLeftAfter ? (
         <>
+          <div className="thesis-section-title-wrap">
+            {labelEl}
+            {headingEl}
+          </div>
           <div className="thesis-section-media thesis-section-media-wrap">
             {videoLeft && (
               <figure className="thesis-section-media-item">
@@ -91,17 +125,19 @@ export default function CaseStudySection({
                     {videoLeftBody && <p className="thesis-video-body">{videoLeftBody}</p>}
                   </div>
                 )}
-                <video
-                  src={videoLeft}
-                  className="thesis-video"
-                  playsInline
-                  muted
-                  loop
-                  autoPlay
-                  aria-label="Video plays automatically"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                <VideoInDevice>
+                  <video
+                    src={videoLeft}
+                    className="thesis-video"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                    aria-label="Video plays automatically"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </VideoInDevice>
               </figure>
             )}
             {videoLeftAfter && (
@@ -112,23 +148,23 @@ export default function CaseStudySection({
                     {videoLeftAfterBody && <p className="thesis-video-body">{videoLeftAfterBody}</p>}
                   </div>
                 )}
-                <video
-                  src={videoLeftAfter}
-                  className="thesis-video"
-                  playsInline
-                  muted
-                  loop
-                  autoPlay
-                  aria-label="After video plays automatically"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                <VideoInDevice>
+                  <video
+                    src={videoLeftAfter}
+                    className="thesis-video"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                    aria-label="After video plays automatically"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </VideoInDevice>
               </figure>
             )}
           </div>
           <div className="thesis-section-content-box">
-            {labelEl}
-            {headingEl}
             {bodyEl}
           </div>
         </>
@@ -148,17 +184,19 @@ export default function CaseStudySection({
                     {videoBody && <p className="thesis-video-body">{videoBody}</p>}
                   </div>
                 )}
-                <video
-                  src={video}
-                  className="thesis-video"
-                  playsInline
-                  muted
-                  loop
-                  autoPlay
-                  aria-label="Before video plays automatically"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                <VideoInDevice>
+                  <video
+                    src={video}
+                    className="thesis-video"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                    aria-label="Before video plays automatically"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </VideoInDevice>
               </figure>
             )}
             {videoAfter && (
@@ -169,17 +207,19 @@ export default function CaseStudySection({
                     {videoAfterBody && <p className="thesis-video-body">{videoAfterBody}</p>}
                   </div>
                 )}
-                <video
-                  src={videoAfter}
-                  className="thesis-video"
-                  playsInline
-                  muted
-                  loop
-                  autoPlay
-                  aria-label="After video plays automatically"
-                >
-                  Your browser does not support the video tag.
-                </video>
+                <VideoInDevice>
+                  <video
+                    src={videoAfter}
+                    className="thesis-video"
+                    playsInline
+                    muted
+                    loop
+                    autoPlay
+                    aria-label="After video plays automatically"
+                  >
+                    Your browser does not support the video tag.
+                  </video>
+                </VideoInDevice>
               </figure>
             )}
           </div>

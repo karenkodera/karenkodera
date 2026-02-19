@@ -207,12 +207,14 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
                 items: [
                   'Store associates have to manually submit audits requiring them to check their screens to see when orders have been audited.',
                 ],
+                video: '/dsg/feedbackbefore.mp4',
               },
               {
                 title: 'AFTER',
                 items: [
                   'Automated process allows store associates to quickly move through audits, saving time.',
                 ],
+                video: '/dsg/feedbackafter.mp4',
               },
             ]}
           />

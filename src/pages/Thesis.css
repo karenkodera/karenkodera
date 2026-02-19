@@ -492,16 +492,13 @@
   align-self: center;
 }
 
-/* Section with text in one box, video on right (e.g. Change #1 Bin by Bin) */
+/* Section with text in one box, video on right (e.g. Change #1 Bin by Bin) – title above */
 .thesis-section-media-right {
   display: grid;
-  grid-template-columns: 1fr 320px;
-  gap: 0 28px;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px 0;
   align-items: start;
-}
-
-.thesis-section-media-right.thesis-section-two-videos {
-  grid-template-columns: 1fr minmax(0, 576px);
 }
 
 .thesis-section-media-right .thesis-section-content-box {
@@ -518,7 +515,7 @@
 }
 
 .thesis-section-media-right .thesis-section-content-box .thesis-section-heading {
-  margin-bottom: 6px;
+  margin-bottom: 0;
 }
 
 .thesis-section-media-right .thesis-section-content-box .thesis-two-col {
@@ -526,10 +523,19 @@
 }
 
 .thesis-section-media-right .thesis-section-media-wrap {
-  grid-column: 2;
-  grid-row: 1;
+  grid-column: 1;
+  grid-row: 2;
   margin: 0;
   align-self: start;
+  display: flex;
+  flex-direction: row;
+  gap: 16px;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+.thesis-section-media-right.thesis-section-two-videos .thesis-section-media-wrap {
+  max-width: none;
 }
 
 .thesis-section-media-right .thesis-section-media-wrap .thesis-section-media-item {
@@ -538,17 +544,10 @@
   max-width: 320px;
 }
 
-.thesis-section-media-right.thesis-section-two-videos .thesis-section-media-wrap {
-  display: flex;
-  flex-direction: row;
-  gap: 16px;
-  max-width: none;
-}
-
 .thesis-section-media-right.thesis-section-two-videos .thesis-section-media-wrap .thesis-section-media-item {
-  flex: 1;
+  flex: 0 1 auto;
   min-width: 0;
-  max-width: 280px;
+  max-width: 300px;
 }
 
 .thesis-section-media-right .thesis-section-media-wrap .thesis-video {
@@ -580,20 +579,37 @@
   margin: 0;
 }
 
-/* Section with video on left, text in box on right (e.g. Change #2) */
+/* Section with video on left, text on right (e.g. Change #2) – title above */
 .thesis-section-media-left {
   display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 0 28px;
+  grid-template-columns: minmax(0, 576px) 1fr;
+  grid-template-rows: auto auto;
+  gap: 20px 28px;
   align-items: start;
+}
+
+.thesis-section-media-left .thesis-section-title-wrap {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.thesis-section-media-left .thesis-section-title-wrap .thesis-section-label {
+  margin-bottom: 4px;
+}
+
+.thesis-section-media-left .thesis-section-title-wrap .thesis-section-heading {
+  margin-bottom: 0;
 }
 
 .thesis-section-media-left .thesis-section-media-wrap {
   grid-column: 1;
-  grid-row: 1;
+  grid-row: 2;
   margin: 0;
   align-self: start;
-  max-width: 320px;
+  max-width: none;
 }
 
 .thesis-section-media-left .thesis-section-media-wrap .thesis-section-media-item {
@@ -611,19 +627,11 @@
 
 .thesis-section-media-left .thesis-section-content-box {
   grid-column: 2;
-  grid-row: 1;
+  grid-row: 2;
   display: flex;
   flex-direction: column;
   gap: 0;
   min-width: 0;
-}
-
-.thesis-section-media-left .thesis-section-content-box .thesis-section-label {
-  margin-bottom: 4px;
-}
-
-.thesis-section-media-left .thesis-section-content-box .thesis-section-heading {
-  margin-bottom: 6px;
 }
 
 .thesis-section-media-left .thesis-section-content-box .thesis-section-body {
@@ -1076,6 +1084,57 @@
   color: var(--text-color);
 }
 
+.thesis-col-video {
+  margin: 12px 0 0;
+  width: 100%;
+}
+
+.thesis-col-video .thesis-video {
+  width: 100%;
+  display: block;
+  border-radius: 12px;
+  background: #000;
+  pointer-events: none;
+}
+
+/* Zebra device frame overlay: video appears inside device screen */
+.thesis-video-device-wrap {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.thesis-video-device-wrap .thesis-video-screen {
+  position: absolute;
+  top: 11%;
+  left: 4%;
+  right: 4%;
+  bottom: 14%;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.thesis-video-device-wrap .thesis-video-screen .thesis-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 0;
+}
+
+.thesis-video-device-wrap .thesis-device-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .thesis-case-nav {
   display: flex;
   justify-content: space-between;
@@ -1227,6 +1286,10 @@
     grid-template-columns: 1fr;
     display: flex;
     flex-direction: column;
+  }
+
+  .thesis-section-media-left .thesis-section-title-wrap {
+    order: 0;
   }
 
   .thesis-section-media-left .thesis-section-media-wrap {
