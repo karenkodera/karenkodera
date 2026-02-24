@@ -51,7 +51,7 @@ const Footer = ({ setCursorVariant }) => {
               className="heart"
               animate={{ scale: [1, 1.2, 1] }}
               transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1.5 }}
-            >♥</motion.span> in Chicago
+            >♥</motion.span> in Cursor
           </span>
 
           <motion.button

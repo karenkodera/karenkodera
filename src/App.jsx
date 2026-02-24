@@ -12,11 +12,30 @@ import Play from './pages/Play';
 import About from './pages/About';
 import './App.css';
 
+const THEME_STORAGE_KEY = 'karenkodera-theme';
+
+function getInitialTheme() {
+  try {
+    const stored = localStorage.getItem(THEME_STORAGE_KEY);
+    if (stored === 'dark' || stored === 'light') return stored;
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
+  } catch (_) {}
+  return 'light';
+}
+
 function AppContent() {
   const location = useLocation();
   const [cursorVariant, setCursorVariant] = useState('default');
   const [hoveredElement, setHoveredElement] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
+  const [theme, setTheme] = useState(getInitialTheme);
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    try {
+      localStorage.setItem(THEME_STORAGE_KEY, theme);
+    } catch (_) {}
+  }, [theme]);
 
   // Reset cursor to dot when navigating (e.g. after clicking a case study)
   useEffect(() => {
@@ -44,7 +63,7 @@ function AppContent() {
       <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} hoveredElement={hoveredElement} />
       <main>
         <Routes>
-          <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
+          <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
           <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
           <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
           <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />

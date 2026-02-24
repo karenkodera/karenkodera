@@ -291,7 +291,7 @@ const Thesis = ({ setCursorVariant }) => {
 
         <footer className="thesis-case-nav">
           <Link
-            to="/"
+            to="/dsg"
             className="thesis-case-nav-link thesis-case-nav-prev"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -300,6 +300,9 @@ const Thesis = ({ setCursorVariant }) => {
               <span className="thesis-case-nav-arrow" aria-hidden>←</span>
               <span className="thesis-case-nav-label">Previous case study</span>
             </div>
+            {get_case_study_for_path('/dsg') && (
+              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/dsg').subtitle}</span>
+            )}
           </Link>
           <Link
             to="/#work"

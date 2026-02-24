@@ -38,8 +38,7 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
       className="project-card"
       variants={cardVariants}
       initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, margin: "-30px" }}
+      animate="visible"
     >
       <CardWrapper
         {...cardProps}

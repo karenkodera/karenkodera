@@ -8,6 +8,7 @@ import './Thesis.css';
 const KROGER_IMAGES = {
   researchMethods: '/kroger/research-methods.png',
   rideAlong: '/kroger/ride-along.png',
+  workshop: '/kroger/workshop.png',
 };
 
 const KROGER_NAV_SECTIONS = [
@@ -143,8 +144,9 @@ const Kroger = ({ setCursorVariant }) => {
             images={[
               {
                 src: KROGER_IMAGES.researchMethods,
-                alt: 'Discovery research methods: a truck ride-along, 2 team workshops, and a driver survey',
+                alt: 'Research methods: truck ride-along, team workshops, driver survey',
                 flat: true,
+                whiteBg: true,
               },
             ]}
           />
@@ -159,12 +161,10 @@ const Kroger = ({ setCursorVariant }) => {
               'HMW make destaging customizable for driver preferences?',
               'HMW reduce paper usage in the delivery process?',
             ]}
-            images={[
-              {
-                src: KROGER_IMAGES.rideAlong,
-                alt: 'Kroger delivery driver pulling a utility wagon from a branded delivery truck',
-              },
-            ]}
+            imageRight={{
+              src: KROGER_IMAGES.rideAlong,
+              alt: 'Kroger delivery driver with wagon',
+            }}
           />
 
           <CaseStudySection
@@ -172,6 +172,10 @@ const Kroger = ({ setCursorVariant }) => {
             label="PROBLEM FINDING WORKSHOP"
             heading="I narrowed down by facilitating a problem-finding workshop."
             body="I led the team including product managers and engineers through a series of activities to narrow down on a feasible and impactful problem. During this meeting, the team expressed interest in pursuing idea 3: Reducing paper usage in the delivery process. They felt this project was both important and feasible for a 10 week project."
+            imageLeft={{
+              src: KROGER_IMAGES.workshop,
+              alt: 'Problem prioritization matrix: potential difficulty vs potential importance',
+            }}
           />
 
           <CaseStudySection

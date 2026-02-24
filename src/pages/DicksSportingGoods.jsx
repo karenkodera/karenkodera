@@ -13,9 +13,6 @@ const DSG_NAV_SECTIONS = [
   { label: 'Understanding Business Needs', id: 'understanding-business-needs' },
   { label: 'Usability Testing', id: 'usability-testing' },
   { label: 'Solution', id: 'solution' },
-  { label: 'Change #1', id: 'change-1' },
-  { label: 'Change #2', id: 'change-2' },
-  { label: 'Change #3', id: 'change-3' },
   { label: 'Conclusion', id: 'conclusion' },
 ];
 
@@ -152,14 +149,14 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="UNDERSTANDING BUSINESS NEEDS"
             heading="I interviewed stakeholders to understand their expectations in audit."
             body="I talked to leaders on eComm, Loss Prevention, Athlete Order Management and Store Ops teams. Stakeholders were excited since creating a quicker audit process would mean store associates would have time for other tasks such as interacting with consumers, Athletes, leading to higher profits for the company."
-            images={[{ src: stakeholderNeedsImg, alt: 'Stakeholder needs: straightforward fast audit, address canceled orders quickly, easy communication with stores', whiteBg: true }]}
+            images={[{ src: stakeholderNeedsImg, alt: 'Stakeholder needs: straightforward fast audit, address canceled orders quickly, easy communication with stores', whiteBg: true, grayBox: true }]}
           />
 
           <CaseStudySection
             id="usability-testing"
             label="USABILITY TESTING"
             heading="I designed my first wireframes based off these goals and then traveled with my team to conduct usability testing in stores."
-            body="I went to Atlanta, Columbus and Pittsburgh, hitting 3–4 stores in each location. I learned that the current process was outdated. I noticed different workarounds being used at stores that lead me to make changes to the design. The designs were primal and there was opportunity to show hierarchy and give feedback to store associates to make the app easier for new store associates."
+            body="I went to Atlanta, Columbus and Pittsburgh, hitting 3–4 stores in each location. I learned that the current process was outdated. I noticed different workarounds being used at stores that lead me to make changes to the design."
             quote="The audit process is complicated to explain to new store associates when they first join."
             quoteAttribution="Pittsburgh store associate"
           />
@@ -171,6 +168,7 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             body="An agnostic audit process that combines the BOPIS and SDD flows into one, saving time for store associates."
             images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true, grayBox: true }]}
             textInBox
+            solutionBox
           />
 
           <CaseStudySection
@@ -236,11 +234,14 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
                 <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/kroger').subtitle}</span>
               )}
             </Link>
-            <Link to="/" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-              <span className="thesis-case-nav-label-wrap">
-                Next case study
-              </span>
-              <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+            <Link to="/thesis" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <div className="thesis-case-nav-content">
+                <span className="thesis-case-nav-label">Next case study</span>
+                <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+              </div>
+              {get_case_study_for_path('/thesis') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/thesis').subtitle}</span>
+              )}
             </Link>
           </footer>
         </article>

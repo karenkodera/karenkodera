@@ -77,8 +77,6 @@
   transition: transform 0.2s ease;
 }
 
-/* Spin is driven by Framer Motion in Hero.jsx for smooth stop on leave */
-
 .karengpt-icon svg {
   width: 14px;
   height: 14px;

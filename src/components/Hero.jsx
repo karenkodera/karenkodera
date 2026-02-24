@@ -2,7 +2,7 @@ import { motion, useMotionValue, animate } from 'framer-motion';
 import { useCallback, useRef } from 'react';
 import './Hero.css';
 
-const Hero = ({ setCursorVariant, handleCursorChange }) => {
+const Hero = ({ setCursorVariant, handleCursorChange, theme, setTheme }) => {
   const rotation = useMotionValue(0);
   const isHoveredRef = useRef(false);
   const spinStopRef = useRef(null);
@@ -101,6 +101,22 @@ const Hero = ({ setCursorVariant, handleCursorChange }) => {
         </motion.p>
 
         <motion.div className="hero-actions" variants={itemVariants}>
+          {setTheme && (
+            <button
+              type="button"
+              className="theme-switch"
+              onClick={() => setTheme((t) => (t === 'light' ? 'dark' : 'light'))}
+              onMouseEnter={() => setCursorVariant('hover')}
+              onMouseLeave={() => setCursorVariant('default')}
+              aria-label={theme === 'light' ? 'Switch to dark mode' : 'Switch to light mode'}
+            >
+              <span className="theme-switch-track">
+                <span className="theme-switch-thumb" data-theme={theme} />
+                <span className="theme-switch-icon theme-switch-sun" aria-hidden>☀️</span>
+                <span className="theme-switch-icon theme-switch-moon" aria-hidden>🌙</span>
+              </span>
+            </button>
+          )}
           <motion.a
             href="/karengpt"
             className="karengpt-btn"

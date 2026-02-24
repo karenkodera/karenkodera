@@ -144,6 +144,11 @@
   padding: 24px 40px 80px 24px;
 }
 
+/* Kroger (and any page with Field Research): use full width of main content area */
+.thesis-article:has(#field-research) {
+  max-width: 100%;
+}
+
 .thesis-hero {
   margin-bottom: 24px;
 }
@@ -393,12 +398,14 @@
 /* Full width, white background, no border */
 .thesis-figure-white-bg {
   background: #fff;
+  padding: 20px;
+  border-radius: 8px;
 }
 
 .thesis-figure-white-bg .thesis-image {
   border: none;
   border-radius: 0;
-  background: none;
+  background: #fff;
 }
 
 /* No border */
@@ -430,6 +437,18 @@
 .thesis-figure-gray-box .thesis-image {
   border-radius: 8px;
   display: block;
+}
+
+/* Stakeholder needs: light gray box and image background (not white) */
+#understanding-business-needs.thesis-section .thesis-figure-gray-box,
+#understanding-business-needs.thesis-section .thesis-figure-white-bg {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+}
+
+#understanding-business-needs.thesis-section .thesis-figure-gray-box .thesis-image,
+#understanding-business-needs.thesis-section .thesis-figure-white-bg .thesis-image {
+  background: var(--hover-bg);
 }
 
 /* Square gray box (solution section) */
@@ -475,58 +494,62 @@
   margin-bottom: 0;
 }
 
-/* Context section: text box left, image box right */
+/* Context section: gray box with text left, image right */
 #context.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
   display: grid;
-  grid-template-columns: 1fr 200px;
-  grid-template-rows: 1fr;
-  gap: 0 28px;
-  align-items: start;
+  grid-template-columns: 1fr auto;
+  gap: 24px 32px;
+  align-items: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 16px 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
 }
 
 #context.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box {
+  min-width: 0;
   grid-column: 1;
-  grid-row: 1;
 }
 
 #context.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
-  grid-column: 2;
-  grid-row: 1;
   margin: 0;
   max-width: 200px;
-  align-self: start;
+  grid-column: 2;
 }
 
 #context.thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-figure {
   width: 100%;
+  max-width: 200px;
 }
 
 #context.thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-image {
   width: 100%;
+  max-width: 200px;
   border-radius: 12px;
 }
 
-/* Solution section: image box left, text box right */
-#solution.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
+/* Solution section: text + image inside one gray box (text left, image right) */
+.thesis-solution-box {
   display: grid;
-  grid-template-columns: 280px 1fr;
-  grid-template-rows: 1fr;
+  grid-template-columns: 1fr 280px;
   gap: 0 28px;
   align-items: center;
+  margin-top: 12px;
 }
 
-#solution.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
+.thesis-solution-box .thesis-section-text-box {
   grid-column: 1;
-  grid-row: 1;
+  align-self: center;
+}
+
+.thesis-solution-box .thesis-section-images {
+  grid-column: 2;
   margin: 0;
   max-width: 280px;
   align-self: start;
-}
-
-#solution.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box {
-  grid-column: 2;
-  grid-row: 1;
-  align-self: center;
 }
 
 /* Section with text in one box, video on right (e.g. Change #1 Bin by Bin) – title above */
@@ -796,45 +819,63 @@
   justify-content: flex-end;
 }
 
-/* Kroger Field Research (HMW): text on left, ride-along image on right */
-#field-research.thesis-section {
-  display: grid;
-  grid-template-columns: minmax(0, 1.25fr) 1.75fr;
-  grid-template-rows: auto auto auto auto auto;
-  column-gap: 24px;
-  row-gap: 0;
-  align-items: start;
-}
-
-#field-research .thesis-section-label {
-  grid-column: 1 / -1;
-}
-
-#field-research .thesis-section-heading {
-  grid-column: 1;
-  grid-row: 2;
-  margin: 0;
-  padding: 0;
-  max-width: 100%;
-}
-
-#field-research .thesis-section-body {
-  grid-column: 1;
-  grid-row: 3;
-}
-
-#field-research .thesis-section-images {
-  grid-column: 2;
-  grid-row: 2 / 6;
-  margin: 0;
+/* Section with image on right (e.g. Kroger Field Research HMW) */
+.thesis-section-image-right .thesis-section-content-image-wrap {
   display: flex;
-  justify-content: flex-end;
-  align-self: start;
+  gap: 32px;
+  align-items: flex-start;
+  margin-top: 8px;
 }
 
-#field-research .thesis-list-wrap {
-  grid-column: 1;
-  grid-row: 4;
+.thesis-section-content-image-left {
+  flex: 1.25;
+  min-width: 0;
+}
+
+/* Consistent spacing inside the text column (left for image-right, right for image-left) */
+.thesis-section-image-right .thesis-section-content-image-left,
+.thesis-section-image-left .thesis-section-content-image-right {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.thesis-section-image-right .thesis-section-content-image-left .thesis-section-heading,
+.thesis-section-image-left .thesis-section-content-image-right .thesis-section-heading {
+  margin-bottom: 0;
+}
+
+.thesis-section-image-right .thesis-section-content-image-left .thesis-section-body,
+.thesis-section-image-left .thesis-section-content-image-right .thesis-section-body {
+  margin-bottom: 0;
+}
+
+.thesis-section-image-right .thesis-section-content-image-left .thesis-list-wrap,
+.thesis-section-image-left .thesis-section-content-image-right .thesis-list-wrap {
+  margin-top: 0;
+}
+
+.thesis-section-content-image-right {
+  flex: 1.75;
+  min-width: 0;
+}
+
+.thesis-section-content-image-right .thesis-image {
+  width: 100%;
+  display: block;
+}
+
+/* Section with image on left (e.g. Kroger Problem Finding Workshop) */
+.thesis-section-image-left .thesis-section-content-image-wrap {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  margin-top: 0;
+}
+
+.thesis-section-image-left .thesis-section-content-image-left .thesis-image {
+  width: 100%;
+  display: block;
 }
 
 /* Solution: title full width, body, then equation centered and larger */
@@ -1141,10 +1182,14 @@
 .thesis-video-device-wrap {
   position: relative;
   display: block;
-  width: 100%;
-  aspect-ratio: 9 / 16;
-  max-width: 300px;
+  width: 220px;
+  height: 443px;
+  min-height: 443px;
+  max-width: 100%;
   margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
 .thesis-video-device-wrap .thesis-video-screen {
@@ -1160,7 +1205,7 @@
 .thesis-video-device-wrap .thesis-video-screen .thesis-video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   border-radius: 0;
   transform: scale(0.9);
@@ -1172,6 +1217,7 @@
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: fill;
   pointer-events: none;
   z-index: 1;
 }
@@ -1240,16 +1286,9 @@
   font-weight: 400;
   color: var(--text-secondary, #666);
   transition: color 0.2s ease;
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.thesis-case-nav-prev .thesis-case-nav-meta-subtitle {
-  padding-left: 16px;
 }
 
 .thesis-case-nav-next .thesis-case-nav-meta-subtitle {
-  padding-right: 16px;
   text-align: right;
 }
 
@@ -1399,21 +1438,21 @@
   }
 
   #context.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
-    max-width: 100%;
-    margin-top: 20px;
+    max-width: 200px;
+    margin-top: 16px;
   }
 
-  #solution.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) {
+  #solution .thesis-solution-box {
     grid-template-columns: 1fr;
   }
 
-  #solution.thesis-section:has(.thesis-section-text-box) .thesis-section-text-box,
-  #solution.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
+  #solution .thesis-solution-box .thesis-section-text-box,
+  #solution .thesis-solution-box .thesis-section-images {
     grid-column: 1;
     grid-row: auto;
   }
 
-  #solution.thesis-section:has(.thesis-section-text-box) .thesis-section-images {
+  #solution .thesis-solution-box .thesis-section-images {
     max-width: 100%;
     margin-top: 20px;
   }
@@ -1459,21 +1498,16 @@
     grid-row: auto;
   }
 
-  #field-research.thesis-section {
-    grid-template-columns: 1fr;
+  .thesis-section-image-right .thesis-section-content-image-wrap,
+  .thesis-section-image-left .thesis-section-content-image-wrap {
+    flex-direction: column;
+    gap: 20px;
   }
 
-  #field-research .thesis-section-label,
-  #field-research .thesis-section-heading,
-  #field-research .thesis-section-body,
-  #field-research .thesis-section-images,
-  #field-research .thesis-list-wrap {
-    grid-column: 1;
-    grid-row: auto;
-  }
-
-  #field-research .thesis-section-images {
-    margin-top: 20px;
+  .thesis-section-content-image-left,
+  .thesis-section-content-image-right {
+    flex: 1;
+    width: 100%;
   }
 
   .thesis-comparison-pairs {

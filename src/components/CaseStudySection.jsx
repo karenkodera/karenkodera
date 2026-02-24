@@ -44,6 +44,8 @@ export default function CaseStudySection({
   videoLeftAfterLabel,
   videoLeftAfterBody,
   imageRight,
+  imageLeft,
+  solutionBox,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -52,6 +54,7 @@ export default function CaseStudySection({
   const hasMediaLeft = !!(videoLeft || videoLeftAfter);
   const hasTwoVideosLeft = !!(videoLeft && videoLeftAfter);
   const hasImageRight = !!(imageRight && imageRight.src);
+  const hasImageLeft = !!(imageLeft && imageLeft.src);
 
   const labelEl = <span className="thesis-section-label">{label}</span>;
   const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>;
@@ -97,7 +100,7 @@ export default function CaseStudySection({
   return (
     <motion.section
       id={id}
-      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}${hasImageRight ? ' thesis-section-image-right' : ''}`}
+      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}${hasImageRight ? ' thesis-section-image-right' : ''}${hasImageLeft ? ' thesis-section-image-left' : ''}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -132,6 +135,19 @@ export default function CaseStudySection({
             <figure className="thesis-section-content-image-right">
               <img src={imageRight.src} alt={imageRight.alt} className="thesis-image" loading="lazy" />
             </figure>
+          </div>
+        </>
+      ) : hasImageLeft ? (
+        <>
+          {labelEl}
+          <div className="thesis-section-content-image-wrap">
+            <figure className="thesis-section-content-image-left">
+              <img src={imageLeft.src} alt={imageLeft.alt} className="thesis-image" loading="lazy" />
+            </figure>
+            <div className="thesis-section-content-image-right">
+              {headingEl}
+              {bodyEl}
+            </div>
           </div>
         </>
       ) : videoLeft || videoLeftAfter ? (
@@ -249,6 +265,38 @@ export default function CaseStudySection({
             )}
           </div>
         </>
+      ) : textInBox && images && images.length > 0 && solutionBox ? (
+        <div className="thesis-solution-box thesis-change-video-box">
+          <div className="thesis-section-text-box">
+            {labelEl}
+            {headingEl}
+            {bodyEl}
+          </div>
+          <div className="thesis-section-images">
+            {images.map((img, i) => (
+              <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}`}>
+                <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
+                {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </div>
+      ) : textInBox && images && images.length > 0 ? (
+        <>
+          <div className="thesis-section-text-box">
+            {labelEl}
+            {headingEl}
+            {bodyEl}
+          </div>
+          <div className="thesis-section-images">
+            {images.map((img, i) => (
+              <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}`}>
+                <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
+                {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
+              </figure>
+            ))}
+          </div>
+        </>
       ) : textInBox ? (
         <div className="thesis-section-text-box">
           {labelEl}
@@ -284,7 +332,7 @@ export default function CaseStudySection({
         </div>
       )}
       {body2 && <p className="thesis-section-body">{body2}</p>}
-      {images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && (
+      {images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && !(textInBox && images.length > 0) && (
         <div className="thesis-section-images">
           {images.map((img, i) => (
             <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}`}>
@@ -355,7 +403,7 @@ export default function CaseStudySection({
           ))}
         </div>
       )}
-      {list && (
+      {list && !hasImageRight && (
         <div className="thesis-list-wrap">
           {listTitle && (
             <div className="thesis-list-title-section">

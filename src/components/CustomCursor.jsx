@@ -96,7 +96,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
           mass: isNavDotVariant ? 0.6 : 0.8,
         }}
         style={{
-          backgroundColor: '#191919',
+          backgroundColor: 'var(--text-color)',
           borderRadius: '50%',
         }}
       />

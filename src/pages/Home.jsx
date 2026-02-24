@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Hero from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
 import './Home.css';
@@ -41,10 +42,14 @@ const projects = [
   },
 ];
 
-const Home = ({ setCursorVariant, handleCursorChange }) => {
+const Home = ({ setCursorVariant, handleCursorChange, theme, setTheme }) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div className="home">
-      <Hero setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />
+      <Hero setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />
       
       <section className="projects-section" id="work">
         <div className="projects-grid">
