@@ -132,7 +132,7 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="CONTEXT"
             heading="An audit is a process for checking order accuracy and location integrity of inline orders packed and stored in-store."
             body="Store associates scan each package and remove canceled/aged orders to keep holding areas accurate. BOPIS (Buy online pickup in store) and SDD (Same day delivery) orders are kept in holding areas together at the front of the store."
-            images={[{ src: '/dsg/dsg-context-storage.png', alt: 'Store holding area with numbered bins for BOPIS and SDD orders', smaller: true }]}
+            images={[{ src: '/dsg/dsg-context-storage.png', alt: 'Store holding area with numbered bins for BOPIS and SDD orders', smaller: true, caption: 'Package Storage Room with Alphabetical Boxes' }]}
             textInBox
           />
 

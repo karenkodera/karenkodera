@@ -6,7 +6,10 @@ import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
 const HSA_FSA_NAV_SECTIONS = [
+  { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
+  { label: 'Design Requirements', id: 'design-requirements' },
+  { label: 'Business Goals', id: 'business-goals' },
   { label: 'Solution', id: 'solution' },
   { label: 'Conclusion', id: 'conclusion' },
 ];
@@ -107,7 +110,7 @@ const HsaFsa = ({ setCursorVariant }) => {
                 <dl className="thesis-meta">
                   <div>
                     <dt>Team</dt>
-                    <dd>Adria Griffin, Angelene Langeslay, Diana Mosley</dd>
+                    <dd>Adria Griffin (PM), Angelene Langeslay (PD), Diana Mosley (PM)</dd>
                   </div>
                   <div>
                     <dt>Tools</dt>
@@ -123,10 +126,47 @@ const HsaFsa = ({ setCursorVariant }) => {
           </motion.section>
 
           <CaseStudySection
+            id="context"
+            label="CONTEXT"
+            heading="What are HSA and FSA cards?"
+            body="HSA and FSA cards are linked to tax-advantaged accounts that can be used to buy medications, personal health care products, vision and dental items, etc."
+          />
+
+          <CaseStudySection
             id="problem"
             label="PROBLEM"
             heading="Currently, HSA and FSA cards are not supported for online transactions."
             body="This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage. Furthermore, customers struggle with identifying eligible items online and lack the ability to allocate specific items to different benefit cards during a single online checkout. This complexity leads to confusion, abandoned carts, and a suboptimal online shopping experience."
+            images={[
+              {
+                src: '/hsafsa/comp-analysis.png',
+                alt: 'Competitive analysis matrix comparing Amazon, CVS, Target, Walgreens, and Walmart across Benefit Overview, FSA, and HSA e-commerce experience',
+                caption: 'Competitive analysis showed that Kroger was at a disadvantage without online HSA/FSA support, a gap that key competitors had already addressed.',
+              },
+            ]}
+          />
+
+          <CaseStudySection
+            id="design-requirements"
+            label="DESIGN REQUIREMENTS"
+            heading="Competitive analysis helped determine a set of requirements for the designs."
+            list={[
+              'Product and search optimization',
+              'Eligible dollar amount',
+              'Split payment',
+              'Managing cards',
+            ]}
+          />
+
+          <CaseStudySection
+            id="business-goals"
+            label="BUSINESS GOALS"
+            heading="Business Goals"
+            list={[
+              'Improve customer satisfaction by reducing friction in purchasing eligible items',
+              'Drive $71M in incremental sales over four years (eComm $21M)',
+              'Leverage opportunity with 26.5% of Kroger households holding HSA/FSA cards (70% HSA, 29% FSA)',
+            ]}
           />
 
           <CaseStudySection

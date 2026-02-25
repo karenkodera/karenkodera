@@ -164,6 +164,7 @@ const Kroger = ({ setCursorVariant }) => {
             imageRight={{
               src: KROGER_IMAGES.rideAlong,
               alt: 'Kroger delivery driver with wagon',
+              caption: 'Ride-along Day with Kroger Delivery Drivers',
             }}
           />
 
@@ -175,6 +176,7 @@ const Kroger = ({ setCursorVariant }) => {
             imageLeft={{
               src: KROGER_IMAGES.workshop,
               alt: 'Problem prioritization matrix: potential difficulty vs potential importance',
+              caption: 'Difficulty vs. Importance Exercise from Workshop',
             }}
           />
 

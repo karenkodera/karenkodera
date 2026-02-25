@@ -134,6 +134,9 @@ export default function CaseStudySection({
             </div>
             <figure className="thesis-section-content-image-right">
               <img src={imageRight.src} alt={imageRight.alt} className="thesis-image" loading="lazy" />
+              {imageRight.caption && (
+                <figcaption className="thesis-figcaption">{imageRight.caption}</figcaption>
+              )}
             </figure>
           </div>
         </>
@@ -143,6 +146,9 @@ export default function CaseStudySection({
           <div className="thesis-section-content-image-wrap">
             <figure className="thesis-section-content-image-left">
               <img src={imageLeft.src} alt={imageLeft.alt} className="thesis-image" loading="lazy" />
+              {imageLeft.caption && (
+                <figcaption className="thesis-figcaption">{imageLeft.caption}</figcaption>
+              )}
             </figure>
             <div className="thesis-section-content-image-right">
               {headingEl}

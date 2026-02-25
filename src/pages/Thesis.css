@@ -355,6 +355,19 @@
   border: 1px solid var(--border-color);
 }
 
+/* Problem section image: no border/stroke (e.g. HSA/FSA comp analysis) */
+#problem .thesis-figure .thesis-image {
+  border: none;
+  background: transparent;
+}
+
+/* Keep comp analysis at native resolution so it doesn’t scale up and look blurry */
+#problem .thesis-figure {
+  max-width: 1438px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .thesis-figure-flat {
   background: #fff;
   width: 62%;
@@ -468,8 +481,8 @@
 }
 
 .thesis-figcaption {
-  font-size: 0.875rem;
-  color: var(--text-secondary);
+  font-size: 0.75rem;
+  color: #888;
   margin-top: 6px;
   line-height: 1.35;
 }
