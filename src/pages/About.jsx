@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import DottedGridBackground from '../components/DottedGridBackground';
 import './About.css';
 
 const About = ({ setCursorVariant }) => {
@@ -8,6 +9,7 @@ const About = ({ setCursorVariant }) => {
 
   return (
     <div className="about-page" id="aboutme">
+      <DottedGridBackground />
       <motion.section
         className="about-bio-section"
         initial={{ opacity: 0, y: 20 }}

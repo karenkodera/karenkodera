@@ -351,7 +351,7 @@
   display: block;
   border-radius: 12px;
   overflow: hidden;
-  background: var(--hover-bg);
+  background: transparent;
   border: 1px solid var(--border-color);
 }
 
@@ -359,6 +359,7 @@
 #problem .thesis-figure .thesis-image {
   border: none;
   background: transparent;
+  border-radius: 0;
 }
 
 /* Keep comp analysis at native resolution so it doesn’t scale up and look blurry */
@@ -366,6 +367,34 @@
   max-width: 1438px;
   margin-left: auto;
   margin-right: auto;
+  background: #fff;
+}
+
+/* Design requirements: pair each bullet with its image, images at ~50% (1.5x previous), no border/background */
+#design-requirements .thesis-list-with-images-item .thesis-figure {
+  max-width: 75%;
+  width: 75%;
+  background: #fff;
+}
+
+#design-requirements .thesis-list-with-images-item .thesis-figure .thesis-image {
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-radius: 0;
+}
+
+#design-requirements .thesis-list-with-images-text {
+  color: #000;
+}
+
+[data-theme="dark"] #design-requirements .thesis-list-with-images-text {
+  color: var(--text-color);
+}
+
+[data-theme="dark"] #problem .thesis-figure,
+[data-theme="dark"] #design-requirements .thesis-list-with-images-item .thesis-figure {
+  background: var(--bg-color);
 }
 
 .thesis-figure-flat {
@@ -378,7 +407,7 @@
 .thesis-figure-flat .thesis-image {
   border-radius: 0;
   border: none;
-  background: #fff;
+  background: transparent;
 }
 
 /* Small inline image: no border, no background */
@@ -418,7 +447,42 @@
 .thesis-figure-white-bg .thesis-image {
   border: none;
   border-radius: 0;
-  background: #fff;
+  background: transparent;
+}
+
+/* Concept development wireframes: no rounded corners */
+#concept-development .thesis-figure-white-bg {
+  border-radius: 0;
+}
+
+#concept-development .thesis-figure-white-bg .thesis-image {
+  border-radius: 0;
+}
+
+/* HSA/FSA: force white behind images so PNG transparency shows white (override any other rules) */
+#problem .thesis-section-images,
+#problem .thesis-figure,
+#design-requirements .thesis-list-with-images-item .thesis-figure,
+#concept-development .thesis-section-images,
+#concept-development .thesis-figure-white-bg {
+  background: #fff !important;
+}
+
+#problem .thesis-figure .thesis-image,
+#problem .thesis-section-images .thesis-image,
+#design-requirements .thesis-list-with-images-item .thesis-figure .thesis-image,
+#concept-development .thesis-figure-white-bg .thesis-image,
+#concept-development .thesis-section-images .thesis-image {
+  background: transparent !important;
+  background-color: transparent !important;
+}
+
+[data-theme="dark"] #problem .thesis-section-images,
+[data-theme="dark"] #problem .thesis-figure,
+[data-theme="dark"] #design-requirements .thesis-list-with-images-item .thesis-figure,
+[data-theme="dark"] #concept-development .thesis-section-images,
+[data-theme="dark"] #concept-development .thesis-figure-white-bg {
+  background: var(--bg-color) !important;
 }
 
 /* No border */

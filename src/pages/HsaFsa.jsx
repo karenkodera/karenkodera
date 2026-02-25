@@ -9,6 +9,7 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
   { label: 'Design Requirements', id: 'design-requirements' },
+  { label: 'Concept Development', id: 'concept-development' },
   { label: 'Business Goals', id: 'business-goals' },
   { label: 'Solution', id: 'solution' },
   { label: 'Conclusion', id: 'conclusion' },
@@ -150,11 +151,24 @@ const HsaFsa = ({ setCursorVariant }) => {
             id="design-requirements"
             label="DESIGN REQUIREMENTS"
             heading="Competitive analysis helped determine a set of requirements for the designs."
-            list={[
-              'Product and search optimization',
-              'Eligible dollar amount',
-              'Split payment',
-              'Managing cards',
+            listWithImages={[
+              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Product and search optimization: add clear filters for eligible products and consistently flag eligible items with visual tags or icons on product cards and detail pages' },
+              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Eligible dollar amount' },
+              { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Split payment' },
+              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Managing cards' },
+            ]}
+          />
+
+          <CaseStudySection
+            id="concept-development"
+            label="CONCEPT DEVELOPMENT"
+            heading="Guided by these requirements, we moved into concept development, ideating and creating wireframes to align the team around a shared direction."
+            images={[
+              {
+                src: '/hsafsa/concept-wireframes.png',
+                alt: 'Checkout and payment wireframes: cart with FSA/HSA items, payment method selection, FSA/HSA card add, split payment, and order confirmation',
+                whiteBg: true,
+              },
             ]}
           />
 

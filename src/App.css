@@ -45,6 +45,41 @@ main {
   z-index: 1;
 }
 
+/* Light dot grid (Home & About only), darker where mouse hovers */
+.dotted-grid-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.dotted-grid-bg-base,
+.dotted-grid-bg-hover {
+  position: absolute;
+  inset: 0;
+  background-size: 20px 20px;
+}
+
+.dotted-grid-bg-base {
+  background-image: radial-gradient(circle, #e8e8e8 1px, transparent 1px);
+}
+
+.dotted-grid-bg-hover {
+  background-image: radial-gradient(circle, #777 1px, transparent 1px);
+  mask-size: 100% 100%;
+  mask-position: 0 0;
+  -webkit-mask-size: 100% 100%;
+  -webkit-mask-position: 0 0;
+}
+
+[data-theme="dark"] .dotted-grid-bg-base {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.06) 1px, transparent 1px);
+}
+
+[data-theme="dark"] .dotted-grid-bg-hover {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.4) 1px, transparent 1px);
+}
+
 a {
   color: inherit;
   text-decoration: none;

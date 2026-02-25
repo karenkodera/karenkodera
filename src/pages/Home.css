@@ -1,6 +1,13 @@
 .home {
   min-height: 100vh;
-  background: var(--bg-color);
+  background: transparent;
+  position: relative;
+}
+
+.home .hero,
+.home .projects-section {
+  position: relative;
+  z-index: 1;
 }
 
 .projects-section {

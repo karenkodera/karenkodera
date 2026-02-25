@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Hero from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
+import DottedGridBackground from '../components/DottedGridBackground';
 import './Home.css';
 
 const projects = [
@@ -49,6 +50,7 @@ const Home = ({ setCursorVariant, handleCursorChange, theme, setTheme }) => {
 
   return (
     <div className="home">
+      <DottedGridBackground />
       <Hero setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />
       
       <section className="projects-section" id="work">
