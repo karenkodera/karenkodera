@@ -9,7 +9,7 @@ export const CASE_STUDIES_BY_PATH = {
   },
   '/hsa-fsa': {
     title: 'Unlocking HSA/FSA capabilities in Grocery Checkout',
-    subtitle: 'Kroger',
+    subtitle: 'Kroger Product Design',
   },
   '/kroger': {
     title: 'Reducing Paper in Grocery Delivery',

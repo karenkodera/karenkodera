@@ -91,8 +91,8 @@ const HsaFsa = ({ setCursorVariant }) => {
             </p>
             <div className="thesis-hero-image-wrap">
               <img
-                src="https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg"
-                alt="Kroger grocery checkout"
+                src="/hsafsa/cover.png"
+                alt="Kroger checkout and payment selection with HSA/FSA card options on web and mobile"
                 className="thesis-hero-image"
               />
             </div>
@@ -125,8 +125,8 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="Customers face significant friction when purchasing eligible health and food items online."
-            body="Currently, HSA, FSA, and Food/OTC benefit cards are not supported for online transactions. This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage. Furthermore, customers struggle with identifying eligible items online and lack the ability to allocate specific items to different benefit cards during a single online checkout. This complexity leads to confusion, abandoned carts, and a suboptimal online shopping experience."
+            heading="Currently, HSA and FSA cards are not supported for online transactions."
+            body="This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage. Furthermore, customers struggle with identifying eligible items online and lack the ability to allocate specific items to different benefit cards during a single online checkout. This complexity leads to confusion, abandoned carts, and a suboptimal online shopping experience."
           />
 
           <CaseStudySection

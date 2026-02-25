@@ -6,21 +6,21 @@ import './Home.css';
 const projects = [
   {
     id: 1,
+    title: 'Unlocking HSA/FSA capabilities in Grocery Checkout',
+    subtitle: 'Kroger Product Design',
+    image: '/hsafsa/cover.png',
+    link: '/hsa-fsa',
+    tags: ['Shipped', '2026'],
+    year: '2026',
+  },
+  {
+    id: 2,
     title: 'Minimizing Overproduction in Fashion Retail',
     subtitle: "Northwestern Design Master's Thesis",
     image: '/thesis/thesis-hero.png',
     link: '/thesis',
     tags: ['Concept', '2025'],
     year: '2025',
-  },
-  {
-    id: 2,
-    title: 'Unlocking HSA/FSA capabilities in Grocery Checkout',
-    subtitle: 'Kroger',
-    image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
-    link: '/hsa-fsa',
-    tags: ['Shipped', '2026'],
-    year: '2026',
   },
   {
     id: 3,
