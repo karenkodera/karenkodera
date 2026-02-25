@@ -6,8 +6,6 @@ import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
 const HSA_FSA_NAV_SECTIONS = [
-  { label: 'Background', id: 'background' },
-  { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
   { label: 'Solution', id: 'solution' },
   { label: 'Conclusion', id: 'conclusion' },
@@ -102,22 +100,22 @@ const HsaFsa = ({ setCursorVariant }) => {
               <div className="thesis-background-col">
                 <span className="thesis-section-label">SUMMARY</span>
                 <p className="thesis-summary">
-                  Add a brief summary of the HSA/FSA grocery checkout project here.
+                  As a product designer on Kroger's Shop and Order team, I led the design of HSA/FSA payment integration within Wallet, introducing a new card type and split-payment functionality to support health-related purchases. The work required balancing competitive parity, regulatory constraints, backend feasibility, and checkout clarity.
                 </p>
               </div>
               <div className="thesis-meta-box">
                 <dl className="thesis-meta">
                   <div>
-                    <dt>Responsibilities</dt>
-                    <dd>Product Designer</dd>
+                    <dt>Team</dt>
+                    <dd>Adria Griffin, Angelene Langeslay, Diana Mosley</dd>
                   </div>
                   <div>
                     <dt>Tools</dt>
-                    <dd>Figma</dd>
+                    <dd>Dovetail, Figma, Mural, Jira</dd>
                   </div>
                   <div>
                     <dt>Duration</dt>
-                    <dd>2026</dd>
+                    <dd>May 2025 – Feb 2026</dd>
                   </div>
                 </dl>
               </div>
@@ -125,24 +123,10 @@ const HsaFsa = ({ setCursorVariant }) => {
           </motion.section>
 
           <CaseStudySection
-            id="background"
-            label="BACKGROUND"
-            heading="Background"
-            body="Add background about the project and your role here."
-          />
-
-          <CaseStudySection
-            id="context"
-            label="CONTEXT"
-            heading="Context"
-            body="Add context about HSA/FSA in grocery checkout and why it matters here."
-          />
-
-          <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="Problem"
-            body="Add the problem you addressed with this project here."
+            heading="Customers face significant friction when purchasing eligible health and food items online."
+            body="Currently, HSA, FSA, and Food/OTC benefit cards are not supported for online transactions. This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage. Furthermore, customers struggle with identifying eligible items online and lack the ability to allocate specific items to different benefit cards during a single online checkout. This complexity leads to confusion, abandoned carts, and a suboptimal online shopping experience."
           />
 
           <CaseStudySection

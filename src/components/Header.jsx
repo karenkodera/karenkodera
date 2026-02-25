@@ -88,7 +88,6 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
 
   const navItems = [
     { path: '/', label: 'work' },
-    { path: '/play', label: 'play' },
     { path: '/about', label: 'about' },
   ];
 
