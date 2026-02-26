@@ -1,7 +1,6 @@
 .thesis-page {
   min-height: 100vh;
   padding-top: 100px;
-  background: var(--bg-color);
   display: flex;
 }
 
@@ -10,7 +9,6 @@
   flex: 0 0 200px;
   width: 200px;
   padding: 24px 16px 24px 24px;
-  background: var(--bg-color);
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -385,11 +383,12 @@
 }
 
 #design-requirements .thesis-list-with-images-text {
-  color: #000;
+  font-size: 0.75rem;
+  color: #888;
 }
 
 [data-theme="dark"] #design-requirements .thesis-list-with-images-text {
-  color: var(--text-color);
+  color: #888;
 }
 
 [data-theme="dark"] #problem .thesis-figure,
@@ -450,9 +449,14 @@
   background: transparent;
 }
 
-/* Concept development wireframes: no rounded corners */
+/* Concept development wireframes: no rounded corners, tight spacing */
+#concept-development .thesis-section-images {
+  margin-top: 8px;
+}
+
 #concept-development .thesis-figure-white-bg {
   border-radius: 0;
+  padding: 0;
 }
 
 #concept-development .thesis-figure-white-bg .thesis-image {
@@ -462,10 +466,14 @@
 /* HSA/FSA: force white behind images so PNG transparency shows white (override any other rules) */
 #problem .thesis-section-images,
 #problem .thesis-figure,
-#design-requirements .thesis-list-with-images-item .thesis-figure,
+#design-requirements .thesis-list-with-images-item .thesis-figure {
+  background: #fff !important;
+}
+
+/* Concept development wireframes: fully transparent so PNG blends with page */
 #concept-development .thesis-section-images,
 #concept-development .thesis-figure-white-bg {
-  background: #fff !important;
+  background: transparent !important;
 }
 
 #problem .thesis-figure .thesis-image,
@@ -479,9 +487,7 @@
 
 [data-theme="dark"] #problem .thesis-section-images,
 [data-theme="dark"] #problem .thesis-figure,
-[data-theme="dark"] #design-requirements .thesis-list-with-images-item .thesis-figure,
-[data-theme="dark"] #concept-development .thesis-section-images,
-[data-theme="dark"] #concept-development .thesis-figure-white-bg {
+[data-theme="dark"] #design-requirements .thesis-list-with-images-item .thesis-figure {
   background: var(--bg-color) !important;
 }
 

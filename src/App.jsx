@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import DottedGridBackground from './components/DottedGridBackground';
 import Home from './pages/Home';
 import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
@@ -59,6 +60,7 @@ function AppContent() {
 
   return (
     <div className="app">
+      <DottedGridBackground />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
       <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} hoveredElement={hoveredElement} />
       <main>

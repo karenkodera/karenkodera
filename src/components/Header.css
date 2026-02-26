@@ -8,8 +8,7 @@
   align-items: center;
   padding: 20px 40px;
   z-index: 100;
-  background: color-mix(in srgb, var(--bg-color) 92%, transparent);
-  backdrop-filter: blur(10px);
+  background: transparent;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -26,8 +25,7 @@
   margin: 0 auto;
   width: fit-content;
   z-index: 100;
-  background: color-mix(in srgb, var(--bg-color) 95%, transparent);
-  backdrop-filter: blur(20px);
+  background: transparent;
   border-radius: 50px;
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--border-color);
