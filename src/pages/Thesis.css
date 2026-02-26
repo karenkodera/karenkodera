@@ -387,6 +387,10 @@
   color: #888;
 }
 
+#design-requirements .thesis-list-with-images-title {
+  color: var(--text-color);
+}
+
 [data-theme="dark"] #design-requirements .thesis-list-with-images-text {
   color: #888;
 }
@@ -1160,6 +1164,11 @@
   margin: 0;
   width: 100%;
   box-sizing: border-box;
+}
+
+.thesis-list-with-images-title {
+  color: var(--text-color);
+  font-weight: 600;
 }
 
 /* Research Methods: image subtitles smaller and black */

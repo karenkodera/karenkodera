@@ -396,7 +396,20 @@ export default function CaseStudySection({
                 <img src={item.src} alt={item.alt} className="thesis-image" loading="lazy" />
               </figure>
               <div>
-                <p className="thesis-list-with-images-text">{item.text}</p>
+                <p className="thesis-list-with-images-text">
+                  {(() => {
+                    const colonIdx = item.text.indexOf(':');
+                    if (colonIdx === -1) return item.text;
+                    const title = item.text.substring(0, colonIdx + 1);
+                    const desc = item.text.substring(colonIdx + 1).trim();
+                    return (
+                      <>
+                        <span className="thesis-list-with-images-title">{title}</span>
+                        {desc && <> {desc}</>}
+                      </>
+                    );
+                  })()}
+                </p>
                 {item.bullets && item.bullets.length > 0 && (
                   <ul className="thesis-list-with-images-bullets">
                     {item.bullets.map((bullet, j) => (
