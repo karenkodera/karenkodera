@@ -154,10 +154,10 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="DESIGN REQUIREMENTS"
             heading="Competitive analysis helped determine a set of design and business requirements for the designs."
             listWithImages={[
-              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Product and search optimization: Add clear filters for eligible products and consistently flag eligible items with visual tags or icons on product cards and detail pages' },
-              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Eligible dollar amount: Automatically show the eligible FSA/HSA amount at checkout, suggest the saved card when applicable, and provide clear error messages.' },
-              { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Split payment: Enable flexible split-payment options with clear guidance, intuitive language, and visibility only when eligible items are present. Clearly show allowed payment method combinations and amounts charged to each.' },
-              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Managing cards: Ensure HSA/FSA card options are clearly visible at checkout and improve card management by clearly identifying saved FSA/HSA cards.' },
+              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Product and search optimization: Add filters for eligible products and flag eligible items with visual tags.' },
+              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Eligible dollar amount: Automatically show the FSA/HSA amount at checkout and suggest the saved card when applicable.' },
+              { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Split payment: Enable split-payment options when eligible items are present.' },
+              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Managing cards: Ensure HSA/FSA card options are clearly visible at checkout and wallet.' },
             ]}
           />
 
