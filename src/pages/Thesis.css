@@ -942,14 +942,47 @@
   margin-top: 0;
 }
 
+/* Usability testing image: 50% width, no border */
+#usability-testing .thesis-section-content-image-wrap {
+  align-items: stretch;
+}
+
+#usability-testing .thesis-section-content-image-right {
+  flex: 0 0 25%;
+  max-width: 25%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#usability-testing .thesis-section-content-image-right .thesis-image {
+  border: none;
+  background: transparent;
+}
+
+#usability-testing .thesis-section-content-image-left {
+  flex: 1.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Design review image inside left column */
+#usability-testing .thesis-figure-in-left {
+  margin-top: auto;
+  max-width: 100%;
+  width: 100%;
+}
+
+#usability-testing .thesis-figure-in-left .thesis-image {
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+}
+
 .thesis-section-content-image-right {
   flex: 1.75;
   min-width: 0;
-}
-
-.thesis-section-content-image-right .thesis-image {
-  width: 100%;
-  display: block;
 }
 
 /* Section with image on left (e.g. Kroger Problem Finding Workshop) */

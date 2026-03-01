@@ -45,6 +45,7 @@ export default function CaseStudySection({
   videoLeftAfterBody,
   imageRight,
   imageLeft,
+  imageInLeft,
   solutionBox,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
@@ -117,9 +118,9 @@ export default function CaseStudySection({
         </>
       ) : hasImageRight ? (
         <>
-          {labelEl}
           <div className="thesis-section-content-image-wrap">
             <div className="thesis-section-content-image-left">
+              {labelEl}
               {headingEl}
               {bodyEl}
               {list && (
@@ -130,6 +131,12 @@ export default function CaseStudySection({
                     ))}
                   </ul>
                 </div>
+              )}
+              {imageInLeft && (
+                <figure className="thesis-figure thesis-figure-in-left">
+                  <img src={imageInLeft.src} alt={imageInLeft.alt} className="thesis-image" loading="lazy" />
+                  {imageInLeft.caption && <figcaption className="thesis-figcaption">{imageInLeft.caption}</figcaption>}
+                </figure>
               )}
             </div>
             <figure className="thesis-section-content-image-right">
@@ -142,7 +149,6 @@ export default function CaseStudySection({
         </>
       ) : hasImageLeft ? (
         <>
-          {labelEl}
           <div className="thesis-section-content-image-wrap">
             <figure className="thesis-section-content-image-left">
               <img src={imageLeft.src} alt={imageLeft.alt} className="thesis-image" loading="lazy" />
@@ -151,6 +157,7 @@ export default function CaseStudySection({
               )}
             </figure>
             <div className="thesis-section-content-image-right">
+              {labelEl}
               {headingEl}
               {bodyEl}
             </div>

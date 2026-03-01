@@ -10,9 +10,10 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
   { label: 'Design Requirements', id: 'design-requirements' },
   { label: 'Concept Development', id: 'concept-development' },
-  { label: 'Usability Testing', id: 'usability-testing' },
-  { label: 'Business Goals', id: 'business-goals' },
+  { label: 'Checking Feasibility', id: 'checking-feasibility' },
+  { label: 'Feedback', id: 'usability-testing' },
   { label: 'Solution', id: 'solution' },
+  { label: 'Business Goals', id: 'business-goals' },
   { label: 'Conclusion', id: 'conclusion' },
 ];
 
@@ -151,7 +152,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="design-requirements"
             label="DESIGN REQUIREMENTS"
-            heading="Competitive analysis helped determine a set of requirements for the designs."
+            heading="Competitive analysis helped determine a set of design and business requirements for the designs."
             listWithImages={[
               { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Product and search optimization: Add clear filters for eligible products and consistently flag eligible items with visual tags or icons on product cards and detail pages' },
               { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Eligible dollar amount: Automatically show the eligible FSA/HSA amount at checkout, suggest the saved card when applicable, and provide clear error messages.' },
@@ -163,7 +164,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="concept-development"
             label="CONCEPT DEVELOPMENT"
-            heading="Guided by these requirements, we moved into concept development, ideating and creating wireframes to align the team around a shared direction."
+            heading="Guided by these requirements, I moved into concept development, ideating and creating wireframes to align the team around a shared direction."
             images={[
               {
                 src: '/hsafsa/concept-wireframes.png',
@@ -174,13 +175,37 @@ const HsaFsa = ({ setCursorVariant }) => {
           />
 
           <CaseStudySection
+            id="checking-feasibility"
+            label="CHECKING FEASIBILITY"
+            heading="I shared these first wireframes to both wallet and checkout teams and led a group of engineers and PMs through a service blueprint to figure out what work needs to be done on backend and front end to make this feature happen."
+            images={[
+              {
+                src: '/hsafsa/service-blueprint.png',
+                alt: 'HSA/FSA service blueprint mapping cart to order with customer actions, frontstage, backstage, support process, and edge cases',
+                noBorder: true,
+              },
+            ]}
+          />
+
+          <CaseStudySection
             id="usability-testing"
-            label="USABILITY TESTING"
-            heading="We ran usability tests to validate the wireframes and identify friction points before moving into high-fidelity design."
-            imageLeft={{
+            label="FEEDBACK"
+            heading="I ran usability testing to validate the wireframes and a workshop with designers to identify friction points before moving forward with designs."
+            imageRight={{
               src: '/hsafsa/usability-testing.png',
               alt: 'Usability testing session: participant navigating cart and identifying HSA/FSA eligible items on mobile',
             }}
+            imageInLeft={{
+              src: '/hsafsa/usability-flow-map.png',
+              alt: 'Design review flow map showing annotated user journey through cart, payment selection, FSA/HSA card add, and checkout',
+            }}
+          />
+
+          <CaseStudySection
+            id="solution"
+            label="SOLUTION"
+            heading="Solution"
+            body="Add your solution and key design decisions here."
           />
 
           <CaseStudySection
@@ -192,13 +217,6 @@ const HsaFsa = ({ setCursorVariant }) => {
               'Drive $71M in incremental sales over four years (eComm $21M)',
               'Leverage opportunity with 26.5% of Kroger households holding HSA/FSA cards (70% HSA, 29% FSA)',
             ]}
-          />
-
-          <CaseStudySection
-            id="solution"
-            label="SOLUTION"
-            heading="Solution"
-            body="Add your solution and key design decisions here."
           />
 
           <CaseStudySection
