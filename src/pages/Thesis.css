@@ -191,6 +191,39 @@
   border-radius: 12px;
 }
 
+/* Stat/callout box (e.g. Context section) – same gray style as meta box */
+.thesis-stat-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.thesis-stat-box-icon {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  line-height: 0;
+}
+
+.thesis-stat-box-icon svg {
+  display: block;
+}
+
+.thesis-stat-box-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+#context .thesis-stat-box {
+  margin-top: 16px;
+}
+
 /* Row of two before/after boxes (same styling as meta box per box) */
 .thesis-before-after-row {
   display: grid;

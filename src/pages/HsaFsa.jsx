@@ -106,7 +106,7 @@ const HsaFsa = ({ setCursorVariant }) => {
               <div className="thesis-background-col">
                 <span className="thesis-section-label">SUMMARY</span>
                 <p className="thesis-summary">
-                  As a product designer on Kroger's Shop and Order team, I led the design of HSA/FSA payment integration within Wallet, introducing a new card type and split-payment functionality to support health-related purchases. The work required balancing competitive parity, regulatory constraints, backend feasibility, and checkout clarity.
+                  As a product designer on Kroger's Shop and Order team, I led the design of HSA/FSA payment integration within Wallet and Checkout, introducing a new card type and split-payment functionality to support health-related purchases.
                 </p>
               </div>
               <div className="thesis-meta-box">
@@ -133,6 +133,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="CONTEXT"
             heading="What are HSA and FSA cards?"
             body="HSA and FSA cards are linked to tax-advantaged accounts that can be used to buy medications, personal health care products, vision and dental items, etc."
+            statBox={{ text: '37% of Americans report using either an HSA or FSA to pay for medical expenses.' }}
           />
 
           <CaseStudySection

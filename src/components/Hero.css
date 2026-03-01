@@ -38,48 +38,45 @@
   margin-bottom: 28px;
 }
 
-.hero-actions {
+.hero-nav {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
-.karengpt-btn {
+.hero-nav-link {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.hero-nav-link:hover {
+  color: var(--text-secondary);
+}
+
+.hero-nav-sep {
+  color: var(--border-color);
+  font-weight: 300;
+  user-select: none;
+}
+
+.hero-nav-resume {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 14px 24px;
-  font-family: 'SF Mono', 'Fira Code', 'Monaco', 'Consolas', monospace;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: var(--bg-color);
-  background: var(--text-color);
-  border: none;
-  border-radius: 50px;
-  text-decoration: none;
-  transition: all 0.2s ease;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  gap: 5px;
 }
 
-.karengpt-btn:hover {
-  background: var(--text-color);
-  color: var(--bg-color);
-  transform: translateY(-2px);
-  box-shadow: none;
+.hero-nav-resume:hover {
+  color: var(--text-secondary);
 }
 
-.karengpt-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  line-height: 1;
-  transition: transform 0.2s ease;
-}
-
-.karengpt-icon svg {
+.hero-nav-external {
   width: 14px;
   height: 14px;
+  opacity: 0.8;
 }
 
 .status-badge {
@@ -130,13 +127,7 @@
     margin-bottom: 24px;
   }
 
-  .hero-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .karengpt-btn {
-    width: auto;
+  .hero-nav {
+    gap: 6px;
   }
 }

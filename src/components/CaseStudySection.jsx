@@ -47,6 +47,7 @@ export default function CaseStudySection({
   imageLeft,
   imageInLeft,
   solutionBox,
+  statBox,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -321,6 +322,18 @@ export default function CaseStudySection({
           {labelEl}
           {headingEl}
           {bodyEl}
+          {statBox && (
+            <div className="thesis-stat-box">
+              <span className="thesis-stat-box-icon" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 20V10" />
+                  <path d="M12 20V4" />
+                  <path d="M6 20v-6" />
+                </svg>
+              </span>
+              <p className="thesis-stat-box-text">{statBox.text}</p>
+            </div>
+          )}
         </>
       )}
       {comparisonPairs && comparisonPairs.length > 0 && (

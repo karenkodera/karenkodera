@@ -58,9 +58,11 @@ function AppContent() {
     setHoveredElement(element);
   }, []);
 
+  const showDotBackground = location.pathname === '/' || location.pathname === '/about';
+
   return (
     <div className="app">
-      <DottedGridBackground />
+      {showDotBackground && <DottedGridBackground />}
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
       <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} hoveredElement={hoveredElement} />
       <main>
