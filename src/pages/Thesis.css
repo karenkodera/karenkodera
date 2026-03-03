@@ -224,6 +224,42 @@
   margin-top: 16px;
 }
 
+/* Context: no gap between section body and stat box */
+#context.thesis-section {
+  margin-bottom: 0;
+}
+
+/* Context stat box (standalone block below Context section – same look as meta box) */
+.thesis-context-stat-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 0 60px 0;
+  padding: 16px 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.thesis-context-stat-box-icon {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  line-height: 0;
+}
+
+.thesis-context-stat-box-icon svg {
+  display: block;
+}
+
+.thesis-context-stat-box-text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
 /* Row of two before/after boxes (same styling as meta box per box) */
 .thesis-before-after-row {
   display: grid;
@@ -402,17 +438,23 @@
 }
 
 /* Design requirements: pair each bullet with its image, images at ~50% (1.5x previous), no border/background */
+#design-requirements .thesis-list-with-images {
+  gap: 18px;
+}
+
 #design-requirements .thesis-list-with-images-item .thesis-figure {
-  max-width: 75%;
-  width: 75%;
+  max-width: 85%;
+  width: 85%;
   background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 #design-requirements .thesis-list-with-images-item .thesis-figure .thesis-image {
   width: 100%;
   border: none;
   background: transparent;
-  border-radius: 0;
+  border-radius: 12px;
 }
 
 #design-requirements .thesis-list-with-images-text {
@@ -501,17 +543,6 @@
 }
 
 /* Checking Feasibility: service blueprint at half size */
-#checking-feasibility .thesis-figure {
-  width: 50%;
-  max-width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-#checking-feasibility .thesis-figure .thesis-image {
-  width: 100%;
-}
-
 /* HSA/FSA: force white behind images so PNG transparency shows white (override any other rules) */
 #problem .thesis-section-images,
 #problem .thesis-figure,

@@ -1,7 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
-import Header from './components/Header';
 import Footer from './components/Footer';
 import DottedGridBackground from './components/DottedGridBackground';
 import Home from './pages/Home';
@@ -64,7 +63,6 @@ function AppContent() {
     <div className="app">
       {showDotBackground && <DottedGridBackground />}
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
-      <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} hoveredElement={hoveredElement} />
       <main>
         <Routes>
           <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />

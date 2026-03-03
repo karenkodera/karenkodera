@@ -1,5 +1,6 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import Hero from '../components/Hero';
+import SectionHeader from '../components/SectionHeader';
 import './About.css';
 
 const About = ({ setCursorVariant }) => {
@@ -7,7 +8,10 @@ const About = ({ setCursorVariant }) => {
   const handleMouseLeave = () => setCursorVariant('default');
 
   return (
-    <div className="about-page" id="aboutme">
+    <>
+      <Hero setCursorVariant={setCursorVariant} />
+      <SectionHeader setCursorVariant={setCursorVariant} />
+      <div className="about-page" id="aboutme">
       <motion.section
         className="about-bio-section"
         initial={{ opacity: 0, y: 20 }}
@@ -83,7 +87,8 @@ const About = ({ setCursorVariant }) => {
           </div>
         </div>
       </motion.section>
-    </div>
+      </div>
+    </>
   );
 };
 

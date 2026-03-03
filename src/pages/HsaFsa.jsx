@@ -11,8 +11,8 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Design Requirements', id: 'design-requirements' },
   { label: 'Concept Development', id: 'concept-development' },
   { label: 'Checking Feasibility', id: 'checking-feasibility' },
-  { label: 'Feedback', id: 'usability-testing' },
   { label: 'Solution', id: 'solution' },
+  { label: 'Feedback', id: 'usability-testing' },
   { label: 'Business Goals', id: 'business-goals' },
   { label: 'Conclusion', id: 'conclusion' },
 ];
@@ -133,14 +133,23 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="CONTEXT"
             heading="What are HSA and FSA cards?"
             body="HSA and FSA cards are linked to tax-advantaged accounts that can be used to buy medications, personal health care products, vision and dental items, etc."
-            statBox={{ text: '37% of Americans report using either an HSA or FSA to pay for medical expenses.' }}
           />
+          <div className="thesis-context-stat-box" aria-label="Statistic">
+            <span className="thesis-context-stat-box-icon" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M18 20V10" />
+                <path d="M12 20V4" />
+                <path d="M6 20v-6" />
+              </svg>
+            </span>
+            <p className="thesis-context-stat-box-text">37% of Americans report using either an HSA or FSA to pay for medical expenses.</p>
+          </div>
 
           <CaseStudySection
             id="problem"
             label="PROBLEM"
             heading="Currently, HSA and FSA cards are not supported for online transactions."
-            body="This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage. Furthermore, customers struggle with identifying eligible items online and lack the ability to allocate specific items to different benefit cards during a single online checkout. This complexity leads to confusion, abandoned carts, and a suboptimal online shopping experience."
+            body="This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage."
             images={[
               {
                 src: '/hsafsa/comp-analysis.png',
@@ -155,10 +164,10 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="DESIGN REQUIREMENTS"
             heading="Competitive analysis helped determine a set of design and business requirements for the designs."
             listWithImages={[
-              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Product and search optimization: Add filters for eligible products and flag eligible items with visual tags.' },
-              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Eligible dollar amount: Automatically show the FSA/HSA amount at checkout and suggest the saved card when applicable.' },
-              { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Split payment: Enable split-payment options when eligible items are present.' },
-              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Managing cards: Ensure HSA/FSA card options are clearly visible at checkout and wallet.' },
+              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Add filters and tags for product search optimization' },
+              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Show eligible FSA/HSA amount at checkout' },
+              { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Enable split-payment options' },
+              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Ensure FSA/HSA card options are clearly visible' },
             ]}
           />
 
@@ -178,14 +187,18 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="checking-feasibility"
             label="CHECKING FEASIBILITY"
-            heading="I shared these first wireframes to both wallet and checkout teams and led a group of engineers and PMs through a service blueprint to figure out what work needs to be done on backend and front end to make this feature happen."
-            images={[
-              {
-                src: '/hsafsa/service-blueprint.png',
-                alt: 'HSA/FSA service blueprint mapping cart to order with customer actions, frontstage, backstage, support process, and edge cases',
-                noBorder: true,
-              },
-            ]}
+            heading="I led the teams through a service blueprint to figure out what work needs to be done on back-end and front-end to make this feature happen."
+            imageRight={{
+              src: '/hsafsa/service-blueprint.png',
+              alt: 'HSA/FSA service blueprint mapping cart to order with customer actions, frontstage, backstage, support process, and edge cases',
+            }}
+          />
+
+          <CaseStudySection
+            id="solution"
+            label="SOLUTION"
+            heading="Solution"
+            body="Add your solution and key design decisions here."
           />
 
           <CaseStudySection
@@ -200,13 +213,6 @@ const HsaFsa = ({ setCursorVariant }) => {
               src: '/hsafsa/usability-flow-map.png',
               alt: 'Design review flow map showing annotated user journey through cart, payment selection, FSA/HSA card add, and checkout',
             }}
-          />
-
-          <CaseStudySection
-            id="solution"
-            label="SOLUTION"
-            heading="Solution"
-            body="Add your solution and key design decisions here."
           />
 
           <CaseStudySection

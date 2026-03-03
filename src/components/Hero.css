@@ -2,7 +2,7 @@
   min-height: auto;
   display: flex;
   align-items: center;
-  padding: 130px 40px 50px;
+  padding: 40px 40px 50px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -36,47 +36,6 @@
   color: var(--text-secondary);
   max-width: 580px;
   margin-bottom: 28px;
-}
-
-.hero-nav {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.hero-nav-link {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--text-color);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.hero-nav-link:hover {
-  color: var(--text-secondary);
-}
-
-.hero-nav-sep {
-  color: var(--border-color);
-  font-weight: 300;
-  user-select: none;
-}
-
-.hero-nav-resume {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.hero-nav-resume:hover {
-  color: var(--text-secondary);
-}
-
-.hero-nav-external {
-  width: 14px;
-  height: 14px;
-  opacity: 0.8;
 }
 
 .status-badge {
@@ -127,7 +86,4 @@
     margin-bottom: 24px;
   }
 
-  .hero-nav {
-    gap: 6px;
-  }
 }
