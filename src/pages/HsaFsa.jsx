@@ -9,7 +9,6 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
   { label: 'Competitive Research', id: 'competitive-research' },
-  { label: 'Design Requirements', id: 'design-requirements' },
   { label: 'Concept Development', id: 'concept-development' },
   { label: 'Checking Feasibility', id: 'checking-feasibility' },
   { label: 'Feedback', id: 'usability-testing' },
@@ -146,8 +145,8 @@ const HsaFsa = ({ setCursorVariant }) => {
             calloutBoxes={[
               'Customers cannot tell what items are eligible to buy with their cards.',
               'Customers do not know their total HSA/FSA amount at checkout.',
-              'There is no split-payment functionality yet so they have to place two separate orders to use their HSA/FSA funds.',
-              'They have trouble quickly identifying their HSA/FSA cards during checkout.',
+              'There is no split-payment functionality yet so customers have to place two separate orders to use their HSA/FSA funds.',
+              'Customers have trouble quickly identifying their HSA/FSA cards during checkout.',
             ]}
           />
 
@@ -160,33 +159,26 @@ const HsaFsa = ({ setCursorVariant }) => {
             transition={{ duration: 0.4 }}
           >
             <span className="thesis-section-label">COMPETITIVE RESEARCH</span>
-            <h2 className="thesis-section-heading">Competitive Research</h2>
             <p className="thesis-section-body thesis-heading2">Research showed that this was a gap that key competitors had already addressed.</p>
-            <div className="thesis-competitive-logo-boxes">
-              <div className="thesis-logo-box">
-                <img src="/hsafsa/logos/amazon.png" alt="Amazon" className="thesis-logo-box-img" />
-                <img src="/hsafsa/logos/cvs.png" alt="CVS" className="thesis-logo-box-img" />
-                <img src="/hsafsa/logos/target.png" alt="Target" className="thesis-logo-box-img" />
-                <img src="/hsafsa/logos/walgreens.png" alt="Walgreens" className="thesis-logo-box-img" />
-                <img src="/hsafsa/logos/walmart.png" alt="Walmart" className="thesis-logo-box-img" />
-              </div>
-              <div className="thesis-logo-box">
-                <img src="/hsafsa/logos/kroger.png" alt="Kroger" className="thesis-logo-box-img" />
-              </div>
+            <div className="thesis-section-images thesis-competitive-images">
+              <figure className="thesis-figure">
+                <img src="/hsafsa/design-req-1-product-search.png" alt="Product and search: Amazon HSA or FSA eligible filter and product eligibility label" className="thesis-image" loading="lazy" />
+                <figcaption className="thesis-figcaption">Add filters and tags for product search optimization</figcaption>
+              </figure>
+              <figure className="thesis-figure">
+                <img src="/hsafsa/design-req-2-eligible-amount.png" alt="Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount" className="thesis-image" loading="lazy" />
+                <figcaption className="thesis-figcaption">Show eligible HSA/FSA amount at checkout</figcaption>
+              </figure>
+              <figure className="thesis-figure">
+                <img src="/hsafsa/design-req-3-split-payment.png" alt="Split payment: Target checkout tip to split payment with two cards" className="thesis-image" loading="lazy" />
+                <figcaption className="thesis-figcaption">Enable split-payment options</figcaption>
+              </figure>
+              <figure className="thesis-figure">
+                <img src="/hsafsa/design-req-4-managing-cards.png" alt="Managing cards: Wallet with Fidelity HSA debit card in cards and accounts" className="thesis-image" loading="lazy" />
+                <figcaption className="thesis-figcaption">Ensure HSA/FSA card options are clearly visible</figcaption>
+              </figure>
             </div>
           </motion.section>
-
-          <CaseStudySection
-            id="design-requirements"
-            label="DESIGN REQUIREMENTS"
-            heading="Competitive analysis helped determine a set of design and business requirements for the designs."
-            listWithImages={[
-              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon HSA or FSA eligible filter and product eligibility label', text: 'Add filters and tags for product search optimization' },
-              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Show eligible HSA/FSA amount at checkout' },
-              { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Enable split-payment options' },
-              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Ensure HSA/FSA card options are clearly visible' },
-            ]}
-          />
 
           <CaseStudySection
             id="concept-development"
