@@ -50,6 +50,8 @@ export default function CaseStudySection({
   solutionBox,
   statBox,
   calloutBoxes,
+  headingPlaceholder,
+  bodyHeading2,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -62,7 +64,7 @@ export default function CaseStudySection({
 
   const labelEl = <span className="thesis-section-label">{label}</span>;
   const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>;
-  const bodyEl = body ? <p className="thesis-section-body">{body}</p> : null;
+  const bodyEl = body ? <p className={`thesis-section-body${bodyHeading2 ? ' thesis-heading2' : ''}`}>{body}</p> : null;
 
   const twoColumnsEl = twoColumns && (
     <div className="thesis-two-col">
@@ -323,11 +325,23 @@ export default function CaseStudySection({
         <>
           {labelEl}
           {headingEl}
+          {headingPlaceholder && (
+            <div className="thesis-heading-placeholder" aria-hidden="true">
+              <span className="thesis-heading-placeholder-text">{headingPlaceholder.text}</span>
+            </div>
+          )}
           {bodyEl}
           {calloutBoxes && calloutBoxes.length > 0 && (
             <div className="thesis-callout-boxes">
               {calloutBoxes.map((text, i) => (
                 <div key={i} className="thesis-callout-box">
+                  <span className="thesis-callout-box-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="12" cy="12" r="10" />
+                      <path d="M12 8v4" />
+                      <path d="M12 16h.01" />
+                    </svg>
+                  </span>
                   <p className="thesis-callout-box-text">{text}</p>
                 </div>
               ))}

@@ -8,6 +8,7 @@ import './Thesis.css';
 const HSA_FSA_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
+  { label: 'Competitive Research', id: 'competitive-research' },
   { label: 'Design Requirements', id: 'design-requirements' },
   { label: 'Concept Development', id: 'concept-development' },
   { label: 'Checking Feasibility', id: 'checking-feasibility' },
@@ -113,7 +114,7 @@ const HsaFsa = ({ setCursorVariant }) => {
                 <dl className="thesis-meta">
                   <div>
                     <dt>Team</dt>
-                    <dd>Adria Griffin (PM), Angelene Langeslay (PD), Diana Mosley (PM)</dd>
+                    <dd>Wallet and Checkout teams</dd>
                   </div>
                   <div>
                     <dt>Tools</dt>
@@ -138,22 +139,42 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="Currently, Kroger does not support all HSA/FSA cards for online transactions."
-            body="Customers work around this by adding their HSA/FSA cards into the regular credit card section. This limitation prevents customers from utilizing their benefit funds conveniently. Customers struggle when trying to use their HSA/FSA cards in checkout because of 4 things."
+            heading="Kroger does not have a place for HSA/FSA cards in the app so customers work around this by adding their cards into the credit card section."
+            headingPlaceholder={{ text: 'Put a gif that is the old wallet with new section popping in' }}
+            bodyHeading2
+            body="This limitation prevents customers from utilizing their benefit funds conveniently."
             calloutBoxes={[
-              'There are no filters and tags for product search so customers cannot see what items they can buy with their cards.',
+              'Customers cannot tell what items are eligible to buy with their cards.',
               'Customers do not know their total HSA/FSA amount at checkout.',
-              'Customers cannot split-payment so they have to place two separate orders if they want to use their HSA/FSA funds.',
-              'They have trouble quickly finding their HSA/FSA cards during checkout.',
-            ]}
-            images={[
-              {
-                src: '/hsafsa/comp-analysis.png',
-                alt: 'Competitive analysis matrix comparing Amazon, CVS, Target, Walgreens, and Walmart across Benefit Overview, HSA, and FSA e-commerce experience',
-                caption: 'Competitive analysis showed that Kroger was at a disadvantage without online HSA/FSA support, a gap that key competitors had already addressed.',
-              },
+              'There is no split-payment functionality yet so they have to place two separate orders to use their HSA/FSA funds.',
+              'They have trouble quickly identifying their HSA/FSA cards during checkout.',
             ]}
           />
+
+          <motion.section
+            id="competitive-research"
+            className="thesis-section"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="thesis-section-label">COMPETITIVE RESEARCH</span>
+            <h2 className="thesis-section-heading">Competitive Research</h2>
+            <p className="thesis-section-body thesis-heading2">Research showed that this was a gap that key competitors had already addressed.</p>
+            <div className="thesis-competitive-logo-boxes">
+              <div className="thesis-logo-box">
+                <img src="/hsafsa/logos/amazon.png" alt="Amazon" className="thesis-logo-box-img" />
+                <img src="/hsafsa/logos/cvs.png" alt="CVS" className="thesis-logo-box-img" />
+                <img src="/hsafsa/logos/target.png" alt="Target" className="thesis-logo-box-img" />
+                <img src="/hsafsa/logos/walgreens.png" alt="Walgreens" className="thesis-logo-box-img" />
+                <img src="/hsafsa/logos/walmart.png" alt="Walmart" className="thesis-logo-box-img" />
+              </div>
+              <div className="thesis-logo-box">
+                <img src="/hsafsa/logos/kroger.png" alt="Kroger" className="thesis-logo-box-img" />
+              </div>
+            </div>
+          </motion.section>
 
           <CaseStudySection
             id="design-requirements"
