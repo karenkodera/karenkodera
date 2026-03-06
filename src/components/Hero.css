@@ -2,7 +2,7 @@
   min-height: auto;
   display: flex;
   align-items: center;
-  padding: 40px 40px 50px;
+  padding: 80px 40px 24px;
   max-width: 1400px;
   margin: 0 auto;
 }
@@ -35,7 +35,7 @@
   line-height: 1.6;
   color: var(--text-secondary);
   max-width: 580px;
-  margin-bottom: 28px;
+  margin-bottom: 12px;
 }
 
 .status-badge {

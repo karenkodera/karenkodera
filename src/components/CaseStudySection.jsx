@@ -46,8 +46,10 @@ export default function CaseStudySection({
   imageRight,
   imageLeft,
   imageInLeft,
+  imagesBeforeBody2,
   solutionBox,
   statBox,
+  calloutBoxes,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -322,6 +324,15 @@ export default function CaseStudySection({
           {labelEl}
           {headingEl}
           {bodyEl}
+          {calloutBoxes && calloutBoxes.length > 0 && (
+            <div className="thesis-callout-boxes">
+              {calloutBoxes.map((text, i) => (
+                <div key={i} className="thesis-callout-box">
+                  <p className="thesis-callout-box-text">{text}</p>
+                </div>
+              ))}
+            </div>
+          )}
           {statBox && (
             <div className="thesis-stat-box">
               <span className="thesis-stat-box-icon" aria-hidden="true">
@@ -357,11 +368,21 @@ export default function CaseStudySection({
           })}
         </div>
       )}
-      {body2 && <p className="thesis-section-body">{body2}</p>}
-      {images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && !(textInBox && images.length > 0) && (
+      {imagesBeforeBody2 && images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && !(textInBox && images.length > 0) && (
         <div className="thesis-section-images">
           {images.map((img, i) => (
-            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}`}>
+            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}${img.fullWidth ? ' thesis-figure-full-width' : ''}`}>
+              <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
+              {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      )}
+      {body2 && <p className="thesis-section-body">{body2}</p>}
+      {!imagesBeforeBody2 && images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && !(textInBox && images.length > 0) && (
+        <div className="thesis-section-images">
+          {images.map((img, i) => (
+            <figure key={i} className={`thesis-figure${img.flat ? ' thesis-figure-flat' : ''}${img.compact ? ' thesis-figure-compact' : ''}${img.wide ? ' thesis-figure-wide' : ''}${img.smaller ? ' thesis-figure-small' : ''}${img.whiteBg ? ' thesis-figure-white-bg' : ''}${img.noBorder ? ' thesis-figure-no-border' : ''}${img.grayBox ? ' thesis-figure-gray-box' : ''}${img.fullWidth ? ' thesis-figure-full-width' : ''}`}>
               <img src={img.src} alt={img.alt} className="thesis-image" loading="lazy" />
               {img.caption && <figcaption className="thesis-figcaption">{img.caption}</figcaption>}
             </figure>

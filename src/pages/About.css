@@ -1,7 +1,8 @@
 .about-page {
   min-height: 100vh;
-  padding-top: 120px;
-  padding-bottom: 80px;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 40px 80px;
   background: transparent;
   position: relative;
 }
@@ -135,7 +136,7 @@
 .about-bio-section {
   max-width: 800px;
   margin: 0 auto;
-  padding: 24px 24px 28px;
+  padding: 24px 0 28px;
 }
 
 .about-bio-layout {
@@ -191,7 +192,7 @@
 .about-experience-section {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px 24px 20px;
+  padding: 20px 0;
   border-top: 1px solid var(--border-color);
 }
 
@@ -239,7 +240,7 @@
 .about-education-section {
   max-width: 800px;
   margin: 0 auto;
-  padding: 20px 24px 48px;
+  padding: 20px 0 48px;
 }
 
 .about-education-list {
@@ -325,8 +326,7 @@
 
 @media (max-width: 768px) {
   .about-page {
-    padding-top: 100px;
-    padding-bottom: 60px;
+    padding: 24px 16px 60px;
   }
 
   .about-hero {

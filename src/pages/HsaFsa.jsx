@@ -11,10 +11,10 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Design Requirements', id: 'design-requirements' },
   { label: 'Concept Development', id: 'concept-development' },
   { label: 'Checking Feasibility', id: 'checking-feasibility' },
-  { label: 'Solution', id: 'solution' },
   { label: 'Feedback', id: 'usability-testing' },
+  { label: 'Solution', id: 'solution' },
   { label: 'Business Goals', id: 'business-goals' },
-  { label: 'Conclusion', id: 'conclusion' },
+  { label: 'Learnings', id: 'learnings' },
 ];
 
 const SCROLL_SPY_TOP_OFFSET = 160;
@@ -131,29 +131,25 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="context"
             label="CONTEXT"
-            heading="What are HSA and FSA cards?"
-            body="HSA and FSA cards are linked to tax-advantaged accounts that can be used to buy medications, personal health care products, vision and dental items, etc."
+            heading="What are HSA/FSA cards?"
+            body="HSA/FSA cards are linked to tax-advantaged accounts that can be used to buy medications, personal health care products, vision and dental items, etc."
           />
-          <div className="thesis-context-stat-box" aria-label="Statistic">
-            <span className="thesis-context-stat-box-icon" aria-hidden="true">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M18 20V10" />
-                <path d="M12 20V4" />
-                <path d="M6 20v-6" />
-              </svg>
-            </span>
-            <p className="thesis-context-stat-box-text">37% of Americans report using either an HSA or FSA to pay for medical expenses.</p>
-          </div>
 
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="Currently, HSA and FSA cards are not supported for online transactions."
-            body="This limitation prevents customers from utilizing their benefit funds conveniently and contributes to a competitive disadvantage."
+            heading="Currently, Kroger does not support all HSA/FSA cards for online transactions."
+            body="Customers work around this by adding their HSA/FSA cards into the regular credit card section. This limitation prevents customers from utilizing their benefit funds conveniently. Customers struggle when trying to use their HSA/FSA cards in checkout because of 4 things."
+            calloutBoxes={[
+              'There are no filters and tags for product search so customers cannot see what items they can buy with their cards.',
+              'Customers do not know their total HSA/FSA amount at checkout.',
+              'Customers cannot split-payment so they have to place two separate orders if they want to use their HSA/FSA funds.',
+              'They have trouble quickly finding their HSA/FSA cards during checkout.',
+            ]}
             images={[
               {
                 src: '/hsafsa/comp-analysis.png',
-                alt: 'Competitive analysis matrix comparing Amazon, CVS, Target, Walgreens, and Walmart across Benefit Overview, FSA, and HSA e-commerce experience',
+                alt: 'Competitive analysis matrix comparing Amazon, CVS, Target, Walgreens, and Walmart across Benefit Overview, HSA, and FSA e-commerce experience',
                 caption: 'Competitive analysis showed that Kroger was at a disadvantage without online HSA/FSA support, a gap that key competitors had already addressed.',
               },
             ]}
@@ -164,10 +160,10 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="DESIGN REQUIREMENTS"
             heading="Competitive analysis helped determine a set of design and business requirements for the designs."
             listWithImages={[
-              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon FSA or HSA eligible filter and product eligibility label', text: 'Add filters and tags for product search optimization' },
-              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Show eligible FSA/HSA amount at checkout' },
+              { src: '/hsafsa/design-req-1-product-search.png', alt: 'Product and search: Amazon HSA or FSA eligible filter and product eligibility label', text: 'Add filters and tags for product search optimization' },
+              { src: '/hsafsa/design-req-2-eligible-amount.png', alt: 'Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount', text: 'Show eligible HSA/FSA amount at checkout' },
               { src: '/hsafsa/design-req-3-split-payment.png', alt: 'Split payment: Target checkout tip to split payment with two cards', text: 'Enable split-payment options' },
-              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Ensure FSA/HSA card options are clearly visible' },
+              { src: '/hsafsa/design-req-4-managing-cards.png', alt: 'Managing cards: Wallet with Fidelity HSA debit card in cards and accounts', text: 'Ensure HSA/FSA card options are clearly visible' },
             ]}
           />
 
@@ -178,7 +174,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             images={[
               {
                 src: '/hsafsa/concept-wireframes.png',
-                alt: 'Checkout and payment wireframes: cart with FSA/HSA items, payment method selection, FSA/HSA card add, split payment, and order confirmation',
+                alt: 'Checkout and payment wireframes: cart with HSA/FSA items, payment method selection, HSA/FSA card add, split payment, and order confirmation',
                 whiteBg: true,
               },
             ]}
@@ -195,13 +191,6 @@ const HsaFsa = ({ setCursorVariant }) => {
           />
 
           <CaseStudySection
-            id="solution"
-            label="SOLUTION"
-            heading="Solution"
-            body="Add your solution and key design decisions here."
-          />
-
-          <CaseStudySection
             id="usability-testing"
             label="FEEDBACK"
             heading="I ran usability testing to validate the wireframes and a workshop with designers to identify friction points before moving forward with designs."
@@ -211,27 +200,108 @@ const HsaFsa = ({ setCursorVariant }) => {
             }}
             imageInLeft={{
               src: '/hsafsa/usability-flow-map.png',
-              alt: 'Design review flow map showing annotated user journey through cart, payment selection, FSA/HSA card add, and checkout',
+              alt: 'Design review flow map showing annotated user journey through cart, payment selection, HSA/FSA card add, and checkout',
             }}
           />
 
           <CaseStudySection
-            id="business-goals"
-            label="BUSINESS GOALS"
-            heading="Business Goals"
-            list={[
-              'Improve customer satisfaction by reducing friction in purchasing eligible items',
-              'Drive $71M in incremental sales over four years (eComm $21M)',
-              'Leverage opportunity with 26.5% of Kroger households holding HSA/FSA cards (70% HSA, 29% FSA)',
-            ]}
+            id="solution"
+            label="SOLUTION"
+            heading="Solution"
+            body="Add your solution and key design decisions here."
           />
 
-          <CaseStudySection
-            id="conclusion"
-            label="CONCLUSION"
-            heading="Conclusion"
-            body="Add learnings and outcomes from the HSA/FSA checkout project here."
-          />
+          <motion.section
+            id="business-goals"
+            className="thesis-section"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="thesis-section-label">BUSINESS GOALS</span>
+            <h2 className="thesis-section-heading thesis-section-intro-heading">
+              This feature just was introduced in 2026. The team is predicting that this feature will:
+            </h2>
+            <div className="thesis-prediction-boxes">
+              <div className="thesis-context-stat-box" aria-label="Prediction">
+                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                    <polyline points="22 4 12 14.01 9 11.01" />
+                  </svg>
+                </span>
+                <p className="thesis-context-stat-box-text">Improve customer satisfaction by reducing friction in purchasing eligible items</p>
+              </div>
+              <div className="thesis-context-stat-box" aria-label="Prediction">
+                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="3 20 7 16 11 20 15 14 19 18 23 12" />
+                    <polyline points="21 14 23 12 21 10" />
+                  </svg>
+                </span>
+                <p className="thesis-context-stat-box-text">Drive $71M in incremental sales over four years</p>
+              </div>
+              <div className="thesis-context-stat-box" aria-label="Prediction">
+                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
+                    <line x1="1" y1="10" x2="23" y2="10" />
+                  </svg>
+                </span>
+                <p className="thesis-context-stat-box-text">Leverage opportunity with 26.5% of Kroger households holding HSA/FSA cards</p>
+              </div>
+            </div>
+          </motion.section>
+
+          <motion.section
+            id="learnings"
+            className="thesis-section"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="thesis-section-label">LEARNINGS</span>
+            <h2 className="thesis-section-heading thesis-section-intro-heading">
+              As a full-time product designer, I was really able to level up my skills in a real-world experience.
+            </h2>
+            <div className="thesis-prediction-boxes">
+              <div className="thesis-context-stat-box" aria-label="Learning">
+                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </span>
+                <p className="thesis-context-stat-box-text">Collaborating closely with developers taught me how important clear, detailed design handoffs are for seamless implementation.</p>
+              </div>
+              <div className="thesis-context-stat-box" aria-label="Learning">
+                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4" />
+                    <path d="M12 8h.01" />
+                  </svg>
+                </span>
+                <p className="thesis-context-stat-box-text">Adding accessibility tags to my designs reinforced how critical it is to build products everyone can use.</p>
+              </div>
+              <div className="thesis-context-stat-box" aria-label="Learning">
+                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                    <polyline points="14 2 14 8 20 8" />
+                    <line x1="16" y1="13" x2="8" y2="13" />
+                    <line x1="16" y1="17" x2="8" y2="17" />
+                    <polyline points="10 9 9 9 8 9" />
+                  </svg>
+                </span>
+                <p className="thesis-context-stat-box-text">Thorough documentation, including edge cases and desk checks, made handoff smoother and implementation more reliable.</p>
+              </div>
+            </div>
+          </motion.section>
 
           <footer className="thesis-case-nav">
             <Link to="/thesis" className="thesis-case-nav-link thesis-case-nav-prev" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>

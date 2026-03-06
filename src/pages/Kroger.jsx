@@ -6,13 +6,11 @@ import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
 const KROGER_IMAGES = {
-  researchMethods: '/kroger/research-methods.png',
   rideAlong: '/kroger/ride-along.png',
   workshop: '/kroger/workshop.png',
 };
 
 const KROGER_NAV_SECTIONS = [
-  { label: 'Learning About the Space', id: 'learning-about-the-space' },
   { label: 'Field Research', id: 'field-research' },
   { label: 'Problem Finding Workshop', id: 'problem-finding-workshop' },
   { label: 'Problem', id: 'problem' },
@@ -113,16 +111,12 @@ const Kroger = ({ setCursorVariant }) => {
                 <p className="thesis-summary">
                   Over the summer, I worked on Fresco, a driver-facing app that handles payments during deliveries. Offline mode was created to combat paper usage on trucks. It contains information needed in order to complete orders when drivers lose cell service.
                 </p>
-                <p className="thesis-summary">
-                  Interns at Kroger are given a lot of ownership over their projects, and so I was tasked with everything from finding a problem space to leading research to running design sprints and critiques.
-                </p>
               </div>
               <div className="thesis-meta-box">
                 <dl className="thesis-meta">
                   <div>
                     <dt>Responsibilities</dt>
                     <dd>Product Designer</dd>
-                    <dd className="meta-sub">UX Research, Workshop Facilitation, Wireframing, Prototyping</dd>
                   </div>
                   <div>
                     <dt>Tools</dt>
@@ -136,20 +130,6 @@ const Kroger = ({ setCursorVariant }) => {
               </div>
             </div>
           </motion.section>
-
-          <CaseStudySection
-            id="learning-about-the-space"
-            label="LEARNING ABOUT THE SPACE"
-            heading="I started discovery by conducting research through…"
-            images={[
-              {
-                src: KROGER_IMAGES.researchMethods,
-                alt: 'Research methods: truck ride-along, team workshops, driver survey',
-                flat: true,
-                whiteBg: true,
-              },
-            ]}
-          />
 
           <CaseStudySection
             id="field-research"
@@ -183,8 +163,17 @@ const Kroger = ({ setCursorVariant }) => {
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="Route summary sheets are used for recording information at every stop, wasting time and paper. However, these sheets are important when drivers lose wifi and cannot access Fresco."
+            heading="Route summary sheets are used for recording information at every stop, wasting time and paper…"
             body="I noticed that drivers spent a lot of time writing redundant information at each stop on these papers; time that could be spent completing more deliveries."
+            images={[
+              {
+                src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1200" height="400"%3E%3Crect fill="%23e5e5e5" width="1200" height="400"/%3E%3Ctext fill="%23999" x="600" y="200" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="14"%3EPhoto placeholder%3C/text%3E%3C/svg%3E',
+                alt: 'Photo placeholder',
+                fullWidth: true,
+              },
+            ]}
+            imagesBeforeBody2
+            body2="However, these sheets are important when drivers lose wifi and cannot access Fresco."
           />
 
           <CaseStudySection

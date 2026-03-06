@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
+import Header from './components/Header';
 import Footer from './components/Footer';
 import DottedGridBackground from './components/DottedGridBackground';
 import Home from './pages/Home';
@@ -63,6 +64,19 @@ function AppContent() {
     <div className="app">
       {showDotBackground && <DottedGridBackground />}
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
+      <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />
+      <a
+        href="mailto:karen@kodera.us"
+        className="app-email-link"
+        onMouseEnter={() => setCursorVariant('hover')}
+        onMouseLeave={() => setCursorVariant('default')}
+        aria-label="Email karen@kodera.us"
+      >
+        <svg className="app-email-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
+          <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+        </svg>
+        karen@kodera.us
+      </a>
       <main>
         <Routes>
           <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
