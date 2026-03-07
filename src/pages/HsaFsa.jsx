@@ -10,10 +10,6 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
   { label: 'Competitive Research', id: 'competitive-research' },
   { label: 'Concept Development', id: 'concept-development' },
-  { label: 'Assumption 1', id: 'assumption-1' },
-  { label: 'Assumption 2', id: 'assumption-2' },
-  { label: 'Assumption 3', id: 'assumption-3' },
-  { label: 'Assumption 4', id: 'assumption-4' },
   { label: 'Feedback', id: 'usability-testing' },
   { label: 'Solution', id: 'solution' },
   { label: 'Business Goals', id: 'business-goals' },
@@ -45,12 +41,17 @@ const HsaFsa = ({ setCursorVariant }) => {
           return;
         }
       }
-      const first = document.getElementById(sectionIds[0]);
-      if (first && first.getBoundingClientRect().bottom < trigger) {
-        setActiveSectionId(sectionIds[sectionIds.length - 1]);
-      } else {
-        setActiveSectionId(sectionIds[0]);
+      // No section contains the trigger (e.g. between sections): use the last section whose top is above the trigger
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const el = document.getElementById(sectionIds[i]);
+        if (!el) continue;
+        const { top } = el.getBoundingClientRect();
+        if (top <= trigger) {
+          setActiveSectionId(sectionIds[i]);
+          return;
+        }
       }
+      setActiveSectionId(sectionIds[0]);
     };
     updateActiveSection();
     window.addEventListener('scroll', updateActiveSection, { passive: true });
@@ -58,6 +59,10 @@ const HsaFsa = ({ setCursorVariant }) => {
   }, []);
 
   const scrollToSection = (id) => {
+    if (id === 'context') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
