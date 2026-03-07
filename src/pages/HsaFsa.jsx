@@ -273,6 +273,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="SOLUTION"
             heading="Final flows"
             headingHeading2
+            body="For handoff, I created designs for all device types: iOS, android, web mobile and web desktop."
             imagePlaceholder={{ text: 'Image placeholder' }}
           />
 
@@ -299,10 +300,10 @@ const HsaFsa = ({ setCursorVariant }) => {
                 <p className="thesis-context-stat-box-text">Improve customer satisfaction by reducing friction in purchasing eligible items</p>
               </div>
               <div className="thesis-context-stat-box" aria-label="Prediction">
-                <span className="thesis-context-stat-box-icon" aria-hidden="true">
+                <span className="thesis-context-stat-box-icon thesis-context-stat-box-icon-trending" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="3 20 7 16 11 20 15 14 19 18 23 12" />
-                    <polyline points="21 14 23 12 21 10" />
+                    <polyline points="3 17 9 11 13 15 21 7" />
+                    <polyline points="18 10 21 7 21 10" />
                   </svg>
                 </span>
                 <p className="thesis-context-stat-box-text">Drive $71M in incremental sales over four years</p>

@@ -246,6 +246,16 @@
 
 .thesis-context-stat-box-icon svg {
   display: block;
+  overflow: visible;
+}
+
+.thesis-context-stat-box-icon-trending {
+  overflow: visible;
+}
+
+.thesis-context-stat-box-icon-trending svg {
+  min-width: 20px;
+  min-height: 20px;
 }
 
 .thesis-context-stat-box-text {
@@ -776,6 +786,7 @@
 .thesis-feedback-design-box .thesis-figure .thesis-image {
   object-fit: cover;
   object-position: center top;
+  border-radius: 12px;
 }
 
 .thesis-feedback-box-subtitle {
