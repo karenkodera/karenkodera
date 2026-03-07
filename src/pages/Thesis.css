@@ -280,9 +280,6 @@
   line-height: 0;
 }
 
-#problem .thesis-callout-box-icon {
-  color: #c41e3a;
-}
 
 .thesis-callout-box-icon svg {
   display: block;
@@ -299,15 +296,15 @@
 #competitive-research .thesis-competitive-images {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px 20px;
+  gap: 24px;
   margin-top: 24px;
   margin-bottom: 0;
 }
 
 #competitive-research .thesis-competitive-images .thesis-figure {
-  margin: 0 auto;
-  max-width: 50%;
-  width: 50%;
+  margin: 0;
+  max-width: 100%;
+  width: 100%;
   background: #fff;
   border-radius: 12px;
   overflow: hidden;

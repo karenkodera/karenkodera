@@ -163,19 +163,19 @@ const HsaFsa = ({ setCursorVariant }) => {
             <div className="thesis-section-images thesis-competitive-images">
               <figure className="thesis-figure">
                 <img src="/hsafsa/design-req-1-product-search.png" alt="Product and search: Amazon HSA or FSA eligible filter and product eligibility label" className="thesis-image" loading="lazy" />
-                <figcaption className="thesis-figcaption">Add filters and tags for product search optimization</figcaption>
+                <figcaption className="thesis-figcaption">Amazon has filters and tags for product search optimization.</figcaption>
               </figure>
               <figure className="thesis-figure">
                 <img src="/hsafsa/design-req-2-eligible-amount.png" alt="Eligible dollar amount: Walgreens payment screen showing FSA eligible order amount" className="thesis-image" loading="lazy" />
-                <figcaption className="thesis-figcaption">Show eligible HSA/FSA amount at checkout</figcaption>
+                <figcaption className="thesis-figcaption">Walgreens shows eligible HSA/FSA amount at checkout.</figcaption>
               </figure>
               <figure className="thesis-figure">
                 <img src="/hsafsa/design-req-3-split-payment.png" alt="Split payment: Target checkout tip to split payment with two cards" className="thesis-image" loading="lazy" />
-                <figcaption className="thesis-figcaption">Enable split-payment options</figcaption>
+                <figcaption className="thesis-figcaption">Target enables split-payment options.</figcaption>
               </figure>
               <figure className="thesis-figure">
                 <img src="/hsafsa/design-req-4-managing-cards.png" alt="Managing cards: Wallet with Fidelity HSA debit card in cards and accounts" className="thesis-image" loading="lazy" />
-                <figcaption className="thesis-figcaption">Ensure HSA/FSA card options are clearly visible</figcaption>
+                <figcaption className="thesis-figcaption">Amazon clearly shows HSA/FSA card options in Wallet.</figcaption>
               </figure>
             </div>
           </motion.section>
@@ -183,7 +183,8 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="concept-development"
             label="CONCEPT DEVELOPMENT"
-            heading="Guided by these requirements, I moved into concept development, ideating and creating wireframes to align the team around a shared direction."
+            heading="In order to bring HSA/FSA implementation to customers, I had to determine what assumptions and risks Kroger was taking to bring this feature to life."
+            body="I led the teams through a service blueprint to figure out what work needs to be done on back-end and front-end to make this feature happen."
             images={[
               {
                 src: '/hsafsa/concept-wireframes.png',
