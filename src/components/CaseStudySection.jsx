@@ -52,6 +52,8 @@ export default function CaseStudySection({
   calloutBoxes,
   headingPlaceholder,
   bodyHeading2,
+  headingHeading2,
+  imagePlaceholder,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -63,7 +65,7 @@ export default function CaseStudySection({
   const hasImageLeft = !!(imageLeft && imageLeft.src);
 
   const labelEl = <span className="thesis-section-label">{label}</span>;
-  const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}`}>{heading}</h2>;
+  const headingEl = <h2 className={`thesis-section-heading${titleLeftClass ? ' header1' : ''}${headingHeading2 ? ' thesis-heading2' : ''}`}>{heading}</h2>;
   const bodyEl = body ? <p className={`thesis-section-body${bodyHeading2 ? ' thesis-heading2' : ''}`}>{body}</p> : null;
 
   const twoColumnsEl = twoColumns && (
@@ -393,6 +395,11 @@ export default function CaseStudySection({
         </div>
       )}
       {body2 && <p className="thesis-section-body">{body2}</p>}
+      {imagePlaceholder && (
+        <div className="thesis-heading-placeholder" aria-hidden="true">
+          <span className="thesis-heading-placeholder-text">{imagePlaceholder.text}</span>
+        </div>
+      )}
       {!imagesBeforeBody2 && images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && !(textInBox && images.length > 0) && (
         <div className="thesis-section-images">
           {images.map((img, i) => (

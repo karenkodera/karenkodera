@@ -10,7 +10,10 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
   { label: 'Competitive Research', id: 'competitive-research' },
   { label: 'Concept Development', id: 'concept-development' },
-  { label: 'Checking Feasibility', id: 'checking-feasibility' },
+  { label: 'Assumption 1', id: 'assumption-1' },
+  { label: 'Assumption 2', id: 'assumption-2' },
+  { label: 'Assumption 3', id: 'assumption-3' },
+  { label: 'Assumption 4', id: 'assumption-4' },
   { label: 'Feedback', id: 'usability-testing' },
   { label: 'Solution', id: 'solution' },
   { label: 'Business Goals', id: 'business-goals' },
@@ -183,46 +186,89 @@ const HsaFsa = ({ setCursorVariant }) => {
           <CaseStudySection
             id="concept-development"
             label="CONCEPT DEVELOPMENT"
-            heading="In order to bring HSA/FSA implementation to customers, I had to determine what assumptions and risks Kroger was taking to bring this feature to life."
-            body="I led the teams through a service blueprint to figure out what work needs to be done on back-end and front-end to make this feature happen."
+            heading="In order to bring HSA/FSA implementation to customers, I had to validate a series of assumptions."
+            body="I led the teams through a service blueprint to figure out what work needs to be done on back-end and front-end to make this feature happen. We talked about risks, edge cases, and any support we would need on each step."
             images={[
               {
-                src: '/hsafsa/concept-wireframes.png',
-                alt: 'Checkout and payment wireframes: cart with HSA/FSA items, payment method selection, HSA/FSA card add, split payment, and order confirmation',
-                whiteBg: true,
+                src: '/hsafsa/service-blueprint.png',
+                alt: 'HSA/FSA service blueprint mapping cart to order with customer actions, frontstage, backstage, support process, and edge cases',
+                caption: 'Service blueprint',
+                noBorder: true,
               },
             ]}
           />
 
           <CaseStudySection
-            id="checking-feasibility"
-            label="CHECKING FEASIBILITY"
-            heading="I led the teams through a service blueprint to figure out what work needs to be done on back-end and front-end to make this feature happen."
-            imageRight={{
-              src: '/hsafsa/service-blueprint.png',
-              alt: 'HSA/FSA service blueprint mapping cart to order with customer actions, frontstage, backstage, support process, and edge cases',
-            }}
+            id="assumption-1"
+            label="ASSUMPTION 1"
+            heading="Split payments are possible."
+            body="Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs must also reflect this order for customers to understand the hierarchy of payment methods."
+            imagePlaceholder={{ text: 'Image placeholder' }}
+          />
+          <CaseStudySection
+            id="assumption-2"
+            label="ASSUMPTION 2"
+            heading="Delivery fees can be covered but tips are not."
+            body="We needed clear messaging so customers could clearly understand the amount being put on their HSA/FSA cards."
+            imagePlaceholder={{ text: 'Image placeholder' }}
+          />
+          <CaseStudySection
+            id="assumption-3"
+            label="ASSUMPTION 3"
+            heading="Substitutions will still be handled."
+            body="We had to think through modifications too. Since there was a chance a substituted item may not be HSA/FSA eligible, customers must have backup bank cards in their order for other unexpected fees."
+            imagePlaceholder={{ text: 'Image placeholder' }}
+          />
+          <CaseStudySection
+            id="assumption-4"
+            label="ASSUMPTION 4"
+            heading="Customers who have already added HSA/FSA cards in the credit card section need their cards moved to the new section."
+            body="There were edge cases designed that moved existing HSA/FSA cards saved into the credit section into the correct new section without confusing customers."
+            imagePlaceholder={{ text: 'Image placeholder' }}
           />
 
-          <CaseStudySection
+          <motion.section
             id="usability-testing"
-            label="FEEDBACK"
-            heading="I ran usability testing to validate the wireframes and a workshop with designers to identify friction points before moving forward with designs."
-            imageRight={{
-              src: '/hsafsa/usability-testing.png',
-              alt: 'Usability testing session: participant navigating cart and identifying HSA/FSA eligible items on mobile',
-            }}
-            imageInLeft={{
-              src: '/hsafsa/usability-flow-map.png',
-              alt: 'Design review flow map showing annotated user journey through cart, payment selection, HSA/FSA card add, and checkout',
-            }}
-          />
+            className="thesis-section"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="thesis-section-label">FEEDBACK</span>
+            <h2 className="thesis-section-heading">I ran usability testing to validate the designs and a workshop with designers to identify friction points before moving forward with designs.</h2>
+            <div className="thesis-feedback-two-boxes">
+              <div className="thesis-feedback-box thesis-feedback-design-box">
+                <figure className="thesis-figure">
+                  <img
+                    src="/hsafsa/usability-flow-map.png"
+                    alt="Design review flow map showing annotated user journey through cart, payment selection, HSA/FSA card add, and checkout"
+                    className="thesis-image"
+                    loading="lazy"
+                  />
+                </figure>
+                <span className="thesis-feedback-box-subtitle">Design feedback</span>
+              </div>
+              <div className="thesis-feedback-box thesis-feedback-testing-box">
+                <figure className="thesis-figure">
+                  <img
+                    src="/hsafsa/usability-testing.png"
+                    alt="Usability testing session: participant navigating cart and identifying HSA/FSA eligible items on mobile"
+                    className="thesis-image"
+                    loading="lazy"
+                  />
+                </figure>
+                <span className="thesis-feedback-box-subtitle">Usability testing</span>
+              </div>
+            </div>
+          </motion.section>
 
           <CaseStudySection
             id="solution"
             label="SOLUTION"
-            heading="Solution"
-            body="Add your solution and key design decisions here."
+            heading="Final flows"
+            headingHeading2
+            imagePlaceholder={{ text: 'Image placeholder' }}
           />
 
           <motion.section
@@ -235,7 +281,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">BUSINESS GOALS</span>
             <h2 className="thesis-section-heading thesis-section-intro-heading">
-              This feature just was introduced in 2026. The team is predicting that this feature will:
+              This feature was just introduced in 2026. The team is predicting that this feature will:
             </h2>
             <div className="thesis-prediction-boxes">
               <div className="thesis-context-stat-box" aria-label="Prediction">
@@ -278,7 +324,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">LEARNINGS</span>
             <h2 className="thesis-section-heading thesis-section-intro-heading">
-              As a full-time product designer, I was really able to level up my skills in a real-world experience.
+              As a full-time product designer, I was able to level up my skills in a real-world experience.
             </h2>
             <div className="thesis-prediction-boxes">
               <div className="thesis-context-stat-box" aria-label="Learning">
