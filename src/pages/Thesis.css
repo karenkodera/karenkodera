@@ -1684,6 +1684,106 @@
   z-index: 1;
 }
 
+/* Grey box around all iPhone images – full width, consistent height (phone 240×497 + 24px padding) */
+.thesis-iphone-gray-box,
+#assumption-2 .thesis-section-images,
+#assumption-3 .thesis-section-images,
+#assumption-4 .thesis-section-images {
+  width: 100%;
+  height: 545px;
+  padding: 24px;
+  margin-top: 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#assumption-2 .thesis-section-images,
+#assumption-3 .thesis-section-images,
+#assumption-4 .thesis-section-images {
+  flex-direction: column;
+}
+
+/* iPhone 16 Pro frame: scaled to match other iPhone images (240px), video 62px rounded corners */
+.thesis-iphone-figure {
+  margin: 0 auto;
+  max-width: 240px;
+}
+
+.thesis-iphone-device-wrap {
+  position: relative;
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  aspect-ratio: 786 / 1626;
+  height: auto;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Screen area 726×1582: inset 3.82% horizontal, 1.35% vertical from 786×1626 */
+.thesis-iphone-device-wrap .thesis-iphone-screen {
+  position: absolute;
+  left: 3.82%;
+  top: 1.35%;
+  right: 3.82%;
+  bottom: 1.35%;
+  overflow: hidden;
+  border-radius: 36px;
+  z-index: 0;
+}
+
+.thesis-iphone-device-wrap .thesis-iphone-screen .thesis-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 36px;
+}
+
+.thesis-iphone-device-wrap .thesis-iphone-frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  pointer-events: none;
+  z-index: 1;
+  background: transparent;
+}
+
+/* Assumptions 2–4: iPhone frame image same size as assumption 1, inside grey box */
+#assumption-2 .thesis-section-images .thesis-figure,
+#assumption-3 .thesis-section-images .thesis-figure,
+#assumption-4 .thesis-section-images .thesis-figure {
+  max-width: 240px;
+  margin: 0 auto;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+#assumption-2 .thesis-section-images .thesis-figure .thesis-image,
+#assumption-3 .thesis-section-images .thesis-figure .thesis-image,
+#assumption-4 .thesis-section-images .thesis-figure .thesis-image {
+  background: transparent;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  display: block;
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
 .thesis-case-nav {
   display: flex;
   justify-content: space-between;

@@ -203,33 +203,60 @@ const HsaFsa = ({ setCursorVariant }) => {
             ]}
           />
 
-          <CaseStudySection
+          <motion.section
             id="assumption-1"
-            label="ASSUMPTION 1"
-            heading="Split payments are possible."
-            body="Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs must also reflect this order for customers to understand the hierarchy of payment methods."
-            imagePlaceholder={{ text: 'Image placeholder' }}
-          />
+            className="thesis-section"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.4 }}
+          >
+            <span className="thesis-section-label">ASSUMPTION 1</span>
+            <h2 className="thesis-section-heading">Split payments are possible.</h2>
+            <p className="thesis-section-body">Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs must also reflect this order for customers to understand the hierarchy of payment methods.</p>
+            <div className="thesis-iphone-gray-box">
+              <div className="thesis-section-images">
+                <figure className="thesis-figure thesis-iphone-figure">
+                <div className="thesis-iphone-device-wrap">
+                  <div className="thesis-iphone-screen">
+                    <video
+                      src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
+                      className="thesis-video"
+                      playsInline
+                      muted
+                      loop
+                      autoPlay
+                      aria-label="HSA/FSA messaging design playing in phone mockup"
+                    >
+                      Your browser does not support the video tag.
+                    </video>
+                  </div>
+                  <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
+                </div>
+              </figure>
+              </div>
+            </div>
+          </motion.section>
           <CaseStudySection
             id="assumption-2"
             label="ASSUMPTION 2"
             heading="Delivery fees can be covered but tips are not."
             body="We needed clear messaging so customers could clearly understand the amount being put on their HSA/FSA cards."
-            imagePlaceholder={{ text: 'Image placeholder' }}
+            images={[{ src: '/hsafsa/iphone-16-pro-frame.png', alt: 'iPhone 16 Pro frame placeholder for HSA/FSA delivery and tips messaging' }]}
           />
           <CaseStudySection
             id="assumption-3"
             label="ASSUMPTION 3"
             heading="Substitutions will still be handled."
             body="We had to think through modifications too. Since there was a chance a substituted item may not be HSA/FSA eligible, customers must have backup bank cards in their order for other unexpected fees."
-            imagePlaceholder={{ text: 'Image placeholder' }}
+            images={[{ src: '/hsafsa/iphone-16-pro-frame.png', alt: 'iPhone 16 Pro frame placeholder for HSA/FSA substitutions' }]}
           />
           <CaseStudySection
             id="assumption-4"
             label="ASSUMPTION 4"
             heading="Customers who have already added HSA/FSA cards in the credit card section need their cards moved to the new section."
             body="There were edge cases designed that moved existing HSA/FSA cards saved into the credit section into the correct new section without confusing customers."
-            imagePlaceholder={{ text: 'Image placeholder' }}
+            images={[{ src: '/hsafsa/iphone-16-pro-frame.png', alt: 'iPhone 16 Pro frame placeholder for HSA/FSA card migration' }]}
           />
 
           <motion.section
