@@ -7,6 +7,9 @@ import './Thesis.css';
 
 function VideoInPhone({ src, subtitle, ariaLabel }) {
   const videoRef = useRef(null);
+  const [showControls, setShowControls] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
@@ -15,6 +18,7 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
         if (entry.isIntersecting) {
           el.currentTime = 0;
           el.play().catch(() => {});
+          setIsPaused(false);
         }
       },
       { threshold: 0 }
@@ -22,37 +26,98 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+
   const handleEnded = () => {
     const el = videoRef.current;
     if (!el) return;
     setTimeout(() => {
       el.currentTime = 0;
       el.play().catch(() => {});
+      setIsPaused(false);
     }, 1000);
   };
+
+  const handleRewind = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.currentTime = 0;
+    el.play().catch(() => {});
+    setIsPaused(false);
+  };
+
+  const handlePausePlay = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (el.paused) {
+      el.play().catch(() => {});
+      setIsPaused(false);
+    } else {
+      el.pause();
+      setIsPaused(true);
+    }
+  };
+
   return (
-    <figure className="thesis-figure thesis-iphone-figure">
-      <div className="thesis-iphone-device-wrap">
-        <div className="thesis-iphone-screen">
-          <video
-            ref={videoRef}
-            src={src}
-            className="thesis-video"
-            playsInline
-            muted
-            loop={false}
-            aria-label={ariaLabel}
-            onEnded={handleEnded}
+    <div
+      className="thesis-iphone-gray-box"
+      onMouseEnter={() => setShowControls(true)}
+      onMouseLeave={() => setShowControls(false)}
+    >
+      {showControls && (
+        <div className="thesis-iphone-video-controls" aria-hidden="true">
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
+            onClick={handleRewind}
+            aria-label="Restart video"
           >
-            Your browser does not support the video tag.
-          </video>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
+            onClick={handlePausePlay}
+            aria-label={isPaused ? 'Play video' : 'Pause video'}
+          >
+            {isPaused ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            )}
+          </button>
         </div>
-        <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
-      </div>
-      <div className="thesis-iphone-video-bottom">
-        {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
-      </div>
-    </figure>
+      )}
+      <figure className="thesis-figure thesis-iphone-figure">
+        <div className="thesis-iphone-device-wrap">
+          <div className="thesis-iphone-screen">
+            <video
+              ref={videoRef}
+              src={src}
+              className="thesis-video"
+              playsInline
+              muted
+              loop={false}
+              aria-label={ariaLabel}
+              onEnded={handleEnded}
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+          <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
+        </div>
+        <div className="thesis-iphone-video-bottom">
+          {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
+        </div>
+      </figure>
+    </div>
   );
 }
 
@@ -199,13 +264,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             label="PROBLEM"
             heading="Kroger does not have a place for HSA/FSA cards in the app so customers work around this by adding their cards into the credit card section."
             headingMedia={
-              <div className="thesis-iphone-gray-box">
-                <VideoInPhone
-                  src="/hsafsa/wallet-kroger-hsa-fsa.mp4"
-                  subtitle="New HSA/FSA section in Wallet"
-                  ariaLabel="Wallet prototype showing new HSA/FSA card section in the app"
-                />
-              </div>
+              <VideoInPhone
+                src="/hsafsa/wallet-kroger-hsa-fsa.mp4"
+                subtitle="New HSA/FSA section in Wallet"
+                ariaLabel="Wallet prototype showing new HSA/FSA card section in the app"
+              />
             }
             bodyHeading2
             body="This limitation prevents customers from utilizing their benefit funds conveniently."
@@ -273,13 +336,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <span className="thesis-section-label">FEATURE 1</span>
             <h2 className="thesis-section-heading">Messaging to inform customers of the new card type.</h2>
             <p className="thesis-section-body">We needed clearly worded conside text so customers could understand how to use their cards.</p>
-            <div className="thesis-iphone-gray-box">
-              <VideoInPhone
-                src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
-                subtitle="Messaging"
-                ariaLabel="Messaging feature prototype playing in phone mockup"
-              />
-            </div>
+            <VideoInPhone
+              src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
+              subtitle="Messaging"
+              ariaLabel="Messaging feature prototype playing in phone mockup"
+            />
           </motion.section>
           <motion.section
             id="assumption-2"
@@ -292,13 +353,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <span className="thesis-section-label">FEATURE 2</span>
             <h2 className="thesis-section-heading">Split payments capabilities introduced.</h2>
             <p className="thesis-section-body">Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs also reflect this order in payment split section for customers to understand the hierarchy of payment methods.</p>
-            <div className="thesis-iphone-gray-box">
-              <VideoInPhone
-                src="/hsafsa/split-tender.mp4"
-                subtitle="Split tender"
-                ariaLabel="Split payments feature prototype playing in phone mockup"
-              />
-            </div>
+            <VideoInPhone
+              src="/hsafsa/split-tender.mp4"
+              subtitle="Split tender"
+              ariaLabel="Split payments feature prototype playing in phone mockup"
+            />
           </motion.section>
           <motion.section
             id="assumption-3"
@@ -314,13 +373,11 @@ const HsaFsa = ({ setCursorVariant }) => {
               We had to think through all edge cases from substitutions, insufficient funds and no cards in wallet. In the case that a customer might not have enough funds on their cards, the checkout automatically recalculates the payment split to use
               whatever is left on the customer's cards.
             </p>
-            <div className="thesis-iphone-gray-box">
-              <VideoInPhone
-                src="/hsafsa/insufficient-funds.mp4"
-                subtitle="Insufficient funds"
-                ariaLabel="Substitutions feature prototype playing in phone mockup"
-              />
-            </div>
+            <VideoInPhone
+              src="/hsafsa/insufficient-funds.mp4"
+              subtitle="Insufficient funds"
+              ariaLabel="Substitutions feature prototype playing in phone mockup"
+            />
           </motion.section>
           <motion.section
             id="assumption-4"
@@ -333,13 +390,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <span className="thesis-section-label">FEATURE 4</span>
             <h2 className="thesis-section-heading">Customers who have already added HSA/FSA cards in the credit card section need their cards moved to the new section.</h2>
             <p className="thesis-section-body">There were error messages designed that gently and clearly prompted customers to move existing HSA/FSA cards saved into the credit section into the correct new section.</p>
-            <div className="thesis-iphone-gray-box">
-              <VideoInPhone
-                src="/hsafsa/move-cards-around.mp4"
-                subtitle="Error messaging"
-                ariaLabel="Existing cards feature prototype playing in phone mockup"
-              />
-            </div>
+            <VideoInPhone
+              src="/hsafsa/move-cards-around.mp4"
+              subtitle="Error messaging"
+              ariaLabel="Existing cards feature prototype playing in phone mockup"
+            />
           </motion.section>
 
           <motion.section
@@ -440,7 +495,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">LEARNINGS</span>
             <h2 className="thesis-section-heading thesis-section-intro-heading">
-              As a full-time product designer, I learned a lot by shipping my first full feature.
+              As one of two designers on the team, I was really able to take ownership on this project.
             </h2>
             <div className="thesis-prediction-boxes">
               <div className="thesis-context-stat-box" aria-label="Learning">
@@ -452,7 +507,7 @@ const HsaFsa = ({ setCursorVariant }) => {
                     <path d="M16 3.13a4 4 0 0 1 0 7.75" />
                   </svg>
                 </span>
-                <p className="thesis-context-stat-box-text">Collaborating closely with developers taught me how important clear, detailed design handoffs are for seamless implementation.</p>
+                <p className="thesis-context-stat-box-text">Being put in charge of design execution, I was able to quickly level up my skills as a designer.</p>
               </div>
               <div className="thesis-context-stat-box" aria-label="Learning">
                 <span className="thesis-context-stat-box-icon" aria-hidden="true">
@@ -462,7 +517,7 @@ const HsaFsa = ({ setCursorVariant }) => {
                     <path d="M12 8h.01" />
                   </svg>
                 </span>
-                <p className="thesis-context-stat-box-text">Adding accessibility tags to my designs reinforced how critical it is to build products everyone can use.</p>
+                <p className="thesis-context-stat-box-text">Collaborating closely with developers taught me how important clear, detailed design handoffs are for seamless implementation.</p>
               </div>
               <div className="thesis-context-stat-box" aria-label="Learning">
                 <span className="thesis-context-stat-box-icon" aria-hidden="true">
