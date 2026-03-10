@@ -7,18 +7,38 @@ import './Thesis.css';
 
 function VideoInPhone({ src, subtitle, ariaLabel }) {
   const videoRef = useRef(null);
+  const [progress, setProgress] = useState(0);
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) el.play().catch(() => {});
+        if (entry.isIntersecting) {
+          el.currentTime = 0;
+          setProgress(0);
+          el.play().catch(() => {});
+        }
       },
-      { threshold: 0.2 }
+      { threshold: 0 }
     );
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
+  const handleTimeUpdate = () => {
+    const el = videoRef.current;
+    if (!el || !el.duration) return;
+    setProgress((el.currentTime / el.duration) * 100);
+  };
+  const handleEnded = () => {
+    setProgress(100);
+    const el = videoRef.current;
+    if (!el) return;
+    setTimeout(() => {
+      el.currentTime = 0;
+      setProgress(0);
+      el.play().catch(() => {});
+    }, 1000);
+  };
   return (
     <figure className="thesis-figure thesis-iphone-figure">
       <div className="thesis-iphone-device-wrap">
@@ -31,9 +51,14 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
             muted
             loop={false}
             aria-label={ariaLabel}
+            onTimeUpdate={handleTimeUpdate}
+            onEnded={handleEnded}
           >
             Your browser does not support the video tag.
           </video>
+          <div className="thesis-iphone-video-progress" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
+            <div className="thesis-iphone-video-progress-fill" style={{ width: `${progress}%` }} />
+          </div>
         </div>
         <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
       </div>
@@ -257,13 +282,13 @@ const HsaFsa = ({ setCursorVariant }) => {
             transition={{ duration: 0.4 }}
           >
             <span className="thesis-section-label">FEATURE 1</span>
-            <h2 className="thesis-section-heading">Delivery fees can be covered but tips are not.</h2>
-            <p className="thesis-section-body">We needed clear messaging so customers could clearly understand the amount being put on their HSA/FSA cards.</p>
+            <h2 className="thesis-section-heading">Messaging to inform customers of the new card type.</h2>
+            <p className="thesis-section-body">We needed clearly worded conside text so customers could understand how to use their cards.</p>
             <div className="thesis-iphone-gray-box">
               <VideoInPhone
-                src="/hsafsa/split-tender.mp4"
-                subtitle="split tender"
-                ariaLabel="Delivery fees feature prototype playing in phone mockup"
+                src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
+                subtitle="Messaging"
+                ariaLabel="Messaging feature prototype playing in phone mockup"
               />
             </div>
           </motion.section>
@@ -276,12 +301,12 @@ const HsaFsa = ({ setCursorVariant }) => {
             transition={{ duration: 0.4 }}
           >
             <span className="thesis-section-label">FEATURE 2</span>
-            <h2 className="thesis-section-heading">Split payments are possible.</h2>
-            <p className="thesis-section-body">Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs must also reflect this order for customers to understand the hierarchy of payment methods.</p>
+            <h2 className="thesis-section-heading">Split payments capabilities introduced.</h2>
+            <p className="thesis-section-body">Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs also reflect this order in payment split section for customers to understand the hierarchy of payment methods.</p>
             <div className="thesis-iphone-gray-box">
               <VideoInPhone
-                src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
-                subtitle="messaging kroger hsa fsa"
+                src="/hsafsa/split-tender.mp4"
+                subtitle="Split tender"
                 ariaLabel="Split payments feature prototype playing in phone mockup"
               />
             </div>
@@ -295,12 +320,15 @@ const HsaFsa = ({ setCursorVariant }) => {
             transition={{ duration: 0.4 }}
           >
             <span className="thesis-section-label">FEATURE 3</span>
-            <h2 className="thesis-section-heading">Substitutions will still be handled.</h2>
-            <p className="thesis-section-body">We had to think through modifications too. Since there was a chance a substituted item may not be HSA/FSA eligible, customers must have backup bank cards in their order for other unexpected fees.</p>
+            <h2 className="thesis-section-heading">Automatic handling of insufficient funds.</h2>
+            <p className="thesis-section-body">
+              We had to think through all edge cases from substitutions, insufficient funds and no cards in wallet. In the case that a customer might not have enough funds on their cards, the checkout automatically recalculates the payment split to use
+              whatever is left on the customer's cards.
+            </p>
             <div className="thesis-iphone-gray-box">
               <VideoInPhone
                 src="/hsafsa/insufficient-funds.mp4"
-                subtitle="insufficient funds"
+                subtitle="Insufficient funds"
                 ariaLabel="Substitutions feature prototype playing in phone mockup"
               />
             </div>
@@ -315,11 +343,11 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">FEATURE 4</span>
             <h2 className="thesis-section-heading">Customers who have already added HSA/FSA cards in the credit card section need their cards moved to the new section.</h2>
-            <p className="thesis-section-body">There were edge cases designed that moved existing HSA/FSA cards saved into the credit section into the correct new section without confusing customers.</p>
+            <p className="thesis-section-body">There were error messages designed that gently and clearly prompted customers to move existing HSA/FSA cards saved into the credit section into the correct new section.</p>
             <div className="thesis-iphone-gray-box">
               <VideoInPhone
                 src="/hsafsa/move-cards-around.mp4"
-                subtitle="move cards around"
+                subtitle="Error messaging"
                 ariaLabel="Existing cards feature prototype playing in phone mockup"
               />
             </div>

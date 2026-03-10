@@ -1690,9 +1690,11 @@
 
 /* Grey box around iPhone + video (Problem + Feature 1–4): single box, full width, consistent height */
 .thesis-iphone-gray-box {
+  position: relative;
   width: 100%;
   height: 545px;
   padding: 24px;
+  padding-bottom: 28px;
   margin-top: 20px;
   background: var(--hover-bg);
   border: 1px solid var(--border-color);
@@ -1741,6 +1743,25 @@
   border-radius: 36px;
 }
 
+.thesis-iphone-device-wrap .thesis-iphone-video-progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 0 0 36px 36px;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.thesis-iphone-device-wrap .thesis-iphone-video-progress-fill {
+  height: 100%;
+  background: #666;
+  border-radius: 0 0 0 0;
+  transition: width 0.1s linear;
+}
+
 .thesis-iphone-device-wrap .thesis-iphone-frame {
   position: absolute;
   top: 0;
@@ -1754,11 +1775,15 @@
   background: transparent;
 }
 
-.thesis-iphone-video-subtitle {
-  margin: 10px 0 0;
-  font-size: 0.8rem;
+/* Video subtitle inside gray box, bottom-right (like service blueprint caption on left) */
+.thesis-iphone-gray-box .thesis-iphone-video-subtitle {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
   color: var(--text-secondary);
-  text-align: center;
 }
 
 
