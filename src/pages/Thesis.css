@@ -811,6 +811,10 @@
   background: #fff !important;
 }
 
+#problem .thesis-iphone-gray-box .thesis-figure {
+  background: transparent !important;
+}
+
 /* Concept development wireframes: fully transparent so PNG blends with page */
 #concept-development .thesis-section-images,
 #concept-development .thesis-figure-white-bg {
@@ -1748,6 +1752,13 @@
   pointer-events: none;
   z-index: 1;
   background: transparent;
+}
+
+.thesis-iphone-video-subtitle {
+  margin: 10px 0 0;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  text-align: center;
 }
 
 

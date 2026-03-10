@@ -1,9 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
 import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
+
+function VideoInPhone({ src, subtitle, ariaLabel }) {
+  const videoRef = useRef(null);
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) el.play().catch(() => {});
+      },
+      { threshold: 0.2 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  return (
+    <figure className="thesis-figure thesis-iphone-figure">
+      <div className="thesis-iphone-device-wrap">
+        <div className="thesis-iphone-screen">
+          <video
+            ref={videoRef}
+            src={src}
+            className="thesis-video"
+            playsInline
+            muted
+            loop={false}
+            aria-label={ariaLabel}
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+        <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
+      </div>
+      {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
+    </figure>
+  );
+}
 
 const HSA_FSA_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
@@ -149,24 +186,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             heading="Kroger does not have a place for HSA/FSA cards in the app so customers work around this by adding their cards into the credit card section."
             headingMedia={
               <div className="thesis-iphone-gray-box">
-                <figure className="thesis-figure thesis-iphone-figure">
-                  <div className="thesis-iphone-device-wrap">
-                    <div className="thesis-iphone-screen">
-                      <video
-                        src="/hsafsa/wallet-kroger-hsa-fsa.mp4"
-                        className="thesis-video"
-                        playsInline
-                        muted
-                        loop
-                        autoPlay
-                        aria-label="Wallet prototype showing new HSA/FSA card section in the app"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
-                    </div>
-                    <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
-                  </div>
-                </figure>
+                <VideoInPhone
+                  src="/hsafsa/wallet-kroger-hsa-fsa.mp4"
+                  subtitle="wallet kroger hsa fsa"
+                  ariaLabel="Wallet prototype showing new HSA/FSA card section in the app"
+                />
               </div>
             }
             bodyHeading2
@@ -236,24 +260,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Delivery fees can be covered but tips are not.</h2>
             <p className="thesis-section-body">We needed clear messaging so customers could clearly understand the amount being put on their HSA/FSA cards.</p>
             <div className="thesis-iphone-gray-box">
-              <figure className="thesis-figure thesis-iphone-figure">
-                <div className="thesis-iphone-device-wrap">
-                  <div className="thesis-iphone-screen">
-                    <video
-                      src="/hsafsa/split-tender.mp4"
-                      className="thesis-video"
-                      playsInline
-                      muted
-                      loop
-                      autoPlay
-                      aria-label="Delivery fees feature prototype playing in phone mockup"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                  <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
-                </div>
-              </figure>
+              <VideoInPhone
+                src="/hsafsa/split-tender.mp4"
+                subtitle="split tender"
+                ariaLabel="Delivery fees feature prototype playing in phone mockup"
+              />
             </div>
           </motion.section>
           <motion.section
@@ -268,24 +279,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Split payments are possible.</h2>
             <p className="thesis-section-body">Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs must also reflect this order for customers to understand the hierarchy of payment methods.</p>
             <div className="thesis-iphone-gray-box">
-              <figure className="thesis-figure thesis-iphone-figure">
-                <div className="thesis-iphone-device-wrap">
-                  <div className="thesis-iphone-screen">
-                    <video
-                      src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
-                      className="thesis-video"
-                      playsInline
-                      muted
-                      loop
-                      autoPlay
-                      aria-label="Split payments feature prototype playing in phone mockup"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                  <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
-                </div>
-              </figure>
+              <VideoInPhone
+                src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
+                subtitle="messaging kroger hsa fsa"
+                ariaLabel="Split payments feature prototype playing in phone mockup"
+              />
             </div>
           </motion.section>
           <motion.section
@@ -300,24 +298,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Substitutions will still be handled.</h2>
             <p className="thesis-section-body">We had to think through modifications too. Since there was a chance a substituted item may not be HSA/FSA eligible, customers must have backup bank cards in their order for other unexpected fees.</p>
             <div className="thesis-iphone-gray-box">
-              <figure className="thesis-figure thesis-iphone-figure">
-                <div className="thesis-iphone-device-wrap">
-                  <div className="thesis-iphone-screen">
-                    <video
-                      src="/hsafsa/insufficient-funds.mp4"
-                      className="thesis-video"
-                      playsInline
-                      muted
-                      loop
-                      autoPlay
-                      aria-label="Substitutions feature prototype playing in phone mockup"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                  <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
-                </div>
-              </figure>
+              <VideoInPhone
+                src="/hsafsa/insufficient-funds.mp4"
+                subtitle="insufficient funds"
+                ariaLabel="Substitutions feature prototype playing in phone mockup"
+              />
             </div>
           </motion.section>
           <motion.section
@@ -332,24 +317,11 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Customers who have already added HSA/FSA cards in the credit card section need their cards moved to the new section.</h2>
             <p className="thesis-section-body">There were edge cases designed that moved existing HSA/FSA cards saved into the credit section into the correct new section without confusing customers.</p>
             <div className="thesis-iphone-gray-box">
-              <figure className="thesis-figure thesis-iphone-figure">
-                <div className="thesis-iphone-device-wrap">
-                  <div className="thesis-iphone-screen">
-                    <video
-                      src="/hsafsa/move-cards-around.mp4"
-                      className="thesis-video"
-                      playsInline
-                      muted
-                      loop
-                      autoPlay
-                      aria-label="Existing cards feature prototype playing in phone mockup"
-                    >
-                      Your browser does not support the video tag.
-                    </video>
-                  </div>
-                  <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
-                </div>
-              </figure>
+              <VideoInPhone
+                src="/hsafsa/move-cards-around.mp4"
+                subtitle="move cards around"
+                ariaLabel="Existing cards feature prototype playing in phone mockup"
+              />
             </div>
           </motion.section>
 
