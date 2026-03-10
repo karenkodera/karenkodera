@@ -50,6 +50,7 @@ export default function CaseStudySection({
   solutionBox,
   statBox,
   calloutBoxes,
+  headingMedia,
   headingPlaceholder,
   bodyHeading2,
   headingHeading2,
@@ -327,11 +328,13 @@ export default function CaseStudySection({
         <>
           {labelEl}
           {headingEl}
-          {headingPlaceholder && (
-            <div className="thesis-heading-placeholder" aria-hidden="true">
-              <span className="thesis-heading-placeholder-text">{headingPlaceholder.text}</span>
-            </div>
-          )}
+          {headingMedia
+            ? headingMedia
+            : headingPlaceholder && (
+                <div className="thesis-heading-placeholder" aria-hidden="true">
+                  <span className="thesis-heading-placeholder-text">{headingPlaceholder.text}</span>
+                </div>
+              )}
           {bodyEl}
           {calloutBoxes && calloutBoxes.length > 0 && (
             <div className="thesis-callout-boxes">

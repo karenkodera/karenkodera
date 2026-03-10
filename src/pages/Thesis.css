@@ -1684,11 +1684,8 @@
   z-index: 1;
 }
 
-/* Grey box around all iPhone images – full width, consistent height (phone 240×497 + 24px padding) */
-.thesis-iphone-gray-box,
-#assumption-2 .thesis-section-images,
-#assumption-3 .thesis-section-images,
-#assumption-4 .thesis-section-images {
+/* Grey box around iPhone + video (Problem + Feature 1–4): single box, full width, consistent height */
+.thesis-iphone-gray-box {
   width: 100%;
   height: 545px;
   padding: 24px;
@@ -1700,12 +1697,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-#assumption-2 .thesis-section-images,
-#assumption-3 .thesis-section-images,
-#assumption-4 .thesis-section-images {
-  flex-direction: column;
 }
 
 /* iPhone 16 Pro frame: scaled to match other iPhone images (240px), video 62px rounded corners */
@@ -1759,30 +1750,6 @@
   background: transparent;
 }
 
-/* Assumptions 2–4: iPhone frame image same size as assumption 1, inside grey box */
-#assumption-2 .thesis-section-images .thesis-figure,
-#assumption-3 .thesis-section-images .thesis-figure,
-#assumption-4 .thesis-section-images .thesis-figure {
-  max-width: 240px;
-  margin: 0 auto;
-  background: transparent;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
-
-#assumption-2 .thesis-section-images .thesis-figure .thesis-image,
-#assumption-3 .thesis-section-images .thesis-figure .thesis-image,
-#assumption-4 .thesis-section-images .thesis-figure .thesis-image {
-  background: transparent;
-  width: 100%;
-  max-width: 240px;
-  height: auto;
-  display: block;
-  border: none;
-  outline: none;
-  box-shadow: none;
-}
 
 .thesis-case-nav {
   display: flex;
