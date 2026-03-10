@@ -2,6 +2,8 @@
   min-height: 100vh;
   padding-top: 100px;
   display: flex;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 /* Left nav: takes space, sticks on scroll, no line beside content */
@@ -2083,5 +2085,58 @@
   .thesis-list-wrap {
     grid-template-columns: 1fr;
     max-width: 100%;
+  }
+
+  /* Feedback: stack design + testing boxes on small screens */
+  .thesis-feedback-two-boxes {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .thesis-feedback-design-box,
+  .thesis-feedback-testing-box {
+    flex: none;
+    max-width: 100%;
+  }
+
+  .thesis-feedback-box {
+    max-height: none;
+  }
+
+  /* iPhone video boxes: reduce padding and min-height on mobile */
+  .thesis-iphone-gray-box {
+    min-height: 420px;
+    padding: 16px;
+    padding-bottom: 24px;
+  }
+
+  .thesis-iphone-figure {
+    max-width: 200px;
+  }
+
+  .thesis-iphone-device-wrap {
+    width: 200px;
+  }
+}
+
+/* Very small phones: smaller iPhone mockup and tighter padding */
+@media (max-width: 480px) {
+  .thesis-article {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .thesis-iphone-gray-box {
+    min-height: 360px;
+    padding: 12px;
+    padding-bottom: 20px;
+  }
+
+  .thesis-iphone-figure {
+    max-width: 160px;
+  }
+
+  .thesis-iphone-device-wrap {
+    width: 160px;
   }
 }

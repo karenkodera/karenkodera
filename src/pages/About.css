@@ -344,7 +344,8 @@
   }
 
   .about-photo-wrap {
-    width: 390px;
+    width: 100%;
+    max-width: 390px;
     margin: 0 auto;
   }
 

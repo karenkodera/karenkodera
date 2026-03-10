@@ -16,11 +16,6 @@ import './App.css';
 const THEME_STORAGE_KEY = 'karenkodera-theme';
 
 function getInitialTheme() {
-  try {
-    const stored = localStorage.getItem(THEME_STORAGE_KEY);
-    if (stored === 'dark' || stored === 'light') return stored;
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) return 'dark';
-  } catch (_) {}
   return 'light';
 }
 
