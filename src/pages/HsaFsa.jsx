@@ -7,7 +7,6 @@ import './Thesis.css';
 
 function VideoInPhone({ src, subtitle, ariaLabel }) {
   const videoRef = useRef(null);
-  const [progress, setProgress] = useState(0);
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
@@ -15,7 +14,6 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
       ([entry]) => {
         if (entry.isIntersecting) {
           el.currentTime = 0;
-          setProgress(0);
           el.play().catch(() => {});
         }
       },
@@ -24,18 +22,11 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
     observer.observe(el);
     return () => observer.disconnect();
   }, []);
-  const handleTimeUpdate = () => {
-    const el = videoRef.current;
-    if (!el || !el.duration) return;
-    setProgress((el.currentTime / el.duration) * 100);
-  };
   const handleEnded = () => {
-    setProgress(100);
     const el = videoRef.current;
     if (!el) return;
     setTimeout(() => {
       el.currentTime = 0;
-      setProgress(0);
       el.play().catch(() => {});
     }, 1000);
   };
@@ -51,18 +42,16 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
             muted
             loop={false}
             aria-label={ariaLabel}
-            onTimeUpdate={handleTimeUpdate}
             onEnded={handleEnded}
           >
             Your browser does not support the video tag.
           </video>
-          <div className="thesis-iphone-video-progress" role="progressbar" aria-valuenow={Math.round(progress)} aria-valuemin={0} aria-valuemax={100}>
-            <div className="thesis-iphone-video-progress-fill" style={{ width: `${progress}%` }} />
-          </div>
         </div>
         <img className="thesis-iphone-frame" src="/hsafsa/iphone-16-pro-frame.png" alt="" role="presentation" />
       </div>
-      {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
+      <div className="thesis-iphone-video-bottom">
+        {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
+      </div>
     </figure>
   );
 }
@@ -213,7 +202,7 @@ const HsaFsa = ({ setCursorVariant }) => {
               <div className="thesis-iphone-gray-box">
                 <VideoInPhone
                   src="/hsafsa/wallet-kroger-hsa-fsa.mp4"
-                  subtitle="wallet kroger hsa fsa"
+                  subtitle="New HSA/FSA section in Wallet"
                   ariaLabel="Wallet prototype showing new HSA/FSA card section in the app"
                 />
               </div>
@@ -408,7 +397,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">BUSINESS GOALS</span>
             <h2 className="thesis-section-heading thesis-section-intro-heading">
-              This feature was just introduced in 2026. The team is predicting that this feature will:
+              This feature was shipped in 2026. The team is predicting that this feature will:
             </h2>
             <div className="thesis-prediction-boxes">
               <div className="thesis-context-stat-box" aria-label="Prediction">
@@ -451,7 +440,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">LEARNINGS</span>
             <h2 className="thesis-section-heading thesis-section-intro-heading">
-              As a full-time product designer, I was able to level up my skills in a real-world experience.
+              As a full-time product designer, I learned a lot by shipping my first full feature.
             </h2>
             <div className="thesis-prediction-boxes">
               <div className="thesis-context-stat-box" aria-label="Learning">

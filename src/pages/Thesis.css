@@ -815,6 +815,10 @@
   background: transparent !important;
 }
 
+#problem .thesis-section-body {
+  margin-top: 28px;
+}
+
 /* Concept development wireframes: fully transparent so PNG blends with page */
 #concept-development .thesis-section-images,
 #concept-development .thesis-figure-white-bg {
@@ -1688,11 +1692,12 @@
   z-index: 1;
 }
 
-/* Grey box around iPhone + video (Problem + Feature 1–4): single box, full width, consistent height */
+/* Grey box around iPhone + video (Problem + Feature 1–4): full width, height fits phone + progress bar */
 .thesis-iphone-gray-box {
   position: relative;
   width: 100%;
-  height: 545px;
+  min-height: 545px;
+  height: auto;
   padding: 24px;
   padding-bottom: 28px;
   margin-top: 20px;
@@ -1705,10 +1710,13 @@
   align-items: center;
 }
 
-/* iPhone 16 Pro frame: scaled to match other iPhone images (240px), video 62px rounded corners */
 .thesis-iphone-figure {
   margin: 0 auto;
   max-width: 240px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .thesis-iphone-device-wrap {
@@ -1721,6 +1729,7 @@
   margin: 0 auto;
   box-sizing: border-box;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 /* Screen area 726×1582: inset 3.82% horizontal, 1.35% vertical from 786×1626 */
@@ -1743,25 +1752,6 @@
   border-radius: 36px;
 }
 
-.thesis-iphone-device-wrap .thesis-iphone-video-progress {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.2);
-  border-radius: 0 0 36px 36px;
-  overflow: hidden;
-  z-index: 1;
-}
-
-.thesis-iphone-device-wrap .thesis-iphone-video-progress-fill {
-  height: 100%;
-  background: #666;
-  border-radius: 0 0 0 0;
-  transition: width 0.1s linear;
-}
-
 .thesis-iphone-device-wrap .thesis-iphone-frame {
   position: absolute;
   top: 0;
@@ -1775,15 +1765,22 @@
   background: transparent;
 }
 
-/* Video subtitle inside gray box, bottom-right (like service blueprint caption on left) */
-.thesis-iphone-gray-box .thesis-iphone-video-subtitle {
+/* Video subtitle + progress bar at bottom of gray box (subtitle above bar, full-width bar) */
+/* Video subtitle: same spacing as service blueprint caption (bottom 8px, left 8px) */
+.thesis-iphone-video-bottom {
   position: absolute;
-  bottom: 8px;
   left: 8px;
+  right: 8px;
+  bottom: 8px;
+  box-sizing: border-box;
+}
+
+.thesis-iphone-gray-box .thesis-iphone-video-subtitle {
   margin: 0;
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-align: left;
 }
 
 
