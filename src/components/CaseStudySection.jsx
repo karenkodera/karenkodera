@@ -55,6 +55,7 @@ export default function CaseStudySection({
   bodyHeading2,
   headingHeading2,
   imagePlaceholder,
+  mediaInGrayBox,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -398,11 +399,11 @@ export default function CaseStudySection({
         </div>
       )}
       {body2 && <p className="thesis-section-body">{body2}</p>}
-      {imagePlaceholder && (
+      {mediaInGrayBox || (imagePlaceholder && (
         <div className="thesis-heading-placeholder" aria-hidden="true">
           <span className="thesis-heading-placeholder-text">{imagePlaceholder.text}</span>
         </div>
-      )}
+      ))}
       {!imagesBeforeBody2 && images && images.length > 0 && !(equationImage && listWithIcons && listWithIcons.length === images.length) && !(textInBox && images.length > 0) && (
         <div className="thesis-section-images">
           {images.map((img, i) => (

@@ -19,12 +19,15 @@ function getInitialTheme() {
   return 'light';
 }
 
+const EMAIL_HIDE_SCROLL_THRESHOLD = 60;
+
 function AppContent() {
   const location = useLocation();
   const [cursorVariant, setCursorVariant] = useState('default');
   const [hoveredElement, setHoveredElement] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const [emailLinkHidden, setEmailLinkHidden] = useState(false);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -48,6 +51,15 @@ function AppContent() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  useEffect(() => {
+    const onScroll = () => {
+      setEmailLinkHidden(window.scrollY > EMAIL_HIDE_SCROLL_THRESHOLD);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   const handleCursorChange = useCallback((variant, element = null) => {
     setCursorVariant(variant);
     setHoveredElement(element);
@@ -62,7 +74,7 @@ function AppContent() {
       <Header setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />
       <a
         href="mailto:karen@kodera.us"
-        className="app-email-link"
+        className={`app-email-link${emailLinkHidden ? ' app-email-link--hidden' : ''}`}
         onMouseEnter={() => setCursorVariant('hover')}
         onMouseLeave={() => setCursorVariant('default')}
         aria-label="Email karen@kodera.us"

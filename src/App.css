@@ -175,7 +175,7 @@ img {
   right: 10px;
 }
 
-/* Email link (top right, all pages) */
+/* Email link (top right, all pages) – fixed, disappears when user scrolls down */
 .app-email-link {
   position: fixed;
   top: 24px;
@@ -188,7 +188,12 @@ img {
   color: #9a9a9a;
   text-decoration: none;
   z-index: 10;
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, opacity 0.25s ease;
+}
+
+.app-email-link--hidden {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .app-email-link:hover {

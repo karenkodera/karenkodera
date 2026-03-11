@@ -121,6 +121,118 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
   );
 }
 
+function DesktopVideoWithToolbar({ src, subtitle, ariaLabel }) {
+  const videoRef = useRef(null);
+  const [showControls, setShowControls] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.currentTime = 0;
+          el.play().catch(() => {});
+          setIsPaused(false);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleEnded = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    setTimeout(() => {
+      el.currentTime = 0;
+      el.play().catch(() => {});
+      setIsPaused(false);
+    }, 1000);
+  };
+
+  const handleRewind = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.currentTime = 0;
+    el.play().catch(() => {});
+    setIsPaused(false);
+  };
+
+  const handlePausePlay = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (el.paused) {
+      el.play().catch(() => {});
+      setIsPaused(false);
+    } else {
+      el.pause();
+      setIsPaused(true);
+    }
+  };
+
+  return (
+    <div
+      className="thesis-iphone-gray-box thesis-desktop-video-wrap"
+      onMouseEnter={() => setShowControls(true)}
+      onMouseLeave={() => setShowControls(false)}
+    >
+      {showControls && (
+        <div className="thesis-iphone-video-controls" aria-hidden="true">
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
+            onClick={handlePausePlay}
+            aria-label={isPaused ? 'Play video' : 'Pause video'}
+          >
+            {isPaused ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            )}
+          </button>
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
+            onClick={handleRewind}
+            aria-label="Restart video"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
+        </div>
+      )}
+      <figure className="thesis-figure thesis-desktop-video-figure">
+        <img src="/hsafsa/toolbar.png" alt="" className="thesis-desktop-toolbar" role="presentation" />
+        <video
+          ref={videoRef}
+          src={src}
+          className="thesis-desktop-video"
+          playsInline
+          muted
+          loop={false}
+          aria-label={ariaLabel}
+          onEnded={handleEnded}
+        >
+          Your browser does not support the video tag.
+        </video>
+        <div className="thesis-iphone-video-bottom">
+          {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
+        </div>
+      </figure>
+    </div>
+  );
+}
+
 const HSA_FSA_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
@@ -267,7 +379,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             heading="Kroger does not have a place for HSA/FSA cards in the app so customers work around this by adding their cards into the credit card section."
             headingMedia={
               <VideoInPhone
-                src="/hsafsa/wallet-kroger-hsa-fsa.mp4"
+                src="/hsafsa/wallet%20kroger%20hsa%20fsa.mp4"
                 subtitle="New HSA/FSA section in Wallet"
                 ariaLabel="Wallet prototype showing new HSA/FSA card section in the app"
               />
@@ -339,7 +451,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Messaging to inform customers of the new card type.</h2>
             <p className="thesis-section-body">We needed clearly worded conside text so customers could understand how to use their cards.</p>
             <VideoInPhone
-              src="/hsafsa/messaging-kroger-hsa-fsa.mp4"
+              src="/hsafsa/messaging%20kroger%20hsa%20fsa.mp4"
               subtitle="Messaging"
               ariaLabel="Messaging feature prototype playing in phone mockup"
             />
@@ -356,7 +468,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Split payments capabilities introduced.</h2>
             <p className="thesis-section-body">Customers can split payment in this order: SNAP EBT, HSA/FSA, Gift Card, Bank card. Designs also reflect this order in payment split section for customers to understand the hierarchy of payment methods.</p>
             <VideoInPhone
-              src="/hsafsa/split-tender.mp4"
+              src="/hsafsa/split%20tender.mp4"
               subtitle="Split tender"
               ariaLabel="Split payments feature prototype playing in phone mockup"
             />
@@ -376,7 +488,7 @@ const HsaFsa = ({ setCursorVariant }) => {
               whatever is left on the customer's cards.
             </p>
             <VideoInPhone
-              src="/hsafsa/insufficient-funds.mp4?v=2"
+              src="/hsafsa/insufficient%20funds.mp4"
               subtitle="Insufficient funds"
               ariaLabel="Substitutions feature prototype playing in phone mockup"
             />
@@ -393,7 +505,7 @@ const HsaFsa = ({ setCursorVariant }) => {
             <h2 className="thesis-section-heading">Customers who have already added HSA/FSA cards in the credit card section need their cards moved to the new section.</h2>
             <p className="thesis-section-body">There were error messages designed that gently and clearly prompted customers to move existing HSA/FSA cards saved into the credit section into the correct new section.</p>
             <VideoInPhone
-              src="/hsafsa/move-cards-around.mp4"
+              src="/hsafsa/move%20cards%20around.mp4"
               subtitle="Error messaging"
               ariaLabel="Existing cards feature prototype playing in phone mockup"
             />
@@ -441,7 +553,13 @@ const HsaFsa = ({ setCursorVariant }) => {
             heading="Final flows"
             headingHeading2
             body="For handoff, I created designs for all device types: iOS, android, web mobile and web desktop."
-            imagePlaceholder={{ text: 'Image placeholder' }}
+            mediaInGrayBox={
+              <DesktopVideoWithToolbar
+                src="/hsafsa/web%20desktop.mp4"
+                subtitle="Web desktop"
+                ariaLabel="Web desktop final flow prototype"
+              />
+            }
           />
 
           <motion.section

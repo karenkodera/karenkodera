@@ -1831,6 +1831,37 @@
   text-align: left;
 }
 
+/* Full-width desktop video with toolbar on top (Solution "Final flows"), gray box + subtitle match other sections */
+.thesis-desktop-video-wrap.thesis-iphone-gray-box {
+  min-height: 0;
+}
+
+.thesis-desktop-video-wrap {
+  position: relative;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.thesis-desktop-video-figure {
+  margin: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+.thesis-desktop-toolbar {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+}
+
+.thesis-desktop-video {
+  display: block;
+  width: 100%;
+  height: auto;
+  vertical-align: top;
+  background: #000;
+}
 
 .thesis-case-nav {
   display: flex;
