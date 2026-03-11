@@ -73,12 +73,15 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   const dotCursorPos = getDotCursorPosition();
 
-  const projectPillX = mousePosition.x - 50;
-  const projectPillY = mousePosition.y - 20;
+  // Pill floats just above the dot when hovering a case study
+  const projectPillOffsetX = 6;
+  const projectPillOffsetY = -28;
+  const projectPillX = mousePosition.x + projectPillOffsetX;
+  const projectPillY = mousePosition.y + projectPillOffsetY;
 
   return (
     <>
-      {/* Default cursor dot - hidden when project pill is shown (pill has its own dot inside) */}
+      {/* Default cursor dot - always visible (pill floats above it on project hover) */}
       <motion.div
         className={`custom-cursor ${isTextVariant ? 'cursor-hidden' : ''} ${isNavDotVariant ? 'nav-dot-cursor' : ''}`}
         animate={{
@@ -86,7 +89,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
           y: dotCursorPos.y,
           width: 8,
           height: 8,
-          opacity: isProjectVariant ? 0 : (isVisible ? 1 : 0),
+          opacity: isVisible ? 1 : 0,
           scale: isNavDotVariant ? 1.1 : 1,
         }}
         transition={{
@@ -146,7 +149,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View project pill - show when hovering a case study, appear at cursor not from corner */}
+      {/* View project pill - floats diagonal top-right of dot when hovering a case study */}
       {isProjectVariant && (
         <motion.div
           className="custom-cursor project-cursor"
@@ -157,7 +160,6 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
           }}
           transition={{ type: 'spring', stiffness: 400, damping: 30 }}
         >
-          <span className="project-cursor-dot" />
           view project
         </motion.div>
       )}

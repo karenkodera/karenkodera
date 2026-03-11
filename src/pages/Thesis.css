@@ -829,6 +829,37 @@
   margin-top: 28px;
 }
 
+/* Thesis Problem: no video between heading and body, so use smaller gap to match other sections */
+#problem:not(:has(.thesis-iphone-gray-box)) .thesis-section-body {
+  margin-top: 0;
+}
+
+/* Problem stat: gray box with "20% garments unsold" + 5 shirt icons (1 filled, 4 outline) */
+.thesis-problem-stat-box {
+  margin-top: 20px;
+  padding: 16px 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.thesis-problem-stat-box-text {
+  margin: 0 0 12px 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.thesis-problem-stat-box-icon {
+  margin-top: 12px;
+  color: var(--text-secondary);
+  line-height: 0;
+}
+
+.thesis-problem-stat-box-icon svg {
+  display: block;
+}
+
 /* Concept development wireframes: fully transparent so PNG blends with page */
 #concept-development .thesis-section-images,
 #concept-development .thesis-figure-white-bg {
@@ -925,11 +956,11 @@
 }
 
 .thesis-section-text-box .thesis-section-label {
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 
 .thesis-section-text-box .thesis-section-heading {
-  margin-bottom: 6px;
+  margin-bottom: 14px;
 }
 
 .thesis-section-text-box .thesis-section-body {
@@ -1013,11 +1044,11 @@
 }
 
 .thesis-section-media-right .thesis-section-content-box .thesis-section-label {
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 
 .thesis-section-media-right .thesis-section-content-box .thesis-section-heading {
-  margin-bottom: 0;
+  margin-bottom: 14px;
 }
 
 .thesis-section-media-right .thesis-section-content-box .thesis-two-col {
@@ -1077,11 +1108,11 @@
 }
 
 .thesis-section-media-left .thesis-section-title-wrap .thesis-section-label {
-  margin-bottom: 4px;
+  margin-bottom: 10px;
 }
 
 .thesis-section-media-left .thesis-section-title-wrap .thesis-section-heading {
-  margin-bottom: 0;
+  margin-bottom: 14px;
 }
 
 .thesis-section-media-left .thesis-before-after-row {
@@ -1148,8 +1179,8 @@
 #final-outcome .thesis-section-body {
   grid-column: 1;
   grid-row: 3;
-  margin-bottom: 0;
   margin-top: 0;
+  margin-bottom: 10px;
 }
 
 #final-outcome .thesis-section-images {
@@ -1248,7 +1279,7 @@
 #question-to-answer .thesis-section-heading {
   grid-column: 1;
   grid-row: 2;
-  margin: 0;
+  margin: 0 0 14px 0;
   padding: 0;
   max-width: 100%;
 }
@@ -1484,25 +1515,25 @@
   align-items: start;
 }
 
-/* Override browser default h2 margin so primary research text sits close to label */
+/* Match HSA/FSA spacing: 10px below label, 14px below heading */
 .thesis-section-title-left h2.thesis-section-heading {
-  margin: 0 !important;
+  margin: 0 0 14px 0 !important;
 }
 
 .thesis-section-title-left > .thesis-section-label {
   grid-column: 1;
   grid-row: 1;
   margin: 0 !important;
-  padding: 0 0 8px 0 !important;
+  padding: 0 0 10px 0 !important;
   max-width: 95px;
   line-height: 1.1;
 }
 
-/* Override any global/h2 margin so "I conducted" sits right under "RESEARCH METHODS" */
+/* Override any global/h2 margin so "I conducted" sits right under "RESEARCH METHODS"; 14px below heading to match HSA/FSA */
 .thesis-section-title-left > .thesis-section-heading.header1 {
   grid-column: 1;
   grid-row: 2;
-  margin: 0 !important;
+  margin: 0 0 14px 0 !important;
   padding: 0 !important;
   max-width: 95px;
   line-height: 1.25;

@@ -56,6 +56,7 @@ export default function CaseStudySection({
   headingHeading2,
   imagePlaceholder,
   mediaInGrayBox,
+  afterBody,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -337,6 +338,7 @@ export default function CaseStudySection({
                 </div>
               )}
           {bodyEl}
+          {afterBody}
           {calloutBoxes && calloutBoxes.length > 0 && (
             <div className="thesis-callout-boxes">
               {calloutBoxes.map((text, i) => (
