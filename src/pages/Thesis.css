@@ -2,23 +2,30 @@
   min-height: 100vh;
   padding-top: 100px;
   display: flex;
-  overflow-x: hidden;
   width: 100%;
 }
 
-/* Left nav: takes space, sticks on scroll, no line beside content */
-.thesis-nav {
+/* Wrapper reserves space so main content doesn’t overlap nav */
+.thesis-nav-wrap {
   flex: 0 0 200px;
+  width: 200px;
+  margin-top: 0;
+  align-self: flex-start;
+}
+
+/* Left nav: fixed so it stays visible while scrolling (sticky was broken by body overflow) */
+.thesis-nav {
+  position: fixed;
+  top: 100px;
+  left: 0;
   width: 200px;
   padding: 24px 16px 24px 24px;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  align-self: flex-start;
-  position: sticky;
-  top: 100px;
   max-height: calc(100vh - 120px);
   overflow-y: auto;
+  z-index: 10;
 }
 
 .thesis-nav-back {
@@ -132,10 +139,11 @@
   margin-top: 8px;
 }
 
-/* Main content: flex 1 so it sits to the right of the nav */
+/* Main content: flex 1 so it sits to the right of the nav; overflow here so .thesis-page has none (sticky nav needs no overflow on ancestor) */
 .thesis-main {
   flex: 1;
   min-width: 0;
+  overflow-x: hidden;
 }
 
 .thesis-article {
@@ -1743,6 +1751,13 @@
   border-color: var(--text-secondary);
 }
 
+.thesis-iphone-video-control-btn svg {
+  width: 20px;
+  height: 20px;
+  transform: scale(0.9);
+  transform-origin: center;
+}
+
 .thesis-iphone-figure {
   margin: 0 auto;
   max-width: 240px;
@@ -1963,7 +1978,7 @@
 }
 
 @media (max-width: 768px) {
-  .thesis-nav {
+  .thesis-nav-wrap {
     display: none;
   }
 

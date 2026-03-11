@@ -68,6 +68,23 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
           <button
             type="button"
             className="thesis-iphone-video-control-btn"
+            onClick={handlePausePlay}
+            aria-label={isPaused ? 'Play video' : 'Pause video'}
+          >
+            {isPaused ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            )}
+          </button>
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
             onClick={handleRewind}
             aria-label="Restart video"
           >
@@ -75,23 +92,6 @@ function VideoInPhone({ src, subtitle, ariaLabel }) {
               <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
               <path d="M3 3v5h5" />
             </svg>
-          </button>
-          <button
-            type="button"
-            className="thesis-iphone-video-control-btn"
-            onClick={handlePausePlay}
-            aria-label={isPaused ? 'Play video' : 'Pause video'}
-          >
-            {isPaused ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <polygon points="5 3 19 12 5 21 5 3" />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                <rect x="6" y="4" width="4" height="16" />
-                <rect x="14" y="4" width="4" height="16" />
-              </svg>
-            )}
           </button>
         </div>
       )}
@@ -185,8 +185,9 @@ const HsaFsa = ({ setCursorVariant }) => {
 
   return (
     <div className="thesis-page">
-      <nav className="thesis-nav" aria-label="Case study sections">
-        <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+      <div className="thesis-nav-wrap">
+        <nav className="thesis-nav" aria-label="Case study sections">
+          <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
           <span className="thesis-nav-back-arrow" aria-hidden>←</span>
           back to home
         </Link>
@@ -205,7 +206,8 @@ const HsaFsa = ({ setCursorVariant }) => {
             </li>
           ))}
         </ul>
-      </nav>
+        </nav>
+      </div>
 
       <div className="thesis-main">
         <article className="thesis-article">
@@ -374,7 +376,7 @@ const HsaFsa = ({ setCursorVariant }) => {
               whatever is left on the customer's cards.
             </p>
             <VideoInPhone
-              src="/hsafsa/insufficient-funds.mp4"
+              src="/hsafsa/insufficient-funds.mp4?v=2"
               subtitle="Insufficient funds"
               ariaLabel="Substitutions feature prototype playing in phone mockup"
             />

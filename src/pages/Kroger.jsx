@@ -64,12 +64,13 @@ const Kroger = ({ setCursorVariant }) => {
 
   return (
     <div className="thesis-page">
-      <nav className="thesis-nav" aria-label="Case study sections">
-        <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <span className="thesis-nav-back-arrow" aria-hidden>←</span>
-          back to home
-        </Link>
-        <ul className="thesis-nav-list">
+      <div className="thesis-nav-wrap">
+        <nav className="thesis-nav" aria-label="Case study sections">
+          <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <span className="thesis-nav-back-arrow" aria-hidden>←</span>
+            back to home
+          </Link>
+          <ul className="thesis-nav-list">
           {KROGER_NAV_SECTIONS.map(({ label, id }) => (
             <li key={id} className="thesis-nav-item">
               <button
@@ -83,8 +84,9 @@ const Kroger = ({ setCursorVariant }) => {
               </button>
             </li>
           ))}
-        </ul>
-      </nav>
+          </ul>
+        </nav>
+      </div>
 
       <div className="thesis-main">
         <article className="thesis-article">
