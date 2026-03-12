@@ -431,6 +431,16 @@
   line-height: 1.35;
 }
 
+.thesis-body-heading {
+  display: block;
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--text-color);
+  line-height: 1.35;
+  margin-bottom: 10px;
+}
+
 /* Business goals / Learnings: intro heading (same style as section headings above), then gray boxes */
 .thesis-section-intro-heading {
   margin-bottom: 16px;
@@ -1088,6 +1098,74 @@
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.08em;
+}
+
+.thesis-user-testing-chart {
+  margin-top: 16px;
+  max-width: 420px;
+}
+
+.thesis-user-testing-bars {
+  margin: 16px 0 0;
+  padding: 16px 20px;
+  background: var(--hover-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+.thesis-user-testing-bars-svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.thesis-bar-yes,
+.thesis-bar-no,
+.thesis-bar-maybe {
+  fill: transparent;
+  stroke: var(--text-secondary);
+  stroke-width: 2;
+}
+
+.thesis-bar-yes {
+  fill: rgba(56, 132, 255, 0.2);
+}
+
+.thesis-bar-no {
+  fill: rgba(255, 99, 71, 0.2);
+}
+
+.thesis-bar-maybe {
+  fill: rgba(255, 193, 7, 0.2);
+}
+
+.thesis-bar-label {
+  font-size: 10px;
+  text-anchor: middle;
+  fill: var(--text-color);
+}
+
+.thesis-bar-caption {
+  font-size: 10px;
+  text-anchor: middle;
+  fill: var(--text-secondary);
+}
+
+.thesis-bar-axis {
+  stroke: var(--text-secondary);
+  stroke-width: 1.2;
+}
+
+.thesis-bar-tick-label {
+  font-size: 9px;
+  text-anchor: end;
+  alignment-baseline: middle;
+  fill: var(--text-secondary);
+}
+
+.thesis-bar-caption-vertical {
+  text-anchor: start;
 }
 
 /* Section with text in one box, video on right (e.g. Change #1 Bin by Bin) – title above */

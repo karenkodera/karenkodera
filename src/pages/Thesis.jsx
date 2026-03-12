@@ -43,8 +43,7 @@ const THESIS_NAV_SECTIONS = [
   { label: 'Question to Answer', id: 'question-to-answer' },
   { label: 'Competitive Analysis', id: 'competitive-analysis' },
   { label: 'Solution', id: 'solution' },
-  { label: 'Existing Brand Integration', id: 'existing-brand-integration' },
-  { label: 'User Testing & Research', id: 'user-testing-and-returning-to-research' },
+  { label: 'User Testing', id: 'user-testing-and-returning-to-research' },
   { label: 'Impact', id: 'impact' },
   { label: 'Conclusion', id: 'final-outcome' },
 ];
@@ -277,30 +276,66 @@ const Thesis = ({ setCursorVariant }) => {
         </div>
 
         <CaseStudySection
-          id="existing-brand-integration"
-          label="EXISTING BRAND INTEGRATION"
-          heading="Bridg integrates seamlessly into brand websites through using a white label model."
-          body="White label branding allows Bridg to integrate into different retail brands' ecosystems without disrupting their existing identity which makes adoption easier. It also increases scalability, since it can be adapted across multiple brands without needing to reinvent the core experience each time."
-          images={[{ src: THESIS_IMAGES.whiteLabelModel, alt: 'White label model: Lululemon, Ralph Lauren, and Urban Outfitters brand integrations', whiteBg: true }]}
-        />
-
-        <CaseStudySection
           id="user-testing-and-returning-to-research"
-          label="USER TESTING AND RETURNING TO RESEARCH"
-          heading="A pre-order model can work if customers are given incentive."
-          body="Since Bridg sells with pre-order, this means that users must wait a little longer for their items to get them."
+          label="USER TESTING"
+          heading="Since Bridg sells pre-order items, this means that users must wait a little longer for their items to get to them."
           comparisonPairs={[
             { src: THESIS_IMAGES.traditionalModel, alt: 'Traditional model delivery timeline', text: 'Traditional model: Items arrive at door in around 2–4 weeks.' },
             { src: THESIS_IMAGES.preOrderModel, alt: 'Pre-order model delivery timeline', text: 'Bridg pre-order model: Items arrive at door in around 4–6 weeks.' },
           ]}
-          body2={<>During user testing, a question that came up often was: <strong>In a world of instant gratification, are people really willing to wait for their items?</strong> I surveyed 24 young adult shoppers and found that they were! If given incentive.</>}
+          body2={
+            <>
+              <span className="thesis-body-heading">In a world of instant gratification, are people really willing to wait for their items?</span>
+              I surveyed 24 young adult shoppers and found that they were! If given incentive.
+              <figure className="thesis-figure thesis-user-testing-chart">
+                <img
+                  src="/thesis/user-testing-chart.png"
+                  alt="Survey results: willingness to wait longer if given a prize"
+                  className="thesis-image"
+                  loading="lazy"
+                />
+              </figure>
+              <div className="thesis-user-testing-bars" aria-hidden="true">
+                <svg
+                  className="thesis-user-testing-bars-svg"
+                  viewBox="0 0 260 160"
+                  role="img"
+                >
+                  {/* Axes */}
+                  <line x1="32" y1="20" x2="32" y2="120" className="thesis-bar-axis" />
+                  <line x1="32" y1="120" x2="230" y2="120" className="thesis-bar-axis" />
+                  {/* Y-axis labels (number of respondents) */}
+                  <text x="28" y="120" className="thesis-bar-tick-label">0</text>
+                  <text x="28" y="96" className="thesis-bar-tick-label">5</text>
+                  <text x="28" y="72" className="thesis-bar-tick-label">10</text>
+                  <text x="28" y="48" className="thesis-bar-tick-label">15</text>
+                  <text x="28" y="24" className="thesis-bar-tick-label">20</text>
+                  <text x="20" y="12" className="thesis-bar-caption thesis-bar-caption-vertical"># of respondents</text>
+                  {/* Bars (approximate: 74%, 13%, remainder) */}
+                  <rect x="48" y="38" width="48" height="82" className="thesis-bar-yes" />
+                  <rect x="120" y="86" width="48" height="34" className="thesis-bar-no" />
+                  <rect x="192" y="98" width="48" height="22" className="thesis-bar-maybe" />
+                  {/* X-axis labels */}
+                  <text x="72" y="136" className="thesis-bar-label">Yes (74%)</text>
+                  <text x="144" y="136" className="thesis-bar-label">No (13%)</text>
+                  <text x="216" y="136" className="thesis-bar-label">Maybe</text>
+                  <text x="160" y="16" className="thesis-bar-caption">24 respondents</text>
+                </svg>
+              </div>
+            </>
+          }
           list={[
             'items are exclusive',
             'items are made with consumer input',
             'items are cheaper',
             'items are more environmentally friendly',
           ]}
-          listTitle="Bridg's Incentives"
+          listTitle="A pre-order model can work if customers are given incentive."
+        />
+
+        <CaseStudySection
+          id="user-testing-followup"
+          label=""
         />
 
         <CaseStudySection
