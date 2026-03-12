@@ -37,7 +37,9 @@ const THESIS_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
   { label: 'User', id: 'user' },
   { label: 'Research Methods', id: 'research-methods' },
+  { label: 'Insights from research', id: 'insights-from-research' },
   { label: 'Insight', id: 'insight' },
+  { label: 'Insight 2', id: 'insight-2' },
   { label: 'Question to Answer', id: 'question-to-answer' },
   { label: 'Competitive Analysis', id: 'competitive-analysis' },
   { label: 'Problem Solving', id: 'problem-solving' },
@@ -159,10 +161,6 @@ const Thesis = ({ setCursorVariant }) => {
                     <dt>Duration</dt>
                     <dd>Sept 2024 – Mar 2025</dd>
                   </div>
-                  <div>
-                    <dt>Tools</dt>
-                    <dd>Figma</dd>
-                  </div>
                 </dl>
               </div>
             </div>
@@ -171,7 +169,7 @@ const Thesis = ({ setCursorVariant }) => {
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="20% of garments in the fashion industry go unsold and end up in landfill..."
+            heading="20% of garments in the fashion industry go unsold and end up in landfills."
             body="Fast fashion items are created out of low quality materials called synthetic fibers that contain tiny pieces of plastic. When these pieces are put through the wash, they release plastic into the water, which end up in our oceans. Making the fashion industry one of the top five most polluting industries in the world."
           />
 
@@ -179,13 +177,12 @@ const Thesis = ({ setCursorVariant }) => {
             id="user"
             label="USER"
           heading="The main offender of fashion trends is the avid female shopper aged 18–35."
-          body="As proven by a survey by Vogue Business, these people are early in their career, they aren't making a lot of money yet so they want to spend less to stay on trend."
+          body="These people are early in their career, they aren't making a lot of money so they want to spend less to stay on trend. To better understand what motivates them to engage with these trends, I conducted both primary and secondary research."
         />
 
         <CaseStudySection
           id="research-methods"
-          label="RESEARCH METHODS"
-          heading="I conducted primary and secondary research to understand my user."
+          label=""
           listWithImages={[
             { src: THESIS_IMAGES.interviewing, alt: 'Interviewing and testing users', text: 'interviewed/tested 30+ users' },
             { src: THESIS_IMAGES.wilson, alt: 'Interviewing experts in retail at Wilson', text: 'interviewed experts in retail' },
@@ -195,11 +192,23 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <CaseStudySection
+          id="insights-from-research"
+          label="INSIGHTS FROM RESEARCH"
+          heading="For these shoppers, affordability is #1."
+        />
+
+        <CaseStudySection
           id="insight"
-          label="INSIGHT"
-          heading="Style First, Sustainability Second."
+          label=""
           body="While many consumers feel guilt over shopping fast fashion, these feelings rarely translate into action."
           quote="I think about sustainability, but then I think, eh it's cheaper"
+        />
+
+        <CaseStudySection
+          id="insight-2"
+          label=""
+          body="Despite fears of untrustworthiness associated with ultra-fast fashion brands, consumers are drawn to their low prices, often justifying purchases as acceptable sunk costs."
+          quote="Once I have income again, I will care about sustainability"
         />
 
         <CaseStudySection

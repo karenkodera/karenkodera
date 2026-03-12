@@ -114,26 +114,61 @@
   margin-bottom: 60px;
 }
 
+/* Less space between User section and Research Methods images */
+#user.thesis-section {
+  margin-bottom: 24px;
+}
+
 /* Less space between Bridg's Incentives and Impact */
 #user-testing-and-returning-to-research.thesis-section {
   margin-bottom: 36px;
 }
 
-/* Insight section: box with border color matching garments image lime green */
-#insight.thesis-section {
-  border: 3px solid #c6ff00;
+/* Less space between Insights from research and insight gray boxes */
+#insights-from-research.thesis-section {
+  margin-bottom: 20px;
+}
+
+/* Insight 1 and 2: gray boxes, no section label, tighter spacing between boxes */
+#insight.thesis-section,
+#insight-2.thesis-section {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
   border-radius: 12px;
   padding: 20px 24px;
+  margin-bottom: 12px;
 }
 
-/* Insight section: quote uses default gray background and left border */
-#insight .thesis-quote {
-  margin: 16px 0 0;
+#insight-2.thesis-section {
+  margin-bottom: 60px; /* keep normal section spacing after last insight box */
 }
 
-#insight .thesis-quote cite {
+#insight.thesis-section > .thesis-section-label,
+#insight-2.thesis-section > .thesis-section-label,
+#insight.thesis-section > .thesis-section-heading,
+#insight-2.thesis-section > .thesis-section-heading {
+  display: none;
+}
+
+/* Insight boxes: quotes styled as distinct pull-quotes */
+#insight .thesis-quote,
+#insight-2 .thesis-quote {
+  margin: 12px 0 0;
+  padding: 14px 18px 14px 20px;
+  background: rgba(0, 0, 0, 0.06);
+  border-left: 4px solid var(--text-color);
+  border-radius: 0 8px 8px 0;
+  font-size: 0.9375rem;
+  font-style: italic;
+  line-height: 1.5;
+  color: var(--text-color);
+  position: relative;
+}
+
+#insight .thesis-quote cite,
+#insight-2 .thesis-quote cite {
   display: block;
-  font-size: 0.875rem;
+  font-size: 0.8125rem;
   font-style: normal;
   color: var(--text-secondary);
   margin-top: 8px;
@@ -1265,14 +1300,15 @@
   margin-bottom: 2px;
 }
 
-/* Question to Answer: HMW heading on left, Venn image on right */
+/* Question to Answer: text 60% width, Venn diagram right-aligned; spacing below matches spacing above (60px) */
 #question-to-answer.thesis-section {
   display: grid;
-  grid-template-columns: minmax(0, 1.25fr) 1.75fr;
+  grid-template-columns: 60% 1fr;
   grid-template-rows: auto auto;
-  column-gap: 24px;
+  column-gap: 8px;
   row-gap: 0;
   align-items: start;
+  margin-bottom: 60px;
 }
 
 #question-to-answer .thesis-section-label {
@@ -1285,14 +1321,23 @@
   margin: 0 0 14px 0;
   padding: 0;
   max-width: 100%;
+  min-width: 0;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 #question-to-answer .thesis-section-images {
   grid-column: 2;
   grid-row: 2;
-  margin: 0;
+  margin: -38px 0 0 0;
   display: flex;
   justify-content: flex-end;
+  align-items: flex-start;
+}
+
+#question-to-answer .thesis-section-images .thesis-figure-compact {
+  max-width: 200px;
+  flex-shrink: 0;
 }
 
 /* Section with image on right (e.g. Kroger Field Research HMW) */
@@ -1553,6 +1598,19 @@
   grid-column: 2;
   grid-row: 1 / -1;
   margin-top: 0;
+}
+
+/* Research Methods: no label/heading, so remove left column and let images use full width */
+#research-methods.thesis-section-title-left {
+  grid-template-columns: 1fr;
+}
+#research-methods.thesis-section-title-left > .thesis-section-label,
+#research-methods.thesis-section-title-left > .thesis-section-heading {
+  display: none;
+}
+#research-methods.thesis-section-title-left > .thesis-list-with-images {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .thesis-list-with-images {
