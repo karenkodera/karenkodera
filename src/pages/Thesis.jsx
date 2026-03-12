@@ -171,21 +171,8 @@ const Thesis = ({ setCursorVariant }) => {
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="The fashion industry is in the top 5 most polluting industries in the world..."
-            body="Fast fashion items are created out of low quality materials called synthetic fibers. Not only do these pieces fall apart after 1–2 uses, synthetic fibers contain tiny pieces of plastic. When these fast fashion pieces are put through the wash, they release plastic into the water, which end up in our oceans."
-            afterBody={
-              <div className="thesis-problem-stat-box" aria-label="20% of garments go unsold and end up in landfill">
-                <p className="thesis-problem-stat-box-text">20% of garments go unsold and end up in landfill</p>
-                <div className="thesis-problem-stat-box-icon" aria-hidden="true">
-                  <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden>
-                    <path d="M0 9 L6 9 L8 6.5 Q12 5 16 6.5 L18 9 L24 9 L24 24 L0 24 Z" />
-                  </svg>
-                </div>
-              </div>
-            }
-            images={[
-              { src: THESIS_IMAGES.garmentsLandfill, alt: 'Garments degrading to landfill', caption: '', flat: true }
-            ]}
+            heading="20% of garments in the fashion industry go unsold and end up in landfill..."
+            body="Fast fashion items are created out of low quality materials called synthetic fibers that contain tiny pieces of plastic. When these pieces are put through the wash, they release plastic into the water, which end up in our oceans. Making the fashion industry one of the top five most polluting industries in the world."
           />
 
           <CaseStudySection

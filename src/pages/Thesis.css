@@ -841,23 +841,26 @@
   background: var(--hover-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-}
-
-.thesis-problem-stat-box-text {
-  margin: 0 0 12px 0;
-  font-size: 0.875rem;
-  line-height: 1.5;
-  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .thesis-problem-stat-box-icon {
-  margin-top: 12px;
+  flex-shrink: 0;
   color: var(--text-secondary);
   line-height: 0;
 }
 
 .thesis-problem-stat-box-icon svg {
   display: block;
+}
+
+.thesis-problem-stat-box-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
 }
 
 /* Concept development wireframes: fully transparent so PNG blends with page */

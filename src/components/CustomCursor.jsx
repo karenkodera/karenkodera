@@ -1,12 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence, useSpring } from 'framer-motion';
 import './CustomCursor.css';
+
+const WIGGLE_FIRST_AFTER_MS = 1000;
+const WIGGLE_REPEAT_EVERY_MS = 4000;
 
 const CustomCursor = ({ cursorVariant, hoveredElement }) => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isVisible, setIsVisible] = useState(false);
   const [elementBounds, setElementBounds] = useState(null);
   const [dotTarget, setDotTarget] = useState(null);
+  const [wiggleTrigger, setWiggleTrigger] = useState(0);
+  const projectHoverTimersRef = useRef({ first: null, repeat: null });
   
   // Smooth spring physics for organic cursor movement
   const springConfig = { stiffness: 400, damping: 28, mass: 0.5 };
@@ -53,6 +58,30 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
       setDotTarget(null);
     }
   }, [cursorVariant, hoveredElement]);
+
+  // Wiggle pill: once after 1s, then again every 4s while hovering a case study
+  useEffect(() => {
+    if (cursorVariant === 'project') {
+      const t = projectHoverTimersRef.current;
+      t.first = window.setTimeout(() => {
+        setWiggleTrigger((k) => k + 1);
+        t.repeat = window.setInterval(() => {
+          setWiggleTrigger((k) => k + 1);
+        }, WIGGLE_REPEAT_EVERY_MS);
+      }, WIGGLE_FIRST_AFTER_MS);
+    } else {
+      const t = projectHoverTimersRef.current;
+      if (t.first) clearTimeout(t.first);
+      if (t.repeat) clearInterval(t.repeat);
+      t.first = null;
+      t.repeat = null;
+    }
+    return () => {
+      const t = projectHoverTimersRef.current;
+      if (t.first) clearTimeout(t.first);
+      if (t.repeat) clearInterval(t.repeat);
+    };
+  }, [cursorVariant]);
 
   const padding = 16;
   const isProjectVariant = cursorVariant === 'project';
@@ -149,20 +178,46 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
         />
       )}
 
-      {/* View project pill - floats diagonal top-right of dot when hovering a case study */}
-      {isProjectVariant && (
-        <motion.div
-          className="custom-cursor project-cursor"
-          initial={{ x: projectPillX, y: projectPillY }}
-          animate={{
-            x: projectPillX,
-            y: projectPillY,
-          }}
-          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-        >
-          view project
-        </motion.div>
-      )}
+      {/* View project pill - floats diagonal top-right of dot when hovering a case study; pops in/out */}
+      <AnimatePresence>
+        {isProjectVariant && (
+          <motion.div
+            className="custom-cursor project-cursor"
+            initial={{
+              x: projectPillX,
+              y: projectPillY,
+              opacity: 0,
+              scale: 0.5,
+            }}
+            animate={{
+              x: projectPillX,
+              y: projectPillY,
+              opacity: 1,
+              scale: 1,
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.6,
+            }}
+            transition={{
+              type: 'spring',
+              stiffness: 320,
+              damping: 24,
+              mass: 0.6,
+            }}
+          >
+            <motion.span
+              key={wiggleTrigger}
+              style={{ display: 'inline-block' }}
+              initial={{ rotate: 0 }}
+              animate={{ rotate: wiggleTrigger >= 1 ? [0, -5, 5, -2, 0] : 0 }}
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+            >
+              view project
+            </motion.span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 };
