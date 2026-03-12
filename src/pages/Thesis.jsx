@@ -240,22 +240,39 @@ const Thesis = ({ setCursorVariant }) => {
             body="This gamified feedback service helps brands produce only what is desired by integrating a series of games directly into their websites. By understanding consumer demand, brands can cut down on unsold inventory and save money on production, leading to less clothing being made and sent to landfill."
             equationImage={{ src: THESIS_IMAGES.equation, alt: 'Gather feedback, orders placed, garment production equals less waste to landfill' }}
             afterEquation={(
-              <CaseStudySection
-                id="gather-feedback"
-                label="GATHER FEEDBACK"
-                heading="Interactive game for customers to vote for their favorite items, giving brands real-time insights into consumer preferences."
-              />
+              <>
+                <CaseStudySection
+                  id="gather-feedback"
+                  label="GATHER FEEDBACK"
+                  heading="Interactive game for customers to vote for their favorite items, giving brands real-time insights into consumer preferences."
+                  afterBody={(
+                    <div className="thesis-game-placeholder" aria-hidden="true">
+                      game gif placeholder
+                    </div>
+                  )}
+                />
+                <CaseStudySection
+                  id="orders-placed-as-needed"
+                  label="ORDERS PLACED AS NEEDED"
+                  heading="Pre-order platform where customers can purchase items won in games before production begins, creating a sense of exclusivity."
+                  afterBody={(
+                    <div className="thesis-game-placeholder" aria-hidden="true">
+                      pre-order platform gif placeholder
+                    </div>
+                  )}
+                />
+                <CaseStudySection
+                  id="garment-production"
+                  label="GARMENT PRODUCTION"
+                  heading="Brand-side dashboard for business to see analytics behind games and make smart production decisions."
+                  afterBody={(
+                    <div className="thesis-game-placeholder" aria-hidden="true">
+                      brand gif placeholder
+                    </div>
+                  )}
+                />
+              </>
             )}
-            listWithIcons={[
-              { iconSrc: THESIS_IMAGES.gatherFeedback, iconAlt: 'Gather feedback', title: 'Interactive Game', text: 'An engaging tool for customers to vote on their favorite designs, giving brands real-time insights into consumer preferences.' },
-              { iconSrc: THESIS_IMAGES.ordersPlaced, iconAlt: 'Orders placed as needed', title: 'Pre-Order Platform', text: 'A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.' },
-              { iconSrc: THESIS_IMAGES.garmentProduction, iconAlt: 'Garment production', title: 'Brand-Side Dashboard', text: 'A platform for businesses to see the analytics behind customer-facing games and make smart production decisions.' },
-            ]}
-            images={[
-              { src: THESIS_IMAGES.game, alt: 'Interactive game for gathering feedback' },
-              { src: THESIS_IMAGES.platformHome, alt: 'Pre-order platform' },
-              { src: THESIS_IMAGES.brandDashboard, alt: 'Brand-side dashboard' },
-            ]}
           />
         </div>
 
