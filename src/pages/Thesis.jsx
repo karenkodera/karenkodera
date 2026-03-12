@@ -35,13 +35,11 @@ const THESIS_IMAGES = {
 };
 
 // Section labels for left nav (same order as on page)
+// Only include sections that have visible titles on the page
 const THESIS_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
   { label: 'User', id: 'user' },
-  { label: 'Research Methods', id: 'research-methods' },
   { label: 'Insights from research', id: 'insights-from-research' },
-  { label: 'Insight', id: 'insight' },
-  { label: 'Insight 2', id: 'insight-2' },
   { label: 'Question to Answer', id: 'question-to-answer' },
   { label: 'Competitive Analysis', id: 'competitive-analysis' },
   { label: 'Solution', id: 'solution' },
@@ -241,6 +239,13 @@ const Thesis = ({ setCursorVariant }) => {
             heading={<><span className="thesis-solution-intro-title">Introducing BRIDG:</span> <span className="thesis-solution-intro-subtitle">A three part system for gathering feedback, placing orders and factory production.</span></>}
             body="This gamified feedback service helps brands produce only what is desired by integrating a series of games directly into their websites. By understanding consumer demand, brands can cut down on unsold inventory and save money on production, leading to less clothing being made and sent to landfill."
             equationImage={{ src: THESIS_IMAGES.equation, alt: 'Gather feedback, orders placed, garment production equals less waste to landfill' }}
+            afterEquation={(
+              <CaseStudySection
+                id="gather-feedback"
+                label="GATHER FEEDBACK"
+                heading="Interactive game for customers to vote for their favorite items, giving brands real-time insights into consumer preferences."
+              />
+            )}
             listWithIcons={[
               { iconSrc: THESIS_IMAGES.gatherFeedback, iconAlt: 'Gather feedback', title: 'Interactive Game', text: 'An engaging tool for customers to vote on their favorite designs, giving brands real-time insights into consumer preferences.' },
               { iconSrc: THESIS_IMAGES.ordersPlaced, iconAlt: 'Orders placed as needed', title: 'Pre-Order Platform', text: 'A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.' },

@@ -1265,14 +1265,14 @@
 /* Quote with logo on the left (e.g. Solution section Wilson logo) */
 .thesis-quote-with-image {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 24px;
   margin: 12px 0 0;
 }
 .thesis-quote-with-image .thesis-quote-figure {
   margin: 0;
   flex-shrink: 0;
-  width: 96px;
+  width: 77px;
 }
 .thesis-quote-with-image .thesis-quote-figure .thesis-image {
   width: 100%;
@@ -1498,10 +1498,12 @@
 }
 
 .thesis-section-solution .thesis-figure-equation .thesis-image {
-  width: 100%;
+  width: 64%;
   border: none;
   border-radius: 0;
   background: none;
+  display: block;
+  margin: 0 auto;
 }
 
 /* Solution: icon + text on top, then image below */

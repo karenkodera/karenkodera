@@ -59,6 +59,7 @@ export default function CaseStudySection({
   imagePlaceholder,
   mediaInGrayBox,
   afterBody,
+  afterEquation,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -127,6 +128,7 @@ export default function CaseStudySection({
           <figure className="thesis-figure thesis-figure-equation">
             <img src={equationImage.src} alt={equationImage.alt} className="thesis-image" loading="lazy" />
           </figure>
+          {afterEquation}
         </>
       ) : hasImageRight ? (
         <>
