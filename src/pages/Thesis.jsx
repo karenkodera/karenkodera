@@ -12,6 +12,8 @@ const THESIS_IMAGES = {
   garmentsLandfill: '/thesis/thesis-garments-landfill.png',
   interviewing: '/thesis/thesis-interviewing.png',
   wilson: '/thesis/thesis-wilson.png',
+  wilsonLogo: '/thesis/thesis-wilson-logo.png',
+  wilsonUser: '/thesis/thesis-wilson-user.png',
   hm: '/thesis/thesis-hm.png',
   venn: '/thesis/thesis-venn.png',
   competitiveLandscape: '/thesis/thesis-competitive-landscape.png',
@@ -42,7 +44,6 @@ const THESIS_NAV_SECTIONS = [
   { label: 'Insight 2', id: 'insight-2' },
   { label: 'Question to Answer', id: 'question-to-answer' },
   { label: 'Competitive Analysis', id: 'competitive-analysis' },
-  { label: 'Problem Solving', id: 'problem-solving' },
   { label: 'Solution', id: 'solution' },
   { label: 'Existing Brand Integration', id: 'existing-brand-integration' },
   { label: 'User Testing & Research', id: 'user-testing-and-returning-to-research' },
@@ -176,16 +177,16 @@ const Thesis = ({ setCursorVariant }) => {
           <CaseStudySection
             id="user"
             label="USER"
-          heading="The main offender of fashion trends is the avid female shopper aged 18–35."
-          body="These people are early in their career, they aren't making a lot of money so they want to spend less to stay on trend. To better understand what motivates them to engage with these trends, I conducted both primary and secondary research."
-        />
+            heading="The main offender of fashion trends is the avid female shopper aged 18–35."
+            body="These people are early in their career, they aren't making a lot of money so they want to spend less to stay on trend. To better understand what motivates them to engage with these trends, I conducted both primary and secondary research."
+          />
 
         <CaseStudySection
           id="research-methods"
           label=""
           listWithImages={[
             { src: THESIS_IMAGES.interviewing, alt: 'Interviewing and testing users', text: 'interviewed/tested 30+ users' },
-            { src: THESIS_IMAGES.wilson, alt: 'Interviewing experts in retail at Wilson', text: 'interviewed experts in retail' },
+            { src: THESIS_IMAGES.wilsonUser, alt: 'Interviewing experts in retail at Wilson', text: 'interviewed experts in retail' },
             { src: THESIS_IMAGES.hm, alt: 'Worked at H&M as a sales advisor', text: 'worked at H&M as a sales advisor' },
           ]}
           listWithImagesTitleLeft
@@ -226,31 +227,32 @@ const Thesis = ({ setCursorVariant }) => {
           images={[{ src: THESIS_IMAGES.competitiveLandscape, alt: 'Competitive landscape: sustainable, affordable, and fashionable', wide: true }]}
         />
 
-        <CaseStudySection
-          id="problem-solving"
-          label="PROBLEM SOLVING"
-          heading="The only way to stop the flow of items into landfill is to stop the flow of product production. Therefore, the solution has to target brands not consumers."
-          quote="Consumers have been trained to think you can get anything at all times. Responsibility ultimately falls to the brands to create mindfully rather than to the consumer to consume less."
-          quoteAttribution="Amanda McFee, Director and Fashion Designer of Evoshield at Wilson Sporting Goods"
-        />
-
-        <CaseStudySection
-          id="solution"
-          label="SOLUTION"
-          heading="INTRODUCING BRIDG: A three part system for gathering feedback, placing orders and factory production."
-          body="This gamified feedback service helps brands produce only what is desired by integrating a series of games directly into their websites. By understanding consumer demand, brands can cut down on unsold inventory and save money on production, leading to less clothing being made and sent to landfill."
-          equationImage={{ src: THESIS_IMAGES.equation, alt: 'Gather feedback, orders placed, garment production equals less waste to landfill' }}
-          listWithIcons={[
-            { iconSrc: THESIS_IMAGES.gatherFeedback, iconAlt: 'Gather feedback', title: 'Interactive Game', text: 'An engaging tool for customers to vote on their favorite designs, giving brands real-time insights into consumer preferences.' },
-            { iconSrc: THESIS_IMAGES.ordersPlaced, iconAlt: 'Orders placed as needed', title: 'Pre-Order Platform', text: 'A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.' },
-            { iconSrc: THESIS_IMAGES.garmentProduction, iconAlt: 'Garment production', title: 'Brand-Side Dashboard', text: 'A platform for businesses to see the analytics behind customer-facing games and make smart production decisions.' },
-          ]}
-          images={[
-            { src: THESIS_IMAGES.game, alt: 'Interactive game for gathering feedback' },
-            { src: THESIS_IMAGES.platformHome, alt: 'Pre-order platform' },
-            { src: THESIS_IMAGES.brandDashboard, alt: 'Brand-side dashboard' },
-          ]}
-        />
+        <div id="solution" className="thesis-solution-merged">
+          <CaseStudySection
+            label="SOLUTION"
+            heading="The only way to stop the flow of items into landfill is to stop the flow of product production. Therefore, the solution has to target brands not consumers."
+            quote="Consumers have been trained to think you can get anything at all times. Responsibility ultimately falls to the brands to create mindfully rather than to the consumer to consume less."
+            quoteAttribution="Amanda McFee, Director and Fashion Designer at Wilson Sporting Goods"
+            quoteAttributionInline
+            quoteImageRight={{ src: THESIS_IMAGES.wilsonLogo, alt: 'Wilson' }}
+          />
+          <CaseStudySection
+            label=""
+            heading={<><span className="thesis-solution-intro-title">Introducing BRIDG:</span> <span className="thesis-solution-intro-subtitle">A three part system for gathering feedback, placing orders and factory production.</span></>}
+            body="This gamified feedback service helps brands produce only what is desired by integrating a series of games directly into their websites. By understanding consumer demand, brands can cut down on unsold inventory and save money on production, leading to less clothing being made and sent to landfill."
+            equationImage={{ src: THESIS_IMAGES.equation, alt: 'Gather feedback, orders placed, garment production equals less waste to landfill' }}
+            listWithIcons={[
+              { iconSrc: THESIS_IMAGES.gatherFeedback, iconAlt: 'Gather feedback', title: 'Interactive Game', text: 'An engaging tool for customers to vote on their favorite designs, giving brands real-time insights into consumer preferences.' },
+              { iconSrc: THESIS_IMAGES.ordersPlaced, iconAlt: 'Orders placed as needed', title: 'Pre-Order Platform', text: 'A system where customers can purchase items won in games before production begins, creating a sense of exclusivity.' },
+              { iconSrc: THESIS_IMAGES.garmentProduction, iconAlt: 'Garment production', title: 'Brand-Side Dashboard', text: 'A platform for businesses to see the analytics behind customer-facing games and make smart production decisions.' },
+            ]}
+            images={[
+              { src: THESIS_IMAGES.game, alt: 'Interactive game for gathering feedback' },
+              { src: THESIS_IMAGES.platformHome, alt: 'Pre-order platform' },
+              { src: THESIS_IMAGES.brandDashboard, alt: 'Brand-side dashboard' },
+            ]}
+          />
+        </div>
 
         <CaseStudySection
           id="existing-brand-integration"

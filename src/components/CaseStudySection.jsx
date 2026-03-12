@@ -28,6 +28,8 @@ export default function CaseStudySection({
   equationImage,
   quote,
   quoteAttribution,
+  quoteAttributionInline,
+  quoteImageRight,
   twoColumns,
   images,
   textInBox,
@@ -451,10 +453,22 @@ export default function CaseStudySection({
         </ul>
       )}
       {quote && (
-        <blockquote className="thesis-quote">
-          "{quote}"
-          {quoteAttribution && <cite>— {quoteAttribution}</cite>}
-        </blockquote>
+        quoteImageRight && quoteImageRight.src ? (
+          <div className="thesis-quote-with-image">
+            <figure className="thesis-quote-figure">
+              <img src={quoteImageRight.src} alt={quoteImageRight.alt} className="thesis-image" loading="lazy" />
+            </figure>
+            <blockquote className={`thesis-quote${quoteAttributionInline ? ' thesis-quote-inline-attribution' : ''}`}>
+              "{quote}"
+              {quoteAttribution && (quoteAttributionInline ? <cite> {quoteAttribution}</cite> : <cite>— {quoteAttribution}</cite>)}
+            </blockquote>
+          </div>
+        ) : (
+          <blockquote className={`thesis-quote${quoteAttributionInline ? ' thesis-quote-inline-attribution' : ''}`}>
+            "{quote}"
+            {quoteAttribution && (quoteAttributionInline ? <cite> {quoteAttribution}</cite> : <cite>— {quoteAttribution}</cite>)}
+          </blockquote>
+        )
       )}
       {listWithImages && listWithImages.length > 0 && (
         <div className="thesis-list-with-images">
