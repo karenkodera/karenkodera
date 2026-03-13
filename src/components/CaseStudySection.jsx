@@ -404,7 +404,7 @@ export default function CaseStudySection({
           ))}
         </div>
       )}
-      {body2 && <p className="thesis-section-body">{body2}</p>}
+      {body2 && (typeof body2 === 'string' ? <p className="thesis-section-body">{body2}</p> : <div className="thesis-section-body thesis-section-body-block">{body2}</div>)}
       {mediaInGrayBox || (imagePlaceholder && (
         <div className="thesis-heading-placeholder" aria-hidden="true">
           <span className="thesis-heading-placeholder-text">{imagePlaceholder.text}</span>

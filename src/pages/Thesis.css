@@ -565,16 +565,20 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  min-width: 0;
 }
 
 .thesis-comparison-pair-image {
   width: 100%;
+  height: 120px;
   margin: 0;
   background: #fff;
+  flex-shrink: 0;
 }
 
 .thesis-comparison-pair-image .thesis-image {
   width: 100%;
+  height: 100%;
   max-height: 120px;
   object-fit: contain;
   object-position: center;
@@ -585,6 +589,7 @@
 
 .thesis-comparison-pair-text {
   margin: 0;
+  width: 100%;
 }
 
 .thesis-comparison-pair-label {
@@ -1105,6 +1110,67 @@
   max-width: 420px;
 }
 
+/* After-graph section: gray box with "Bridg's Incentives" + trophy + bullet list; block centered, text right-aligned */
+.thesis-bridg-incentives-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 16px;
+  padding: 24px 20px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.thesis-bridg-incentives-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  width: fit-content;
+  text-align: left;
+}
+
+.thesis-bridg-incentives-header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.thesis-bridg-incentives-box .thesis-bridg-incentives-icon {
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.thesis-bridg-incentives-box .thesis-bridg-incentives-text {
+  font-weight: 600;
+  color: #000;
+  font-size: 1rem;
+}
+
+.thesis-bridg-incentives-list {
+  margin: 0;
+  padding: 0;
+  list-style: disc;
+  list-style-position: inside;
+  color: #000;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  text-align: left;
+}
+
+.thesis-bridg-incentives-list li {
+  margin-bottom: 6px;
+}
+
+.thesis-bridg-incentives-list li:last-child {
+  margin-bottom: 0;
+}
+
 .thesis-user-testing-bars {
   margin: 16px 0 0;
   padding: 16px 20px;
@@ -1116,28 +1182,38 @@
 .thesis-user-testing-bars-svg {
   display: block;
   width: 100%;
-  max-width: 420px;
+  max-width: 462px; /* ~10% larger for pie */
   margin: 0 auto;
 }
 
-.thesis-bar-yes,
-.thesis-bar-no,
-.thesis-bar-maybe {
-  fill: transparent;
-  stroke: var(--text-secondary);
-  stroke-width: 2;
+.thesis-pie-svg {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.thesis-bar-yes {
-  fill: rgba(56, 132, 255, 0.2);
+.thesis-bar-fill {
+  fill: #4a4a4a;
+  stroke: none;
 }
 
-.thesis-bar-no {
-  fill: rgba(255, 99, 71, 0.2);
+.thesis-pie-yes,
+.thesis-pie-no {
+  stroke: none !important;
+  stroke-width: 0;
+  shape-rendering: geometricPrecision;
 }
 
-.thesis-bar-maybe {
-  fill: rgba(255, 193, 7, 0.2);
+.thesis-pie-yes {
+  fill: #41582A;
+}
+
+.thesis-pie-no {
+  fill: #DCE1D7;
+}
+
+.thesis-bar-arrow {
+  fill: var(--text-secondary);
 }
 
 .thesis-bar-label {
@@ -1146,10 +1222,11 @@
   fill: var(--text-color);
 }
 
-.thesis-bar-caption {
+.thesis-pie-label {
   font-size: 10px;
   text-anchor: middle;
-  fill: var(--text-secondary);
+  dominant-baseline: middle;
+  fill: #000;
 }
 
 .thesis-bar-axis {
@@ -1162,10 +1239,6 @@
   text-anchor: end;
   alignment-baseline: middle;
   fill: var(--text-secondary);
-}
-
-.thesis-bar-caption-vertical {
-  text-anchor: start;
 }
 
 /* Section with text in one box, video on right (e.g. Change #1 Bin by Bin) – title above */
@@ -1303,34 +1376,34 @@
 }
 
 /* Final outcome: body text left, smaller photo right, no caption */
+/* Conclusion: text (label, heading, body) in one gray box, image to the right */
 #final-outcome.thesis-section {
   display: grid;
   grid-template-columns: 1fr 320px;
-  grid-template-rows: auto auto auto;
   gap: 0 28px;
   align-items: start;
 }
 
-#final-outcome .thesis-section-label {
-  grid-column: 1 / -1;
-}
-
-#final-outcome .thesis-section-heading {
-  grid-column: 1 / -1;
-}
-
-#final-outcome .thesis-section-body {
+#final-outcome .thesis-section-text-box {
   grid-column: 1;
-  grid-row: 3;
-  margin-top: 0;
+  min-width: 0;
+}
+
+#final-outcome .thesis-section-text-box .thesis-section-label {
   margin-bottom: 10px;
+}
+
+#final-outcome .thesis-section-text-box .thesis-section-heading {
+  margin-bottom: 14px;
+}
+
+#final-outcome .thesis-section-text-box .thesis-section-body {
+  margin-bottom: 0;
 }
 
 #final-outcome .thesis-section-images {
   grid-column: 2;
-  grid-row: 3;
   margin: 0;
-  margin-top: -6px;
   max-width: 320px;
   align-self: start;
 }
@@ -1837,6 +1910,70 @@
   margin-top: 24px;
 }
 
+#impact .thesis-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px 20px;
+}
+
+/* Impact: match Bridg's Incentives – title left, icon right, left-aligned list */
+#impact .thesis-col-header {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  width: fit-content;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+#impact .thesis-col .thesis-col-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
+  flex-shrink: 0;
+}
+
+#impact .thesis-col:first-child .thesis-col-icon {
+  width: calc(1.5rem - 2px);
+  height: calc(1.5rem - 2px);
+}
+
+#impact .thesis-col .thesis-col-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #000;
+}
+
+#impact .thesis-col ul {
+  list-style: disc;
+  list-style-position: inside;
+  padding: 0;
+  margin: 0;
+  width: fit-content;
+  max-width: 100%;
+  text-align: left;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: #000;
+}
+
+#impact .thesis-col li {
+  margin-bottom: 6px;
+  padding-left: 0;
+  color: #000;
+}
+
+#impact .thesis-col li::before {
+  content: none;
+}
+
 .thesis-col-header {
   text-align: center;
   margin-bottom: 8px;
@@ -2339,10 +2476,9 @@
     grid-template-columns: 1fr;
   }
 
-  #final-outcome .thesis-section-body,
+  #final-outcome .thesis-section-text-box,
   #final-outcome .thesis-section-images {
     grid-column: 1;
-    grid-row: auto;
   }
 
   #final-outcome .thesis-section-images {

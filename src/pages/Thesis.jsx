@@ -287,50 +287,49 @@ const Thesis = ({ setCursorVariant }) => {
             <>
               <span className="thesis-body-heading">In a world of instant gratification, are people really willing to wait for their items?</span>
               I surveyed 24 young adult shoppers and found that they were! If given incentive.
-              <figure className="thesis-figure thesis-user-testing-chart">
-                <img
-                  src="/thesis/user-testing-chart.png"
-                  alt="Survey results: willingness to wait longer if given a prize"
-                  className="thesis-image"
-                  loading="lazy"
-                />
-              </figure>
               <div className="thesis-user-testing-bars" aria-hidden="true">
                 <svg
-                  className="thesis-user-testing-bars-svg"
+                  className="thesis-user-testing-bars-svg thesis-pie-svg"
                   viewBox="0 0 260 160"
                   role="img"
                 >
-                  {/* Axes */}
-                  <line x1="32" y1="20" x2="32" y2="120" className="thesis-bar-axis" />
-                  <line x1="32" y1="120" x2="230" y2="120" className="thesis-bar-axis" />
-                  {/* Y-axis labels (number of respondents) */}
-                  <text x="28" y="120" className="thesis-bar-tick-label">0</text>
-                  <text x="28" y="96" className="thesis-bar-tick-label">5</text>
-                  <text x="28" y="72" className="thesis-bar-tick-label">10</text>
-                  <text x="28" y="48" className="thesis-bar-tick-label">15</text>
-                  <text x="28" y="24" className="thesis-bar-tick-label">20</text>
-                  <text x="20" y="12" className="thesis-bar-caption thesis-bar-caption-vertical"># of respondents</text>
-                  {/* Bars (approximate: 74%, 13%, remainder) */}
-                  <rect x="48" y="38" width="48" height="82" className="thesis-bar-yes" />
-                  <rect x="120" y="86" width="48" height="34" className="thesis-bar-no" />
-                  <rect x="192" y="98" width="48" height="22" className="thesis-bar-maybe" />
-                  {/* X-axis labels */}
-                  <text x="72" y="136" className="thesis-bar-label">Yes (74%)</text>
-                  <text x="144" y="136" className="thesis-bar-label">No (13%)</text>
-                  <text x="216" y="136" className="thesis-bar-label">Maybe</text>
-                  <text x="160" y="16" className="thesis-bar-caption">24 respondents</text>
+                  {/* Pie: centered (130,80), r=60 (10% larger). Yes 87%, No 13% */}
+                  <path
+                    d="M 130 80 L 190 80 A 60 60 0 1 1 170.9 36.1 Z"
+                    className="thesis-pie-yes"
+                  />
+                  <path
+                    d="M 130 80 L 170.9 36.1 A 60 60 0 0 1 190 80 Z"
+                    className="thesis-pie-no"
+                  />
+                  <text x="48" y="112" className="thesis-pie-label">Yes (87%)</text>
+                  <text x="212" y="56" className="thesis-pie-label">No (13%)</text>
                 </svg>
               </div>
             </>
           }
-          list={[
-            'items are exclusive',
-            'items are made with consumer input',
-            'items are cheaper',
-            'items are more environmentally friendly',
-          ]}
-          listTitle="A pre-order model can work if customers are given incentive."
+        />
+
+        <CaseStudySection
+          id="after-graph"
+          label=""
+          heading="A pre-order model can work if customers are given incentive."
+          body2={
+            <div className="thesis-bridg-incentives-box">
+              <div className="thesis-bridg-incentives-inner">
+                <div className="thesis-bridg-incentives-header">
+                  <span className="thesis-bridg-incentives-text">Bridg's Incentives</span>
+                  <span className="thesis-bridg-incentives-icon" aria-hidden="true">🏆</span>
+                </div>
+                <ul className="thesis-bridg-incentives-list">
+                <li>items are exclusive</li>
+                <li>items are made with consumer input</li>
+                <li>items are cheaper</li>
+                <li>items are more environmentally friendly</li>
+                </ul>
+              </div>
+            </div>
+          }
         />
 
         <CaseStudySection
@@ -339,11 +338,18 @@ const Thesis = ({ setCursorVariant }) => {
         />
 
         <CaseStudySection
+          id="section-under-user-testing"
+          label=""
+          heading=""
+          body=""
+        />
+
+        <CaseStudySection
           id="impact"
           label="IMPACT"
-          heading="Both brands and consumers benefit, and as a result, the environment as well."
+          heading="With Bridg, both brands and consumers benefit, and as a result, the environment as well."
           twoColumns={[
-            { title: 'Brands', iconSrc: THESIS_IMAGES.brandsIcon, iconAlt: 'Brands', items: ['reduces unsold inventory', 'saves money on production', 'come off as eco-conscious to public eye'] },
+            { title: 'Brands', iconSrc: THESIS_IMAGES.brandsIcon, iconAlt: 'Brands', items: ['reduces unsold inventory', 'saves money on production', 'seen as eco-conscious'] },
             { title: 'Consumers', iconSrc: THESIS_IMAGES.consumersIcon, iconAlt: 'Consumers', items: ['receives early access', 'personal connection to brand', 'feels sustainable'] },
           ]}
         />
@@ -353,6 +359,7 @@ const Thesis = ({ setCursorVariant }) => {
           label="CONCLUSION"
           heading="Learning to own the process!"
           body="Tackling this project solo was my biggest design challenge yet. Over the course of six months, I learned how to manage my time, stay accountable, and keep momentum without external pressure. Meeting my own goals and holding myself to them became just as important as the final outcome. Here is an image from the big presentation day!"
+          textInBox
           images={[{ src: THESIS_IMAGES.finalOutcome, alt: 'Thesis presentation day' }]}
         />
 
