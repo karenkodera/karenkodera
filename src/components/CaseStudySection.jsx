@@ -60,6 +60,7 @@ export default function CaseStudySection({
   mediaInGrayBox,
   afterBody,
   afterEquation,
+  sectionClassName,
 }) {
   const titleLeftClass = listWithImages && listWithImages.length > 0 && listWithImagesTitleLeft ? ' thesis-section-title-left' : '';
   const solutionClass = equationImage ? ' thesis-section-solution' : '';
@@ -114,7 +115,7 @@ export default function CaseStudySection({
   return (
     <motion.section
       id={id}
-      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}${hasImageRight ? ' thesis-section-image-right' : ''}${hasImageLeft ? ' thesis-section-image-left' : ''}`}
+      className={`thesis-section${titleLeftClass}${solutionClass}${hasMediaRight ? ' thesis-section-media-right' : ''}${hasTwoVideos ? ' thesis-section-two-videos' : ''}${hasMediaLeft ? ' thesis-section-media-left' : ''}${hasTwoVideosLeft ? ' thesis-section-two-videos-left' : ''}${hasImageRight ? ' thesis-section-image-right' : ''}${hasImageLeft ? ' thesis-section-image-left' : ''}${sectionClassName ? ` ${sectionClassName}` : ''}`}
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
@@ -380,15 +381,17 @@ export default function CaseStudySection({
             const label = colonIndex > -1 ? pair.text.substring(0, colonIndex + 1) : '';
             const desc = colonIndex > -1 ? pair.text.substring(colonIndex + 1).trim() : pair.text;
             return (
-              <div key={i} className="thesis-comparison-pair">
-                <figure className="thesis-figure thesis-comparison-pair-image">
-                  <img src={pair.src} alt={pair.alt} className="thesis-image" loading="lazy" />
-                </figure>
-                <p className="thesis-section-body thesis-comparison-pair-text">
-                  {label && <span className="thesis-comparison-pair-label">{label}</span>}
-                  {label && ' '}
-                  <span className="thesis-comparison-pair-desc">{desc}</span>
-                </p>
+              <div key={i} className="thesis-comparison-pair-box">
+                <div className="thesis-comparison-pair">
+                  <figure className="thesis-figure thesis-comparison-pair-image">
+                    <img src={pair.src} alt={pair.alt} className="thesis-image" loading="lazy" />
+                  </figure>
+                  <p className="thesis-section-body thesis-comparison-pair-text">
+                    {label && <span className="thesis-comparison-pair-label">{label}</span>}
+                    {label && ' '}
+                    <span className="thesis-comparison-pair-desc">{desc}</span>
+                  </p>
+                </div>
               </div>
             );
           })}

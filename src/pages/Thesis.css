@@ -555,10 +555,27 @@
 
 /* Comparison pairs: image above text, two models side by side */
 .thesis-comparison-pairs {
-  margin: 40px 0 24px;
+  margin: 40px 0 36px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 24px;
+}
+
+/* Wrapper around each pair (Traditional / Bridg pre-order): code-only, no visible box; max 300px */
+.thesis-comparison-pair-box {
+  max-width: 300px;
+  width: 100%;
+  min-width: 0;
+}
+
+.thesis-comparison-pair-box:first-child .thesis-comparison-pair {
+  align-items: center;
+}
+
+.thesis-comparison-pair-box:first-child .thesis-comparison-pair-text {
+  max-width: 250px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .thesis-comparison-pair {
@@ -965,6 +982,107 @@
   display: block;
 }
 
+/* Kroger: less space between route summary image and "However, these sheets..." */
+#problem.thesis-section:has(+ #problem-sheets) {
+  margin-bottom: 24px;
+}
+
+/* Kroger problem-sheets: match route summary gray box + subtitle style; image 50%, no border */
+#problem-sheets .thesis-figure-gray-box {
+  background: var(--hover-bg) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  padding-bottom: 28px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+#problem-sheets .thesis-figure-gray-box .thesis-image {
+  border-radius: 8px;
+  display: block;
+}
+
+#problem-sheets .thesis-figure-gray-box .thesis-figcaption {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Kroger problem-sheets: two stat boxes across full width */
+.kroger-problem-sheets-stats-row {
+  margin-top: 16px;
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+}
+
+.kroger-problem-sheets-stat-box {
+  padding: 12px 14px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.kroger-problem-sheets-stat-number {
+  margin: 0 0 4px 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.kroger-problem-sheets-stat-text {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 900px) {
+  .kroger-problem-sheets-stats-row {
+    flex-direction: column;
+  }
+}
+
+/* Kroger Problem: route summary in gray box – full width, subtitle bottom-left */
+#problem .thesis-figure-gray-box {
+  background: var(--hover-bg) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  padding-bottom: 28px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+}
+
+#problem .thesis-figure-gray-box .thesis-image {
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+#problem .thesis-figure-gray-box .thesis-figcaption {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
 /* Stakeholder needs: light gray box and image background (not white) */
 #understanding-business-needs.thesis-section .thesis-figure-gray-box,
 #understanding-business-needs.thesis-section .thesis-figure-white-bg {
@@ -1110,6 +1228,24 @@
   max-width: 420px;
 }
 
+/* Wrapper: full width of case for pie chart gray box */
+.thesis-user-testing-chart-scaled {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Pie chart subtitle – bottom-left of gray box; match HSA FSA .thesis-feedback-box-subtitle */
+.thesis-user-testing-bars .thesis-user-testing-chart-subtitle {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+
 /* After-graph section: gray box with "Bridg's Incentives" + trophy + bullet list; block centered, text right-aligned */
 .thesis-bridg-incentives-box {
   display: flex;
@@ -1171,6 +1307,36 @@
   margin-bottom: 0;
 }
 
+.thesis-user-testing-chart-scaled .thesis-user-testing-bars {
+  position: relative;
+  margin: 12px 0 0;
+  padding: 16px 20px;
+  padding-bottom: 28px; /* room for bottom-left subtitle */
+  width: 100%;
+  box-sizing: border-box;
+  background: var(--hover-bg);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+}
+
+/* Pie only: keep at 75% scale inside full-width gray box */
+.thesis-user-testing-pie-wrap {
+  width: 75%;
+  max-width: 346.5px;
+  margin: 0 auto;
+}
+
+.thesis-user-testing-pie-wrap .thesis-user-testing-bars-svg {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.thesis-user-testing-pie-wrap .thesis-pie-label {
+  font-size: 7.5px; /* 75% of 10px to match pie scale */
+}
+
 .thesis-user-testing-bars {
   margin: 16px 0 0;
   padding: 16px 20px;
@@ -1228,6 +1394,7 @@
   dominant-baseline: middle;
   fill: #000;
 }
+
 
 .thesis-bar-axis {
   stroke: var(--text-secondary);
@@ -1375,44 +1542,51 @@
   border-radius: 12px;
 }
 
-/* Final outcome: body text left, smaller photo right, no caption */
-/* Conclusion: text (label, heading, body) in one gray box, image to the right */
-#final-outcome.thesis-section {
+/* Split width: text (label, heading, body) grouped left, image right; used in Conclusion */
+#final-outcome.thesis-section,
+.thesis-split-width.thesis-section {
   display: grid;
   grid-template-columns: 1fr 320px;
   gap: 0 28px;
   align-items: start;
 }
 
-#final-outcome .thesis-section-text-box {
+#final-outcome .thesis-section-text-box,
+.thesis-split-width .thesis-section-text-box {
   grid-column: 1;
   min-width: 0;
 }
 
-#final-outcome .thesis-section-text-box .thesis-section-label {
+#final-outcome .thesis-section-text-box .thesis-section-label,
+.thesis-split-width .thesis-section-text-box .thesis-section-label {
   margin-bottom: 10px;
 }
 
-#final-outcome .thesis-section-text-box .thesis-section-heading {
+#final-outcome .thesis-section-text-box .thesis-section-heading,
+.thesis-split-width .thesis-section-text-box .thesis-section-heading {
   margin-bottom: 14px;
 }
 
-#final-outcome .thesis-section-text-box .thesis-section-body {
+#final-outcome .thesis-section-text-box .thesis-section-body,
+.thesis-split-width .thesis-section-text-box .thesis-section-body {
   margin-bottom: 0;
 }
 
-#final-outcome .thesis-section-images {
+#final-outcome .thesis-section-images,
+.thesis-split-width .thesis-section-images {
   grid-column: 2;
   margin: 0;
   max-width: 320px;
   align-self: start;
 }
 
-#final-outcome .thesis-section-images .thesis-figure {
+#final-outcome .thesis-section-images .thesis-figure,
+.thesis-split-width .thesis-section-images .thesis-figure {
   width: 100%;
 }
 
-#final-outcome .thesis-section-images .thesis-image {
+#final-outcome .thesis-section-images .thesis-image,
+.thesis-split-width .thesis-section-images .thesis-image {
   width: 100%;
   border-radius: 12px;
 }
@@ -2472,16 +2646,20 @@
     margin-top: 20px;
   }
 
-  #final-outcome.thesis-section {
+  #final-outcome.thesis-section,
+  .thesis-split-width.thesis-section {
     grid-template-columns: 1fr;
   }
 
   #final-outcome .thesis-section-text-box,
-  #final-outcome .thesis-section-images {
+  #final-outcome .thesis-section-images,
+  .thesis-split-width .thesis-section-text-box,
+  .thesis-split-width .thesis-section-images {
     grid-column: 1;
   }
 
-  #final-outcome .thesis-section-images {
+  #final-outcome .thesis-section-images,
+  .thesis-split-width .thesis-section-images {
     max-width: 100%;
     margin-top: 20px;
   }

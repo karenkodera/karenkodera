@@ -113,8 +113,8 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
               <div className="thesis-meta-box">
                 <dl className="thesis-meta">
                   <div>
-                    <dt>Responsibilities</dt>
-                    <dd>Product Designer</dd>
+                    <dt>Team</dt>
+                    <dd>Fulfillment innovation team</dd>
                   </div>
                   <div>
                     <dt>Tools</dt>
@@ -236,13 +236,13 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
                 <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/kroger').subtitle}</span>
               )}
             </Link>
-            <Link to="/thesis" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+            <Link to="/hsa-fsa" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
               <div className="thesis-case-nav-content">
                 <span className="thesis-case-nav-label">Next case study</span>
                 <span className="thesis-case-nav-arrow" aria-hidden>→</span>
               </div>
-              {get_case_study_for_path('/thesis') && (
-                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/thesis').subtitle}</span>
+              {get_case_study_for_path('/hsa-fsa') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/hsa-fsa').subtitle}</span>
               )}
             </Link>
           </footer>

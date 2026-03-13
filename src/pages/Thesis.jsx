@@ -287,24 +287,29 @@ const Thesis = ({ setCursorVariant }) => {
             <>
               <span className="thesis-body-heading">In a world of instant gratification, are people really willing to wait for their items?</span>
               I surveyed 24 young adult shoppers and found that they were! If given incentive.
-              <div className="thesis-user-testing-bars" aria-hidden="true">
-                <svg
-                  className="thesis-user-testing-bars-svg thesis-pie-svg"
-                  viewBox="0 0 260 160"
-                  role="img"
-                >
-                  {/* Pie: centered (130,80), r=60 (10% larger). Yes 87%, No 13% */}
-                  <path
-                    d="M 130 80 L 190 80 A 60 60 0 1 1 170.9 36.1 Z"
-                    className="thesis-pie-yes"
-                  />
-                  <path
-                    d="M 130 80 L 170.9 36.1 A 60 60 0 0 1 190 80 Z"
-                    className="thesis-pie-no"
-                  />
-                  <text x="48" y="112" className="thesis-pie-label">Yes (87%)</text>
-                  <text x="212" y="56" className="thesis-pie-label">No (13%)</text>
-                </svg>
+              <div className="thesis-user-testing-chart-scaled">
+                <div className="thesis-user-testing-bars" aria-hidden="true">
+                <div className="thesis-user-testing-pie-wrap">
+                  <svg
+                    className="thesis-user-testing-bars-svg thesis-pie-svg"
+                    viewBox="0 0 260 160"
+                    role="img"
+                  >
+                    {/* Pie: centered (130,80), r=60. Yes 87%, No 13% */}
+                    <path
+                      d="M 130 80 L 190 80 A 60 60 0 1 1 170.9 36.1 Z"
+                      className="thesis-pie-yes"
+                    />
+                    <path
+                      d="M 130 80 L 170.9 36.1 A 60 60 0 0 1 190 80 Z"
+                      className="thesis-pie-no"
+                    />
+                    <text x="48" y="112" className="thesis-pie-label">Yes (87%)</text>
+                    <text x="212" y="56" className="thesis-pie-label">No (13%)</text>
+                  </svg>
+                </div>
+                <p className="thesis-user-testing-chart-subtitle">Results from user testing survey</p>
+                </div>
               </div>
             </>
           }
@@ -360,12 +365,13 @@ const Thesis = ({ setCursorVariant }) => {
           heading="Learning to own the process!"
           body="Tackling this project solo was my biggest design challenge yet. Over the course of six months, I learned how to manage my time, stay accountable, and keep momentum without external pressure. Meeting my own goals and holding myself to them became just as important as the final outcome. Here is an image from the big presentation day!"
           textInBox
+          sectionClassName="thesis-split-width"
           images={[{ src: THESIS_IMAGES.finalOutcome, alt: 'Thesis presentation day' }]}
         />
 
         <footer className="thesis-case-nav">
           <Link
-            to="/dsg"
+            to="/hsa-fsa"
             className="thesis-case-nav-link thesis-case-nav-prev"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -374,12 +380,12 @@ const Thesis = ({ setCursorVariant }) => {
               <span className="thesis-case-nav-arrow" aria-hidden>←</span>
               <span className="thesis-case-nav-label">Previous case study</span>
             </div>
-            {get_case_study_for_path('/dsg') && (
-              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/dsg').subtitle}</span>
+            {get_case_study_for_path('/hsa-fsa') && (
+              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/hsa-fsa').subtitle}</span>
             )}
           </Link>
           <Link
-            to="/#work"
+            to="/kroger"
             className="thesis-case-nav-link thesis-case-nav-next"
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
@@ -388,8 +394,8 @@ const Thesis = ({ setCursorVariant }) => {
               <span className="thesis-case-nav-label">Next case study</span>
               <span className="thesis-case-nav-arrow" aria-hidden>→</span>
             </div>
-            {get_case_study_for_path('/hsa-fsa') && (
-              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/hsa-fsa').subtitle}</span>
+            {get_case_study_for_path('/kroger') && (
+              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/kroger').subtitle}</span>
             )}
           </Link>
         </footer>

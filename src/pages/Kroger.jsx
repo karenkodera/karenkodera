@@ -7,12 +7,9 @@ import './Thesis.css';
 
 const KROGER_IMAGES = {
   rideAlong: '/kroger/ride-along.png',
-  workshop: '/kroger/workshop.png',
 };
 
 const KROGER_NAV_SECTIONS = [
-  { label: 'Field Research', id: 'field-research' },
-  { label: 'Problem Finding Workshop', id: 'problem-finding-workshop' },
   { label: 'Problem', id: 'problem' },
   { label: 'Survey Findings', id: 'survey-findings' },
   { label: 'Ideation Workshop', id: 'ideation-workshop' },
@@ -117,8 +114,8 @@ const Kroger = ({ setCursorVariant }) => {
               <div className="thesis-meta-box">
                 <dl className="thesis-meta">
                   <div>
-                    <dt>Responsibilities</dt>
-                    <dd>Product Designer</dd>
+                    <dt>Team</dt>
+                    <dd>eComm POS team</dd>
                   </div>
                   <div>
                     <dt>Tools</dt>
@@ -134,48 +131,55 @@ const Kroger = ({ setCursorVariant }) => {
           </motion.section>
 
           <CaseStudySection
-            id="field-research"
-            label="FIELD RESEARCH"
-            heading="I rode-along with drivers to observe as they completed orders."
-            body="I watched them complete their orders throughout the day, taking notes on what I noticed and asking lots of questions. I took these ideas back and deciphered patterns through affinity mapping. Then, arranged my insights into 3 problem spaces that I could potentially delve into."
-            list={[
-              'HMW make destaging clearer so orders don’t get forgotten',
-              'HMW make destaging customizable for driver preferences?',
-              'HMW reduce paper usage in the delivery process?',
-            ]}
-            imageRight={{
-              src: KROGER_IMAGES.rideAlong,
-              alt: 'Kroger delivery driver with wagon',
-              caption: 'Ride-along Day with Kroger Delivery Drivers',
-            }}
-          />
-
-          <CaseStudySection
-            id="problem-finding-workshop"
-            label="PROBLEM FINDING WORKSHOP"
-            heading="I narrowed down by facilitating a problem-finding workshop."
-            body="I led the team including product managers and engineers through a series of activities to narrow down on a feasible and impactful problem. During this meeting, the team expressed interest in pursuing idea 3: Reducing paper usage in the delivery process. They felt this project was both important and feasible for a 10 week project."
-            imageLeft={{
-              src: KROGER_IMAGES.workshop,
-              alt: 'Problem prioritization matrix: potential difficulty vs potential importance',
-              caption: 'Difficulty vs. Importance Exercise from Workshop',
-            }}
-          />
-
-          <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="Route summary sheets are used for recording information at every stop, wasting time and paper…"
-            body="I noticed that drivers spent a lot of time writing redundant information at each stop on these papers; time that could be spent completing more deliveries."
+            heading="Route summary sheets are used for recording information at every stop. Information that is already also being recorded in the app, wasting time and paper."
+            body="I started my internship by spending a day riding alongside drivers. I noticed that drivers spent a lot of time writing redundant information at each stop on these papers; time that could be spent completing more deliveries."
             images={[
               {
-                src: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="1200" height="400"%3E%3Crect fill="%23e5e5e5" width="1200" height="400"/%3E%3Ctext fill="%23999" x="600" y="200" text-anchor="middle" dominant-baseline="middle" font-family="sans-serif" font-size="14"%3EPhoto placeholder%3C/text%3E%3C/svg%3E',
-                alt: 'Photo placeholder',
+                src: '/kroger/route-summary.png',
+                alt: 'Route summary sheet with handwritten delivery stop details, times, and temperature readings',
+                caption: 'Route summary sheets',
                 fullWidth: true,
+                grayBox: true,
               },
             ]}
-            imagesBeforeBody2
-            body2="However, these sheets are important when drivers lose wifi and cannot access Fresco."
+          />
+
+          <CaseStudySection
+            id="problem-sheets"
+            label=""
+            heading="However, these sheets are important when drivers lose wifi and cannot access Fresco."
+            body="I analyzed 100+ survey responses and found that:"
+            body2={
+              <>
+                <h2 className="thesis-section-heading thesis-heading2">
+                  How might we reduce paper usage in the delivery process while ensuring drivers have the information they need in the app when they lose cell service?
+                </h2>
+                <div className="kroger-problem-sheets-stats-row">
+                  <div className="kroger-problem-sheets-stat-box">
+                    <p className="kroger-problem-sheets-stat-number">65%</p>
+                    <p className="kroger-problem-sheets-stat-text">
+                      of drivers lose cell service at least one time during the week.
+                    </p>
+                  </div>
+                  <div className="kroger-problem-sheets-stat-box">
+                    <p className="kroger-problem-sheets-stat-number">51%</p>
+                    <p className="kroger-problem-sheets-stat-text">
+                      of drivers rely on route summary sheets when they lose service.
+                    </p>
+                  </div>
+                </div>
+              </>
+            }
+            images={[
+              {
+                src: KROGER_IMAGES.rideAlong,
+                alt: 'Ride-along day with Kroger delivery drivers',
+                caption: 'Ride-along Day with Kroger Delivery Drivers',
+                grayBox: true,
+              },
+            ]}
           />
 
           <CaseStudySection
