@@ -984,7 +984,7 @@
 
 /* Kroger: less space between route summary image and "However, these sheets..." */
 #problem.thesis-section:has(+ #problem-sheets) {
-  margin-bottom: 24px;
+  margin-bottom: 36px;
 }
 
 /* Kroger problem-sheets: match route summary gray box + subtitle style; image 50%, no border */
@@ -1050,7 +1050,7 @@
 }
 
 .kroger-problem-sheets-hmw {
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
 @media (max-width: 900px) {
@@ -1100,6 +1100,69 @@
   background: var(--hover-bg);
 }
 
+/* Kroger learnings: two gray boxes stacked */
+.kroger-learnings {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.kroger-learning-box {
+  padding: 14px 16px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.kroger-learning-title {
+  margin: 0 0 4px 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.kroger-learning-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+.kroger-learning-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+/* Kroger solution: route summary + offline routing text blocks */
+.kroger-solution-details {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.kroger-solution-item {
+  max-width: 640px;
+}
+
+.kroger-solution-title {
+  margin: 0 0 4px 0;
+  font-size: inherit;
+}
+
+.kroger-solution-text {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
 /* Solution: merged section (quote block + INTRODUCING BRIDG content); less gap between them */
 .thesis-solution-merged {
   scroll-margin-top: 120px;
@@ -1123,9 +1186,11 @@
 }
 
 #solution .thesis-section .thesis-figure-gray-box .thesis-image {
-  width: 100%;
-  height: 100%;
+  width: 50%;
+  height: auto;
   object-fit: contain;
+  border: none;
+  background: none;
 }
 
 .thesis-figcaption {

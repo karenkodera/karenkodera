@@ -181,34 +181,87 @@ const Kroger = ({ setCursorVariant }) => {
           />
 
           <CaseStudySection
-            id="ideation-workshop"
-            label="IDEATION WORKSHOP"
-            heading="Next, I facilitated a workshop where I lead the Fresco team in activities to frame the problem and spur solutioning."
-            body="I lead the team through Abstraction Laddering and a Crazy Eights exercise that lead to 3 main ideas. From there, I went forward with the idea that I felt would be most useful to the drivers."
-            list={[
-              'Camera capture fridge temp to minimize time spent writing it',
-              'Start timer at arrival to reduce time spent writing',
-              'Offline Mode reduces need for paper at all',
-            ]}
-          />
-
-          <CaseStudySection
             id="solution"
             label="SOLUTION"
-            heading="INTRODUCING OFFLINE MODE"
-            body="A version of Fresco that provides drivers with all information needed to complete deliveries without cell service."
-            list={[
-              'Route Summary Sheet Information — Fresco downloads all information from route summary sheets before route begins so it is available when drivers lose service. Drivers can remove orders as completed to clear up space in the device memory.',
-              'Offline Routing — Currently, drivers use their personal devices to route themselves when they lose service on their Zebra. Offline Mode allows drivers to see the route on the map even without service.',
-            ]}
+            heading="Introducing Offline Mode: A feature that provides drivers with all information needed to complete deliveries without cell service."
+            body=""
+            body2={
+              <>
+                <figure className="thesis-figure thesis-figure-gray-box">
+                  <img
+                    src="/kroger/DxP3N89EhUDnq0ZRcXxPN2t8hvo.webp"
+                    alt="Offline Mode toast: You are in Offline Mode. Route summary information is available while you are offline."
+                    className="thesis-image"
+                    loading="lazy"
+                  />
+                  <figcaption className="thesis-figcaption">
+                    Toast showing Offline Mode status and what information is available while drivers are offline.
+                  </figcaption>
+                </figure>
+                <div className="kroger-solution-details">
+                  <div className="kroger-solution-item">
+                    <h2 className="thesis-section-heading thesis-heading2 kroger-solution-title">
+                      Route Summary Sheet Information
+                    </h2>
+                    <p className="kroger-solution-text">
+                      Fresco downloads all information from route summary sheets before route begins so it is available
+                      when drivers lose service. Drivers can remove orders as completed to clear up space in the device
+                      memory.
+                    </p>
+                  </div>
+                  <div className="kroger-solution-item">
+                    <h2 className="thesis-section-heading thesis-heading2 kroger-solution-title">
+                      Offline Routing
+                    </h2>
+                    <p className="kroger-solution-text">
+                      Currently, drivers use their personal devices to route themselves when they lose service on their
+                      Zebra. Offline Mode allows drivers to see the route on the map even without service.
+                    </p>
+                  </div>
+                </div>
+              </>
+            }
           />
 
           <CaseStudySection
             id="conclusion"
-            label="CONCLUSION"
-            heading="Offline Mode is in production!"
-            body="Offline Mode was presented to stakeholders at my final presentation. It has been incorporated into the goals for this upcoming quarter. While there is much testing and designing still to be done, this is an exciting step in the next direction!"
-            body2="The main learning from my project was that the double diamond method is not linear. Stepping back to conduct more research and gather more information is ok! I never realized how much goes on behind the scenes of an everyday grocery trip. I will never look at a quick run to Kroger the same."
+            label="LEARNINGS"
+            heading="What I learned"
+            headingMedia={
+              <div className="kroger-learnings">
+                <div className="kroger-learning-box">
+                  <p className="kroger-learning-title">
+                    <span className="kroger-learning-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                        <path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    Feasibility first.
+                  </p>
+                  <p className="kroger-learning-text">
+                    Offline Mode was presented to stakeholders at my final presentation. While it has gathered lots of
+                    interest, there is a lot of requirements that must be completed before this can be feasible. While
+                    it is in progress, it may take many more months for Offline Mode to completely come to fruition.
+                  </p>
+                </div>
+                <div className="kroger-learning-box">
+                  <p className="kroger-learning-title">
+                    <span className="kroger-learning-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                        <path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    The double diamond method is not linear.
+                  </p>
+                  <p className="kroger-learning-text">
+                    Stepping back to conduct more research and gather more information is ok! A lot of the time, new
+                    information being uncovered meant having to go back and research further before moving forward.
+                  </p>
+                </div>
+              </div>
+            }
           />
 
           <footer className="thesis-case-nav">
