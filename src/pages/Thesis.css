@@ -114,19 +114,18 @@
   margin-bottom: 60px;
 }
 
-/* Less space between User section and Research Methods images */
+/* Thesis spacing tweaks around user research sections */
+/* 24px between USER text and 3 research-methods images */
 #user.thesis-section {
   margin-bottom: 24px;
 }
-
-/* Less space between Bridg's Incentives and Impact */
-#user-testing-and-returning-to-research.thesis-section {
-  margin-bottom: 36px;
+/* 60px between research-methods images and INSIGHTS FROM RESEARCH heading */
+#research-methods.thesis-section {
+  margin-bottom: 60px;
 }
-
-/* Less space between Insights from research and insight gray boxes */
+/* 24px between INSIGHTS FROM RESEARCH heading and first gray insight box */
 #insights-from-research.thesis-section {
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 }
 
 /* Insight 1 and 2: gray boxes, no section label, tighter spacing between boxes */
@@ -438,6 +437,7 @@
   letter-spacing: -0.02em;
   color: var(--text-color);
   line-height: 1.35;
+  margin-top: 60px;
   margin-bottom: 10px;
 }
 
@@ -893,11 +893,11 @@
 }
 
 #problem .thesis-section-body {
-  margin-top: 28px;
+  margin-top: 60px;
 }
 
-/* Thesis Problem: no video between heading and body, so use smaller gap to match other sections */
-#problem:not(:has(.thesis-iphone-gray-box)) .thesis-section-body {
+/* Thesis Problem: no video between heading and body – override back to 0 for that page only */
+#problem.thesis-section:not(:has(.thesis-iphone-gray-box)) .thesis-section-body {
   margin-top: 0;
 }
 
@@ -971,7 +971,7 @@
 
 /* Gray box with rounded corners (e.g. Front of House Audit screenshot) */
 .thesis-figure-gray-box {
-  background: #d0d0d0;
+  background: var(--hover-bg);
   border-radius: 12px;
   padding: 12px;
   overflow: hidden;
@@ -1050,7 +1050,7 @@
 }
 
 .kroger-problem-sheets-hmw {
-  margin-top: 32px;
+  margin-top: 60px;
 }
 
 @media (max-width: 900px) {
@@ -1152,45 +1152,100 @@
 }
 
 .kroger-solution-title {
-  margin: 0 0 4px 0;
+  margin: 0 0 14px 0; /* match section heading spacing above body */
   font-size: inherit;
 }
 
 .kroger-solution-text {
-  margin: 0;
+  margin: 0 0 10px 0; /* match section body spacing above media */
   font-size: 0.875rem;
   line-height: 1.5;
   color: var(--text-secondary);
 }
 
-/* Solution: merged section (quote block + INTRODUCING BRIDG content); less gap between them */
+/* When we manually insert secondary headings (thesis-heading2) inside body blocks,
+   give them full section spacing above to match sections without labels. */
+.thesis-section-body-block .thesis-section-heading.thesis-heading2 {
+  margin-top: 60px;
+}
+
+/* Kroger route summary & offline routing videos: use gray box format like service blueprint */
+.kroger-route-summary-figure,
+.kroger-offline-routing-figure {
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  padding-bottom: 28px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  margin-top: 28px; /* same gap from text to gray box as other sections */
+}
+
+.kroger-route-summary-figure .thesis-video,
+.kroger-offline-routing-figure .thesis-video {
+  width: 50%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+}
+
+/* Solution: merged section (quote block + INTRODUCING BRIDG content) */
 .thesis-solution-merged {
   scroll-margin-top: 120px;
 }
 .thesis-solution-merged .thesis-section:first-child {
-  margin-bottom: 36px;
+  margin-bottom: 60px;
 }
 
 .thesis-solution-intro-subtitle {
   color: var(--text-secondary);
 }
 
-/* Square gray box (solution section) */
+/* Square gray box (solution section) – use same \"gray box format\" as ride-along / problem-sheets */
 #solution .thesis-section .thesis-figure-gray-box {
-  aspect-ratio: 1;
+  background: var(--hover-bg) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  padding-bottom: 28px;
   width: 100%;
-  max-width: 280px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
 }
 
 #solution .thesis-section .thesis-figure-gray-box .thesis-image {
   width: 50%;
   height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   object-fit: contain;
   border: none;
   background: none;
+  border-radius: 8px;
+}
+
+#solution .thesis-section .thesis-figure-gray-box .thesis-figcaption {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Kroger Offline Mode toast gray box: 24px below section heading */
+.kroger-solution-toast-figure {
+  margin-top: 24px;
 }
 
 .thesis-figcaption {
@@ -1899,7 +1954,7 @@
 .thesis-section-solution .thesis-figure-equation {
   width: 100%;
   max-width: none;
-  margin: 0 0 32px;
+  margin: 0 0 60px;
   padding: 24px;
   background: var(--hover-bg);
   border: 1px solid var(--border-color);

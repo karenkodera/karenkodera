@@ -187,7 +187,7 @@ const Kroger = ({ setCursorVariant }) => {
             body=""
             body2={
               <>
-                <figure className="thesis-figure thesis-figure-gray-box">
+                <figure className="thesis-figure thesis-figure-gray-box kroger-solution-toast-figure">
                   <img
                     src="/kroger/DxP3N89EhUDnq0ZRcXxPN2t8hvo.webp"
                     alt="Offline Mode toast: You are in Offline Mode. Route summary information is available while you are offline."
@@ -208,6 +208,22 @@ const Kroger = ({ setCursorVariant }) => {
                       when drivers lose service. Drivers can remove orders as completed to clear up space in the device
                       memory.
                     </p>
+                    <figure className="thesis-figure thesis-figure-gray-box kroger-route-summary-figure">
+                      <video
+                        src="/kroger/1p8AYsmlzX6JBkMlPC2IXtQMU.mp4"
+                        className="thesis-video"
+                        playsInline
+                        muted
+                        loop
+                        autoPlay
+                        aria-label="Route summary sheet experience demo video"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                      <figcaption className="thesis-figcaption">
+                        Route summary sheet flow
+                      </figcaption>
+                    </figure>
                   </div>
                   <div className="kroger-solution-item">
                     <h2 className="thesis-section-heading thesis-heading2 kroger-solution-title">
@@ -217,6 +233,22 @@ const Kroger = ({ setCursorVariant }) => {
                       Currently, drivers use their personal devices to route themselves when they lose service on their
                       Zebra. Offline Mode allows drivers to see the route on the map even without service.
                     </p>
+                    <figure className="thesis-figure thesis-figure-gray-box kroger-offline-routing-figure">
+                      <video
+                        src="/kroger/offline routing.mp4"
+                        className="thesis-video"
+                        playsInline
+                        muted
+                        loop
+                        autoPlay
+                        aria-label="Offline routing experience demo video"
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                      <figcaption className="thesis-figcaption">
+                        Offline routing flow
+                      </figcaption>
+                    </figure>
                   </div>
                 </div>
               </>
