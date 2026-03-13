@@ -1004,6 +1004,9 @@
 #problem-sheets .thesis-figure-gray-box .thesis-image {
   border-radius: 8px;
   display: block;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 #problem-sheets .thesis-figure-gray-box .thesis-figcaption {
@@ -1016,11 +1019,12 @@
   color: var(--text-secondary);
 }
 
-/* Kroger problem-sheets: two stat boxes across full width */
+/* Kroger problem-sheets: two stat boxes stacked full width */
 .kroger-problem-sheets-stats-row {
   margin-top: 16px;
   display: flex;
-  gap: 16px;
+  flex-direction: column;
+  gap: 12px;
   align-items: stretch;
 }
 
@@ -1045,10 +1049,11 @@
   color: var(--text-secondary);
 }
 
+.kroger-problem-sheets-hmw {
+  margin-top: 24px;
+}
+
 @media (max-width: 900px) {
-  .kroger-problem-sheets-stats-row {
-    flex-direction: column;
-  }
 }
 
 /* Kroger Problem: route summary in gray box – full width, subtitle bottom-left */

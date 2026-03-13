@@ -153,23 +153,21 @@ const Kroger = ({ setCursorVariant }) => {
             body="I analyzed 100+ survey responses and found that:"
             body2={
               <>
-                <h2 className="thesis-section-heading thesis-heading2">
-                  How might we reduce paper usage in the delivery process while ensuring drivers have the information they need in the app when they lose cell service?
-                </h2>
                 <div className="kroger-problem-sheets-stats-row">
                   <div className="kroger-problem-sheets-stat-box">
-                    <p className="kroger-problem-sheets-stat-number">65%</p>
                     <p className="kroger-problem-sheets-stat-text">
-                      of drivers lose cell service at least one time during the week.
+                      <span className="kroger-problem-sheets-stat-number">65%</span> of drivers lose cell service at least one time during the week.
                     </p>
                   </div>
                   <div className="kroger-problem-sheets-stat-box">
-                    <p className="kroger-problem-sheets-stat-number">51%</p>
                     <p className="kroger-problem-sheets-stat-text">
-                      of drivers rely on route summary sheets when they lose service.
+                      <span className="kroger-problem-sheets-stat-number">51%</span> of drivers rely on route summary sheets when they lose service.
                     </p>
                   </div>
                 </div>
+                <h2 className="thesis-section-heading thesis-heading2 kroger-problem-sheets-hmw">
+                  How might we reduce paper usage in the delivery process while ensuring drivers have the information they need in the app when they lose cell service?
+                </h2>
               </>
             }
             images={[
@@ -180,13 +178,6 @@ const Kroger = ({ setCursorVariant }) => {
                 grayBox: true,
               },
             ]}
-          />
-
-          <CaseStudySection
-            id="survey-findings"
-            label="SURVEY FINDINGS"
-            heading="I conducted a survey to all US drivers which further proved this was a problem to solve."
-            body="I analyzed 100+ survey responses and created a readable summary for my team with my insights. I learned…"
           />
 
           <CaseStudySection
