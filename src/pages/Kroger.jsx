@@ -11,10 +11,8 @@ const KROGER_IMAGES = {
 
 const KROGER_NAV_SECTIONS = [
   { label: 'Problem', id: 'problem' },
-  { label: 'Survey Findings', id: 'survey-findings' },
-  { label: 'Ideation Workshop', id: 'ideation-workshop' },
   { label: 'Solution', id: 'solution' },
-  { label: 'Conclusion', id: 'conclusion' },
+  { label: 'Learnings', id: 'conclusion' },
 ];
 
 const SCROLL_SPY_TOP_OFFSET = 160;
@@ -195,7 +193,7 @@ const Kroger = ({ setCursorVariant }) => {
                     loading="lazy"
                   />
                   <figcaption className="thesis-figcaption">
-                    Toast showing Offline Mode status and what information is available while drivers are offline.
+                    Offline mode toast messaging
                   </figcaption>
                 </figure>
                 <div className="kroger-solution-details">
@@ -209,17 +207,22 @@ const Kroger = ({ setCursorVariant }) => {
                       memory.
                     </p>
                     <figure className="thesis-figure thesis-figure-gray-box kroger-route-summary-figure">
-                      <video
-                        src="/kroger/1p8AYsmlzX6JBkMlPC2IXtQMU.mp4"
-                        className="thesis-video"
-                        playsInline
-                        muted
-                        loop
-                        autoPlay
-                        aria-label="Route summary sheet experience demo video"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
+                      <div className="thesis-video-device-wrap">
+                        <div className="thesis-video-screen">
+                          <video
+                            src="/kroger/1p8AYsmlzX6JBkMlPC2IXtQMU.mp4"
+                            className="thesis-video"
+                            playsInline
+                            muted
+                            loop
+                            autoPlay
+                            aria-label="Route summary sheet experience demo video"
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                        <img className="thesis-device-frame" src="/dsg/zebra-device.png" alt="" role="presentation" />
+                      </div>
                       <figcaption className="thesis-figcaption">
                         Route summary sheet flow
                       </figcaption>
@@ -234,17 +237,22 @@ const Kroger = ({ setCursorVariant }) => {
                       Zebra. Offline Mode allows drivers to see the route on the map even without service.
                     </p>
                     <figure className="thesis-figure thesis-figure-gray-box kroger-offline-routing-figure">
-                      <video
-                        src="/kroger/offline routing.mp4"
-                        className="thesis-video"
-                        playsInline
-                        muted
-                        loop
-                        autoPlay
-                        aria-label="Offline routing experience demo video"
-                      >
-                        Your browser does not support the video tag.
-                      </video>
+                      <div className="thesis-video-device-wrap">
+                        <div className="thesis-video-screen">
+                          <video
+                            src="/kroger/offline routing.mp4"
+                            className="thesis-video"
+                            playsInline
+                            muted
+                            loop
+                            autoPlay
+                            aria-label="Offline routing experience demo video"
+                          >
+                            Your browser does not support the video tag.
+                          </video>
+                        </div>
+                        <img className="thesis-device-frame" src="/dsg/zebra-device.png" alt="" role="presentation" />
+                      </div>
                       <figcaption className="thesis-figcaption">
                         Offline routing flow
                       </figcaption>
@@ -258,7 +266,7 @@ const Kroger = ({ setCursorVariant }) => {
           <CaseStudySection
             id="conclusion"
             label="LEARNINGS"
-            heading="What I learned"
+            heading="In the few months, I spent on this team, I learned a lot about the way design works in a corporate environment."
             headingMedia={
               <div className="kroger-learnings">
                 <div className="kroger-learning-box">

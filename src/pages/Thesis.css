@@ -797,6 +797,7 @@
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-align: left;
 }
 
 #concept-development .thesis-section-images .thesis-figure:first-child .thesis-image {
@@ -982,6 +983,18 @@
   display: block;
 }
 
+/* All gray box subtitles: match HSA/FSA case video feature 1 (font, color, position) */
+.thesis-figure-gray-box .thesis-figcaption {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
 /* Kroger: less space between route summary image and "However, these sheets..." */
 #problem.thesis-section:has(+ #problem-sheets) {
   margin-bottom: 36px;
@@ -1017,6 +1030,7 @@
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-align: left;
 }
 
 /* Kroger problem-sheets: two stat boxes stacked full width */
@@ -1086,6 +1100,7 @@
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-align: left;
 }
 
 /* Stakeholder needs: light gray box and image background (not white) */
@@ -1185,14 +1200,45 @@
   margin-top: 28px; /* same gap from text to gray box as other sections */
 }
 
-.kroger-route-summary-figure .thesis-video,
-.kroger-offline-routing-figure .thesis-video {
-  width: 50%;
+/* Kroger videos not in Zebra device: keep reduced width */
+.kroger-route-summary-figure .thesis-figure-gray-box > .thesis-video,
+.kroger-offline-routing-figure .thesis-figure-gray-box > .thesis-video {
+  width: calc(50% - 48px);
+  max-width: calc(100% - 96px);
   height: auto;
   display: block;
   margin-left: auto;
   margin-right: auto;
   border-radius: 8px;
+}
+
+/* Kroger Zebra device: frame 8px skinnier than default (212px), height unchanged */
+.kroger-route-summary-figure .thesis-video-device-wrap,
+.kroger-offline-routing-figure .thesis-video-device-wrap {
+  width: 212px;
+}
+
+/* Kroger Zebra device: video screen 191×307, centered in frame, shifted up 1px */
+.kroger-route-summary-figure .thesis-video-device-wrap .thesis-video-screen,
+.kroger-offline-routing-figure .thesis-video-device-wrap .thesis-video-screen {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 191px;
+  height: 307px;
+  transform: translate(-50%, calc(-50% - 1px));
+}
+
+.kroger-route-summary-figure .thesis-video-device-wrap .thesis-video-screen .thesis-video,
+.kroger-offline-routing-figure .thesis-video-device-wrap .thesis-video-screen .thesis-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  display: block;
+  border-radius: 4px;
 }
 
 /* Solution: merged section (quote block + INTRODUCING BRIDG content) */
@@ -1207,8 +1253,9 @@
   color: var(--text-secondary);
 }
 
-/* Square gray box (solution section) – use same \"gray box format\" as ride-along / problem-sheets */
-#solution .thesis-section .thesis-figure-gray-box {
+/* Square gray box (solution section) – use same "gray box format" as ride-along / problem-sheets */
+#solution.thesis-section .thesis-figure-gray-box,
+.kroger-solution-toast-figure.thesis-figure-gray-box {
   background: var(--hover-bg) !important;
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -1233,7 +1280,11 @@
   border-radius: 8px;
 }
 
-#solution .thesis-section .thesis-figure-gray-box .thesis-figcaption {
+/* Gray box captions: match HSA/FSA case video feature 1 subtitle (same text style + position) */
+#solution.thesis-section .thesis-figure-gray-box .thesis-figcaption,
+.kroger-solution-toast-figure .thesis-figcaption,
+.kroger-route-summary-figure .thesis-figcaption,
+.kroger-offline-routing-figure .thesis-figcaption {
   position: absolute;
   bottom: 8px;
   left: 8px;
@@ -1241,11 +1292,34 @@
   font-size: 0.7rem;
   font-weight: 500;
   color: var(--text-secondary);
+  text-align: left;
 }
 
-/* Kroger Offline Mode toast gray box: 24px below section heading */
+/* Kroger Offline Mode toast gray box: 24px below section heading; image has no border */
 .kroger-solution-toast-figure {
   margin-top: 24px;
+}
+
+.kroger-solution-toast-figure .thesis-figcaption {
+  margin-top: 12px;
+  padding-bottom: 8px;
+}
+
+.kroger-solution-toast-figure.thesis-figure-gray-box {
+  padding-bottom: 36px;
+}
+
+.kroger-solution-toast-figure .thesis-image {
+  width: 37.5%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  border: none !important;
+  outline: none;
+  box-shadow: none;
 }
 
 .thesis-figcaption {
