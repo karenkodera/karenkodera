@@ -1000,8 +1000,9 @@
   margin-bottom: 36px;
 }
 
-/* Kroger problem-sheets: match route summary gray box + subtitle style; image 50%, no border */
-#problem-sheets .thesis-figure-gray-box {
+/* Kroger problem-sheets + Dicks context: same gray box format as route summary / service blueprint */
+#problem-sheets .thesis-figure-gray-box,
+#context.thesis-section .thesis-section-images .thesis-figure-gray-box {
   background: var(--hover-bg) !important;
   border: 1px solid var(--border-color);
   border-radius: 12px;
@@ -1110,6 +1111,47 @@
   border: 1px solid var(--border-color);
 }
 
+/* Dicks: three stacked gray boxes under Understanding Business Needs */
+.dsg-business-needs-boxes {
+  margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dsg-business-needs-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+}
+
+.dsg-business-needs-icon {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color);
+}
+
+.dsg-business-needs-text {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-color);
+}
+
+#understanding-business-needs.thesis-section:has(+ #business-needs-goals) {
+  margin-bottom: 24px;
+}
+
+#business-needs-goals.thesis-section {
+  margin-top: 0;
+  margin-bottom: 60px;
+}
+
 #understanding-business-needs.thesis-section .thesis-figure-gray-box .thesis-image,
 #understanding-business-needs.thesis-section .thesis-figure-white-bg .thesis-image {
   background: var(--hover-bg);
@@ -1210,6 +1252,12 @@
   margin-left: auto;
   margin-right: auto;
   border-radius: 8px;
+}
+
+/* Kroger Zebra video: wrapper for play/restart controls (same as HSA/FSA) */
+.kroger-zebra-video-wrap {
+  position: relative;
+  display: inline-block;
 }
 
 /* Kroger Zebra device: frame 8px skinnier than default (212px), height unchanged */
@@ -1375,15 +1423,44 @@
   grid-column: 2;
 }
 
-#context.thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-figure {
+/* Only apply 200px when context has side-by-side layout (textInBox); gray-box layout uses full width */
+#context.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) .thesis-section-images .thesis-figure {
   width: 100%;
   max-width: 200px;
 }
 
-#context.thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-image {
+#context.thesis-section:has(.thesis-section-text-box):has(.thesis-section-images) .thesis-section-images .thesis-image {
   width: 100%;
   max-width: 200px;
   border-radius: 12px;
+}
+
+/* Context section: 60px below Background (hero/meta); 24px below (between Package Storage Room image and next heading) */
+#context.thesis-section {
+  margin-top: 60px;
+  margin-bottom: 24px;
+}
+
+/* Context: 24px between heading/paragraph and Package Storage Room gray box */
+#context.thesis-section .thesis-section-images {
+  margin-top: 24px;
+  width: 100%;
+  max-width: 100%;
+}
+
+#context.thesis-section .thesis-section-images .thesis-figure-gray-box {
+  width: 100%;
+  max-width: 100% !important;
+}
+
+#context.thesis-section .thesis-section-images .thesis-figure-gray-box .thesis-image {
+  width: 50%;
+  max-width: 50%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
 }
 
 /* Solution section: text + image inside one gray box (text left, image right) */
@@ -1739,6 +1816,29 @@
 #solution .thesis-section:has(.thesis-section-images) .thesis-section-images .thesis-image {
   width: 100%;
   border-radius: 12px;
+}
+
+/* Dicks solution: Front of House Audit image in gray box, 64% (20% smaller than 80%), with subtitle */
+#solution .thesis-section-images .thesis-figure-gray-box .thesis-image {
+  width: 64%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  border-radius: 8px;
+  border: none;
+  background: none;
+}
+
+#solution .thesis-section-images .thesis-figure-gray-box .thesis-figcaption {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
 }
 
 /* Split width: text (label, heading, body) grouped left, image right; used in Conclusion */

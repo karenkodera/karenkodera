@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 const ZEBRA_DEVICE_FRAME = '/dsg/zebra-device.png';
@@ -9,6 +10,114 @@ function VideoInDevice({ children }) {
         {children}
       </div>
       <img className="thesis-device-frame" src={ZEBRA_DEVICE_FRAME} alt="" role="presentation" />
+    </div>
+  );
+}
+
+function ControlledVideoInDevice({ src, ariaLabel }) {
+  const videoRef = useRef(null);
+  const [showControls, setShowControls] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          el.currentTime = 0;
+          el.play().catch(() => {});
+          setIsPaused(false);
+        }
+      },
+      { threshold: 0 }
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const handleEnded = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    setTimeout(() => {
+      el.currentTime = 0;
+      el.play().catch(() => {});
+      setIsPaused(false);
+    }, 1000);
+  };
+
+  const handleRewind = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    el.currentTime = 0;
+    el.play().catch(() => {});
+    setIsPaused(false);
+  };
+
+  const handlePausePlay = () => {
+    const el = videoRef.current;
+    if (!el) return;
+    if (el.paused) {
+      el.play().catch(() => {});
+      setIsPaused(false);
+    } else {
+      el.pause();
+      setIsPaused(true);
+    }
+  };
+
+  return (
+    <div
+      className="kroger-zebra-video-wrap"
+      onMouseEnter={() => setShowControls(true)}
+      onMouseLeave={() => setShowControls(false)}
+    >
+      {showControls && (
+        <div className="thesis-iphone-video-controls" aria-hidden="true">
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
+            onClick={handlePausePlay}
+            aria-label={isPaused ? 'Play video' : 'Pause video'}
+          >
+            {isPaused ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <polygon points="5 3 19 12 5 21 5 3" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden>
+                <rect x="6" y="4" width="4" height="16" />
+                <rect x="14" y="4" width="4" height="16" />
+              </svg>
+            )}
+          </button>
+          <button
+            type="button"
+            className="thesis-iphone-video-control-btn"
+            onClick={handleRewind}
+            aria-label="Restart video"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+          </button>
+        </div>
+      )}
+      <VideoInDevice>
+        <video
+          ref={videoRef}
+          src={src}
+          className="thesis-video"
+          playsInline
+          muted
+          loop={false}
+          aria-label={ariaLabel}
+          onEnded={handleEnded}
+        >
+          Your browser does not support the video tag.
+        </video>
+      </VideoInDevice>
     </div>
   );
 }
@@ -92,19 +201,10 @@ export default function CaseStudySection({
           </ul>
           {col.video && (
             <figure className="thesis-col-video">
-              <VideoInDevice>
-                <video
-                  src={col.video}
-                  className="thesis-video"
-                  playsInline
-                  muted
-                  loop
-                  autoPlay
-                  aria-label={`${col.title} video plays automatically`}
-                >
-                  Your browser does not support the video tag.
-                </video>
-              </VideoInDevice>
+              <ControlledVideoInDevice
+                src={col.video}
+                ariaLabel={`${col.title} video plays automatically`}
+              />
             </figure>
           )}
         </div>
@@ -193,19 +293,10 @@ export default function CaseStudySection({
                     {videoLeftBody && <p className="thesis-video-body">{videoLeftBody}</p>}
                   </div>
                 )}
-                <VideoInDevice>
-                  <video
-                    src={videoLeft}
-                    className="thesis-video"
-                    playsInline
-                    muted
-                    loop
-                    autoPlay
-                    aria-label="Video plays automatically"
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </VideoInDevice>
+                <ControlledVideoInDevice
+                  src={videoLeft}
+                  ariaLabel="Video plays automatically"
+                />
               </div>
             )}
             {videoLeftAfter && (
@@ -216,19 +307,10 @@ export default function CaseStudySection({
                     {videoLeftAfterBody && <p className="thesis-video-body">{videoLeftAfterBody}</p>}
                   </div>
                 )}
-                <VideoInDevice>
-                  <video
-                    src={videoLeftAfter}
-                    className="thesis-video"
-                    playsInline
-                    muted
-                    loop
-                    autoPlay
-                    aria-label="After video plays automatically"
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </VideoInDevice>
+                <ControlledVideoInDevice
+                  src={videoLeftAfter}
+                  ariaLabel="After video plays automatically"
+                />
               </div>
             )}
           </div>
@@ -253,19 +335,10 @@ export default function CaseStudySection({
                     {videoBody && <p className="thesis-video-body">{videoBody}</p>}
                   </div>
                 )}
-                <VideoInDevice>
-                  <video
-                    src={video}
-                    className="thesis-video"
-                    playsInline
-                    muted
-                    loop
-                    autoPlay
-                    aria-label="Before video plays automatically"
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </VideoInDevice>
+                <ControlledVideoInDevice
+                  src={video}
+                  ariaLabel="Before video plays automatically"
+                />
               </div>
             )}
             {videoAfter && (
@@ -276,19 +349,10 @@ export default function CaseStudySection({
                     {videoAfterBody && <p className="thesis-video-body">{videoAfterBody}</p>}
                   </div>
                 )}
-                <VideoInDevice>
-                  <video
-                    src={videoAfter}
-                    className="thesis-video"
-                    playsInline
-                    muted
-                    loop
-                    autoPlay
-                    aria-label="After video plays automatically"
-                  >
-                    Your browser does not support the video tag.
-                  </video>
-                </VideoInDevice>
+                <ControlledVideoInDevice
+                  src={videoAfter}
+                  ariaLabel="After video plays automatically"
+                />
               </div>
             )}
           </div>
@@ -534,19 +598,10 @@ export default function CaseStudySection({
                   <p className="thesis-video-body">{col.items.join(' ')}</p>
                 )}
               </div>
-              <VideoInDevice>
-                <video
-                  src={col.video}
-                  className="thesis-video"
-                  playsInline
-                  muted
-                  loop
-                  autoPlay
-                  aria-label={`${col.title} video plays automatically`}
-                >
-                  Your browser does not support the video tag.
-                </video>
-              </VideoInDevice>
+              <ControlledVideoInDevice
+                src={col.video}
+                ariaLabel={`${col.title} video plays automatically`}
+              />
             </div>
           ))}
         </div>

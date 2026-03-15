@@ -11,8 +11,8 @@ const DSG_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
   { label: 'Understanding Business Needs', id: 'understanding-business-needs' },
-  { label: 'Usability Testing', id: 'usability-testing' },
   { label: 'Solution', id: 'solution' },
+  { label: 'Usability Testing', id: 'usability-testing' },
   { label: 'Conclusion', id: 'conclusion' },
 ];
 
@@ -134,49 +134,79 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
             label="CONTEXT"
             heading="An audit is a process for checking order accuracy and location integrity of inline orders packed and stored in-store."
             body="Store associates scan each package and remove canceled/aged orders to keep holding areas accurate. BOPIS (Buy online pickup in store) and SDD (Same day delivery) orders are kept in holding areas together at the front of the store."
-            images={[{ src: '/dsg/dsg-context-storage.png', alt: 'Store holding area with numbered bins for BOPIS and SDD orders', smaller: true, caption: 'Package Storage Room with Alphabetical Boxes' }]}
-            textInBox
+            images={[{ src: '/dsg/dsg-context-storage.png', alt: 'Store holding area with numbered bins for BOPIS and SDD orders', caption: 'Package Storage Room with Alphabetical Boxes', grayBox: true }]}
+          />
+
+          <CaseStudySection
+            id="problem-intro"
+            label=""
+            heading="BOPIS and SDD audits are two separate processes that happen at different times and intervals, but have the same basic function: to check on order storage."
+            body=""
           />
 
           <CaseStudySection
             id="problem"
             label="PROBLEM"
-            heading="BOPIS and SDD audits are two separate processes that happen at different times and intervals, but have the same basic function: to check on order storage. There is opportunity to make the structure more efficient and less redundant."
-            body="First, I worked in-store alongside store associates and interviewed them to understand the audit process. I quickly realized that it was a repetitive process and combining the two into one would significantly save time for associates."
+            heading="Duplicate audits for BOPIS and SDD create inefficiency and redundancy."
+            body="I worked in-store alongside store associates and interviewed them to understand the audit process. I quickly realized that it was a repetitive process and combining the two into one would significantly save time for associates."
             images={[{ src: auditDiagramImg, alt: 'Current audit process (separate SDD and BOPIS flows) vs new proposed single audit process', noBorder: true }]}
           />
 
           <CaseStudySection
             id="understanding-business-needs"
             label="UNDERSTANDING BUSINESS NEEDS"
-            heading="I interviewed stakeholders to understand their expectations in audit."
-            body="I talked to leaders on eComm, Loss Prevention, Athlete Order Management and Store Ops teams. Stakeholders were excited since creating a quicker audit process would mean store associates would have time for other tasks such as interacting with consumers, Athletes, leading to higher profits for the company."
-            images={[{ src: stakeholderNeedsImg, alt: 'Stakeholder needs: straightforward fast audit, address canceled orders quickly, easy communication with stores', whiteBg: true, grayBox: true }]}
+            heading="Talking to stakeholders revealed a set of requirements for the design based on their needs."
+            body="I talked to leaders on eComm, Loss Prevention, Athlete Order Management and Store Ops teams. Stakeholders were excited since creating a quicker audit process would mean store associates would have time for other tasks such as interacting with consumers leading to higher profits for the company."
           />
 
           <CaseStudySection
-            id="usability-testing"
-            label="USABILITY TESTING"
-            heading="I designed my first wireframes based off these goals and then traveled with my team to conduct usability testing in stores."
-            body="I went to Atlanta, Columbus and Pittsburgh, hitting 3–4 stores in each location. I learned that the current process was outdated. I noticed different workarounds being used at stores that lead me to make changes to the design."
-            quote="The audit process is complicated to explain to new store associates when they first join."
-            quoteAttribution="Pittsburgh store associate"
+            id="business-needs-goals"
+            label=""
+            heading=""
+            body=""
+            body2={
+              <div className="dsg-business-needs-boxes">
+                <div className="dsg-business-needs-box">
+                  <span className="dsg-business-needs-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                    </svg>
+                  </span>
+                  <span className="dsg-business-needs-text">Straight forward and fast audit process.</span>
+                </div>
+                <div className="dsg-business-needs-box">
+                  <span className="dsg-business-needs-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 11l3 3L22 4" />
+                      <path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" />
+                    </svg>
+                  </span>
+                  <span className="dsg-business-needs-text">Ability to address canceled orders quickly.</span>
+                </div>
+                <div className="dsg-business-needs-box">
+                  <span className="dsg-business-needs-icon" aria-hidden="true">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z" />
+                    </svg>
+                  </span>
+                  <span className="dsg-business-needs-text">Easy communication with stores.</span>
+                </div>
+              </div>
+            }
           />
 
           <CaseStudySection
             id="solution"
             label="SOLUTION"
-            heading="INTRODUCING The Front of House Audit"
+            heading="Introducing The Front of House Audit"
             body="An agnostic audit process that combines the BOPIS and SDD flows into one, saving time for store associates."
-            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true, grayBox: true }]}
-            textInBox
-            solutionBox
+            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true, grayBox: true, caption: 'Front of House Audit' }]}
           />
 
           <CaseStudySection
             id="change-1"
             label="CHANGE #1"
-            heading="BIN BY BIN SCANNING"
+            heading="Bin by bin scanning"
             video="/dsg/binbybinbefore.mp4"
             videoAfter="/dsg/binbybinafter.mp4"
             videoLabel="BEFORE"
@@ -188,7 +218,7 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
           <CaseStudySection
             id="change-2"
             label="CHANGE #2"
-            heading="CLEAR AUDIT ORDER HIERARCHY"
+            heading="Clear audit order hierarchy"
             videoLeft="/dsg/clearauditorderbefore.mp4"
             videoLeftAfter="/dsg/clearauditorderafter.mp4"
             videoLeftLabel="BEFORE"
@@ -200,7 +230,7 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
           <CaseStudySection
             id="change-3"
             label="CHANGE #3"
-            heading="FEEDBACK WHEN TASKS ARE COMPLETED"
+            heading="Feedback when tasks are completed"
             twoColumns={[
               {
                 title: 'BEFORE',
@@ -217,6 +247,15 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
                 video: '/dsg/feedbackafter.mp4',
               },
             ]}
+          />
+
+          <CaseStudySection
+            id="usability-testing"
+            label="USABILITY TESTING"
+            heading="I designed my first wireframes based off these goals and then traveled with my team to conduct usability testing in stores."
+            body="I went to Atlanta, Columbus and Pittsburgh, hitting 3–4 stores in each location. I learned that the current process was outdated. I noticed different workarounds being used at stores that lead me to make changes to the design."
+            quote="The audit process is complicated to explain to new store associates when they first join."
+            quoteAttribution="Pittsburgh store associate"
           />
 
           <CaseStudySection
