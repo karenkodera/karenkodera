@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import CaseStudySection from '../components/CaseStudySection';
+import CaseStudySection, { ControlledVideoInDevice } from '../components/CaseStudySection';
 import { get_case_study_for_path } from '../data/caseStudies';
 import auditDiagramImg from '../assets/dsg/dsg-audit-diagram.png';
 import stakeholderNeedsImg from '../assets/dsg/dsg-stakeholder-needs.png';
@@ -11,9 +11,10 @@ const DSG_NAV_SECTIONS = [
   { label: 'Context', id: 'context' },
   { label: 'Problem', id: 'problem' },
   { label: 'Understanding Business Needs', id: 'understanding-business-needs' },
-  { label: 'Solution', id: 'solution' },
   { label: 'Usability Testing', id: 'usability-testing' },
-  { label: 'Conclusion', id: 'conclusion' },
+  { label: 'Heuristic Evaluation', id: 'heuristic-evaluation' },
+  { label: 'Solution', id: 'solution' },
+  { label: 'Learnings', id: 'conclusion' },
 ];
 
 const SCROLL_SPY_TOP_OFFSET = 160;
@@ -196,60 +197,6 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
           />
 
           <CaseStudySection
-            id="solution"
-            label="SOLUTION"
-            heading="Introducing The Front of House Audit"
-            body="An agnostic audit process that combines the BOPIS and SDD flows into one, saving time for store associates."
-            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true, grayBox: true, caption: 'Front of House Audit' }]}
-          />
-
-          <CaseStudySection
-            id="change-1"
-            label="CHANGE #1"
-            heading="Bin by bin scanning"
-            video="/dsg/binbybinbefore.mp4"
-            videoAfter="/dsg/binbybinafter.mp4"
-            videoLabel="BEFORE"
-            videoBody="Store associates don't know to set aside orders unless they look at their screen and see the notification."
-            videoAfterLabel="AFTER"
-            videoAfterBody="Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
-          />
-
-          <CaseStudySection
-            id="change-2"
-            label="CHANGE #2"
-            heading="Clear audit order hierarchy"
-            videoLeft="/dsg/clearauditorderbefore.mp4"
-            videoLeftAfter="/dsg/clearauditorderafter.mp4"
-            videoLeftLabel="BEFORE"
-            videoLeftBody="Teammates don't know to set aside orders unless they look at their screen and see the notification."
-            videoLeftAfterLabel="AFTER"
-            videoLeftAfterBody="Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
-          />
-
-          <CaseStudySection
-            id="change-3"
-            label="CHANGE #3"
-            heading="Feedback when tasks are completed"
-            twoColumns={[
-              {
-                title: 'BEFORE',
-                items: [
-                  'Store associates have to manually submit audits requiring them to check their screens to see when orders have been audited.',
-                ],
-                video: '/dsg/feedbackbefore.mp4',
-              },
-              {
-                title: 'AFTER',
-                items: [
-                  'Automated process allows store associates to quickly move through audits, saving time.',
-                ],
-                video: '/dsg/feedbackafter.mp4',
-              },
-            ]}
-          />
-
-          <CaseStudySection
             id="usability-testing"
             label="USABILITY TESTING"
             heading="I designed my first wireframes based off these goals and then traveled with my team to conduct usability testing in stores."
@@ -259,10 +206,137 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
           />
 
           <CaseStudySection
+            id="heuristic-evaluation"
+            label="HEURISTIC EVALUATION"
+            heading="The current experience was missing important features that needed to be included in the new audit."
+            body="I looked at the current experience and found some aspects of the design that were lacking. This helped me find a good starting point for the designs."
+            afterBody={
+              <>
+                <ul className="thesis-list">
+                  <li>The original screens were list-heavy. The lack of hierarchy makes it difficult to understand information on page.</li>
+                  <li>Teammates don&apos;t know to set aside orders unless they look at their screen and see the notification.</li>
+                  <li>Store associates have to manually submit audits requiring them to check their screens to see when orders have been audited.</li>
+                </ul>
+                <div className="thesis-figure thesis-figure-gray-box dsg-heuristic-before-box">
+                  <div className="thesis-video-caption">
+                    <span className="thesis-video-label">MOCKUPS OF OLD DESIGNS</span>
+                  </div>
+                  <div className="thesis-before-after-row">
+                    <div className="thesis-video-device-wrap">
+                      <div className="thesis-video-screen">
+                        <img src="/dsg/binbybinbefore.png" alt="Bin by bin before state" className="thesis-video" />
+                      </div>
+                      <img className="thesis-device-frame" src="/dsg/zebra-device.png" alt="" role="presentation" />
+                    </div>
+                    <div className="thesis-video-device-wrap">
+                      <div className="thesis-video-screen">
+                        <img src="/dsg/clearauditorderbefore.png" alt="Clear audit order before state" className="thesis-video" />
+                      </div>
+                      <img className="thesis-device-frame" src="/dsg/zebra-device.png" alt="" role="presentation" />
+                    </div>
+                    <div className="thesis-video-device-wrap">
+                      <div className="thesis-video-screen">
+                        <img src="/dsg/feedbackbefore.png" alt="Feedback before state" className="thesis-video" />
+                      </div>
+                      <img className="thesis-device-frame" src="/dsg/zebra-device.png" alt="" role="presentation" />
+                    </div>
+                  </div>
+                </div>
+              </>
+            }
+          />
+
+          <CaseStudySection
+            id="solution"
+            label="SOLUTION"
+            heading="Introducing The Front of House Audit"
+            body="An agnostic audit process that combines the BOPIS and SDD flows into one, saving time for store associates."
+            images={[{ src: '/dsg/dsg-foh-solution.png', alt: 'Omnimobile app showing Order Search, BOPIS Performance metrics, and To Do with Front of House Audit', noBorder: true, grayBox: true, caption: 'Front of House Audit' }]}
+          />
+
+          <CaseStudySection
+            id="change-1"
+            label=""
+            heading="Bin by bin scanning"
+            body="Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
+            afterBody={
+              <div className="dsg-change-after-full-width">
+                <div className="thesis-change-video-box">
+                  <ControlledVideoInDevice src="/dsg/binbybinafter.mp4" ariaLabel="Change 1 after video" />
+                  <span className="thesis-figcaption dsg-change-video-subtitle">Bin by bin scanning flow</span>
+                </div>
+              </div>
+            }
+          />
+
+          <CaseStudySection
+            id="change-2"
+            label=""
+            heading="Clear audit order hierarchy"
+            body="Orders to set aside are glued to the top of the list in yellow so it is easy to differentiate from regular orders."
+            afterBody={
+              <div className="dsg-change-after-full-width">
+                <div className="thesis-change-video-box">
+                  <ControlledVideoInDevice src="/dsg/clearauditorderafter.mp4" ariaLabel="Change 2 after video" />
+                  <span className="thesis-figcaption dsg-change-video-subtitle">Clear audit order hierarchy flow</span>
+                </div>
+              </div>
+            }
+          />
+
+          <CaseStudySection
+            id="change-3"
+            label=""
+            heading="Feedback when tasks are completed"
+            body="Automated process allows store associates to quickly move through audits, saving time."
+            afterBody={
+              <div className="dsg-change-after-full-width">
+                <div className="thesis-change-video-box">
+                  <ControlledVideoInDevice src="/dsg/feedbackafter.mp4" ariaLabel="Change 3 after video" />
+                  <span className="thesis-figcaption dsg-change-video-subtitle">Feedback when tasks are completed flow</span>
+                </div>
+              </div>
+            }
+          />
+
+          <CaseStudySection
             id="conclusion"
-            label="CONCLUSION"
-            heading="This was my first internship in UX design, working under designers with formal training allowed me to pick up so much through observation and one on one interaction."
-            body="I learned that important insights aren't always clear immediately. Often times, they require several rounds of research and affinity mapping over and over again until patterns become clear. User testing is so important and what you thought will work the first time isn't always the best solution. What an exciting time of modernization to be apart of the Fulfillment team. I look forward to taking the skills learned from this internship into projects in the future."
+            label="LEARNINGS"
+            heading="This was my first internship in UX design, working under other designers allowed me to pick up so much through observation."
+            headingMedia={
+              <div className="kroger-learnings">
+                <div className="kroger-learning-box">
+                  <p className="kroger-learning-title">
+                    <span className="kroger-learning-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                        <path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    Insights take time to uncover.
+                  </p>
+                  <p className="kroger-learning-text">
+                    Important insights aren&apos;t always clear immediately. Often times, they require several rounds of
+                    research and affinity mapping over and over again until patterns become clear.
+                  </p>
+                </div>
+                <div className="kroger-learning-box">
+                  <p className="kroger-learning-title">
+                    <span className="kroger-learning-icon" aria-hidden="true">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" />
+                        <path d="M8 12.5l2.5 2.5L16 9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    </span>
+                    User testing is essential.
+                  </p>
+                  <p className="kroger-learning-text">
+                    What you thought will work the first time isn&apos;t always the best solution. Testing in person with
+                    real people reveals a lot about customer behavior.
+                  </p>
+                </div>
+              </div>
+            }
           />
 
           <footer className="thesis-case-nav">

@@ -11,9 +11,11 @@ import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
 import Play from './pages/Play';
 import About from './pages/About';
+import PasswordGate from './components/PasswordGate';
 import './App.css';
 
 const THEME_STORAGE_KEY = 'karenkodera-theme';
+const KROGER_PASSWORD = 'karenkodera';
 
 function getInitialTheme() {
   return 'light';
@@ -88,8 +90,8 @@ function AppContent() {
         <Routes>
           <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
           <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
-          <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
-          <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
+          <Route path="/kroger" element={<PasswordGate password={KROGER_PASSWORD}><Kroger setCursorVariant={setCursorVariant} /></PasswordGate>} />
+          <Route path="/hsa-fsa" element={<PasswordGate password={KROGER_PASSWORD}><HsaFsa setCursorVariant={setCursorVariant} /></PasswordGate>} />
           <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
           <Route path="/play" element={<Play setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />
           <Route path="/about" element={<About setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} />} />

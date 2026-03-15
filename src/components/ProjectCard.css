@@ -54,6 +54,43 @@
   display: block;
 }
 
+/* Work in progress: grayed-out image and text, badge overlay */
+.project-card-wip .project-image {
+  filter: grayscale(0.85);
+  opacity: 0.7;
+}
+
+.project-card-wip .project-title,
+.project-card-wip .project-subtitle,
+.project-card-wip .project-tag {
+  color: var(--text-secondary);
+}
+
+.project-wip-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-color);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.project-wip-icon {
+  flex-shrink: 0;
+  color: var(--text-color);
+}
+
 .project-info {
   flex: 1;
   display: flex;

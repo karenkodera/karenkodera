@@ -33,9 +33,11 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
   const CardWrapper = project.link ? Link : 'div';
   const cardProps = project.link ? { to: project.link } : {};
 
+  const isWip = project.workInProgress === true;
+
   return (
     <motion.div
-      className="project-card"
+      className={`project-card${isWip ? ' project-card-wip' : ''}`}
       variants={cardVariants}
       initial="hidden"
       animate="visible"
@@ -62,6 +64,15 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
                 className="project-image"
                 loading="lazy"
               />
+              {isWip && (
+                <div className="project-wip-badge" aria-hidden="true">
+                  <svg className="project-wip-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+                  </svg>
+                  <span>Work In Progress</span>
+                </div>
+              )}
             </div>
             
             <div className="project-info">

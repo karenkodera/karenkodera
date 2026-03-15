@@ -2549,6 +2549,139 @@
   z-index: 1;
 }
 
+/* Dicks Change sections: AFTER gray box full width of case study; body text under header */
+#change-1 .dsg-change-after-full-width,
+#change-2 .dsg-change-after-full-width,
+#change-3 .dsg-change-after-full-width {
+  width: 100%;
+  max-width: 100%;
+  margin-top: 24px;
+}
+
+#change-1 .dsg-change-after-full-width .thesis-change-video-box,
+#change-2 .dsg-change-after-full-width .thesis-change-video-box,
+#change-3 .dsg-change-after-full-width .thesis-change-video-box {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#change-1 .dsg-change-after-full-width .thesis-change-video-box .thesis-video-caption,
+#change-2 .dsg-change-after-full-width .thesis-change-video-box .thesis-video-caption,
+#change-3 .dsg-change-after-full-width .thesis-change-video-box .thesis-video-caption {
+  width: 100%;
+  text-align: center;
+}
+
+#change-1 .dsg-change-after-full-width .thesis-change-video-box,
+#change-2 .dsg-change-after-full-width .thesis-change-video-box,
+#change-3 .dsg-change-after-full-width .thesis-change-video-box {
+  position: relative;
+  padding-bottom: 28px;
+}
+
+#change-1 .dsg-change-after-full-width .dsg-change-video-subtitle,
+#change-2 .dsg-change-after-full-width .dsg-change-video-subtitle,
+#change-3 .dsg-change-after-full-width .dsg-change-video-subtitle {
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: left;
+}
+
+/* Dicks Sporting Goods: match Zebra device + video sizes to Kroger internship (212px frame, 191×307 screen); frame 2px shorter */
+#change-1 .thesis-video-device-wrap,
+#change-2 .thesis-video-device-wrap,
+#change-3 .thesis-video-device-wrap,
+#heuristic-evaluation .thesis-video-device-wrap {
+  width: 212px;
+  height: 439px;
+  min-height: 439px;
+}
+
+/* Heuristic Evaluation: single gray box containing all three BEFORE images */
+#heuristic-evaluation .dsg-heuristic-before-box {
+  background: var(--hover-bg) !important;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  padding-bottom: 28px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  position: relative;
+  margin-top: 24px;
+}
+
+#heuristic-evaluation .dsg-heuristic-before-box .thesis-video-caption {
+  text-align: center;
+}
+
+#heuristic-evaluation .dsg-heuristic-before-box .thesis-before-after-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  margin-top: 12px;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+#heuristic-evaluation .dsg-heuristic-before-box .thesis-before-after-row .thesis-video-device-wrap {
+  margin: 0;
+}
+
+/* Heuristic Evaluation: smaller BEFORE images so all 3 fit in one row; Zebra 2px shorter, 1px narrower */
+#heuristic-evaluation .thesis-before-after-row .thesis-video-device-wrap {
+  width: 153px;
+  height: 317px;
+  min-height: 317px;
+}
+
+#heuristic-evaluation .thesis-before-after-row .thesis-video-device-wrap .thesis-video-screen {
+  width: 140px;
+  height: 222px;
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  transform: translate(-50%, calc(-50% - 2px));
+}
+
+#change-1 .thesis-video-device-wrap .thesis-video-screen,
+#change-2 .thesis-video-device-wrap .thesis-video-screen,
+#change-3 .thesis-video-device-wrap .thesis-video-screen,
+#heuristic-evaluation .thesis-video-device-wrap .thesis-video-screen {
+  top: 50%;
+  left: 50%;
+  right: auto;
+  bottom: auto;
+  width: 191px;
+  height: 307px;
+  transform: translate(-50%, calc(-50% - 2px));
+}
+
+#change-1 .thesis-video-device-wrap .thesis-video-screen .thesis-video,
+#change-2 .thesis-video-device-wrap .thesis-video-screen .thesis-video,
+#change-3 .thesis-video-device-wrap .thesis-video-screen .thesis-video,
+#heuristic-evaluation .thesis-video-device-wrap .thesis-video-screen .thesis-video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transform: none;
+  display: block;
+  border-radius: 4px;
+}
+
 /* Grey box around iPhone + video (Problem + Feature 1–4): full width, height fits phone + progress bar */
 .thesis-iphone-gray-box {
   position: relative;

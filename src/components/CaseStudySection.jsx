@@ -609,3 +609,5 @@ export default function CaseStudySection({
     </motion.section>
   );
 }
+
+export { ControlledVideoInDevice };

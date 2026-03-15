@@ -22,6 +22,7 @@ const projects = [
     link: '/thesis',
     tags: ['Concept', '2025'],
     year: '2025',
+    workInProgress: true,
   },
   {
     id: 3,
