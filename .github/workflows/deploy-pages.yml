@@ -20,10 +20,13 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VITE_BASE_PATH: /karenkodera/
+      # Root base path for custom domain (karenkodera.com)
+      VITE_BASE_PATH: /
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          lfs: true  # fetch Git LFS assets so images/videos in public/ are real files, not pointers
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -40,6 +43,10 @@ jobs:
       # GitHub Pages serves 404.html for unknown paths; use it so the SPA handles routes
       - name: Add 404.html for SPA routing
         run: cp dist/index.html dist/404.html
+
+      # Custom domain: CNAME tells GitHub Pages to serve this site at karenkodera.com
+      - name: Add CNAME for custom domain
+        run: echo "karenkodera.com" > dist/CNAME
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
