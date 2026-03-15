@@ -134,7 +134,7 @@
 
 /* Bio section */
 .about-bio-section {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 24px 0 28px;
 }
@@ -190,7 +190,7 @@
 
 /* Experience */
 .about-experience-section {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px 0;
   border-top: 1px solid var(--border-color);
@@ -238,7 +238,7 @@
 
 /* Education */
 .about-education-section {
-  max-width: 800px;
+  max-width: 100%;
   margin: 0 auto;
   padding: 20px 0 48px;
 }

@@ -102,9 +102,12 @@ function AppContent() {
   );
 }
 
+// Match Vite base path for GitHub Pages (e.g. /karenkodera); empty string for local / custom domain
+const basename = import.meta.env.BASE_URL !== '/' ? import.meta.env.BASE_URL.replace(/\/$/, '') : ''
+
 function App() {
   return (
-    <Router>
+    <Router basename={basename}>
       <AppContent />
     </Router>
   );
