@@ -1,7 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Hero from '../components/Hero';
 import SectionHeader from '../components/SectionHeader';
 import ProjectCard from '../components/ProjectCard';
+import PasswordGate from '../components/PasswordGate';
 import './Home.css';
 
 const projects = [
@@ -11,6 +13,7 @@ const projects = [
     subtitle: 'Kroger Product Design',
     image: '/hsafsa/cover.png',
     link: '/hsa-fsa',
+    requiresPassword: true,
     tags: ['Shipped', '2026'],
     year: '2026',
   },
@@ -30,6 +33,7 @@ const projects = [
     subtitle: 'Kroger Product Design Internship',
     image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
     link: '/kroger',
+    requiresPassword: true,
     tags: ['Handed off', '2024'],
     year: '2024',
   },
@@ -45,9 +49,23 @@ const projects = [
 ];
 
 const Home = ({ setCursorVariant, handleCursorChange, theme, setTheme }) => {
+  const navigate = useNavigate();
+  const [protectedPath, setProtectedPath] = useState(null);
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleProtectedClick = (path) => {
+    setProtectedPath(path);
+  };
+
+  const handlePasswordSuccess = () => {
+    const path = protectedPath;
+    setProtectedPath(null);
+    if (path) {
+      navigate(path);
+    }
+  };
 
   return (
     <div className="home">
@@ -61,10 +79,17 @@ const Home = ({ setCursorVariant, handleCursorChange, theme, setTheme }) => {
               project={project}
               index={index}
               setCursorVariant={setCursorVariant}
+              onProtectedClick={handleProtectedClick}
             />
           ))}
         </div>
       </section>
+      <PasswordGate
+        password="karenkodera"
+        isOpen={Boolean(protectedPath)}
+        onClose={() => setProtectedPath(null)}
+        onSuccess={handlePasswordSuccess}
+      />
     </div>
   );
 };

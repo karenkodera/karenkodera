@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import './ProjectCard.css';
 
-const ProjectCard = ({ project, index, setCursorVariant }) => {
+const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => {
   const [isHovered, setIsHovered] = useState(false);
   const handleMouseEnter = () => {
     setCursorVariant('project');
@@ -34,6 +34,14 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
   const cardProps = project.link ? { to: project.link } : {};
 
   const isWip = project.workInProgress === true;
+  const requiresPassword = project.requiresPassword === true;
+
+  const handleClick = (event) => {
+    if (requiresPassword && onProtectedClick && project.link) {
+      event.preventDefault();
+      onProtectedClick(project.link);
+    }
+  };
 
   return (
     <motion.div
@@ -45,6 +53,7 @@ const ProjectCard = ({ project, index, setCursorVariant }) => {
       <CardWrapper
         {...cardProps}
         className="project-card-link"
+        onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >

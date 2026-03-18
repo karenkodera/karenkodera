@@ -1,36 +1,85 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import './PasswordGate.css';
 
-export default function PasswordGate({ password, children }) {
-  const [unlocked, setUnlocked] = useState(false);
+export default function PasswordGate({ password, isOpen, onClose, onSuccess }) {
   const [value, setValue] = useState('');
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+
+  useEffect(() => {
+    if (isOpen) {
+      setValue('');
+      setError('');
+      setShowPassword(false);
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      const handleKeyDown = (event) => {
+        if (event.key === 'Escape') {
+          event.preventDefault();
+          if (onClose) {
+            onClose();
+          }
+        }
+      };
+      window.addEventListener('keydown', handleKeyDown);
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        window.removeEventListener('keydown', handleKeyDown);
+      };
+    }
+    return undefined;
+  }, [isOpen, onClose]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
     if (value === password) {
-      setUnlocked(true);
+      if (onSuccess) {
+        onSuccess();
+      }
     } else {
       setError('Incorrect password');
     }
   };
 
-  if (unlocked) {
-    return children;
+  if (!isOpen) {
+    return null;
   }
 
+  const handleOverlayClick = () => {
+    if (onClose) {
+      onClose();
+    }
+  };
+
+  const handleInnerClick = (event) => {
+    event.stopPropagation();
+  };
+
   return (
-    <div className="password-gate">
-      <Link to="/" className="password-gate-back" aria-label="Back to home">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <line x1="19" y1="12" x2="5" y2="12" />
-          <polyline points="12 19 5 12 12 5" />
-        </svg>
-      </Link>
-      <div className="password-gate-inner">
+    <div className="password-gate" onClick={handleOverlayClick}>
+      <div className="password-gate-inner" onClick={handleInnerClick}>
+        <button
+          type="button"
+          className="password-gate-back"
+          onClick={onClose}
+          aria-label="Close password dialog"
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden
+          >
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
         <div className="password-gate-lock-icon" aria-hidden="true">
           <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
