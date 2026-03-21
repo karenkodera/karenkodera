@@ -29,7 +29,7 @@ const About = ({ setCursorVariant }) => {
           </div>
           <div className="about-bio-content">
             <p className="about-bio-lead">
-              Designer, lifelong student, lover of small trinkets, and outdoor enthusiast.
+              Designer, lover of small trinkets, and outdoor enthusiast.
             </p>
             <p className="about-bio">
               Growing up with two artists as parents, I like to think I was born with creativity in my blood. My design journey began when I majored in architecture at Georgia Tech, building a foundation for technical precision and an ability to balance constraints with creative vision.

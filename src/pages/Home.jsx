@@ -33,7 +33,6 @@ const projects = [
     subtitle: 'Kroger Product Design Internship',
     image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
     link: '/kroger',
-    requiresPassword: true,
     tags: ['Handed off', '2024'],
     year: '2024',
   },
