@@ -140,7 +140,7 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
             ))}
             <span className="bubble-separator">|</span>
             <a
-              href="https://drive.google.com/file/d/1Y3znbP0TRkg7HWIuc0sueCin9TuKyWom/view?usp=sharing"
+              href="https://drive.google.com/file/d/1hH56x_vKd1yI-vyyi-ExBk-bYQnbQq60/view?usp=sharing"
               target="_blank"
               rel="noopener noreferrer"
               className="bubble-compact-link bubble-compact-resume"

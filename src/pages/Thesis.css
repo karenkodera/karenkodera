@@ -186,8 +186,8 @@
   padding: 24px 40px 80px 24px;
 }
 
-/* Kroger (and any page with Field Research): use full width of main content area */
-.thesis-article:has(#field-research) {
+/* Kroger case study: use full width of main content area (replaces former #field-research hook) */
+.thesis-article.thesis-article-kroger {
   max-width: 100%;
 }
 
@@ -1104,6 +1104,11 @@
   text-align: left;
 }
 
+/* Kroger Problem: hide top 30px of route summary sheet image */
+.thesis-article-kroger #problem .thesis-figure-gray-box .thesis-image {
+  clip-path: inset(30px 0 0 0 round 8px);
+}
+
 /* Stakeholder needs: light gray box and image background (not white) */
 #understanding-business-needs.thesis-section .thesis-figure-gray-box,
 #understanding-business-needs.thesis-section .thesis-figure-white-bg {
@@ -1205,7 +1210,8 @@
 }
 
 .kroger-solution-item {
-  max-width: 640px;
+  width: 100%;
+  min-width: 0;
 }
 
 .kroger-solution-title {
@@ -1258,6 +1264,25 @@
 .kroger-zebra-video-wrap {
   position: relative;
   display: inline-block;
+}
+
+/* Kroger solution gray boxes: center Zebra + video horizontally */
+.kroger-route-summary-figure .kroger-zebra-video-wrap,
+.kroger-offline-routing-figure .kroger-zebra-video-wrap {
+  display: block;
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  /* Let .thesis-iphone-video-controls position against the figure (gray box), not this narrow wrap */
+  position: static;
+}
+
+/* Play / restart: top-left of gray box (figure is position: relative + padding) */
+.kroger-route-summary-figure .thesis-iphone-video-controls,
+.kroger-offline-routing-figure .thesis-iphone-video-controls {
+  top: 12px;
+  left: 12px;
 }
 
 /* Kroger Zebra device: frame 8px skinnier than default (212px), height unchanged */

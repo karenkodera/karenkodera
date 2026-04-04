@@ -195,7 +195,7 @@ const Kroger = ({ setCursorVariant }) => {
       </div>
 
       <div className="thesis-main">
-        <article className="thesis-article">
+        <article className="thesis-article thesis-article-kroger">
           <motion.section
             className="thesis-hero"
             initial={{ opacity: 0, y: 24 }}
