@@ -186,9 +186,9 @@
   padding: 24px 40px 80px 24px;
 }
 
-/* Kroger case study: use full width of main content area (replaces former #field-research hook) */
+/* Kroger case study: match standard case-study content width */
 .thesis-article.thesis-article-kroger {
-  max-width: 100%;
+  max-width: 800px;
 }
 
 .thesis-hero {
