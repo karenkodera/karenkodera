@@ -21,7 +21,7 @@ const projects = [
     id: 2,
     title: 'Minimizing Overproduction in Fashion Retail',
     subtitle: "Northwestern Design Master's Thesis",
-    image: '/thesis/thesis-hero.png',
+    image: '/case%20bridg/cover.png',
     link: '/thesis',
     tags: ['Concept', '2025'],
     year: '2025',

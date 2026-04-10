@@ -9,6 +9,9 @@ export default function DesktopVideoWithToolbar({
   subtitle,
   ariaLabel,
   toolbarSrc = '/hsafsa/toolbar.png',
+  /** Larger framed area + contain fit (Bridg thesis hero) */
+  tallFrame = false,
+  poster,
 }) {
   const videoRef = useRef(null);
   const [showControls, setShowControls] = useState(false);
@@ -17,19 +20,50 @@ export default function DesktopVideoWithToolbar({
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
+
+    const tryPlay = () => {
+      if (el.readyState < 2) return; /* HAVE_CURRENT_DATA */
+      el.play().catch(() => {});
+      setIsPaused(false);
+    };
+
+    const playFromStartIfInView = () => {
+      const rect = el.getBoundingClientRect();
+      const inView = rect.bottom > 0 && rect.top < window.innerHeight;
+      if (inView) {
+        el.currentTime = 0;
+        tryPlay();
+      }
+    };
+
+    const onReady = () => {
+      playFromStartIfInView();
+    };
+
+    el.addEventListener('canplay', onReady);
+    el.addEventListener('loadeddata', onReady);
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           el.currentTime = 0;
-          el.play().catch(() => {});
-          setIsPaused(false);
+          tryPlay();
         }
       },
-      { threshold: 0 }
+      { threshold: 0.05, rootMargin: '120px 0px' }
     );
     observer.observe(el);
-    return () => observer.disconnect();
-  }, []);
+
+    // Hero / above-the-fold: IO may race before metadata; one tick retry
+    const t = window.setTimeout(playFromStartIfInView, 100);
+
+    return () => {
+      window.clearTimeout(t);
+      observer.disconnect();
+      el.removeEventListener('canplay', onReady);
+      el.removeEventListener('loadeddata', onReady);
+    };
+  }, [src]);
 
   const handleEnded = () => {
     const el = videoRef.current;
@@ -63,7 +97,7 @@ export default function DesktopVideoWithToolbar({
 
   return (
     <div
-      className="thesis-iphone-gray-box thesis-desktop-video-wrap"
+      className={`thesis-iphone-gray-box thesis-desktop-video-wrap${tallFrame ? ' thesis-desktop-video-wrap--hero' : ''}`}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
@@ -101,18 +135,39 @@ export default function DesktopVideoWithToolbar({
       )}
       <figure className="thesis-figure thesis-desktop-video-figure">
         <img src={toolbarSrc} alt="" className="thesis-desktop-toolbar" role="presentation" />
-        <video
-          ref={videoRef}
-          src={src}
-          className="thesis-desktop-video"
-          playsInline
-          muted
-          loop={false}
-          aria-label={ariaLabel}
-          onEnded={handleEnded}
-        >
-          Your browser does not support the video tag.
-        </video>
+        {tallFrame ? (
+          <div className="thesis-desktop-video-inner">
+            <video
+              ref={videoRef}
+              src={src}
+              poster={poster}
+              className="thesis-desktop-video"
+              playsInline
+              muted
+              loop={false}
+              preload="auto"
+              aria-label={ariaLabel}
+              onEnded={handleEnded}
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        ) : (
+          <video
+            ref={videoRef}
+            src={src}
+            poster={poster}
+            className="thesis-desktop-video"
+            playsInline
+            muted
+            loop={false}
+            preload="metadata"
+            aria-label={ariaLabel}
+            onEnded={handleEnded}
+          >
+            Your browser does not support the video tag.
+          </video>
+        )}
         <div className="thesis-iphone-video-bottom">
           {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}
         </div>

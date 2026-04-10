@@ -135,8 +135,10 @@ const Thesis = ({ setCursorVariant }) => {
               <DesktopVideoWithToolbar
                 src="/thesis/bridg%20home.mp4"
                 toolbarSrc="/hsafsa/toolbar.png"
+                poster="/case%20bridg/cover.png"
                 subtitle="home"
                 ariaLabel="Bridg home web prototype video"
+                tallFrame
               />
             </div>
             <div className="thesis-hero-meta-row">
