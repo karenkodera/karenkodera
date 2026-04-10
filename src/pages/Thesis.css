@@ -2,6 +2,7 @@
   min-height: 100vh;
   padding-top: 100px;
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
 }
 
@@ -616,6 +617,28 @@
 
 .thesis-comparison-pair-desc {
   color: var(--text-secondary);
+}
+
+/* Named placeholders: keep label casing (vs uppercase .thesis-game-placeholder) */
+.thesis-placeholder-proper-case {
+  text-transform: none;
+  letter-spacing: 0.04em;
+}
+
+/* Thesis hero: desktop video + toolbar (same pattern as HSA/FSA web desktop) */
+.thesis-hero-desktop-video-wrap {
+  margin-bottom: 16px;
+}
+
+.thesis-hero-desktop-video-wrap .thesis-desktop-video-wrap {
+  margin-top: 0;
+}
+
+/* User testing: placeholder under calendar comparison */
+#user-testing-and-returning-to-research .thesis-user-testing-email-placeholder {
+  margin-top: 28px;
+  margin-bottom: 16px;
+  max-width: 640px;
 }
 
 .thesis-section-images {
@@ -2868,15 +2891,25 @@
   background: #000;
 }
 
+/* Full viewport-width row under nav + main (same strip as site footer); links constrained like .footer-content */
 .thesis-case-nav {
+  flex-basis: 100%;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+  border-top: none;
+  box-sizing: border-box;
+}
+
+.thesis-case-nav .footer-content.thesis-case-nav-inner {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 64px;
-  padding-top: 32px;
-  border-top: 1px solid var(--border-color);
   gap: 24px;
   flex-wrap: wrap;
+  padding-top: 16px;
+  padding-bottom: 10px;
 }
 
 .thesis-case-nav-link {
@@ -3026,6 +3059,13 @@
     padding-left: 16px;
     padding-right: 16px;
     padding-bottom: 60px;
+  }
+
+  .thesis-case-nav .footer-content.thesis-case-nav-inner {
+    padding-top: 14px;
+    padding-bottom: 8px;
+    padding-left: 16px;
+    padding-right: 16px;
   }
 
   .thesis-hero-meta-row {

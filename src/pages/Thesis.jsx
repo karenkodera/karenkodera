@@ -2,12 +2,12 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
+import DesktopVideoWithToolbar from '../components/DesktopVideoWithToolbar';
 import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
 // Local images saved from https://karenkodera.com/thesis (same order as on the page)
 const THESIS_IMAGES = {
-  hero: '/thesis/thesis-hero.png',
   problem: '/thesis/thesis-1.png',
   garmentsLandfill: '/thesis/thesis-garments-landfill.png',
   interviewing: '/thesis/thesis-interviewing.png',
@@ -131,11 +131,12 @@ const Thesis = ({ setCursorVariant }) => {
             <p className="thesis-tagline">
               A feedback service to help retail brands reduce overproduction.
             </p>
-            <div className="thesis-hero-image-wrap">
-              <img
-                src={THESIS_IMAGES.hero}
-                alt="Bridg — minimizing overproduction in fashion retail"
-                className="thesis-hero-image"
+            <div className="thesis-hero-image-wrap thesis-hero-desktop-video-wrap">
+              <DesktopVideoWithToolbar
+                src="/thesis/bridg%20home.mp4"
+                toolbarSrc="/hsafsa/toolbar.png"
+                subtitle="home"
+                ariaLabel="Bridg home web prototype video"
               />
             </div>
             <div className="thesis-hero-meta-row">
@@ -278,13 +279,19 @@ const Thesis = ({ setCursorVariant }) => {
         <CaseStudySection
           id="user-testing-and-returning-to-research"
           label="USER TESTING"
-          heading="Since Bridg sells pre-order items, this means that users must wait a little longer for their items to get to them."
+          heading="Pre-order delivery timing"
           comparisonPairs={[
             { src: THESIS_IMAGES.traditionalModel, alt: 'Traditional model delivery timeline', text: 'Traditional model: Items arrive at door in around 2–4 weeks.' },
             { src: THESIS_IMAGES.preOrderModel, alt: 'Pre-order model delivery timeline', text: 'Bridg pre-order model: Items arrive at door in around 4–6 weeks.' },
           ]}
           body2={
             <>
+              <div
+                className="thesis-game-placeholder thesis-placeholder-proper-case thesis-user-testing-email-placeholder"
+                aria-hidden="true"
+              >
+                Email
+              </div>
               <span className="thesis-body-heading">In a world of instant gratification, are people really willing to wait for their items?</span>
               I surveyed 24 young adult shoppers and found that they were! If given incentive.
               <div className="thesis-user-testing-chart-scaled">
@@ -331,6 +338,7 @@ const Thesis = ({ setCursorVariant }) => {
                 <li>items are made with consumer input</li>
                 <li>items are cheaper</li>
                 <li>items are more environmentally friendly</li>
+                <li>won an item</li>
                 </ul>
               </div>
             </div>
@@ -369,7 +377,11 @@ const Thesis = ({ setCursorVariant }) => {
           images={[{ src: THESIS_IMAGES.finalOutcome, alt: 'Thesis presentation day' }]}
         />
 
-        <footer className="thesis-case-nav">
+      </article>
+      </div>
+
+      <footer className="thesis-case-nav" aria-label="Other case studies">
+        <div className="footer-content thesis-case-nav-inner">
           <Link
             to="/hsa-fsa"
             className="thesis-case-nav-link thesis-case-nav-prev"
@@ -398,10 +410,9 @@ const Thesis = ({ setCursorVariant }) => {
               <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/kroger').subtitle}</span>
             )}
           </Link>
-        </footer>
-      </article>
+        </div>
+      </footer>
     </div>
-  </div>
   );
 };
 

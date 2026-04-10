@@ -42,6 +42,11 @@ main {
   z-index: 1;
 }
 
+/* Case study prev/next bar: 8px gap above the global footer */
+.app main:has(.thesis-case-nav) + .footer {
+  margin-top: 8px;
+}
+
 /* Light dot grid (Home & About only), darker where mouse hovers */
 .dotted-grid-bg {
   position: fixed;
