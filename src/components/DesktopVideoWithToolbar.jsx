@@ -1,4 +1,13 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
+
+/** Displayed width/height of video with object-fit: contain inside cw×ch. */
+function containedVideoDisplaySize(video, cw, ch) {
+  const vw = video.videoWidth;
+  const vh = video.videoHeight;
+  if (!vw || !vh || !cw || !ch) return null;
+  const scale = Math.min(cw / vw, ch / vh);
+  return { w: vw * scale, h: vh * scale };
+}
 
 /**
  * Gray box + browser toolbar image + full-width video + play/restart controls + bottom-left caption.
@@ -14,34 +23,75 @@ export default function DesktopVideoWithToolbar({
   poster,
 }) {
   const videoRef = useRef(null);
+  const videoInnerRef = useRef(null);
   const [showControls, setShowControls] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [heroStackWidthPx, setHeroStackWidthPx] = useState(null);
+
+  useLayoutEffect(() => {
+    if (!tallFrame) {
+      setHeroStackWidthPx(null);
+      return;
+    }
+    const video = videoRef.current;
+    const inner = videoInnerRef.current;
+    if (!video || !inner) return;
+
+    const updateStackWidth = () => {
+      const cw = inner.clientWidth;
+      const ch = inner.clientHeight;
+      const size = containedVideoDisplaySize(video, cw, ch);
+      if (size && size.w >= 2) {
+        setHeroStackWidthPx(Math.round(size.w));
+      }
+    };
+
+    const ro = new ResizeObserver(() => {
+      window.requestAnimationFrame(updateStackWidth);
+    });
+    ro.observe(inner);
+
+    const onVideoMeta = () => {
+      requestAnimationFrame(updateStackWidth);
+    };
+    video.addEventListener('loadedmetadata', onVideoMeta);
+    video.addEventListener('loadeddata', onVideoMeta);
+
+    updateStackWidth();
+
+    return () => {
+      ro.disconnect();
+      video.removeEventListener('loadedmetadata', onVideoMeta);
+      video.removeEventListener('loadeddata', onVideoMeta);
+    };
+  }, [tallFrame, src]);
 
   useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
 
+    el.muted = true;
+    el.defaultMuted = true;
+    el.setAttribute('muted', '');
+
     const tryPlay = () => {
-      if (el.readyState < 2) return; /* HAVE_CURRENT_DATA */
       el.play().catch(() => {});
       setIsPaused(false);
     };
 
-    const playFromStartIfInView = () => {
+    const playIfInView = () => {
       const rect = el.getBoundingClientRect();
       const inView = rect.bottom > 0 && rect.top < window.innerHeight;
-      if (inView) {
-        el.currentTime = 0;
-        tryPlay();
-      }
+      if (inView) tryPlay();
     };
 
     const onReady = () => {
-      playFromStartIfInView();
+      playIfInView();
     };
 
     el.addEventListener('canplay', onReady);
     el.addEventListener('loadeddata', onReady);
+    el.addEventListener('loadedmetadata', onReady);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -54,14 +104,14 @@ export default function DesktopVideoWithToolbar({
     );
     observer.observe(el);
 
-    // Hero / above-the-fold: IO may race before metadata; one tick retry
-    const t = window.setTimeout(playFromStartIfInView, 100);
+    const timers = [0, 120, 400, 1000].map((ms) => window.setTimeout(playIfInView, ms));
 
     return () => {
-      window.clearTimeout(t);
+      timers.forEach((t) => window.clearTimeout(t));
       observer.disconnect();
       el.removeEventListener('canplay', onReady);
       el.removeEventListener('loadeddata', onReady);
+      el.removeEventListener('loadedmetadata', onReady);
     };
   }, [src]);
 
@@ -134,9 +184,39 @@ export default function DesktopVideoWithToolbar({
         </div>
       )}
       <figure className="thesis-figure thesis-desktop-video-figure">
-        <img src={toolbarSrc} alt="" className="thesis-desktop-toolbar" role="presentation" />
         {tallFrame ? (
-          <div className="thesis-desktop-video-inner">
+          <div
+            className="thesis-desktop-hero-window-stack"
+            style={
+              heroStackWidthPx != null
+                ? { width: heroStackWidthPx, maxWidth: '100%' }
+                : { width: '100%', maxWidth: '100%' }
+            }
+          >
+            <div className="thesis-desktop-toolbar-pane">
+              <img src={toolbarSrc} alt="" className="thesis-desktop-toolbar" role="presentation" />
+            </div>
+            <div className="thesis-desktop-video-inner" ref={videoInnerRef}>
+              <video
+                ref={videoRef}
+                src={src}
+                poster={poster}
+                className="thesis-desktop-video"
+                playsInline
+                muted
+                autoPlay
+                loop={false}
+                preload="auto"
+                aria-label={ariaLabel}
+                onEnded={handleEnded}
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        ) : (
+          <>
+            <img src={toolbarSrc} alt="" className="thesis-desktop-toolbar" role="presentation" />
             <video
               ref={videoRef}
               src={src}
@@ -144,29 +224,15 @@ export default function DesktopVideoWithToolbar({
               className="thesis-desktop-video"
               playsInline
               muted
+              autoPlay
               loop={false}
-              preload="auto"
+              preload="metadata"
               aria-label={ariaLabel}
               onEnded={handleEnded}
             >
               Your browser does not support the video tag.
             </video>
-          </div>
-        ) : (
-          <video
-            ref={videoRef}
-            src={src}
-            poster={poster}
-            className="thesis-desktop-video"
-            playsInline
-            muted
-            loop={false}
-            preload="metadata"
-            aria-label={ariaLabel}
-            onEnded={handleEnded}
-          >
-            Your browser does not support the video tag.
-          </video>
+          </>
         )}
         <div className="thesis-iphone-video-bottom">
           {subtitle && <figcaption className="thesis-iphone-video-subtitle">{subtitle}</figcaption>}

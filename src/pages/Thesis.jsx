@@ -136,7 +136,7 @@ const Thesis = ({ setCursorVariant }) => {
                 src="/thesis/bridg%20home%20.mp4"
                 toolbarSrc="/hsafsa/toolbar.png"
                 poster="/thesis/bridg-hero-full.png"
-                subtitle="home"
+                subtitle="Bridg Home"
                 ariaLabel="Bridg home web prototype video"
                 tallFrame
               />
@@ -258,8 +258,14 @@ const Thesis = ({ setCursorVariant }) => {
                   label="ORDERS PLACED AS NEEDED"
                   heading="Pre-order platform where customers can purchase items won in games before production begins, creating a sense of exclusivity."
                   afterBody={(
-                    <div className="thesis-game-placeholder" aria-hidden="true">
-                      pre-order platform gif placeholder
+                    <div className="thesis-solution-desktop-video-wrap">
+                      <DesktopVideoWithToolbar
+                        src="/thesis/bridg%20pre%20order%20.mp4"
+                        toolbarSrc="/hsafsa/toolbar.png"
+                        subtitle="Pre-order platform"
+                        ariaLabel="Bridg pre-order platform prototype video"
+                        tallFrame
+                      />
                     </div>
                   )}
                 />
@@ -329,21 +335,26 @@ const Thesis = ({ setCursorVariant }) => {
           label=""
           heading="A pre-order model can work if customers are given incentive."
           body2={
-            <div className="thesis-bridg-incentives-box">
-              <div className="thesis-bridg-incentives-inner">
-                <div className="thesis-bridg-incentives-header">
-                  <span className="thesis-bridg-incentives-text">Bridg's Incentives</span>
-                  <span className="thesis-bridg-incentives-icon" aria-hidden="true">🏆</span>
+            <>
+              <div className="thesis-bridg-incentives-box">
+                <div className="thesis-bridg-incentives-inner">
+                  <div className="thesis-bridg-incentives-header">
+                    <span className="thesis-bridg-incentives-text">Bridg's Incentives</span>
+                    <span className="thesis-bridg-incentives-icon" aria-hidden="true">🏆</span>
+                  </div>
+                  <ul className="thesis-bridg-incentives-list">
+                    <li>items are exclusive</li>
+                    <li>items are made with consumer input</li>
+                    <li>items are cheaper</li>
+                    <li>items are more environmentally friendly</li>
+                    <li>won an item</li>
+                  </ul>
                 </div>
-                <ul className="thesis-bridg-incentives-list">
-                <li>items are exclusive</li>
-                <li>items are made with consumer input</li>
-                <li>items are cheaper</li>
-                <li>items are more environmentally friendly</li>
-                <li>won an item</li>
-                </ul>
               </div>
-            </div>
+              <div className="thesis-game-placeholder thesis-placeholder-proper-case" aria-hidden="true">
+                celebration unlock item
+              </div>
+            </>
           }
         />
 

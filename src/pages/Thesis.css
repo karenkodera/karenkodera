@@ -641,6 +641,8 @@
 }
 
 .thesis-desktop-video-wrap--hero .thesis-desktop-video-figure {
+  /* Video stage height only; toolbar uses natural height (no extra black band) */
+  --thesis-hero-desktop-pane-height: clamp(280px, 45vh, 680px);
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -648,19 +650,42 @@
   box-sizing: border-box;
 }
 
-.thesis-desktop-video-wrap--hero .thesis-desktop-toolbar {
+/* Toolbar + video share width = displayed video width (object-fit: contain), centered */
+.thesis-desktop-hero-window-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
+}
+
+/* Toolbar: intrinsic height at full width (not stretched to match video — that duplicated a huge dark area) */
+.thesis-desktop-video-wrap--hero .thesis-desktop-toolbar-pane {
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  display: block;
+  background: transparent;
+  box-sizing: border-box;
   flex-shrink: 0;
 }
 
-/* Fixed viewport height band + contain = full frame visible (letterboxing as needed) */
+.thesis-desktop-video-wrap--hero .thesis-desktop-toolbar-pane .thesis-desktop-toolbar {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Letterboxing around contained video uses page/gray-box color, not a black matte */
 .thesis-desktop-video-wrap--hero .thesis-desktop-video-inner {
   width: 100%;
-  height: clamp(360px, 58vh, 820px);
-  min-height: 360px;
+  height: var(--thesis-hero-desktop-pane-height);
+  min-height: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0a0a0a;
+  background: transparent;
   box-sizing: border-box;
 }
 
@@ -1570,6 +1595,10 @@
   margin: 0;
   max-width: 280px;
   align-self: start;
+}
+
+.thesis-solution-desktop-video-wrap {
+  margin-top: 16px;
 }
 
 .thesis-game-placeholder {
