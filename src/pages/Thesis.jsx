@@ -133,9 +133,9 @@ const Thesis = ({ setCursorVariant }) => {
             </p>
             <div className="thesis-hero-image-wrap thesis-hero-desktop-video-wrap">
               <DesktopVideoWithToolbar
-                src="/thesis/bridg%20home.mp4"
+                src="/thesis/bridg%20home%20.mp4"
                 toolbarSrc="/hsafsa/toolbar.png"
-                poster="/case%20bridg/cover.png"
+                poster="/thesis/bridg-hero-full.png"
                 subtitle="home"
                 ariaLabel="Bridg home web prototype video"
                 tallFrame
