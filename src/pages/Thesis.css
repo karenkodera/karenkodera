@@ -619,7 +619,7 @@
   color: var(--text-secondary);
 }
 
-/* Named placeholders: keep label casing (vs uppercase .thesis-game-placeholder) */
+/* Named placeholders: keep label casing (vs uppercase section labels) */
 .thesis-placeholder-proper-case {
   text-transform: none;
   letter-spacing: 0.04em;
@@ -1692,21 +1692,6 @@
 
 .thesis-solution-desktop-video-wrap {
   margin-top: 16px;
-}
-
-.thesis-game-placeholder {
-  margin-top: 16px;
-  height: 220px;
-  border-radius: 16px;
-  background: var(--hover-bg);
-  border: 1px dashed var(--border-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
 }
 
 .thesis-user-testing-chart {

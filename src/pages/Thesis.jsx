@@ -137,7 +137,6 @@ const Thesis = ({ setCursorVariant }) => {
               <DesktopVideoWithToolbar
                 src="/thesis/bridg%20home%20.mp4"
                 toolbarSrc="/hsafsa/toolbar.png"
-                poster="/thesis/bridg-hero-full.png"
                 subtitle="Bridg Home"
                 ariaLabel="Bridg home web prototype video"
                 tallFrame
@@ -250,8 +249,15 @@ const Thesis = ({ setCursorVariant }) => {
                   label="GATHER FEEDBACK"
                   heading="Interactive game for customers to vote for their favorite items, giving brands real-time insights into consumer preferences."
                   afterBody={(
-                    <div className="thesis-game-placeholder" aria-hidden="true">
-                      game gif placeholder
+                    <div className="thesis-solution-desktop-video-wrap">
+                      <DesktopVideoWithToolbar
+                        src="/thesis/bridg%20game%20baskets.mp4"
+                        toolbarSrc="/hsafsa/toolbar.png"
+                        poster={THESIS_IMAGES.gatherFeedback}
+                        subtitle="Interactive game"
+                        ariaLabel="Bridg interactive game for customers to vote on favorite items"
+                        tallFrame
+                      />
                     </div>
                   )}
                 />
