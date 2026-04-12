@@ -699,11 +699,70 @@
   vertical-align: top;
 }
 
-/* User testing: placeholder under calendar comparison */
-#user-testing-and-returning-to-research .thesis-user-testing-email-placeholder {
+/* User testing: order email — full-width gray box (Kroger service blueprint / route summary pattern) */
+#user-testing-and-returning-to-research .thesis-bridg-email-figure.thesis-figure-gray-box {
   margin-top: 28px;
   margin-bottom: 16px;
-  max-width: 640px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: var(--hover-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  /* Extra vertical padding so the email block sits centered with room above/below; overflow visible for Outlook overlap */
+  padding: 36px 28px 42px;
+  position: relative;
+  overflow: visible;
+}
+
+#user-testing-and-returning-to-research .thesis-bridg-email-mockup-wrap {
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 0 14px;
+  box-sizing: border-box;
+}
+
+/* Card = white email mockup; Outlook overlaps bottom-left corner */
+#user-testing-and-returning-to-research .thesis-bridg-email-card {
+  position: relative;
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+#user-testing-and-returning-to-research .thesis-bridg-email-screenshot.thesis-image {
+  width: 100%;
+  max-width: min(400px, 92%);
+  height: auto;
+  display: block;
+  margin: 0;
+  border: none !important;
+  box-shadow: none;
+  overflow: visible;
+  vertical-align: top;
+  background: #fff;
+  border-radius: 10px;
+}
+
+#user-testing-and-returning-to-research .thesis-bridg-email-outlook-badge {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+  z-index: 2;
+  pointer-events: none;
+  /* PNG uses transparency for matte; no multiply (avoids black halos) */
+  transform: translate(-28%, 28%);
 }
 
 .thesis-section-images {

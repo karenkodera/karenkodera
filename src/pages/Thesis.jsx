@@ -25,6 +25,8 @@ const THESIS_IMAGES = {
   game: '/thesis/thesis-game.png',
   platformHome: '/thesis/thesis-platform-home.png',
   brandDashboard: '/thesis/thesis-brand-dashboard.png',
+  orderConfirmationEmail: '/thesis/bridg-order-email.png',
+  outlookLogo: '/thesis/outlook-logo.png',
   existingBrand: '/thesis/thesis-10.png',
   whiteLabelModel: '/thesis/thesis-white-label-model.png',
   traditionalModel: '/thesis/thesis-traditional-model.png',
@@ -274,8 +276,15 @@ const Thesis = ({ setCursorVariant }) => {
                   label="GARMENT PRODUCTION"
                   heading="Brand-side dashboard for business to see analytics behind games and make smart production decisions."
                   afterBody={(
-                    <div className="thesis-game-placeholder" aria-hidden="true">
-                      brand gif placeholder
+                    <div className="thesis-solution-desktop-video-wrap">
+                      <DesktopVideoWithToolbar
+                        src="/thesis/bridg%20brand%20dashboard%20.mp4"
+                        toolbarSrc="/hsafsa/toolbar.png"
+                        poster={THESIS_IMAGES.brandDashboard}
+                        subtitle="Brand dashboard"
+                        ariaLabel="Bridg brand-side analytics dashboard prototype video"
+                        tallFrame
+                      />
                     </div>
                   )}
                 />
@@ -287,19 +296,34 @@ const Thesis = ({ setCursorVariant }) => {
         <CaseStudySection
           id="user-testing-and-returning-to-research"
           label="USER TESTING"
-          heading="Pre-order delivery timing"
+          heading="Since Bridg sells pre-order items, this means that users must wait a little longer for their items to get to them."
           comparisonPairs={[
             { src: THESIS_IMAGES.traditionalModel, alt: 'Traditional model delivery timeline', text: 'Traditional model: Items arrive at door in around 2–4 weeks.' },
             { src: THESIS_IMAGES.preOrderModel, alt: 'Pre-order model delivery timeline', text: 'Bridg pre-order model: Items arrive at door in around 4–6 weeks.' },
           ]}
           body2={
             <>
-              <div
-                className="thesis-game-placeholder thesis-placeholder-proper-case thesis-user-testing-email-placeholder"
-                aria-hidden="true"
-              >
-                Email
-              </div>
+              <figure className="thesis-figure thesis-figure-gray-box thesis-bridg-email-figure">
+                <div className="thesis-bridg-email-mockup-wrap">
+                  <div className="thesis-bridg-email-card">
+                    <img
+                      src={THESIS_IMAGES.orderConfirmationEmail}
+                      alt="Bridg transactional email: order received with production timeline and May 1st production date"
+                      className="thesis-image thesis-bridg-email-screenshot"
+                      decoding="async"
+                    />
+                    <img
+                      src={THESIS_IMAGES.outlookLogo}
+                      alt=""
+                      className="thesis-bridg-email-outlook-badge"
+                      width={48}
+                      height={48}
+                      decoding="async"
+                    />
+                  </div>
+                </div>
+                <figcaption className="thesis-figcaption">Email with production date</figcaption>
+              </figure>
               <span className="thesis-body-heading">In a world of instant gratification, are people really willing to wait for their items?</span>
               I surveyed 24 young adult shoppers and found that they were! If given incentive.
               <div className="thesis-user-testing-chart-scaled">
@@ -351,8 +375,15 @@ const Thesis = ({ setCursorVariant }) => {
                   </ul>
                 </div>
               </div>
-              <div className="thesis-game-placeholder thesis-placeholder-proper-case" aria-hidden="true">
-                celebration unlock item
+              <div className="thesis-solution-desktop-video-wrap">
+                <DesktopVideoWithToolbar
+                  src="/thesis/bridg%20celebration%20.mp4"
+                  toolbarSrc="/hsafsa/toolbar.png"
+                  poster={THESIS_IMAGES.game}
+                  subtitle="Celebration / unlock item"
+                  ariaLabel="Bridg celebration when a customer unlocks an item"
+                  tallFrame
+                />
               </div>
             </>
           }

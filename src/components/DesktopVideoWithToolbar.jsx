@@ -1,20 +1,24 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 
-/** Displayed width/height of video with object-fit: contain inside cw×ch. */
+/** Displayed width/height of media with object-fit: contain inside cw×ch. */
+function containedDisplaySize(intrinsicW, intrinsicH, cw, ch) {
+  if (!intrinsicW || !intrinsicH || !cw || !ch) return null;
+  const scale = Math.min(cw / intrinsicW, ch / intrinsicH);
+  return { w: intrinsicW * scale, h: intrinsicH * scale };
+}
+
 function containedVideoDisplaySize(video, cw, ch) {
-  const vw = video.videoWidth;
-  const vh = video.videoHeight;
-  if (!vw || !vh || !cw || !ch) return null;
-  const scale = Math.min(cw / vw, ch / vh);
-  return { w: vw * scale, h: vh * scale };
+  return containedDisplaySize(video.videoWidth, video.videoHeight, cw, ch);
 }
 
 /**
- * Gray box + browser toolbar image + full-width video + play/restart controls + bottom-left caption.
+ * Gray box + browser toolbar image + full-width video or static site image + play/restart controls + bottom-left caption.
  * Same pattern as HSA/FSA Solution “Web desktop” (toolbar defaults to that case study asset).
  */
 export default function DesktopVideoWithToolbar({
   src,
+  /** Static screenshot in the same chrome as video (e.g. Bridg dashboard PNG). */
+  imageSrc,
   subtitle,
   ariaLabel,
   toolbarSrc = '/hsafsa/toolbar.png',
@@ -22,25 +26,34 @@ export default function DesktopVideoWithToolbar({
   tallFrame = false,
   poster,
 }) {
-  const videoRef = useRef(null);
+  const mediaRef = useRef(null);
   const videoInnerRef = useRef(null);
   const [showControls, setShowControls] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [heroStackWidthPx, setHeroStackWidthPx] = useState(null);
+
+  const isImage = Boolean(imageSrc);
 
   useLayoutEffect(() => {
     if (!tallFrame) {
       setHeroStackWidthPx(null);
       return;
     }
-    const video = videoRef.current;
     const inner = videoInnerRef.current;
-    if (!video || !inner) return;
+    const media = mediaRef.current;
+    if (!inner) return;
 
     const updateStackWidth = () => {
+      const m = mediaRef.current;
+      if (!m) return;
       const cw = inner.clientWidth;
       const ch = inner.clientHeight;
-      const size = containedVideoDisplaySize(video, cw, ch);
+      let size = null;
+      if (isImage) {
+        size = containedDisplaySize(m.naturalWidth, m.naturalHeight, cw, ch);
+      } else {
+        size = containedVideoDisplaySize(m, cw, ch);
+      }
       if (size && size.w >= 2) {
         setHeroStackWidthPx(Math.round(size.w));
       }
@@ -51,24 +64,31 @@ export default function DesktopVideoWithToolbar({
     });
     ro.observe(inner);
 
-    const onVideoMeta = () => {
-      requestAnimationFrame(updateStackWidth);
-    };
-    video.addEventListener('loadedmetadata', onVideoMeta);
-    video.addEventListener('loadeddata', onVideoMeta);
+    if (isImage) {
+      media?.addEventListener('load', updateStackWidth);
+    } else if (media) {
+      media.addEventListener('loadedmetadata', updateStackWidth);
+      media.addEventListener('loadeddata', updateStackWidth);
+    }
 
     updateStackWidth();
 
     return () => {
       ro.disconnect();
-      video.removeEventListener('loadedmetadata', onVideoMeta);
-      video.removeEventListener('loadeddata', onVideoMeta);
+      const m = mediaRef.current;
+      if (isImage) {
+        m?.removeEventListener('load', updateStackWidth);
+      } else if (m) {
+        m.removeEventListener('loadedmetadata', updateStackWidth);
+        m.removeEventListener('loadeddata', updateStackWidth);
+      }
     };
-  }, [tallFrame, src]);
+  }, [tallFrame, src, imageSrc, isImage]);
 
   useEffect(() => {
-    const el = videoRef.current;
-    if (!el) return;
+    if (isImage) return;
+    const el = mediaRef.current;
+    if (!el || el.tagName !== 'VIDEO') return;
 
     el.muted = true;
     el.defaultMuted = true;
@@ -113,11 +133,11 @@ export default function DesktopVideoWithToolbar({
       el.removeEventListener('loadeddata', onReady);
       el.removeEventListener('loadedmetadata', onReady);
     };
-  }, [src]);
+  }, [src, isImage]);
 
   const handleEnded = () => {
-    const el = videoRef.current;
-    if (!el) return;
+    const el = mediaRef.current;
+    if (!el || el.tagName !== 'VIDEO') return;
     setTimeout(() => {
       el.currentTime = 0;
       el.play().catch(() => {});
@@ -126,16 +146,16 @@ export default function DesktopVideoWithToolbar({
   };
 
   const handleRewind = () => {
-    const el = videoRef.current;
-    if (!el) return;
+    const el = mediaRef.current;
+    if (!el || el.tagName !== 'VIDEO') return;
     el.currentTime = 0;
     el.play().catch(() => {});
     setIsPaused(false);
   };
 
   const handlePausePlay = () => {
-    const el = videoRef.current;
-    if (!el) return;
+    const el = mediaRef.current;
+    if (!el || el.tagName !== 'VIDEO') return;
     if (el.paused) {
       el.play().catch(() => {});
       setIsPaused(false);
@@ -145,13 +165,39 @@ export default function DesktopVideoWithToolbar({
     }
   };
 
+  const mediaNode = isImage ? (
+    <img
+      ref={mediaRef}
+      src={imageSrc}
+      alt={ariaLabel ?? ''}
+      className="thesis-desktop-video"
+      decoding="async"
+    />
+  ) : (
+    <video
+      ref={mediaRef}
+      src={src}
+      poster={poster}
+      className="thesis-desktop-video"
+      playsInline
+      muted
+      autoPlay
+      loop={false}
+      preload={tallFrame ? 'auto' : 'metadata'}
+      aria-label={ariaLabel}
+      onEnded={handleEnded}
+    >
+      Your browser does not support the video tag.
+    </video>
+  );
+
   return (
     <div
       className={`thesis-iphone-gray-box thesis-desktop-video-wrap${tallFrame ? ' thesis-desktop-video-wrap--hero' : ''}`}
       onMouseEnter={() => setShowControls(true)}
       onMouseLeave={() => setShowControls(false)}
     >
-      {showControls && (
+      {showControls && !isImage && (
         <div className="thesis-iphone-video-controls" aria-hidden="true">
           <button
             type="button"
@@ -197,41 +243,13 @@ export default function DesktopVideoWithToolbar({
               <img src={toolbarSrc} alt="" className="thesis-desktop-toolbar" role="presentation" />
             </div>
             <div className="thesis-desktop-video-inner" ref={videoInnerRef}>
-              <video
-                ref={videoRef}
-                src={src}
-                poster={poster}
-                className="thesis-desktop-video"
-                playsInline
-                muted
-                autoPlay
-                loop={false}
-                preload="auto"
-                aria-label={ariaLabel}
-                onEnded={handleEnded}
-              >
-                Your browser does not support the video tag.
-              </video>
+              {mediaNode}
             </div>
           </div>
         ) : (
           <>
             <img src={toolbarSrc} alt="" className="thesis-desktop-toolbar" role="presentation" />
-            <video
-              ref={videoRef}
-              src={src}
-              poster={poster}
-              className="thesis-desktop-video"
-              playsInline
-              muted
-              autoPlay
-              loop={false}
-              preload="metadata"
-              aria-label={ariaLabel}
-              onEnded={handleEnded}
-            >
-              Your browser does not support the video tag.
-            </video>
+            {mediaNode}
           </>
         )}
         <div className="thesis-iphone-video-bottom">
