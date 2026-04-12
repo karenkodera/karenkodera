@@ -699,6 +699,13 @@
   vertical-align: top;
 }
 
+/* Body block: full width so the gray email panel can span and center */
+#user-testing-and-returning-to-research .thesis-section-body-block {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
 /* User testing: order email — full-width gray box (Kroger service blueprint / route summary pattern) */
 #user-testing-and-returning-to-research .thesis-bridg-email-figure.thesis-figure-gray-box {
   margin-top: 28px;
@@ -709,47 +716,74 @@
   background: var(--hover-bg);
   border: 1px solid var(--border-color);
   border-radius: 12px;
-  /* Extra vertical padding so the email block sits centered with room above/below; overflow visible for Outlook overlap */
-  padding: 36px 28px 42px;
+  padding: 40px 24px 44px;
   position: relative;
   overflow: visible;
+  /* Grid: center the shrink-wrapped email+Outlook group in the gray panel */
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
 }
 
+/* Only as wide as the group; grid parent centers this column */
 #user-testing-and-returning-to-research .thesis-bridg-email-mockup-wrap {
-  width: 100%;
+  width: max-content;
   max-width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 10px 0 14px;
+  margin: 0;
+  padding: 12px 0 16px;
   box-sizing: border-box;
 }
 
-/* Card = white email mockup; Outlook overlaps bottom-left corner */
-#user-testing-and-returning-to-research .thesis-bridg-email-card {
+/* Symmetric horizontal padding so the email (not just the group box) is optically centered */
+#user-testing-and-returning-to-research .thesis-bridg-email-card.thesis-bridg-email-group {
   position: relative;
   display: inline-block;
+  width: fit-content;
   max-width: 100%;
   line-height: 0;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  background: transparent;
+  box-shadow: none;
+  box-sizing: border-box;
+  padding-left: 18px;
+  padding-right: 18px;
+  padding-bottom: 18px;
+}
+
+/* Shell = positioning context for corner badge; clip = rounded mask + crop */
+#user-testing-and-returning-to-research .thesis-bridg-email-photo-shell {
+  position: relative;
+  display: inline-block;
+  line-height: 0;
+  width: auto;
+  max-width: min(400px, calc(100vw - 120px));
+  margin: 0;
+  overflow: visible;
+}
+
+#user-testing-and-returning-to-research .thesis-bridg-email-photo-clip {
+  display: block;
+  line-height: 0;
+  border-radius: 20px;
+  overflow: hidden;
 }
 
 #user-testing-and-returning-to-research .thesis-bridg-email-screenshot.thesis-image {
   width: 100%;
-  max-width: min(400px, 92%);
+  max-width: none;
   height: auto;
   display: block;
   margin: 0;
   border: none !important;
   box-shadow: none;
-  overflow: visible;
   vertical-align: top;
-  background: #fff;
-  border-radius: 10px;
+  background: transparent;
+  border-radius: 0;
+  /* Trim 1px from right and bottom (artifact line) */
+  clip-path: inset(0 1px 1px 0);
 }
 
 #user-testing-and-returning-to-research .thesis-bridg-email-outlook-badge {
@@ -761,7 +795,7 @@
   object-fit: contain;
   z-index: 2;
   pointer-events: none;
-  /* PNG uses transparency for matte; no multiply (avoids black halos) */
+  /* Bottom-left corner of the email image, overlapping inward/outward like before */
   transform: translate(-28%, 28%);
 }
 

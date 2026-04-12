@@ -305,21 +305,25 @@ const Thesis = ({ setCursorVariant }) => {
             <>
               <figure className="thesis-figure thesis-figure-gray-box thesis-bridg-email-figure">
                 <div className="thesis-bridg-email-mockup-wrap">
-                  <div className="thesis-bridg-email-card">
-                    <img
-                      src={THESIS_IMAGES.orderConfirmationEmail}
-                      alt="Bridg transactional email: order received with production timeline and May 1st production date"
-                      className="thesis-image thesis-bridg-email-screenshot"
-                      decoding="async"
-                    />
-                    <img
-                      src={THESIS_IMAGES.outlookLogo}
-                      alt=""
-                      className="thesis-bridg-email-outlook-badge"
-                      width={48}
-                      height={48}
-                      decoding="async"
-                    />
+                  <div className="thesis-bridg-email-card thesis-bridg-email-group">
+                    <div className="thesis-bridg-email-photo-shell">
+                      <div className="thesis-bridg-email-photo-clip">
+                        <img
+                          src={THESIS_IMAGES.orderConfirmationEmail}
+                          alt="Bridg transactional email: order received with production timeline and May 1st production date"
+                          className="thesis-image thesis-bridg-email-screenshot"
+                          decoding="async"
+                        />
+                      </div>
+                      <img
+                        src={THESIS_IMAGES.outlookLogo}
+                        alt=""
+                        className="thesis-bridg-email-outlook-badge"
+                        width={48}
+                        height={48}
+                        decoding="async"
+                      />
+                    </div>
                   </div>
                 </div>
                 <figcaption className="thesis-figcaption">Email with production date</figcaption>
