@@ -192,6 +192,21 @@
   max-width: 800px;
 }
 
+/* Internship Kroger (/kroger): first section after hero — same rhythm as case studies with #context after hero */
+.thesis-article-kroger .thesis-hero + .thesis-section {
+  margin-top: 60px;
+}
+
+/* HSA/FSA: tighter space between summary (hero) and CONTEXT than default #context margin-top */
+.thesis-article-hsafsa .thesis-hero {
+  margin-bottom: 16px;
+}
+
+.thesis-article-hsafsa #context.thesis-section {
+  margin-top: 24px;
+  margin-bottom: 64px;
+}
+
 .thesis-hero {
   margin-bottom: 24px;
 }
@@ -927,8 +942,8 @@
   background: var(--hover-bg);
 }
 
-/* Problem section: first body as subtitle */
-#problem.thesis-section .thesis-section-body:first-of-type {
+/* HSA/FSA Problem: first body as subtitle under main heading (Wallet video layout) */
+.thesis-article-hsafsa #problem.thesis-section .thesis-section-body:first-of-type {
   font-size: 0.8125rem;
   color: #888;
 }
@@ -1176,9 +1191,9 @@
   text-align: left;
 }
 
-/* Kroger: less space between route summary image and "However, these sheets..." */
+/* Kroger: tighter gap between first PROBLEM block (route summary) and problem-sheets section */
 #problem.thesis-section:has(+ #problem-sheets) {
-  margin-bottom: 36px;
+  margin-bottom: 24px;
 }
 
 /* Kroger problem-sheets + Dicks context: same gray box format as route summary / service blueprint */

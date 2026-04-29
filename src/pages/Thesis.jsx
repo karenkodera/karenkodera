@@ -381,7 +381,6 @@ const Thesis = ({ setCursorVariant }) => {
                     <li>items are made with consumer input</li>
                     <li>items are cheaper</li>
                     <li>items are more environmentally friendly</li>
-                    <li>won an item</li>
                   </ul>
                 </div>
               </div>

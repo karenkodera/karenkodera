@@ -211,7 +211,7 @@ const HsaFsa = ({ setCursorVariant }) => {
       </div>
 
       <div className="thesis-main">
-        <article className="thesis-article">
+        <article className="thesis-article thesis-article-hsafsa">
           <motion.section
             className="thesis-hero"
             initial={{ opacity: 0, y: 24 }}
@@ -338,7 +338,7 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">FEATURE 1</span>
             <h2 className="thesis-section-heading">Messaging to inform customers of the new card type.</h2>
-            <p className="thesis-section-body">We needed clearly worded conside text so customers could understand how to use their cards.</p>
+            <p className="thesis-section-body">We needed clearly worded concise text so customers could understand how to use their cards.</p>
             <VideoInPhone
               src="/hsafsa/messaging%20kroger%20hsa%20fsa.mp4"
               subtitle="Messaging"
