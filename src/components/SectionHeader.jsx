@@ -7,6 +7,7 @@ const RESUME_URL = 'https://drive.google.com/file/d/1hH56x_vKd1yI-vyyi-ExBk-bYQn
 
 const navItems = [
   { path: '/', label: 'work' },
+  { path: '/play', label: 'play' },
   { path: '/about', label: 'about' },
 ];
 

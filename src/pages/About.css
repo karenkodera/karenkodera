@@ -132,17 +132,21 @@
   color: var(--text-color);
 }
 
-/* Bio section */
+/* Bio section — white rounded card */
 .about-bio-section {
   max-width: 100%;
   margin: 0 auto;
-  padding: 24px 0 28px;
+  padding: 0;
 }
 
 .about-bio-layout {
   display: flex;
-  gap: 32px;
+  gap: 28px;
   align-items: flex-start;
+  padding: 24px;
+  background: #f0f0f0;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 .about-bio-content {
@@ -168,32 +172,28 @@
   display: block;
 }
 
-.about-bio-lead {
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  line-height: 1.35;
-  color: var(--text-color);
-  margin-bottom: 14px;
-}
-
 .about-bio {
   font-size: 0.875rem;
   line-height: 1.45;
   color: var(--text-secondary);
-  margin-bottom: 12px;
+  margin: 0;
 }
 
-.about-bio:last-of-type {
-  margin-bottom: 0;
+.about-details-card {
+  max-width: 100%;
+  margin: 16px auto 0;
+  padding: 24px;
+  background: #f0f0f0;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
 /* Experience */
 .about-experience-section {
   max-width: 100%;
-  margin: 0 auto;
-  padding: 20px 0;
-  border-top: 1px solid var(--border-color);
+  margin: 0;
+  padding: 0 0 10px;
+  border-top: none;
 }
 
 .about-section-label {
@@ -239,8 +239,9 @@
 /* Education */
 .about-education-section {
   max-width: 100%;
-  margin: 0 auto;
-  padding: 20px 0 48px;
+  margin: 0;
+  padding: 10px 0 0;
+  border-top: none;
 }
 
 .about-education-list {
@@ -341,6 +342,7 @@
   .about-bio-layout {
     flex-direction: column;
     gap: 24px;
+    padding: 18px;
   }
 
   .about-photo-wrap {
@@ -349,11 +351,19 @@
     margin: 0 auto;
   }
 
-  .about-bio-section,
+  .about-bio-section {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .about-details-card {
+    padding: 18px;
+  }
+
   .about-experience-section,
   .about-education-section {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .about-experience-item,

@@ -37,15 +37,25 @@ body {
   position: relative;
 }
 
+.app--gray {
+  background: transparent;
+}
+
+/* Gray page background behind Work / Play / About */
+.site-gray-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: #e8e8e8;
+}
+
 main {
   position: relative;
   z-index: 1;
 }
 
-/* Case study prev/next bar: 8px gap above the global footer */
-.app main:has(.thesis-case-nav) + .footer {
-  margin-top: 8px;
-}
+/* Case study prev/next bar spacing */
 
 /* Light dot grid (Home & About only), darker where mouse hovers */
 .dotted-grid-bg {

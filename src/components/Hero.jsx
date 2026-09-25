@@ -1,64 +1,66 @@
 import { motion } from 'framer-motion';
+import { scrollHomeTo } from '../utils/scrollHome';
 import './Hero.css';
 
 const Hero = ({ setCursorVariant }) => {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.15,
-        delayChildren: 0.1,
-      },
-    },
-  };
+  const handleEnter = () => setCursorVariant?.('hover');
+  const handleLeave = () => setCursorVariant?.('default');
 
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.6,
-        ease: [0.25, 0.1, 0.25, 1],
-      },
-    },
+  const goToAbout = () => {
+    scrollHomeTo('about');
+    if (window.history.replaceState) {
+      window.history.replaceState(null, '', '/#about');
+    }
   };
 
   return (
-    <section className="hero">
-      <motion.div
-        className="hero-content"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <motion.div className="hero-avatar-container" variants={itemVariants}>
-          <motion.img
-            src="https://framerusercontent.com/images/CTmSY8MITcYG5EkE8CeIlxzGbSM.png?scale-down-to=512"
-            alt="Karen Kodera"
-            className="hero-avatar"
-            whileHover={{ scale: 1.1, rotate: 5 }}
-            transition={{ type: 'spring', stiffness: 300 }}
-            onMouseEnter={() => setCursorVariant('hover')}
-            onMouseLeave={() => setCursorVariant('default')}
-          />
-        </motion.div>
+    <section className="hero" aria-label="Introduction">
+      <div className="hero-content">
+        <motion.p
+          className="hero-description"
+          initial={{ opacity: 1, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          iterating and iterating and iterating and iterating...
+        </motion.p>
 
         <motion.h1
           className="hero-title"
-          variants={itemVariants}
+          initial={{ opacity: 1, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.06, ease: [0.25, 0.1, 0.25, 1] }}
+          onClick={goToAbout}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              goToAbout();
+            }
+          }}
+          role="link"
+          tabIndex={0}
+          aria-label="Karen Kodera — click to learn more about me"
+          onMouseEnter={handleEnter}
+          onMouseLeave={handleLeave}
         >
-          Hi, I'm Karen Kodera.
+          <span className="hero-title-line">
+            <span className="hero-title-word">KAREN</span>
+            <span className="hero-title-photo-slot" aria-hidden="true">
+              <img
+                className="hero-title-photo"
+                src="/about-photo.png"
+                alt=""
+              />
+            </span>
+          </span>
+          <span className="hero-title-line">
+            <span className="hero-title-word">KODERA</span>
+          </span>
+          <span className="hero-title-hint" aria-hidden="true">
+            click to learn more about me
+          </span>
         </motion.h1>
-
-        <motion.p
-          className="hero-description"
-          variants={itemVariants}
-        >
-          A product designer with a background in architecture, turning complex problems into intuitive, human-centered solutions.
-        </motion.p>
-      </motion.div>
+      </div>
     </section>
   );
 };

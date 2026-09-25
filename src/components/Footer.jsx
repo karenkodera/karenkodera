@@ -14,13 +14,7 @@ const Footer = ({ setCursorVariant }) => {
   return (
     <footer className="footer">
       <div className="footer-content">
-        <motion.div
-          className="footer-row"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-        >
+        <div className="footer-row">
           <div className="footer-links">
             <motion.a
               href="https://linkedin.com"
@@ -45,14 +39,6 @@ const Footer = ({ setCursorVariant }) => {
               <span className="external-icon">↗</span>
             </motion.a>
           </div>
-
-          <span className="made-with made-with-center">
-            Made with <motion.span
-              className="heart"
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ duration: 0.8, repeat: Infinity, repeatDelay: 1.5 }}
-            >♥</motion.span> in Cursor
-          </span>
 
           <motion.button
             className="back-to-top"
@@ -82,7 +68,7 @@ const Footer = ({ setCursorVariant }) => {
             </motion.span>
             Back to top
           </motion.button>
-        </motion.div>
+        </div>
       </div>
     </footer>
   );
