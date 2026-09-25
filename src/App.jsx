@@ -2,7 +2,9 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
-import Home, { PlayRedirect, AboutRedirect } from './pages/Home';
+import Home, { AboutRedirect } from './pages/Home';
+import Work from './pages/Work';
+import Play from './pages/Play';
 import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
@@ -29,7 +31,6 @@ function AppContent() {
     } catch (_) {}
   }, [theme]);
 
-  // Reset cursor to dot when navigating (e.g. after clicking a case study)
   useEffect(() => {
     setCursorVariant('default');
     setHoveredElement(null);
@@ -44,25 +45,38 @@ function AppContent() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  useEffect(() => {
+    const lock = location.pathname === '/';
+    document.documentElement.style.overflow = lock ? 'hidden' : '';
+    document.body.style.overflow = lock ? 'hidden' : 'auto';
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+    };
+  }, [location.pathname]);
+
   const handleCursorChange = useCallback((variant, element = null) => {
     setCursorVariant(variant);
     setHoveredElement(element);
   }, []);
 
-  const showGrayBackground = location.pathname === '/';
+  const isHome = location.pathname === '/';
+  const showGrayBackground =
+    isHome || location.pathname === '/work' || location.pathname === '/play';
 
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
       {showGrayBackground && <div className="site-gray-bg" aria-hidden />}
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
-      <main>
+      <main className={isHome ? undefined : 'main--scrollable'}>
         <Routes>
           <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
+          <Route path="/work" element={<Work setCursorVariant={setCursorVariant} />} />
+          <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
           <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
           <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
           <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
           <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
-          <Route path="/play" element={<PlayRedirect />} />
           <Route path="/about" element={<AboutRedirect />} />
         </Routes>
       </main>
@@ -70,8 +84,7 @@ function AppContent() {
   );
 }
 
-// Match Vite base path for GitHub Pages (e.g. /karenkodera); empty string for local / custom domain
-const basename = import.meta.env.BASE_URL !== '/' ? import.meta.env.BASE_URL.replace(/\/$/, '') : ''
+const basename = import.meta.env.BASE_URL !== '/' ? import.meta.env.BASE_URL.replace(/\/$/, '') : '';
 
 function App() {
   return (

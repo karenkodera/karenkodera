@@ -46,12 +46,12 @@ const About = ({ setCursorVariant }) => {
             <div className="about-experience-item">
               <div className="about-experience-role">Product Design</div>
               <div className="about-experience-company">Kroger</div>
-              <div className="about-experience-date">Jun 2024 – now</div>
+              <div className="about-experience-date">2024 – now</div>
             </div>
             <div className="about-experience-item">
               <div className="about-experience-role">Product Design</div>
               <div className="about-experience-company">Dick&apos;s Sporting Goods</div>
-              <div className="about-experience-date">Jun 2023 – Nov 2023</div>
+              <div className="about-experience-date">2023</div>
             </div>
           </div>
         </section>
@@ -62,12 +62,12 @@ const About = ({ setCursorVariant }) => {
             <div className="about-education-item">
               <div className="about-education-degree">M.S. Engineering Design Innovation</div>
               <div className="about-education-school">Northwestern University</div>
-              <div className="about-education-date">Sept 2023 – Mar 2025</div>
+              <div className="about-education-date">2023 – 2025</div>
             </div>
             <div className="about-education-item">
               <div className="about-education-degree">B.S. Architecture</div>
               <div className="about-education-school">Georgia Institute of Technology</div>
-              <div className="about-education-date">Aug 2018 – Aug 2023</div>
+              <div className="about-education-date">2018 – 2023</div>
             </div>
           </div>
         </section>

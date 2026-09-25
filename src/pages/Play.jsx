@@ -1,64 +1,54 @@
 import { useEffect, useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Hero from '../components/Hero';
+import { useNavigate } from 'react-router-dom';
 import './Play.css';
+import './ProjectsIndex.css';
 
 const PLAY_PROJECTS = [
   {
-    id: 'interaction-art',
-    title: 'Interaction Art',
-    subtitle: 'Installation',
-    cover: 'https://placehold.co/800x500/e8e4df/6b6560?text=Interaction+Art',
-    modalTitle: 'Interaction Art',
+    id: 'grand-piano',
+    title: 'Grand Piano',
+    subtitle: 'A 2-player working floor piano that leads players through songs with light-up keys.',
+    cover: '/play/grand-piano/demo.png',
+    coverPortrait: true,
+    modalTitle: 'Grand Piano',
     modalBody:
-      'For my installation art class. Exploring how people move through space, leave traces, and change the piece just by being there.',
+      'A 2-player working floor piano that leads players through songs with light-up keys.',
     slides: [
-      'https://placehold.co/1200x800/e8e4df/6b6560?text=Slide+1',
-      'https://placehold.co/1200x800/d9d4ce/6b6560?text=Slide+2',
-      'https://placehold.co/1200x800/cdc7c0/6b6560?text=Slide+3',
+      '/play/grand-piano/demo.png',
+      '/play/grand-piano/cover.png',
+      '/play/grand-piano/build.png',
     ],
   },
   {
-    id: 'weekend-ui',
-    title: 'Weekend UI',
-    subtitle: 'Interface sketches',
-    cover: 'https://placehold.co/800x500/e4ebe8/5f6b66?text=Weekend+UI',
-    modalTitle: 'Weekend UI',
+    id: 'carrot',
+    title: 'CARROT',
+    subtitle:
+      'Transforming the ordinary act of grocery shopping into an unexpected moment with sewn stuffed carrot installation art.',
+    cover: '/play/carrot/cover.png',
+    coverPortrait: true,
+    coverZoom: true,
+    modalTitle: 'CARROT',
     modalBody:
-      'Quick interface sketches from weekends between projects. Loose explorations of empty states, motion, and little moments of delight.',
+      'Transforming the ordinary act of grocery shopping into an unexpected moment with sewn stuffed carrot installation art.',
     slides: [
-      'https://placehold.co/1200x800/e4ebe8/5f6b66?text=Slide+1',
-      'https://placehold.co/1200x800/d5ddd9/5f6b66?text=Slide+2',
-      'https://placehold.co/1200x800/c6d0cb/5f6b66?text=Slide+3',
+      '/play/carrot/cover.png',
+      '/play/carrot/01.png',
+      '/play/carrot/02.png',
+      '/play/carrot/03.png',
     ],
   },
   {
-    id: 'photo-walks',
-    title: 'Photo Walks',
-    subtitle: 'Personal archive',
-    cover: 'https://placehold.co/800x500/ebe6e0/6a645e?text=Photo+Walks',
-    modalTitle: 'Photo Walks',
-    modalBody:
-      'A personal archive of walks and light. Color, material, and quiet details that end up informing product work later.',
-    slides: [
-      'https://placehold.co/1200x800/ebe6e0/6a645e?text=Slide+1',
-      'https://placehold.co/1200x800/ddd7d0/6a645e?text=Slide+2',
-    ],
-  },
-  {
-    id: 'object-studies',
-    title: 'Object Studies',
-    subtitle: 'Form & material',
-    cover: 'https://placehold.co/800x500/e7e9ec/5e636a?text=Object+Studies',
-    modalTitle: 'Object Studies',
-    modalBody:
-      'Still-life and form studies looking at edges, joins, and materials. Reference for future product stories and physical prototypes.',
-    slides: [
-      'https://placehold.co/1200x800/e7e9ec/5e636a?text=Slide+1',
-      'https://placehold.co/1200x800/d8dbe0/5e636a?text=Slide+2',
-      'https://placehold.co/1200x800/c9ced4/5e636a?text=Slide+3',
-      'https://placehold.co/1200x800/bac0c8/5e636a?text=Slide+4',
-    ],
+    id: 'weight-of-a-heart',
+    title: 'WEIGHT OF A HEART',
+    subtitle: '2024',
+    cover: '/play/weight-of-a-heart/cover.png',
+    coverPortrait: true,
+    coverZoom: true,
+    coverFocus: 'bl',
+    modalTitle: 'WEIGHT OF A HEART: 2024',
+    modalBody: 'WEIGHT OF A HEART: 2024',
+    slides: ['/play/weight-of-a-heart/cover.png'],
   },
 ];
 
@@ -191,48 +181,66 @@ function PlayModal({ project, onClose, setCursorVariant }) {
   );
 }
 
-function PlayCard({ project, index, setCursorVariant, onOpen }) {
+function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
     <motion.div
-      className="play-card"
-      initial={{ opacity: 0, y: 24 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{
-        duration: 0.4,
-        ease: [0.25, 0.1, 0.25, 1],
-        delay: index * 0.06,
-      }}
+      className={`play-card${stacked ? ' play-card--stacked' : ''}`}
+      initial={stacked ? false : { opacity: 0, y: 24 }}
+      animate={stacked ? undefined : { opacity: 1, y: 0 }}
+      transition={
+        stacked
+          ? undefined
+          : {
+              duration: 0.4,
+              ease: [0.25, 0.1, 0.25, 1],
+              delay: index * 0.06,
+            }
+      }
     >
       <button
         type="button"
         className="play-card-link"
         onClick={() => onOpen(project)}
+        aria-label={`${project.title}. ${project.subtitle}`}
         onMouseEnter={() => {
           setIsHovered(true);
-          setCursorVariant?.('project');
+          if (!stacked) setCursorVariant?.('project');
         }}
         onMouseLeave={() => {
           setIsHovered(false);
-          setCursorVariant?.('default');
+          if (!stacked) setCursorVariant?.('default');
         }}
       >
         <motion.div
-          className="play-card-content"
-          animate={{
-            padding: isHovered ? 8 : 0,
-            margin: isHovered ? -8 : 0,
-          }}
+          className="play-card-content play-card-content--cover-only"
+          animate={
+            stacked
+              ? undefined
+              : {
+                  padding: isHovered ? 6 : 0,
+                  margin: isHovered ? -6 : 0,
+                }
+          }
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         >
-          <div className="play-card-inner">
-            <div className="play-card-image-wrap">
-              <img src={project.cover} alt="" className="play-card-image" loading="lazy" />
-            </div>
-            <div className="play-card-text">
-              <h3 className="play-card-title">{project.title}</h3>
-              <p className="play-card-subtitle">{project.subtitle}</p>
+          <div className="play-card-inner play-card-inner--cover-only">
+            <div
+              className={`play-card-image-wrap${project.coverPortrait ? ' play-card-image-wrap--portrait' : ''}`}
+            >
+              <img
+                src={project.cover}
+                alt=""
+                className={[
+                  'play-card-image',
+                  project.coverZoom ? 'play-card-image--zoom' : '',
+                  project.coverFocus ? `play-card-image--focus-${project.coverFocus}` : '',
+                ]
+                  .filter(Boolean)
+                  .join(' ')}
+                loading="lazy"
+              />
             </div>
           </div>
         </motion.div>
@@ -242,29 +250,69 @@ function PlayCard({ project, index, setCursorVariant, onOpen }) {
 }
 
 const Play = ({ setCursorVariant }) => {
+  const navigate = useNavigate();
   const [activeProject, setActiveProject] = useState(null);
+  const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
-    <div className="play-page">
-      <Hero setCursorVariant={setCursorVariant} />
+    <div className="projects-index play-page">
+      <header className="projects-index-header">
+        <button
+          type="button"
+          className="projects-index-back"
+          onClick={() => navigate('/')}
+          onMouseEnter={() => setCursorVariant?.('hover')}
+          onMouseLeave={() => setCursorVariant?.('default')}
+        >
+          ← back
+        </button>
+      </header>
 
-      <section className="play-projects" id="play">
-        <div className="play-grid">
-          {PLAY_PROJECTS.map((project, index) => (
-            <PlayCard
+      <div className="play-stack" aria-label="Play projects">
+        {PLAY_PROJECTS.map((project, index) => {
+          const isHovered = hoveredId === project.id;
+          const stackX = index * 22;
+          const stackY = index * 28;
+          const stackRotate = (index - 1) * 4;
+
+          return (
+            <motion.div
               key={project.id}
-              project={project}
-              index={index}
-              setCursorVariant={setCursorVariant}
-              onOpen={setActiveProject}
-            />
-          ))}
-        </div>
-      </section>
+              className="play-stack-item"
+              style={{ zIndex: isHovered ? 20 : index + 1 }}
+              initial={{ opacity: 0, y: 24 }}
+              animate={{
+                opacity: 1,
+                x: isHovered ? stackX + 36 : stackX,
+                y: isHovered ? stackY - 28 : stackY,
+                rotate: isHovered ? stackRotate - 3 : stackRotate,
+                scale: isHovered ? 1.06 : 1,
+              }}
+              transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+              onMouseEnter={() => {
+                setHoveredId(project.id);
+                setCursorVariant?.('project');
+              }}
+              onMouseLeave={() => {
+                setHoveredId(null);
+                setCursorVariant?.('default');
+              }}
+            >
+              <PlayCard
+                project={project}
+                index={index}
+                setCursorVariant={setCursorVariant}
+                onOpen={setActiveProject}
+                stacked
+              />
+            </motion.div>
+          );
+        })}
+      </div>
 
       <AnimatePresence>
         {activeProject && (

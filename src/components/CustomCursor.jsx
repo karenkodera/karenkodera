@@ -87,6 +87,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
   const isProjectVariant = cursorVariant === 'project';
   const isTextVariant = cursorVariant === 'text';
   const isNavDotVariant = cursorVariant === 'navDot';
+  const isRulerVariant = cursorVariant === 'ruler';
 
   // When in navDot mode, cursor snaps fully to the dot position
   const getDotCursorPosition = () => {
@@ -110,14 +111,14 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
 
   return (
     <>
-      {/* Default cursor dot - always visible (pill floats above it on project hover) */}
+      {/* Default cursor dot — white over scroll ruler */}
       <motion.div
         className={`custom-cursor ${isTextVariant ? 'cursor-hidden' : ''} ${isNavDotVariant ? 'nav-dot-cursor' : ''}`}
         animate={{
-          x: dotCursorPos.x,
-          y: dotCursorPos.y,
-          width: 8,
-          height: 8,
+          x: isRulerVariant ? mousePosition.x - 5 : dotCursorPos.x,
+          y: isRulerVariant ? mousePosition.y - 5 : dotCursorPos.y,
+          width: isRulerVariant ? 10 : 8,
+          height: isRulerVariant ? 10 : 8,
           opacity: isVisible ? 1 : 0,
           scale: isNavDotVariant ? 1.1 : 1,
         }}
@@ -128,8 +129,9 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
           mass: isNavDotVariant ? 0.6 : 0.8,
         }}
         style={{
-          backgroundColor: 'var(--text-color)',
+          backgroundColor: isRulerVariant ? '#ffffff' : 'var(--text-color)',
           borderRadius: '50%',
+          boxShadow: isRulerVariant ? '0 0 0 1px rgba(0,0,0,0.12)' : 'none',
         }}
       />
 

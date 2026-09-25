@@ -1,0 +1,112 @@
+.projects-index {
+  min-height: 100%;
+  padding: 32px 40px 64px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 1;
+}
+
+.projects-index-header {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.projects-index-back {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 0;
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #191919;
+  cursor: none;
+}
+
+.projects-index-back:hover {
+  color: #444;
+}
+
+.projects-index-title {
+  margin: 0;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #191919;
+}
+
+.projects-index-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px 16px;
+  max-width: 1400px;
+}
+
+/* Play page: stacked deck, ~50% size */
+.play-page.projects-index .projects-index-header {
+  margin-bottom: 48px;
+}
+
+.play-stack {
+  position: relative;
+  width: min(190px, 42vw);
+  height: min(320px, 70vw);
+  margin: 24px 0 80px;
+}
+
+.play-stack-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  transform-origin: center bottom;
+  will-change: transform;
+}
+
+.play-stack-item .play-card--stacked {
+  width: 100%;
+  max-width: none;
+}
+
+.play-stack-item .play-card-image-wrap--portrait {
+  aspect-ratio: 3 / 4;
+}
+
+.play-stack-item .play-card-content--cover-only {
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  background: #fafafa;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.play-stack-item .play-card-content--cover-only:hover {
+  border-color: transparent;
+  background: #fafafa;
+}
+
+.play-stack-item .home-slide-play .play-card-image-wrap,
+.play-stack-item .play-card-content--cover-only .play-card-image-wrap {
+  border-radius: 10px;
+}
+
+@media (max-width: 768px) {
+  .projects-index {
+    padding: 24px 16px 48px;
+  }
+
+  .projects-index-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .play-stack {
+    width: min(170px, 48vw);
+    height: min(300px, 78vw);
+  }
+}

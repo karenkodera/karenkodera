@@ -50,7 +50,7 @@
   min-width: 0;
   border-radius: 16px;
   border: 2px solid transparent;
-  background: #f0f0f0;
+  background: #fafafa;
   overflow: hidden;
   cursor: none;
   transition: border-color 0.2s ease;
@@ -70,6 +70,24 @@
   padding: 10px;
 }
 
+.play-card-inner--cover-only {
+  padding: 0;
+}
+
+.play-card-content--cover-only {
+  background: transparent;
+}
+
+.play-card-content--cover-only:hover {
+  border-color: #191919;
+  background: #fafafa;
+}
+
+.home-slide-play .play-card-image-wrap,
+.play-card-content--cover-only .play-card-image-wrap {
+  border-radius: 14px;
+}
+
 .play-card-image-wrap {
   position: relative;
   width: 100%;
@@ -79,11 +97,29 @@
   border-radius: 10px;
 }
 
+.play-card-image-wrap--portrait {
+  aspect-ratio: 3 / 4;
+}
+
 .play-card-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+}
+
+/* Cropped/zoomed cover — focuses on subject, cuts floor/ceiling */
+.play-card-image--zoom {
+  object-fit: cover;
+  object-position: 55% 38%;
+  transform: scale(1.42);
+  transform-origin: 55% 38%;
+}
+
+.play-card-image--zoom.play-card-image--focus-bl {
+  object-position: 32% 78%;
+  transform-origin: 32% 78%;
+  transform: scale(1.55);
 }
 
 .play-card-text {
@@ -169,16 +205,21 @@
 .play-modal-media {
   position: relative;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  max-height: min(70vh, 720px);
   background: var(--hover-bg);
   border-radius: 10px;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .play-modal-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: min(70vh, 720px);
+  object-fit: contain;
   display: block;
 }
 
@@ -231,7 +272,7 @@
 
 .play-modal-copy {
   width: 100%;
-  text-align: right;
+  text-align: left;
 }
 
 .play-modal-title {
@@ -289,10 +330,6 @@
 
   .play-modal-nav-next {
     right: 8px;
-  }
-
-  .play-modal-media {
-    aspect-ratio: 4 / 3;
   }
 
   .play-modal-footer {

@@ -2,7 +2,8 @@
   height: 100%;
   min-height: 0;
   display: flex;
-  align-items: flex-end;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: flex-start;
   padding: 0;
   max-width: none;
@@ -19,15 +20,9 @@
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
-}
-
-.hero-description {
-  font-size: 0.85rem;
-  line-height: 1.4;
-  color: var(--text-secondary);
-  max-width: none;
-  margin: 0 0 8px;
-  text-align: left;
+  flex: 1 1 auto;
+  /* Room for fixed work/play/about above the name */
+  padding-top: 44px;
 }
 
 .hero-title {
@@ -37,11 +32,11 @@
   align-items: flex-start;
   gap: 0;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: clamp(5rem, 16vw, 11rem);
+  font-size: clamp(6.5rem, 20vw, 14rem);
   font-weight: 800;
   line-height: 0.86;
   margin: 0;
-  letter-spacing: -0.055em;
+  letter-spacing: -0.035em;
   text-transform: uppercase;
   color: #191919 !important;
   opacity: 1 !important;
@@ -51,72 +46,113 @@
   width: max-content;
 }
 
+.hero-subtitle {
+  margin: 14px 0 0;
+  padding: 0;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: #191919;
+  max-width: 32rem;
+  text-align: left;
+  align-self: flex-start;
+}
+
 .hero-title-line {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
   gap: 0.12em;
   white-space: nowrap;
+  position: relative;
 }
 
 .hero-title-word {
+  display: inline-flex;
+  align-items: center;
+}
+
+.hero-title-letter {
   display: inline-block;
 }
 
-.hero-title-hint {
-  margin-top: 12px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  letter-spacing: 0;
-  text-transform: none;
-  color: var(--text-secondary);
-  opacity: 0;
-  transform: translateY(-4px);
-  transition: opacity 0.2s ease, transform 0.2s ease;
-  pointer-events: none;
-  white-space: nowrap;
+.hero-title-word--kodera {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: -0.035em;
 }
 
-.hero-title:hover .hero-title-hint,
-.hero-title:focus-visible .hero-title-hint {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Horizontal pill slot — expands on title hover */
-.hero-title-photo-slot {
+/* O → expanding pill; grow right, keep clear of K, pull DERA in slightly */
+.hero-title-o-slot {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 0.92em;
-  width: 0;
-  overflow: hidden;
-  border-radius: 999px;
+  height: 0.86em;
+  width: 0.68em;
   flex-shrink: 0;
-  opacity: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
   transition:
-    width 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
-    opacity 0.25s ease;
+    width 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+    margin-right 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
-.hero-title:hover .hero-title-photo-slot,
-.hero-title:focus-within .hero-title-photo-slot {
-  width: 1.55em;
+.hero-title-word--kodera:hover .hero-title-o-slot,
+.hero-title-word--kodera:focus-within .hero-title-o-slot {
+  width: 1.4em;
+  margin-left: 0;
+  margin-right: -0.1em;
+}
+
+.hero-title-o {
+  display: inline-block;
+  transition: opacity 0.2s ease;
+}
+
+.hero-title-photo-slot {
+  position: absolute;
+  inset: 0.04em 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: hidden;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.hero-title-word--kodera:hover .hero-title-o,
+.hero-title-word--kodera:focus-within .hero-title-o {
+  opacity: 0;
+}
+
+.hero-title-word--kodera:hover .hero-title-photo-slot,
+.hero-title-word--kodera:focus-within .hero-title-photo-slot {
   opacity: 1;
+  pointer-events: auto;
 }
 
 .hero-title-photo {
-  height: 100%;
-  width: 1.55em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100% !important;
+  width: 100% !important;
+  max-width: none !important;
   object-fit: cover;
-  object-position: center center;
+  object-position: 88% top !important;
   border-radius: 999px;
   display: block;
   background: #ddd;
-  flex-shrink: 0;
-  transform: scale(1.08);
-  transform-origin: center center;
+  transform: translateX(-18%);
 }
 
 @media (max-width: 768px) {
@@ -124,21 +160,23 @@
     padding: 0;
   }
 
-  .hero-description {
-    font-size: 0.8rem;
-    margin-bottom: 6px;
+  .hero-content {
+    padding-top: 36px;
   }
 
   .hero-title {
-    font-size: clamp(3.25rem, 20vw, 5.5rem);
+    font-size: clamp(4rem, 22vw, 6.5rem);
   }
 
-  .hero-title:hover .hero-title-photo-slot,
-  .hero-title:focus-within .hero-title-photo-slot {
-    width: 1.45em;
+  .hero-subtitle {
+    font-size: 0.9rem;
+    margin-top: 10px;
   }
 
-  .hero-title-photo {
-    width: 1.45em;
+  .hero-title-word--kodera:hover .hero-title-o-slot,
+  .hero-title-word--kodera:focus-within .hero-title-o-slot {
+    width: 1.25em;
+    margin-left: 0;
+    margin-right: -0.08em;
   }
 }

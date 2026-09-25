@@ -1,0 +1,65 @@
+.home-scroll-ruler {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  transform: translateX(-50%);
+  z-index: 125;
+  width: min(220px, 46vw);
+  height: 40px;
+  border-radius: 999px;
+  background: #191919;
+  overflow: hidden;
+  touch-action: none;
+  user-select: none;
+  cursor: none;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  pointer-events: auto;
+}
+
+.home-scroll-ruler-track {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  padding: 0 0 10px;
+  gap: 6px;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.home-scroll-ruler-tick {
+  flex: 0 0 1px;
+  width: 1px;
+  height: 7px;
+  background: rgba(255, 255, 255, 0.32);
+  border-radius: 1px;
+}
+
+.home-scroll-ruler-tick--major {
+  height: 14px;
+  background: rgba(255, 255, 255, 0.78);
+}
+
+.home-scroll-ruler-mark {
+  position: absolute;
+  left: 50%;
+  top: 7px;
+  bottom: 7px;
+  width: 2px;
+  border-radius: 1px;
+  background: #ffffff;
+  transform: translateX(-50%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+@media (max-width: 768px) {
+  .home-scroll-ruler {
+    bottom: 18px;
+    width: min(180px, 56vw);
+    height: 36px;
+  }
+}
