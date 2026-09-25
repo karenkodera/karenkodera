@@ -1,15 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import { AnimatePresence } from 'framer-motion';
 import Hero, { CONTACT_LINKS, RESUME_URL } from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
-import { PLAY_PROJECTS, PlayModal, PlayCard } from './Play';
 import { WORK_PROJECTS } from '../data/workProjects';
 import { scrollHomeTo } from '../utils/scrollHome';
 import './About.css';
-import './Play.css';
 import './Home.css';
 
 const NAV_SECTIONS = [
@@ -18,54 +15,33 @@ const NAV_SECTIONS = [
   { id: 'about', label: 'about', type: 'scroll', target: 'about' },
 ];
 
-function buildMixedStream() {
-  const stream = [];
-  let workIdx = 0;
-  let playIdx = 0;
-  let pair = 0;
-
-  while (workIdx < WORK_PROJECTS.length || playIdx < PLAY_PROJECTS.length) {
-    for (let i = 0; i < 2 && workIdx < WORK_PROJECTS.length; i += 1) {
-      const float =
-        workIdx % 4 === 0
-          ? 'float-up'
-          : workIdx % 4 === 1
-            ? 'float-down'
-            : workIdx % 4 === 2
-              ? 'float-mid-up'
-              : 'float-mid-down';
-      stream.push({
-        kind: 'work',
-        key: WORK_PROJECTS[workIdx].id,
-        project: WORK_PROJECTS[workIdx],
-        anchor: workIdx === 0 ? 'work' : undefined,
-        float,
-      });
-      workIdx += 1;
-    }
-    for (let i = 0; i < 2 && playIdx < PLAY_PROJECTS.length; i += 1) {
-      stream.push({
-        kind: 'play',
-        key: PLAY_PROJECTS[playIdx].id,
-        project: PLAY_PROJECTS[playIdx],
-        float: i === 0 ? 'float-play-high' : 'float-play-low',
-      });
-      playIdx += 1;
-    }
-    pair += 1;
-    if (pair > 20) break;
-  }
-  return stream;
+function buildWorkStream() {
+  return WORK_PROJECTS.map((project, workIdx) => {
+    const float =
+      workIdx % 4 === 0
+        ? 'float-up'
+        : workIdx % 4 === 1
+          ? 'float-down'
+          : workIdx % 4 === 2
+            ? 'float-mid-up'
+            : 'float-mid-down';
+    return {
+      kind: 'work',
+      key: project.id,
+      project,
+      anchor: workIdx === 0 ? 'work' : undefined,
+      float,
+    };
+  });
 }
 
-const MIXED_STREAM = buildMixedStream();
+const WORK_STREAM = buildWorkStream();
 
 const Home = ({ setCursorVariant }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const scrollerRef = useRef(null);
   const [protectedPath, setProtectedPath] = useState(null);
-  const [activePlay, setActivePlay] = useState(null);
   const [scrollEdge, setScrollEdge] = useState('start'); // start | middle | end
 
   useEffect(() => {
@@ -279,27 +255,18 @@ const Home = ({ setCursorVariant }) => {
           <Hero setCursorVariant={setCursorVariant} />
         </section>
 
-        {MIXED_STREAM.map((item, index) => (
+        {WORK_STREAM.map((item, index) => (
           <section
             key={item.key}
             className={`home-slide home-slide-card home-slide-${item.kind} ${item.float || ''}`}
             id={item.anchor}
           >
-            {item.kind === 'work' ? (
-              <ProjectCard
-                project={item.project}
-                index={index}
-                setCursorVariant={setCursorVariant}
-                onProtectedClick={handleProtectedClick}
-              />
-            ) : (
-              <PlayCard
-                project={item.project}
-                index={index}
-                setCursorVariant={setCursorVariant}
-                onOpen={setActivePlay}
-              />
-            )}
+            <ProjectCard
+              project={item.project}
+              index={index}
+              setCursorVariant={setCursorVariant}
+              onProtectedClick={handleProtectedClick}
+            />
           </section>
         ))}
 
@@ -320,7 +287,7 @@ const Home = ({ setCursorVariant }) => {
                     </div>
                     <div className="about-bio-content">
                       <p className="about-bio">
-                        I&apos;ve always loved creating, starting in high school with choreographing dances to designing buildings for my architecture degree. When I discovered product design, I fell in love with its iterative nature and human impact. Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers buy groceries online easier daily. When I&apos;m not designing, I&apos;m climbing! Check out{' '}
+                        I&apos;ve always loved creating, starting in high school with choreographing dances to designing buildings for my architecture degree. When I discovered product design, I fell in love with its iterative nature and human impact. Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers buy groceries online daily. When I&apos;m not designing, I&apos;m climbing! Check out{' '}
                         <a
                           href="https://www.instagram.com/karebiner"
                           target="_blank"
@@ -383,16 +350,6 @@ const Home = ({ setCursorVariant }) => {
         onClose={() => setProtectedPath(null)}
         onSuccess={handlePasswordSuccess}
       />
-
-      <AnimatePresence>
-        {activePlay && (
-          <PlayModal
-            project={activePlay}
-            onClose={() => setActivePlay(null)}
-            setCursorVariant={setCursorVariant}
-          />
-        )}
-      </AnimatePresence>
     </div>
   );
 };

@@ -272,25 +272,19 @@ const Play = ({ setCursorVariant }) => {
         </button>
       </header>
 
-      <div className="play-stack" aria-label="Play projects">
+      <div className="play-row" aria-label="Play projects">
         {PLAY_PROJECTS.map((project, index) => {
           const isHovered = hoveredId === project.id;
-          const stackX = index * 22;
-          const stackY = index * 28;
-          const stackRotate = (index - 1) * 4;
-
           return (
             <motion.div
               key={project.id}
-              className="play-stack-item"
-              style={{ zIndex: isHovered ? 20 : index + 1 }}
-              initial={{ opacity: 0, y: 24 }}
+              className="play-row-item"
+              initial={{ opacity: 0, y: 20 }}
               animate={{
                 opacity: 1,
-                x: isHovered ? stackX + 36 : stackX,
-                y: isHovered ? stackY - 28 : stackY,
-                rotate: isHovered ? stackRotate - 3 : stackRotate,
+                y: isHovered ? -14 : 0,
                 scale: isHovered ? 1.06 : 1,
+                zIndex: isHovered ? 5 : 1,
               }}
               transition={{ type: 'spring', stiffness: 380, damping: 28 }}
               onMouseEnter={() => {

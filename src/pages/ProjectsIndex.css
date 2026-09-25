@@ -49,50 +49,59 @@
   max-width: 1400px;
 }
 
-/* Play page: stacked deck, ~50% size */
+/* Play page: centered horizontal row, ~50% size */
+.play-page.projects-index {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .play-page.projects-index .projects-index-header {
-  margin-bottom: 48px;
+  margin-bottom: 0;
+  flex-shrink: 0;
 }
 
-.play-stack {
-  position: relative;
-  width: min(190px, 42vw);
-  height: min(320px, 70vw);
-  margin: 24px 0 80px;
-}
-
-.play-stack-item {
-  position: absolute;
-  top: 0;
-  left: 0;
+.play-row {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
   width: 100%;
-  transform-origin: center bottom;
-  will-change: transform;
+  padding: 48px 0 80px;
+  box-sizing: border-box;
 }
 
-.play-stack-item .play-card--stacked {
+.play-row-item {
+  width: min(160px, 26vw);
+  flex: 0 0 auto;
+  position: relative;
+}
+
+.play-row-item .play-card--stacked {
   width: 100%;
   max-width: none;
 }
 
-.play-stack-item .play-card-image-wrap--portrait {
+.play-row-item .play-card-image-wrap--portrait {
   aspect-ratio: 3 / 4;
 }
 
-.play-stack-item .play-card-content--cover-only {
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+.play-row-item .play-card-content--cover-only {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
   background: #fafafa;
   border-radius: 12px;
   overflow: hidden;
 }
 
-.play-stack-item .play-card-content--cover-only:hover {
+.play-row-item .play-card-content--cover-only:hover {
   border-color: transparent;
   background: #fafafa;
 }
 
-.play-stack-item .home-slide-play .play-card-image-wrap,
-.play-stack-item .play-card-content--cover-only .play-card-image-wrap {
+.play-row-item .play-card-content--cover-only .play-card-image-wrap {
   border-radius: 10px;
 }
 
@@ -105,8 +114,12 @@
     grid-template-columns: 1fr;
   }
 
-  .play-stack {
-    width: min(170px, 48vw);
-    height: min(300px, 78vw);
+  .play-row {
+    gap: 16px;
+    padding: 32px 0 64px;
+  }
+
+  .play-row-item {
+    width: min(120px, 28vw);
   }
 }
