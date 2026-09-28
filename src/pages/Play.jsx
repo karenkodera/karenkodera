@@ -272,40 +272,43 @@ const Play = ({ setCursorVariant }) => {
         </button>
       </header>
 
-      <div className="play-row" aria-label="Play projects">
-        {PLAY_PROJECTS.map((project, index) => {
-          const isHovered = hoveredId === project.id;
-          return (
-            <motion.div
-              key={project.id}
-              className="play-row-item"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{
-                opacity: 1,
-                y: isHovered ? -14 : 0,
-                scale: isHovered ? 1.06 : 1,
-                zIndex: isHovered ? 5 : 1,
-              }}
-              transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-              onMouseEnter={() => {
-                setHoveredId(project.id);
-                setCursorVariant?.('project');
-              }}
-              onMouseLeave={() => {
-                setHoveredId(null);
-                setCursorVariant?.('default');
-              }}
-            >
-              <PlayCard
-                project={project}
-                index={index}
-                setCursorVariant={setCursorVariant}
-                onOpen={setActiveProject}
-                stacked
-              />
-            </motion.div>
-          );
-        })}
+      <div className="play-stage">
+        <h1 className="play-stage-title">projects</h1>
+        <div className="play-row" aria-label="Play projects">
+          {PLAY_PROJECTS.map((project, index) => {
+            const isHovered = hoveredId === project.id;
+            return (
+              <motion.div
+                key={project.id}
+                className="play-row-item"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{
+                  opacity: 1,
+                  y: isHovered ? -14 : 0,
+                  scale: isHovered ? 1.06 : 1,
+                  zIndex: isHovered ? 5 : 1,
+                }}
+                transition={{ type: 'spring', stiffness: 380, damping: 28 }}
+                onMouseEnter={() => {
+                  setHoveredId(project.id);
+                  setCursorVariant?.('project');
+                }}
+                onMouseLeave={() => {
+                  setHoveredId(null);
+                  setCursorVariant?.('default');
+                }}
+              >
+                <PlayCard
+                  project={project}
+                  index={index}
+                  setCursorVariant={setCursorVariant}
+                  onOpen={setActiveProject}
+                  stacked
+                />
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
       <AnimatePresence>

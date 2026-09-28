@@ -49,50 +49,89 @@
   max-width: 1400px;
 }
 
-/* Play page: centered horizontal row, ~50% size */
+/* Play page: full-width row, centered on viewport */
 .play-page.projects-index {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
+  position: relative;
+  height: 100vh;
+  height: 100dvh;
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: 0;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 .play-page.projects-index .projects-index-header {
-  margin-bottom: 0;
-  flex-shrink: 0;
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  margin: 0;
+  z-index: 2;
+}
+
+.play-stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: clamp(20px, 2.5vh, 32px);
+  width: 100%;
+  padding: 72px 28px 28px;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.play-stage-title {
+  margin: 0;
+  flex: 0 0 auto;
+  text-align: center;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: #191919;
 }
 
 .play-row {
-  flex: 1 1 auto;
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 28px;
+  justify-content: stretch;
+  gap: clamp(14px, 1.8vw, 28px);
   width: 100%;
-  padding: 48px 0 80px;
+  padding: 0;
+  margin: 0;
   box-sizing: border-box;
 }
 
 .play-row-item {
-  width: min(160px, 26vw);
-  flex: 0 0 auto;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
   position: relative;
+  align-self: center;
 }
 
-.play-row-item .play-card--stacked {
+.play-row-item .play-card--stacked,
+.play-row-item .play-card {
   width: 100%;
+  height: auto;
   max-width: none;
 }
 
 .play-row-item .play-card-image-wrap--portrait {
   aspect-ratio: 3 / 4;
+  width: 100%;
 }
 
 .play-row-item .play-card-content--cover-only {
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
   background: #fafafa;
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
 }
 
@@ -102,7 +141,7 @@
 }
 
 .play-row-item .play-card-content--cover-only .play-card-image-wrap {
-  border-radius: 10px;
+  border-radius: 12px;
 }
 
 @media (max-width: 768px) {
@@ -114,12 +153,17 @@
     grid-template-columns: 1fr;
   }
 
-  .play-row {
-    gap: 16px;
-    padding: 32px 0 64px;
+  .play-page.projects-index .projects-index-header {
+    top: 24px;
+    left: 16px;
   }
 
-  .play-row-item {
-    width: min(120px, 28vw);
+  .play-stage {
+    gap: 16px;
+    padding: 64px 16px 24px;
+  }
+
+  .play-row {
+    gap: 12px;
   }
 }
