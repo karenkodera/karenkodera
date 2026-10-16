@@ -71,7 +71,7 @@ const Hero = ({ setCursorVariant }) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.45, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
         >
-          a multidisciplinary designer who loves iteration
+          multidisciplinary designer currently based in new york city who loves iteration
         </motion.p>
       </div>
     </section>
