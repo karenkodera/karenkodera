@@ -8,7 +8,6 @@ import {
   StickerLiberty,
   StickerCarrot,
   StickerPiano,
-  StickerReset,
 } from './pixelStickers';
 import './StickerNote.css';
 
@@ -82,7 +81,7 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
         aria-labelledby={noteId}
       >
         <p className="sticker-note-title" id={noteId}>
-          stickers
+          peel to decorate
         </p>
         <div className="sticker-note-grid" role="group" aria-label="Choose a sticker">
           {STICKERS.map(({ id, label, Icon }) => (
@@ -108,9 +107,7 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
             onMouseEnter={() => setCursorVariant?.('hover')}
             onMouseLeave={() => setCursorVariant?.('default')}
           >
-            <span className="sticker-note-glyph">
-              <StickerReset />
-            </span>
+            <span className="sticker-note-reset-label">reset</span>
           </button>
         </div>
       </aside>

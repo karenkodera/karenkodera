@@ -3,8 +3,8 @@
   top: 88px;
   right: var(--home-inset, 40px);
   z-index: 125;
-  width: 168px;
-  padding: 14px 12px 12px;
+  width: 210px;
+  padding: 18px 14px 14px;
   background: #fffef8;
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 2px;
@@ -22,8 +22,8 @@
   position: absolute;
   top: -10px;
   left: 50%;
-  width: 54px;
-  height: 18px;
+  width: 64px;
+  height: 20px;
   transform: translateX(-50%) rotate(-2deg);
   background: rgba(255, 236, 150, 0.72);
   border-radius: 2px;
@@ -37,12 +37,12 @@
 }
 
 .sticker-note-title {
-  margin: 0 0 10px;
+  margin: 0 0 12px;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 500;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
   color: #8a867c;
   text-align: center;
 }
@@ -50,7 +50,7 @@
 .sticker-note-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
+  gap: 8px;
 }
 
 .sticker-note-cell {
@@ -59,7 +59,7 @@
   background: #f7f5ef;
   border-radius: 4px;
   aspect-ratio: 1;
-  padding: 6px;
+  padding: 8px;
   margin: 0;
   cursor: none;
   display: grid;
@@ -86,6 +86,18 @@
 .sticker-note-cell--reset:focus-visible {
   background: #ffe8e2;
   border-color: rgba(192, 57, 43, 0.35);
+}
+
+.sticker-note-reset-label {
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.42rem;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  color: #c0392b;
+  text-transform: lowercase;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
 }
 
 .sticker-note-glyph {
@@ -137,11 +149,15 @@
   .sticker-note {
     top: 72px;
     right: 16px;
-    width: 132px;
-    padding: 12px 10px 10px;
+    width: 160px;
+    padding: 14px 12px 12px;
   }
 
   .sticker-note-cell {
-    padding: 4px;
+    padding: 6px;
+  }
+
+  .sticker-note-reset-label {
+    font-size: 0.36rem;
   }
 }
