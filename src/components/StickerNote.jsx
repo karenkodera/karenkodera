@@ -50,8 +50,9 @@ function StickerFace({ Icon, outline, label }) {
   );
 }
 
-const StickerNote = ({ setCursorVariant, visible = true }) => {
+const StickerNote = ({ setCursorVariant }) => {
   const noteId = useId();
+  const rootRef = useRef(null);
   const [placed, setPlaced] = useState([]);
   const [dragging, setDragging] = useState(null);
   const [peelingId, setPeelingId] = useState(null);
@@ -61,6 +62,16 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
     setPlaced([]);
     setDragging(null);
     setPeelingId(null);
+  };
+
+  const toLocalPoint = (clientX, clientY) => {
+    const root = rootRef.current;
+    if (!root) return { x: clientX, y: clientY };
+    const rect = root.getBoundingClientRect();
+    return {
+      x: clientX - rect.left,
+      y: clientY - rect.top,
+    };
   };
 
   useEffect(() => {
@@ -86,6 +97,7 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
         setPeelingId(null);
         return;
       }
+      const local = toLocalPoint(e.clientX, e.clientY);
       const rotate = -12 + Math.random() * 24;
       const scale = 0.95 + Math.random() * 0.2;
       setPlaced((prev) => [
@@ -93,8 +105,8 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
         {
           key: `${current.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
           id: current.id,
-          x: e.clientX,
-          y: e.clientY,
+          x: local.x,
+          y: local.y,
           rotate,
           scale,
         },
@@ -140,11 +152,8 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
   const dragSticker = dragging ? STICKERS.find((s) => s.id === dragging.id) : null;
 
   return (
-    <>
-      <div
-        className={`sticker-layer${visible ? '' : ' sticker-layer--hidden'}`}
-        aria-hidden={!visible}
-      >
+    <div className="sticker-note-root" ref={rootRef}>
+      <div className="sticker-layer" aria-hidden>
         {placed.map((item) => {
           const sticker = STICKERS.find((s) => s.id === item.id);
           if (!sticker) return null;
@@ -185,11 +194,7 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
         </div>
       )}
 
-      <aside
-        className={`sticker-note${visible ? '' : ' sticker-note--hidden'}`}
-        aria-label="Sticker pad"
-        aria-labelledby={noteId}
-      >
+      <aside className="sticker-note" aria-label="Sticker pad" aria-labelledby={noteId}>
         <p className="sticker-note-title" id={noteId}>
           peel to decorate
         </p>
@@ -229,7 +234,7 @@ const StickerNote = ({ setCursorVariant, visible = true }) => {
           </button>
         </div>
       </aside>
-    </>
+    </div>
   );
 };
 

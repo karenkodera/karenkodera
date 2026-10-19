@@ -1,8 +1,16 @@
+.sticker-note-root {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+  overflow: visible;
+}
+
 .sticker-note {
-  position: fixed;
-  top: 84px;
-  right: var(--home-inset, 40px);
-  z-index: 125;
+  position: absolute;
+  top: 24px;
+  right: 8px;
+  z-index: 6;
   width: 268px;
   padding: 22px 18px 18px;
   background: #fffef8;
@@ -15,7 +23,6 @@
   transform: rotate(2.5deg);
   pointer-events: auto;
   overflow: visible;
-  transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .sticker-note::before {
@@ -29,12 +36,6 @@
   background: rgba(255, 236, 150, 0.72);
   border-radius: 2px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
-}
-
-.sticker-note--hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: rotate(2.5deg) translateY(-8px);
 }
 
 .sticker-note-title {
@@ -225,15 +226,11 @@
 }
 
 .sticker-layer {
-  position: fixed;
+  position: absolute;
   inset: 0;
-  z-index: 90;
+  z-index: 4;
   pointer-events: none;
-  transition: opacity 0.25s ease;
-}
-
-.sticker-layer--hidden {
-  opacity: 0;
+  overflow: visible;
 }
 
 .sticker-placed {
@@ -275,8 +272,8 @@
 
 @media (max-width: 768px) {
   .sticker-note {
-    top: 72px;
-    right: 16px;
+    top: 16px;
+    right: 0;
     width: 196px;
     padding: 16px 14px 14px;
   }

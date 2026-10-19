@@ -251,14 +251,10 @@ const Home = ({ setCursorVariant }) => {
 
       <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
 
-      <StickerNote
-        setCursorVariant={setCursorVariant}
-        visible={scrollEdge === 'start'}
-      />
-
       <div className="home-scroller" id="home-scroller" ref={scrollerRef}>
         <section className="home-slide home-slide-hero" id="home">
           <Hero setCursorVariant={setCursorVariant} />
+          <StickerNote setCursorVariant={setCursorVariant} />
         </section>
 
         {WORK_STREAM.map((item, index) => (
