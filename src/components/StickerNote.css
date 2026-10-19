@@ -1,253 +1,312 @@
 .sticker-note-root {
   position: absolute;
   inset: 0;
-  z-index: 5;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
+  z-index: 6;
   overflow: visible;
+}
+
+.sticker-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.sticker-placed {
+  position: absolute;
+  width: clamp(72px, 7.5vw, 110px);
+  height: clamp(72px, 7.5vw, 110px);
+  pointer-events: none;
+  filter: drop-shadow(0 3px 5px rgba(40, 28, 10, 0.22));
+  animation: sticker-settle 0.38s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+}
+
+.sticker-placed img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+@keyframes sticker-settle {
+  from {
+    opacity: 0.55;
+    filter: drop-shadow(0 10px 14px rgba(40, 28, 10, 0.28));
+  }
+  to {
+    opacity: 1;
+    filter: drop-shadow(0 3px 5px rgba(40, 28, 10, 0.22));
+  }
+}
+
+.sticker-drag {
+  position: fixed;
+  z-index: 80;
+  width: clamp(88px, 9vw, 128px);
+  height: clamp(88px, 9vw, 128px);
+  transform: translate(-50%, -55%) rotate(-8deg);
+  pointer-events: none;
+  filter: drop-shadow(0 12px 18px rgba(40, 28, 10, 0.28));
+  transition: transform 0.12s ease, filter 0.2s ease;
+}
+
+.sticker-drag--ready {
+  transform: translate(-50%, -50%) rotate(-4deg) scale(1.04);
+  filter: drop-shadow(0 8px 12px rgba(40, 28, 10, 0.24));
+}
+
+.sticker-drag img,
+.sticker-drag-mid img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.sticker-drag-mid {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.sticker-drag-mid img {
+  position: absolute;
+  inset: 0;
+}
+
+.sticker-drag-mid img:first-child {
+  opacity: 0.55;
+  transform: rotate(-4deg) translateY(-2px);
+}
+
+.sticker-drag-mid img:last-child {
+  opacity: 0.85;
+  transform: rotate(6deg) translate(3px, -4px);
 }
 
 .sticker-note {
   position: absolute;
-  top: 74px;
-  right: 58px;
-  z-index: 6;
-  width: 268px;
-  padding: 22px 18px 18px;
-  background: #fffef8;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 2px;
+  right: clamp(1.1rem, 2.4vw, 2.2rem);
+  bottom: clamp(1.1rem, 2.4vw, 2.2rem);
+  width: min(292px, 36vw);
+  padding: 0.72rem 0.78rem 0.78rem;
+  border-radius: 3px;
+  background:
+    linear-gradient(180deg, rgba(255, 252, 214, 0.22), transparent 38%),
+    linear-gradient(135deg, #fff7a8 0%, #ffe566 48%, #ffd84a 100%);
+  border: 1px solid rgba(180, 140, 20, 0.28);
   box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 12px 32px rgba(0, 0, 0, 0.11),
-    0 2px 6px rgba(0, 0, 0, 0.06);
-  transform: rotate(2.5deg);
+    0 1px 0 rgba(255, 255, 255, 0.55) inset,
+    0 10px 28px rgba(40, 28, 10, 0.14),
+    0 2px 6px rgba(40, 28, 10, 0.1);
+  transform: rotate(-2.2deg);
   pointer-events: auto;
-  overflow: visible;
+  z-index: 4;
 }
 
 .sticker-note::before {
   content: '';
   position: absolute;
-  top: -12px;
+  top: 0;
   left: 50%;
-  width: 78px;
-  height: 22px;
-  transform: translateX(-50%) rotate(-2deg);
-  background: rgba(255, 236, 150, 0.72);
-  border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  width: 46px;
+  height: 18px;
+  transform: translate(-50%, -42%) rotate(-1deg);
+  background: rgba(255, 255, 255, 0.42);
+  border: 1px solid rgba(180, 180, 180, 0.35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 
 .sticker-note-title {
-  margin: 0 0 14px;
-  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: 0.78rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: lowercase;
-  color: #8a867c;
+  margin: 0 0 0.55rem;
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.48rem;
+  line-height: 1.55;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(70, 52, 12, 0.72);
   text-align: center;
 }
 
 .sticker-note-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
+  gap: 0.42rem;
 }
 
 .sticker-note-cell {
-  appearance: none;
-  border: none;
-  background: transparent;
-  border-radius: 0;
-  aspect-ratio: 1;
-  padding: 2px;
-  margin: 0;
-  cursor: none;
-  display: grid;
-  place-items: center;
   position: relative;
-  touch-action: none;
-  user-select: none;
-  -webkit-user-select: none;
-  overflow: visible;
-}
-
-.sticker-note-cell:focus-visible {
-  outline: none;
-}
-
-.sticker-note-cell--reset {
-  background: transparent;
+  aspect-ratio: 1;
   border: none;
+  padding: 0.2rem;
+  margin: 0;
+  background: transparent;
+  cursor: none;
+  overflow: visible;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: none;
 }
 
-.sticker-note-cell--reset:hover .sticker-note-reset-label,
-.sticker-note-cell--reset:focus-visible .sticker-note-reset-label {
-  color: #7a7a7a;
-}
-
-.sticker-note-reset-label {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
-  font-size: 0.48rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
-  color: #9a9a9a;
-  text-transform: lowercase;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-}
-
-/* Gray residue under the sticker on the pad */
 .sticker-pad-glue {
   position: absolute;
-  inset: 18%;
-  border-radius: 42% 48% 45% 50% / 48% 42% 52% 46%;
-  background: #d0cdc6;
-  opacity: 0.7;
+  inset: 18% 16% 16% 18%;
+  border-radius: 40% 42% 38% 44% / 42% 38% 44% 40%;
+  background:
+    radial-gradient(ellipse at 40% 35%, rgba(255, 255, 255, 0.55), transparent 55%),
+    linear-gradient(160deg, #f3ead0 0%, #e8d9b4 100%);
+  box-shadow: inset 0 0 0 1px rgba(180, 150, 80, 0.18);
+  opacity: 0;
+  transform: scale(0.92);
+  transition: opacity 0.22s ease, transform 0.22s ease;
+  pointer-events: none;
   z-index: 0;
 }
 
-.sticker-peel {
+.sticker-note-cell--peel-2 .sticker-pad-glue,
+.sticker-note-cell--peel-3 .sticker-pad-glue,
+.sticker-note-cell--gone .sticker-pad-glue {
+  opacity: 0.85;
+  transform: scale(1);
+}
+
+.sticker-frames {
   position: relative;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  display: grid;
-  place-items: center;
-  transform-origin: 12% 12%;
-  transform-style: preserve-3d;
-  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
-  will-change: transform;
-}
-
-/* Folded corner flap cue */
-.sticker-peel-flap {
-  position: absolute;
-  top: 10%;
-  left: 10%;
-  width: 28%;
-  height: 28%;
-  z-index: 3;
-  pointer-events: none;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0 48%, transparent 50%);
-  clip-path: polygon(0 0, 100% 0, 0 100%);
-  transform-origin: 0 0;
-  opacity: 0;
-  transform: rotate(0deg) scale(0.4);
-  transition:
-    opacity 0.22s ease,
-    transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
-  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.08));
-}
-
-/* Hover: peel top-left corner up */
-.sticker-note-cell:hover .sticker-peel:not(.sticker-peel--off),
-.sticker-note-cell:focus-visible .sticker-peel:not(.sticker-peel--off) {
-  transform:
-    perspective(220px)
-    rotateX(18deg)
-    rotateY(-28deg)
-    translate3d(-4px, -6px, 14px);
-  filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.16));
-}
-
-.sticker-note-cell:hover .sticker-peel:not(.sticker-peel--off) .sticker-peel-flap,
-.sticker-note-cell:focus-visible .sticker-peel:not(.sticker-peel--off) .sticker-peel-flap {
-  opacity: 1;
-  transform: rotate(-18deg) scale(1) translate(-2px, -2px);
-}
-
-.sticker-note-cell--lifting .sticker-peel,
-.sticker-peel--off {
-  opacity: 0;
-  transform:
-    perspective(220px)
-    rotateX(32deg)
-    rotateY(-48deg)
-    translate3d(-14px, -18px, 28px)
-    scale(1.08);
-  transition: transform 0.2s ease, opacity 0.14s ease;
-  pointer-events: none;
-}
-
-.sticker-face {
-  position: relative;
-  width: 88%;
-  height: 88%;
-  display: grid;
-  place-items: center;
-  filter: none;
-}
-
-.sticker-face svg {
   display: block;
   width: 100%;
   height: 100%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  z-index: 1;
 }
 
-.sticker-art--tilt45 {
-  transform: rotate(-45deg) scale(0.92);
-  transform-origin: center;
-}
-
-.sticker-layer {
+.sticker-frame {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 0;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
+  transition:
+    opacity 0.11s ease,
+    transform 0.14s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.14s ease;
   pointer-events: none;
-  overflow: visible;
+  user-select: none;
+  -webkit-user-drag: none;
+  will-change: opacity, transform;
 }
 
-.sticker-placed {
-  position: absolute;
-  width: clamp(72px, 7.5vw, 104px);
-  height: clamp(72px, 7.5vw, 104px);
-  filter: none;
-  pointer-events: none;
+/* Flat: regular only */
+.sticker-frames--flat .sticker-frame--regular {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
 }
 
-.sticker-drag {
-  position: fixed;
-  z-index: 200;
-  width: clamp(72px, 7.5vw, 104px);
-  height: clamp(72px, 7.5vw, 104px);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  filter: none;
+/* Hover: slight peel (frame fill-in via slight lift of regular → slight) */
+.sticker-frames--hover .sticker-frame--regular {
+  opacity: 0.2;
+  transform: translate3d(-1px, 1px, 0) rotate(-2deg) scale(0.98);
+  filter: blur(0.2px);
 }
 
-.sticker-drag--peeling {
-  animation: sticker-peel-lift 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+.sticker-frames--hover .sticker-frame--slight {
+  opacity: 1;
+  transform: translate3d(1px, -3px, 0) rotate(3deg) scale(1.02);
 }
 
-.sticker-drag--peeled {
-  transform: translate(-50%, -50%) rotate(-8deg) scale(1.06);
+/* Peel stage 1: leave slight, start lifting */
+.sticker-frames--peel-1 .sticker-frame--slight {
+  opacity: 1;
+  transform: translate3d(2px, -5px, 0) rotate(5deg) scale(1.03);
 }
 
-@keyframes sticker-peel-lift {
-  from {
-    transform: translate(-50%, -50%) perspective(180px) rotateX(24deg) rotateY(-36deg) scale(0.92);
-    opacity: 0.85;
-  }
-  to {
-    transform: translate(-50%, -50%) rotate(-8deg) scale(1.06);
-    opacity: 1;
-  }
+.sticker-frames--peel-1 .sticker-frame--mid-a {
+  opacity: 0.45;
+  transform: translate3d(3px, -7px, 0) rotate(7deg) scale(1.04);
 }
 
-@media (max-width: 768px) {
+/* Peel stage 2: synthetic mid blend slight + peeled */
+.sticker-frames--peel-2 .sticker-frame--slight {
+  opacity: 0.35;
+  transform: translate3d(4px, -8px, 0) rotate(8deg) scale(1.05);
+  filter: blur(0.3px);
+}
+
+.sticker-frames--peel-2 .sticker-frame--mid-a {
+  opacity: 0.55;
+  transform: translate3d(5px, -10px, 0) rotate(10deg) scale(1.06);
+}
+
+.sticker-frames--peel-2 .sticker-frame--mid-b {
+  opacity: 0.65;
+  transform: translate3d(6px, -12px, 0) rotate(12deg) scale(1.07);
+}
+
+.sticker-frames--peel-2 .sticker-frame--peeled {
+  opacity: 0.4;
+  transform: translate3d(7px, -14px, 0) rotate(14deg) scale(1.08);
+}
+
+/* Peel stage 3: full peel */
+.sticker-frames--peel-3 .sticker-frame--peeled {
+  opacity: 1;
+  transform: translate3d(10px, -18px, 0) rotate(16deg) scale(1.1);
+  filter: drop-shadow(0 10px 12px rgba(40, 28, 10, 0.22));
+}
+
+.sticker-frames--peel-3 .sticker-frame--mid-b {
+  opacity: 0.25;
+  transform: translate3d(8px, -16px, 0) rotate(14deg) scale(1.08);
+}
+
+.sticker-note-cell--gone .sticker-frames {
+  opacity: 0;
+  transition: opacity 0.12s ease;
+}
+
+.sticker-note-cell--gone .sticker-pad-glue {
+  opacity: 0.55;
+}
+
+.sticker-note-cell--reset {
+  display: grid;
+  place-items: center;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px dashed rgba(120, 90, 20, 0.35);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.sticker-note-cell--reset:hover {
+  background: rgba(255, 255, 255, 0.55);
+  transform: scale(1.03);
+}
+
+.sticker-note-reset-label {
+  font-family: 'Press Start 2P', monospace;
+  font-size: 0.42rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(70, 52, 12, 0.7);
+}
+
+@media (max-width: 900px) {
   .sticker-note {
-    top: 66px;
-    right: 50px;
-    width: 196px;
-    padding: 16px 14px 14px;
+    width: min(240px, 46vw);
+    right: 0.75rem;
+    bottom: 0.75rem;
   }
 
-  .sticker-note-reset-label {
-    font-size: 0.4rem;
+  .sticker-placed,
+  .sticker-drag {
+    width: clamp(64px, 14vw, 96px);
+    height: clamp(64px, 14vw, 96px);
   }
 }
