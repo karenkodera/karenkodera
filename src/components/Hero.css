@@ -57,7 +57,9 @@
   line-height: 1.35;
   letter-spacing: -0.02em;
   color: #191919;
-  max-width: 32rem;
+  max-width: none;
+  width: max-content;
+  white-space: nowrap;
   text-align: left;
   align-self: flex-start;
 }
@@ -172,8 +174,9 @@
   }
 
   .hero-subtitle {
-    font-size: 0.9rem;
+    font-size: clamp(0.72rem, 3.2vw, 0.9rem);
     margin: 0 0 10px;
+    white-space: nowrap;
   }
 
   .hero-title-word--kodera:hover .hero-title-o-slot,
