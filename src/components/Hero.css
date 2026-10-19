@@ -21,9 +21,9 @@
   align-items: flex-start;
   text-align: left;
   flex: 0 0 auto;
-  /* Sit bottom-left; clear fixed contact links */
+  /* Sit bottom-left; clear contacts + scroll ruler hint */
   padding-top: 0;
-  padding-bottom: 56px;
+  padding-bottom: 110px;
 }
 
 .hero-title {
@@ -53,6 +53,7 @@
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
   font-size: clamp(0.95rem, 1.6vw, 1.25rem);
   font-weight: 400;
+  font-style: normal;
   line-height: 1.35;
   letter-spacing: -0.02em;
   color: #191919;
@@ -163,7 +164,7 @@
 
   .hero-content {
     padding-top: 0;
-    padding-bottom: 48px;
+    padding-bottom: 96px;
   }
 
   .hero-title {

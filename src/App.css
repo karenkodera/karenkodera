@@ -54,11 +54,11 @@ body {
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-color: #f2f2f2;
+  background-color: #f3f1eb;
   background-image:
-    linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
-  background-size: 24px 24px;
+    linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  background-size: 16px 16px;
   background-position: center top;
 }
 
