@@ -23,11 +23,20 @@ const Hero = ({ setCursorVariant }) => {
   return (
     <section className="hero" aria-label="Introduction">
       <div className="hero-content">
+        <motion.p
+          className="hero-subtitle"
+          initial={{ opacity: 1, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.45, delay: 0.06, ease: [0.25, 0.1, 0.25, 1] }}
+        >
+          multidisciplinary designer currently based in new york city who loves iteration
+        </motion.p>
+
         <motion.h1
           className="hero-title"
           initial={{ opacity: 1, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.06, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
           onClick={goToAbout}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === ' ') {
@@ -64,15 +73,6 @@ const Hero = ({ setCursorVariant }) => {
             </span>
           </span>
         </motion.h1>
-
-        <motion.p
-          className="hero-subtitle"
-          initial={{ opacity: 1, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.45, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-        >
-          multidisciplinary designer currently based in new york city who loves iteration
-        </motion.p>
       </div>
     </section>
   );

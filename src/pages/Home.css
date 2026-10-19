@@ -249,7 +249,7 @@
 .home-slide-hero {
   width: 100vw;
   max-width: 100vw;
-  padding: 32px var(--home-inset) 28px;
+  padding: 88px var(--home-inset) 28px;
   align-items: stretch;
 }
 
@@ -342,7 +342,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0;
+  gap: 12px;
   box-sizing: border-box;
 }
 
@@ -359,52 +359,46 @@
 }
 
 .about-page-cards {
-  display: flex;
-  flex-direction: row;
+  display: grid;
+  grid-template-columns: auto minmax(260px, 300px);
   align-items: stretch;
   gap: 14px;
-}
-
-.about-bio-column {
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
-  gap: 12px;
   width: max-content;
-  align-self: stretch;
 }
 
 .about-page--slide .about-bio-section {
-  flex: 1 1 auto;
-  width: auto;
   margin: 0;
-  height: auto;
+  min-height: 0;
   display: flex;
   flex-direction: column;
+  height: 100%;
 }
 
 .about-page--slide .about-details-card {
-  flex: 0 0 auto;
-  width: min(300px, 34vw);
+  width: auto;
   margin: 0;
-  height: auto;
   box-sizing: border-box;
   padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  background: #fafafa;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  height: 100%;
 }
 
 .about-page--slide .about-bio-layout {
   display: flex;
-  align-items: stretch;
-  gap: 16px;
+  align-items: center;
+  gap: 20px;
   padding: 20px;
   width: auto;
   max-width: none;
-  height: auto;
   box-sizing: border-box;
-  flex: 0 0 auto;
+  flex: 1 1 auto;
+  min-height: 100%;
+  height: 100%;
 }
 
 .about-page--slide .about-photo-wrap {
@@ -431,15 +425,15 @@
 }
 
 .about-page--slide .about-bio-content {
-  /* Wider column + larger type; photo shrunk so bio card footprint stays similar */
-  flex: 0 0 215px;
-  width: 215px;
-  max-width: 215px;
+  /* Wide enough that paragraph height ≈ 200px photo */
+  flex: 0 0 350px;
+  width: 350px;
+  max-width: 350px;
   min-width: 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-self: stretch;
+  align-self: center;
 }
 
 .about-page--slide .about-bio {
@@ -567,10 +561,6 @@
     width: 100%;
   }
 
-  .about-bio-column {
-    width: 100%;
-  }
-
   .about-page--slide .about-bio-section,
   .about-page--slide .about-details-card {
     flex: none;
@@ -582,6 +572,7 @@
     display: flex;
     flex-direction: column;
     height: auto;
+    min-height: 0;
   }
 
   .about-page--slide .about-photo-wrap {
@@ -597,6 +588,5 @@
     flex: none;
     width: 100%;
     max-width: none;
-    height: auto;
   }
 }
