@@ -26,7 +26,8 @@
 .home-section-nav {
   position: fixed;
   top: 28px;
-  left: var(--home-inset);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 130;
   display: flex;
   flex-direction: row;
@@ -408,15 +409,15 @@
 
 .about-page--slide .about-photo-wrap {
   position: relative;
-  flex: 0 0 240px;
-  width: 240px !important;
-  height: 240px !important;
-  max-width: 240px;
-  max-height: 240px;
+  flex: 0 0 200px;
+  width: 200px !important;
+  height: 200px !important;
+  max-width: 200px;
+  max-height: 200px;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 12px;
-  align-self: flex-start;
+  align-self: center;
 }
 
 .about-page--slide .about-photo-wrap .about-photo {
@@ -430,10 +431,10 @@
 }
 
 .about-page--slide .about-bio-content {
-  /* Narrow so wrapped text height matches 240px photo */
-  flex: 0 0 175px;
-  width: 175px;
-  max-width: 175px;
+  /* Wider column + larger type; photo shrunk so bio card footprint stays similar */
+  flex: 0 0 215px;
+  width: 215px;
+  max-width: 215px;
   min-width: 0;
   display: flex;
   flex-direction: column;
@@ -442,8 +443,9 @@
 }
 
 .about-page--slide .about-bio {
-  font-size: 0.78rem;
-  line-height: 1.4;
+  /* Match experience company size (Kroger / Dick's) */
+  font-size: 0.875rem;
+  line-height: 1.45;
   height: auto;
   min-height: 0;
   margin: 0;
@@ -509,7 +511,8 @@
 
   .home-section-nav {
     top: 16px;
-    left: var(--home-inset);
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   .home-top-links {
@@ -582,9 +585,9 @@
   }
 
   .about-page--slide .about-photo-wrap {
-    width: min(100%, 240px) !important;
+    width: min(100%, 200px) !important;
     height: auto !important;
-    max-width: 240px;
+    max-width: 200px;
     max-height: none;
     aspect-ratio: 1;
     align-self: center;
