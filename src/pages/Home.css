@@ -330,15 +330,16 @@
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .about-page.about-page--slide {
   min-height: 0;
   height: auto;
-  max-width: none;
+  max-width: min(920px, calc(100vw - 80px));
   margin: 0 auto;
   padding: 0;
-  width: max-content;
+  width: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -349,65 +350,74 @@
 .about-hi {
   margin: 0;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: clamp(2.4rem, 4.2vw, 3.4rem);
+  font-size: clamp(2rem, 3.6vw, 3.2rem);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.05;
   color: #191919;
-  max-width: none;
+  max-width: 100%;
   white-space: nowrap;
 }
 
 .about-page-cards {
   display: grid;
-  grid-template-columns: auto minmax(260px, 300px);
+  /* Row height comes from bio (photo); details matches via min-height:100% */
+  grid-template-columns: minmax(0, 1fr) minmax(200px, 260px);
+  grid-template-rows: auto;
   align-items: stretch;
   gap: 14px;
-  width: max-content;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .about-page--slide .about-bio-section {
   margin: 0;
+  min-width: 0;
   min-height: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  height: auto;
 }
 
 .about-page--slide .about-details-card {
   width: auto;
   margin: 0;
   box-sizing: border-box;
-  padding: 20px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  gap: 4px;
   background: #fafafa;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.04);
-  height: 100%;
+  /* Take bio row height only (not the other way around) */
+  height: 0;
+  min-height: 100%;
+  overflow: auto;
 }
 
 .about-page--slide .about-bio-layout {
   display: flex;
   align-items: center;
-  gap: 20px;
-  padding: 20px;
-  width: auto;
-  max-width: none;
+  gap: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 100%;
   box-sizing: border-box;
-  flex: 1 1 auto;
-  min-height: 100%;
-  height: 100%;
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 0;
 }
 
 .about-page--slide .about-photo-wrap {
   position: relative;
-  flex: 0 0 200px;
-  width: 200px !important;
-  height: 200px !important;
-  max-width: 200px;
-  max-height: 200px;
+  flex: 0 0 180px;
+  width: 180px !important;
+  height: 180px !important;
+  max-width: 180px;
+  max-height: 180px;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 12px;
@@ -425,24 +435,28 @@
 }
 
 .about-page--slide .about-bio-content {
-  /* Wide enough that paragraph height ≈ 200px photo */
-  flex: 0 0 350px;
-  width: 350px;
-  max-width: 350px;
+  /* Width tuned so copy wraps to ~180px tall (photo height) */
+  flex: 1 1 auto;
+  width: auto;
   min-width: 0;
+  max-width: 300px;
+  height: 180px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-self: center;
+  overflow: hidden;
 }
 
 .about-page--slide .about-bio {
   /* Match experience company size (Kroger / Dick's) */
   font-size: 0.875rem;
-  line-height: 1.45;
+  line-height: 1.4;
   height: auto;
+  max-height: 180px;
   min-height: 0;
   margin: 0;
+  overflow: hidden;
 }
 
 .about-bio-link {
@@ -557,6 +571,7 @@
   }
 
   .about-page-cards {
+    display: flex;
     flex-direction: column;
     width: 100%;
   }
@@ -566,6 +581,8 @@
     flex: none;
     width: 100%;
     max-width: none;
+    height: auto;
+    min-height: 0;
   }
 
   .about-page--slide .about-bio-layout {
@@ -576,9 +593,9 @@
   }
 
   .about-page--slide .about-photo-wrap {
-    width: min(100%, 200px) !important;
+    width: min(100%, 180px) !important;
     height: auto !important;
-    max-width: 200px;
+    max-width: 180px;
     max-height: none;
     aspect-ratio: 1;
     align-self: center;
@@ -588,5 +605,13 @@
     flex: none;
     width: 100%;
     max-width: none;
+    height: auto;
+    max-height: none;
+    overflow: visible;
+  }
+
+  .about-page--slide .about-bio {
+    max-height: none;
+    overflow: visible;
   }
 }
