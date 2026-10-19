@@ -55,37 +55,33 @@
 
 .sticker-note-cell {
   appearance: none;
-  border: 1px dashed rgba(0, 0, 0, 0.1);
-  background: #f7f5ef;
-  border-radius: 4px;
+  border: none;
+  background: transparent;
+  border-radius: 0;
   aspect-ratio: 1;
-  padding: 8px;
+  padding: 2px;
   margin: 0;
   cursor: none;
   display: grid;
   place-items: center;
-  transition:
-    transform 0.15s ease,
-    background-color 0.15s ease,
-    border-color 0.15s ease;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
-.sticker-note-cell:hover,
 .sticker-note-cell:focus-visible {
-  background: #fff;
-  border-color: rgba(0, 0, 0, 0.22);
-  transform: scale(1.06);
   outline: none;
 }
 
 .sticker-note-cell--reset {
-  background: #f3ece8;
+  background: transparent;
+  border: none;
 }
 
-.sticker-note-cell--reset:hover,
-.sticker-note-cell--reset:focus-visible {
-  background: #ffe8e2;
-  border-color: rgba(192, 57, 43, 0.35);
+.sticker-note-cell--reset:hover .sticker-note-reset-label,
+.sticker-note-cell--reset:focus-visible .sticker-note-reset-label {
+  color: #7a7a7a;
 }
 
 .sticker-note-reset-label {
@@ -94,21 +90,98 @@
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.2;
-  color: #c0392b;
+  color: #9a9a9a;
   text-transform: lowercase;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }
 
-.sticker-note-glyph {
+/* Gray residue under the sticker on the pad */
+.sticker-pad-glue {
+  position: absolute;
+  inset: 14%;
+  border-radius: 42% 48% 45% 50% / 48% 42% 52% 46%;
+  background: #d8d5ce;
+  opacity: 0.55;
+  z-index: 0;
+}
+
+.sticker-peel {
+  position: relative;
+  z-index: 1;
   width: 100%;
   height: 100%;
+  display: grid;
+  place-items: center;
+  transform-origin: 0% 0%;
+  transition: transform 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
+  will-change: transform;
+}
+
+/* Hover: peel top-left corner up */
+.sticker-note-cell:hover .sticker-peel:not(.sticker-peel--off),
+.sticker-note-cell:focus-visible .sticker-peel:not(.sticker-peel--off) {
+  transform:
+    perspective(160px)
+    rotateX(14deg)
+    rotateY(-22deg)
+    translate3d(-3px, -4px, 8px);
+  filter: drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.12));
+}
+
+.sticker-note-cell--lifting .sticker-peel,
+.sticker-peel--off {
+  opacity: 0;
+  transform:
+    perspective(160px)
+    rotateX(28deg)
+    rotateY(-40deg)
+    translate3d(-10px, -14px, 20px)
+    scale(1.05);
+  transition: transform 0.2s ease, opacity 0.16s ease;
+  pointer-events: none;
+}
+
+.sticker-face {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+.sticker-diecut {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.06));
+}
+
+.sticker-diecut-fill {
+  fill: #ffffff;
+}
+
+.sticker-diecut-stroke {
+  fill: none;
+  stroke: #cfcbc3;
+  stroke-width: 1.35;
+  stroke-linejoin: round;
+}
+
+.sticker-face-art {
+  position: relative;
+  z-index: 1;
+  width: 58%;
+  height: 58%;
   display: block;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+  pointer-events: none;
 }
 
-.sticker-note-glyph svg {
+.sticker-face-art svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -130,19 +203,39 @@
 
 .sticker-placed {
   position: absolute;
-  width: clamp(48px, 5.5vw, 72px);
-  height: clamp(48px, 5.5vw, 72px);
-  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12));
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+  width: clamp(56px, 6.2vw, 84px);
+  height: clamp(56px, 6.2vw, 84px);
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.14));
+  pointer-events: none;
 }
 
-.sticker-placed svg {
-  display: block;
-  width: 100%;
-  height: 100%;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
+.sticker-drag {
+  position: fixed;
+  z-index: 200;
+  width: clamp(56px, 6.2vw, 84px);
+  height: clamp(56px, 6.2vw, 84px);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+}
+
+.sticker-drag--peeling {
+  animation: sticker-peel-lift 0.2s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+.sticker-drag--peeled {
+  transform: translate(-50%, -50%) rotate(-8deg) scale(1.06);
+}
+
+@keyframes sticker-peel-lift {
+  from {
+    transform: translate(-50%, -50%) perspective(180px) rotateX(24deg) rotateY(-36deg) scale(0.92);
+    opacity: 0.85;
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(-8deg) scale(1.06);
+    opacity: 1;
+  }
 }
 
 @media (max-width: 768px) {
@@ -151,10 +244,6 @@
     right: 16px;
     width: 160px;
     padding: 14px 12px 12px;
-  }
-
-  .sticker-note-cell {
-    padding: 6px;
   }
 
   .sticker-note-reset-label {
