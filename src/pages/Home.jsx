@@ -277,30 +277,32 @@ const Home = ({ setCursorVariant }) => {
             <div className="about-page-cards">
               <div className="about-bio-section">
                 <div className="about-bio-layout">
-                  <div className="about-photo-wrap" aria-hidden="true">
-                    <img
-                      src="/about-photo.png"
-                      alt=""
-                      className="about-photo"
-                      loading="eager"
-                    />
-                  </div>
-                  <div className="about-bio-content">
-                    <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
-                    <p className="about-bio">
-                      I&apos;ve always loved creating, starting in high school with choreographing dances to designing buildings for my architecture degree. When I discovered product design, I fell in love with its iterative nature and human impact. Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers buy groceries online daily. When I&apos;m not designing, I&apos;m climbing! Check out{' '}
-                      <a
-                        href="https://www.instagram.com/karebiner"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="about-bio-link"
-                        onMouseEnter={() => setCursorVariant?.('hover')}
-                        onMouseLeave={() => setCursorVariant?.('default')}
-                      >
-                        @karebiner
-                      </a>
-                      .
-                    </p>
+                  <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
+                  <div className="about-bio-main">
+                    <div className="about-photo-wrap" aria-hidden="true">
+                      <img
+                        src="/about-photo.png"
+                        alt=""
+                        className="about-photo"
+                        loading="eager"
+                      />
+                    </div>
+                    <div className="about-bio-content">
+                      <p className="about-bio">
+                        I&apos;ve always loved creating, starting in high school with choreographing dances to designing buildings for my architecture degree. When I discovered product design, I fell in love with its iterative nature and human impact. Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers buy groceries online daily. When I&apos;m not designing, I&apos;m climbing! Check out{' '}
+                        <a
+                          href="https://www.instagram.com/karebiner"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="about-bio-link"
+                          onMouseEnter={() => setCursorVariant?.('hover')}
+                          onMouseLeave={() => setCursorVariant?.('default')}
+                        >
+                          @karebiner
+                        </a>
+                        .
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>
