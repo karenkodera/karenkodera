@@ -350,7 +350,7 @@
 }
 
 .about-page--slide .about-hi {
-  margin: 0 0 14px;
+  margin: 0 0 12px;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
   font-size: clamp(1.75rem, 3vw, 2.6rem);
   font-weight: 700;
@@ -377,6 +377,7 @@
   min-height: 0;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   height: auto;
 }
 
@@ -397,12 +398,10 @@
   overflow: visible;
 }
 
-/* Card chrome lives here so Hello is clearly inside the box */
 .about-page--slide .about-bio-layout {
   display: flex;
-  flex-direction: column;
   align-items: stretch;
-  gap: 0;
+  gap: 20px;
   padding: 20px;
   width: 100%;
   max-width: 100%;
@@ -415,15 +414,7 @@
   border: 1px solid rgba(0, 0, 0, 0.04);
 }
 
-.about-page--slide .about-bio-main {
-  display: flex;
-  align-items: stretch;
-  gap: 20px;
-  width: 100%;
-  min-width: 0;
-}
-
-/* Square photo fills the row height; width grows with it */
+/* Square photo fills the card height; width grows with it */
 .about-page--slide .about-photo-wrap {
   position: relative;
   flex: 0 0 auto;
@@ -602,10 +593,6 @@
     flex-direction: column;
     height: auto;
     min-height: 0;
-  }
-
-  .about-page--slide .about-bio-main {
-    flex-direction: column;
   }
 
   .about-page--slide .about-photo-wrap {
