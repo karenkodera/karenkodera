@@ -338,21 +338,21 @@
 .about-page.about-page--slide {
   min-height: 0;
   height: auto;
-  max-width: min(920px, calc(100vw - 80px));
+  max-width: min(1100px, calc(100vw - 80px));
   margin: 0 auto;
   padding: 0;
   width: auto;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 12px;
+  gap: 0;
   box-sizing: border-box;
 }
 
-.about-hi {
-  margin: 0;
+.about-page--slide .about-hi {
+  margin: 0 0 12px;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: clamp(2rem, 3.6vw, 3.2rem);
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.05;
@@ -399,8 +399,8 @@
 
 .about-page--slide .about-bio-layout {
   display: flex;
-  align-items: flex-start;
-  gap: 18px;
+  align-items: stretch;
+  gap: 20px;
   padding: 20px;
   width: 100%;
   max-width: 100%;
@@ -410,17 +410,19 @@
   min-height: 0;
 }
 
+/* Square photo fills the card height; width grows with it */
 .about-page--slide .about-photo-wrap {
   position: relative;
-  flex: 0 0 200px;
-  width: 200px !important;
-  height: 200px !important;
-  max-width: 200px;
-  max-height: 200px;
+  flex: 0 0 auto;
+  align-self: stretch;
+  width: auto !important;
+  height: auto !important;
+  min-height: 240px;
+  max-width: none;
+  max-height: none;
   aspect-ratio: 1;
   overflow: hidden;
   border-radius: 12px;
-  align-self: flex-start;
 }
 
 .about-page--slide .about-photo-wrap .about-photo {
@@ -437,7 +439,7 @@
   flex: 1 1 auto;
   width: auto;
   min-width: 0;
-  max-width: 360px;
+  max-width: 420px;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -590,12 +592,17 @@
   }
 
   .about-page--slide .about-photo-wrap {
-    width: min(100%, 200px) !important;
+    width: min(100%, 280px) !important;
     height: auto !important;
-    max-width: 200px;
+    min-height: 0;
+    max-width: 280px;
     max-height: none;
     aspect-ratio: 1;
     align-self: center;
+  }
+
+  .about-page--slide .about-hi {
+    white-space: normal;
   }
 
   .about-page--slide .about-bio-content {

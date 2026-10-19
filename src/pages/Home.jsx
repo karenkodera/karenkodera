@@ -274,7 +274,6 @@ const Home = ({ setCursorVariant }) => {
 
         <section className="home-slide home-slide-about" id="about">
           <div className="about-page about-page--slide">
-            <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
             <div className="about-page-cards">
               <div className="about-bio-section">
                 <div className="about-bio-layout">
@@ -287,6 +286,7 @@ const Home = ({ setCursorVariant }) => {
                     />
                   </div>
                   <div className="about-bio-content">
+                    <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
                     <p className="about-bio">
                       I&apos;ve always loved creating, starting in high school with choreographing dances to designing buildings for my architecture degree. When I discovered product design, I fell in love with its iterative nature and human impact. Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers buy groceries online daily. When I&apos;m not designing, I&apos;m climbing! Check out{' '}
                       <a
