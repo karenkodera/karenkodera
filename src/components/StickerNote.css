@@ -1,29 +1,30 @@
 .sticker-note {
   position: fixed;
-  top: 88px;
+  top: 84px;
   right: var(--home-inset, 40px);
   z-index: 125;
-  width: 210px;
-  padding: 18px 14px 14px;
+  width: 268px;
+  padding: 22px 18px 18px;
   background: #fffef8;
   border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 2px;
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 10px 28px rgba(0, 0, 0, 0.1),
+    0 12px 32px rgba(0, 0, 0, 0.11),
     0 2px 6px rgba(0, 0, 0, 0.06);
   transform: rotate(2.5deg);
   pointer-events: auto;
+  overflow: visible;
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
 .sticker-note::before {
   content: '';
   position: absolute;
-  top: -10px;
+  top: -12px;
   left: 50%;
-  width: 64px;
-  height: 20px;
+  width: 78px;
+  height: 22px;
   transform: translateX(-50%) rotate(-2deg);
   background: rgba(255, 236, 150, 0.72);
   border-radius: 2px;
@@ -37,9 +38,9 @@
 }
 
 .sticker-note-title {
-  margin: 0 0 12px;
+  margin: 0 0 14px;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: 0.72rem;
+  font-size: 0.78rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-transform: lowercase;
@@ -50,7 +51,7 @@
 .sticker-note-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
+  gap: 10px;
 }
 
 .sticker-note-cell {
@@ -68,6 +69,7 @@
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  overflow: visible;
 }
 
 .sticker-note-cell:focus-visible {
@@ -86,7 +88,7 @@
 
 .sticker-note-reset-label {
   font-family: 'Press Start 2P', 'Courier New', monospace;
-  font-size: 0.42rem;
+  font-size: 0.48rem;
   font-weight: 400;
   letter-spacing: 0.02em;
   line-height: 1.2;
@@ -99,10 +101,10 @@
 /* Gray residue under the sticker on the pad */
 .sticker-pad-glue {
   position: absolute;
-  inset: 14%;
+  inset: 18%;
   border-radius: 42% 48% 45% 50% / 48% 42% 52% 46%;
-  background: #d8d5ce;
-  opacity: 0.55;
+  background: #d0cdc6;
+  opacity: 0.7;
   z-index: 0;
 }
 
@@ -113,32 +115,59 @@
   height: 100%;
   display: grid;
   place-items: center;
-  transform-origin: 0% 0%;
-  transition: transform 0.22s cubic-bezier(0.25, 0.1, 0.25, 1);
+  transform-origin: 12% 12%;
+  transform-style: preserve-3d;
+  transition: transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
   will-change: transform;
+}
+
+/* Folded corner flap cue */
+.sticker-peel-flap {
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  width: 28%;
+  height: 28%;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0 48%, transparent 50%);
+  clip-path: polygon(0 0, 100% 0, 0 100%);
+  transform-origin: 0 0;
+  opacity: 0;
+  transform: rotate(0deg) scale(0.4);
+  transition:
+    opacity 0.22s ease,
+    transform 0.28s cubic-bezier(0.22, 0.61, 0.36, 1);
+  filter: drop-shadow(1px 1px 0 rgba(0, 0, 0, 0.08));
 }
 
 /* Hover: peel top-left corner up */
 .sticker-note-cell:hover .sticker-peel:not(.sticker-peel--off),
 .sticker-note-cell:focus-visible .sticker-peel:not(.sticker-peel--off) {
   transform:
-    perspective(160px)
-    rotateX(14deg)
-    rotateY(-22deg)
-    translate3d(-3px, -4px, 8px);
-  filter: drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.12));
+    perspective(220px)
+    rotateX(18deg)
+    rotateY(-28deg)
+    translate3d(-4px, -6px, 14px);
+  filter: drop-shadow(3px 5px 3px rgba(0, 0, 0, 0.16));
+}
+
+.sticker-note-cell:hover .sticker-peel:not(.sticker-peel--off) .sticker-peel-flap,
+.sticker-note-cell:focus-visible .sticker-peel:not(.sticker-peel--off) .sticker-peel-flap {
+  opacity: 1;
+  transform: rotate(-18deg) scale(1) translate(-2px, -2px);
 }
 
 .sticker-note-cell--lifting .sticker-peel,
 .sticker-peel--off {
   opacity: 0;
   transform:
-    perspective(160px)
-    rotateX(28deg)
-    rotateY(-40deg)
-    translate3d(-10px, -14px, 20px)
-    scale(1.05);
-  transition: transform 0.2s ease, opacity 0.16s ease;
+    perspective(220px)
+    rotateX(32deg)
+    rotateY(-48deg)
+    translate3d(-14px, -18px, 28px)
+    scale(1.08);
+  transition: transform 0.2s ease, opacity 0.14s ease;
   pointer-events: none;
 }
 
@@ -156,7 +185,7 @@
   width: 100%;
   height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.06));
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
 }
 
 .sticker-diecut-fill {
@@ -165,16 +194,17 @@
 
 .sticker-diecut-stroke {
   fill: none;
-  stroke: #cfcbc3;
-  stroke-width: 1.35;
+  stroke: #d5d1c9;
+  stroke-width: 0.7;
   stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 
 .sticker-face-art {
   position: relative;
   z-index: 1;
-  width: 58%;
-  height: 58%;
+  width: 68%;
+  height: 68%;
   display: block;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
@@ -187,6 +217,11 @@
   height: 100%;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
+}
+
+.sticker-art--tilt45 {
+  transform: rotate(-45deg) scale(0.92);
+  transform-origin: center;
 }
 
 .sticker-layer {
@@ -203,8 +238,8 @@
 
 .sticker-placed {
   position: absolute;
-  width: clamp(56px, 6.2vw, 84px);
-  height: clamp(56px, 6.2vw, 84px);
+  width: clamp(72px, 7.5vw, 104px);
+  height: clamp(72px, 7.5vw, 104px);
   filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.14));
   pointer-events: none;
 }
@@ -212,8 +247,8 @@
 .sticker-drag {
   position: fixed;
   z-index: 200;
-  width: clamp(56px, 6.2vw, 84px);
-  height: clamp(56px, 6.2vw, 84px);
+  width: clamp(72px, 7.5vw, 104px);
+  height: clamp(72px, 7.5vw, 104px);
   transform: translate(-50%, -50%);
   pointer-events: none;
   filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
@@ -242,11 +277,11 @@
   .sticker-note {
     top: 72px;
     right: 16px;
-    width: 160px;
-    padding: 14px 12px 12px;
+    width: 196px;
+    padding: 16px 14px 14px;
   }
 
   .sticker-note-reset-label {
-    font-size: 0.36rem;
+    font-size: 0.4rem;
   }
 }
