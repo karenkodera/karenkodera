@@ -4,6 +4,7 @@ import Hero, { CONTACT_LINKS, RESUME_URL } from '../components/Hero';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
+import StickerNote from '../components/StickerNote';
 import { WORK_PROJECTS } from '../data/workProjects';
 import { scrollHomeTo } from '../utils/scrollHome';
 import './About.css';
@@ -249,6 +250,11 @@ const Home = ({ setCursorVariant }) => {
       </div>
 
       <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
+
+      <StickerNote
+        setCursorVariant={setCursorVariant}
+        visible={scrollEdge === 'start'}
+      />
 
       <div className="home-scroller" id="home-scroller" ref={scrollerRef}>
         <section className="home-slide home-slide-hero" id="home">

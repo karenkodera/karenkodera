@@ -1,0 +1,147 @@
+.sticker-note {
+  position: fixed;
+  top: 88px;
+  right: var(--home-inset, 40px);
+  z-index: 125;
+  width: 168px;
+  padding: 14px 12px 12px;
+  background: #fffef8;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 2px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 10px 28px rgba(0, 0, 0, 0.1),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+  transform: rotate(2.5deg);
+  pointer-events: auto;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.sticker-note::before {
+  content: '';
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  width: 54px;
+  height: 18px;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(255, 236, 150, 0.72);
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+}
+
+.sticker-note--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(2.5deg) translateY(-8px);
+}
+
+.sticker-note-title {
+  margin: 0 0 10px;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8a867c;
+  text-align: center;
+}
+
+.sticker-note-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.sticker-note-cell {
+  appearance: none;
+  border: 1px dashed rgba(0, 0, 0, 0.1);
+  background: #f7f5ef;
+  border-radius: 4px;
+  aspect-ratio: 1;
+  padding: 6px;
+  margin: 0;
+  cursor: none;
+  display: grid;
+  place-items: center;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.sticker-note-cell:hover,
+.sticker-note-cell:focus-visible {
+  background: #fff;
+  border-color: rgba(0, 0, 0, 0.22);
+  transform: scale(1.06);
+  outline: none;
+}
+
+.sticker-note-cell--reset {
+  background: #f3ece8;
+}
+
+.sticker-note-cell--reset:hover,
+.sticker-note-cell--reset:focus-visible {
+  background: #ffe8e2;
+  border-color: rgba(192, 57, 43, 0.35);
+}
+
+.sticker-note-glyph {
+  width: 100%;
+  height: 100%;
+  display: block;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.sticker-note-glyph svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.sticker-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.sticker-layer--hidden {
+  opacity: 0;
+}
+
+.sticker-placed {
+  position: absolute;
+  width: clamp(48px, 5.5vw, 72px);
+  height: clamp(48px, 5.5vw, 72px);
+  filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.12));
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.sticker-placed svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+@media (max-width: 768px) {
+  .sticker-note {
+    top: 72px;
+    right: 16px;
+    width: 132px;
+    padding: 12px 10px 10px;
+  }
+
+  .sticker-note-cell {
+    padding: 4px;
+  }
+}
