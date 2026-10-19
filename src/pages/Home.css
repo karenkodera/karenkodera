@@ -364,7 +364,7 @@
 .about-page-cards {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
-  align-items: start;
+  align-items: end;
   gap: 14px;
   width: 100%;
   max-width: 100%;
