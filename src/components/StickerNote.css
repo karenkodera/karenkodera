@@ -8,8 +8,8 @@
 
 .sticker-note {
   position: absolute;
-  top: 74px;
-  right: 58px;
+  top: 174px;
+  right: 158px;
   z-index: 6;
   width: 268px;
   padding: 22px 18px 18px;
@@ -91,15 +91,13 @@
 }
 
 .sticker-note-reset-label {
-  font-family: 'Press Start 2P', 'Courier New', monospace;
-  font-size: 0.48rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.2;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
   color: #9a9a9a;
   text-transform: lowercase;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
 }
 
 /* Gray residue under the sticker on the pad */
@@ -276,8 +274,8 @@
 
 @media (max-width: 768px) {
   .sticker-note {
-    top: 66px;
-    right: 50px;
+    top: 166px;
+    right: 150px;
     width: 196px;
     padding: 16px 14px 14px;
   }
@@ -289,6 +287,6 @@
   }
 
   .sticker-note-reset-label {
-    font-size: 0.4rem;
+    font-size: 0.75rem;
   }
 }
