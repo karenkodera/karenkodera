@@ -12,40 +12,20 @@ import {
 import './StickerNote.css';
 
 const STICKERS = [
-  { id: 'japan', label: 'Japan flag', Icon: StickerJapan, outline: 0 },
-  { id: 'sushi', label: 'Salmon nigiri', Icon: StickerSushi, outline: 1 },
-  { id: 'needle', label: 'Sewing needle and thread', Icon: StickerNeedle, outline: 2 },
-  { id: 'cat', label: 'Cat', Icon: StickerCat, outline: 0 },
-  { id: 'climber', label: 'Climber', Icon: StickerClimber, outline: 1 },
-  { id: 'liberty', label: 'Statue of Liberty', Icon: StickerLiberty, outline: 2 },
-  { id: 'mountain', label: 'Mountain', Icon: StickerMountain, outline: 0 },
-  { id: 'note', label: 'Music note', Icon: StickerMusicNote, outline: 1 },
+  { id: 'japan', label: 'Japan flag', Icon: StickerJapan },
+  { id: 'sushi', label: 'Salmon nigiri', Icon: StickerSushi },
+  { id: 'needle', label: 'Sewing needle and thread', Icon: StickerNeedle },
+  { id: 'cat', label: 'Cat', Icon: StickerCat },
+  { id: 'climber', label: 'Climber', Icon: StickerClimber },
+  { id: 'liberty', label: 'Statue of Liberty', Icon: StickerLiberty },
+  { id: 'mountain', label: 'Mountain', Icon: StickerMountain },
+  { id: 'note', label: 'Music note', Icon: StickerMusicNote },
 ];
 
-/** Tighter die-cut outlines hugging the sticker (viewBox 0 0 40 40) */
-const OUTLINES = [
-  'M11 7 C15 5 25 5 29 8 C33 11 34 17 32 23 C30 29 24 33 18 33 C12 33 7 28 7 21 C7 14 8 9 11 7 Z',
-  'M12 8 C17 5 27 6 31 11 C34 15 33 24 28 29 C22 33 13 32 9 26 C6 21 7 12 12 8 Z',
-  'M10 9 C14 5 26 5 30 10 C34 15 33 25 27 30 C20 34 10 31 8 23 C7 16 8 11 10 9 Z',
-];
-
-function DieCutBacking({ outline = 0 }) {
-  const d = OUTLINES[outline] || OUTLINES[0];
-  return (
-    <svg className="sticker-diecut" viewBox="0 0 40 40" aria-hidden="true">
-      <path d={d} className="sticker-diecut-fill" />
-      <path d={d} className="sticker-diecut-stroke" />
-    </svg>
-  );
-}
-
-function StickerFace({ Icon, outline, label }) {
+function StickerFace({ Icon, label }) {
   return (
     <span className="sticker-face">
-      <DieCutBacking outline={outline} />
-      <span className="sticker-face-art">
-        <Icon label={label} />
-      </span>
+      <Icon label={label} />
     </span>
   );
 }
@@ -167,11 +147,7 @@ const StickerNote = ({ setCursorVariant }) => {
                 transform: `translate(-50%, -50%) rotate(${item.rotate}deg) scale(${item.scale})`,
               }}
             >
-              <StickerFace
-                Icon={sticker.Icon}
-                outline={sticker.outline}
-                label={sticker.label}
-              />
+              <StickerFace Icon={sticker.Icon} label={sticker.label} />
             </div>
           );
         })}
@@ -186,11 +162,7 @@ const StickerNote = ({ setCursorVariant }) => {
           }}
           aria-hidden
         >
-          <StickerFace
-            Icon={dragSticker.Icon}
-            outline={dragSticker.outline}
-            label={dragSticker.label}
-          />
+          <StickerFace Icon={dragSticker.Icon} label={dragSticker.label} />
         </div>
       )}
 
@@ -200,7 +172,7 @@ const StickerNote = ({ setCursorVariant }) => {
         </p>
         <div className="sticker-note-grid" role="group" aria-label="Choose a sticker">
           {STICKERS.map((sticker) => {
-            const { id, label, Icon, outline } = sticker;
+            const { id, label, Icon } = sticker;
             const isPeeling = peelingId === id && dragging;
             return (
               <button
@@ -216,7 +188,7 @@ const StickerNote = ({ setCursorVariant }) => {
               >
                 <span className="sticker-pad-glue" aria-hidden />
                 <span className={`sticker-peel${isPeeling ? ' sticker-peel--off' : ''}`}>
-                  <StickerFace Icon={Icon} outline={outline} label={label} />
+                  <StickerFace Icon={Icon} label={label} />
                   <span className="sticker-peel-flap" aria-hidden />
                 </span>
               </button>

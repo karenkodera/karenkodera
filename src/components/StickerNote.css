@@ -8,8 +8,8 @@
 
 .sticker-note {
   position: absolute;
-  top: 24px;
-  right: 8px;
+  top: 74px;
+  right: 58px;
   z-index: 6;
   width: 268px;
   padding: 22px 18px 18px;
@@ -174,45 +174,14 @@
 
 .sticker-face {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 88%;
+  height: 88%;
   display: grid;
   place-items: center;
+  filter: none;
 }
 
-.sticker-diecut {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  overflow: visible;
-  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05));
-}
-
-.sticker-diecut-fill {
-  fill: #ffffff;
-}
-
-.sticker-diecut-stroke {
-  fill: none;
-  stroke: #d5d1c9;
-  stroke-width: 0.7;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
-}
-
-.sticker-face-art {
-  position: relative;
-  z-index: 1;
-  width: 68%;
-  height: 68%;
-  display: block;
-  image-rendering: pixelated;
-  image-rendering: crisp-edges;
-  pointer-events: none;
-}
-
-.sticker-face-art svg {
+.sticker-face svg {
   display: block;
   width: 100%;
   height: 100%;
@@ -237,7 +206,7 @@
   position: absolute;
   width: clamp(72px, 7.5vw, 104px);
   height: clamp(72px, 7.5vw, 104px);
-  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.14));
+  filter: none;
   pointer-events: none;
 }
 
@@ -248,7 +217,7 @@
   height: clamp(72px, 7.5vw, 104px);
   transform: translate(-50%, -50%);
   pointer-events: none;
-  filter: drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18));
+  filter: none;
 }
 
 .sticker-drag--peeling {
@@ -272,8 +241,8 @@
 
 @media (max-width: 768px) {
   .sticker-note {
-    top: 16px;
-    right: 0;
+    top: 66px;
+    right: 50px;
     width: 196px;
     padding: 16px 14px 14px;
   }
