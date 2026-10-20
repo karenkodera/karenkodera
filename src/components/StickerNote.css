@@ -25,7 +25,6 @@
   overflow: visible;
 }
 
-/* Keep the clearer translucent tape */
 .sticker-note::before {
   content: '';
   position: absolute;
@@ -100,25 +99,7 @@
   text-transform: lowercase;
 }
 
-/* Gray residue under the sticker on the pad */
-.sticker-pad-glue {
-  position: absolute;
-  inset: 18%;
-  border-radius: 42% 48% 45% 50% / 48% 42% 52% 46%;
-  background: #d0cdc6;
-  opacity: 0;
-  z-index: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease;
-}
-
-.sticker-note-cell--peel-2 .sticker-pad-glue,
-.sticker-note-cell--peel-3 .sticker-pad-glue,
-.sticker-note-cell--gone .sticker-pad-glue {
-  opacity: 0.7;
-}
-
-.sticker-frames {
+.sticker-peel {
   position: relative;
   z-index: 1;
   display: block;
@@ -126,92 +107,65 @@
   height: 100%;
 }
 
-.sticker-frame {
+.sticker-peel img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  opacity: 0;
-  transform: translate3d(0, 0, 0) rotate(0deg) scale(1);
-  transition:
-    opacity 0.11s ease,
-    transform 0.14s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.14s ease;
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-  will-change: opacity, transform;
 }
 
-/* Flat: regular only */
-.sticker-frames--flat .sticker-frame--regular {
-  opacity: 1;
-  transform: translate3d(0, 0, 0) rotate(0deg);
-}
-
-/* Hover: slight peel — keep size constant */
-.sticker-frames--hover .sticker-frame--regular {
-  opacity: 0.2;
-  transform: translate3d(-1px, 1px, 0) rotate(-2deg);
-}
-
-.sticker-frames--hover .sticker-frame--slight {
-  opacity: 1;
-  transform: translate3d(1px, -2px, 0) rotate(3deg);
-}
-
-/* Peel stage 1 */
-.sticker-frames--peel-1 .sticker-frame--slight {
-  opacity: 1;
-  transform: translate3d(2px, -4px, 0) rotate(5deg);
-}
-
-.sticker-frames--peel-1 .sticker-frame--mid-a {
-  opacity: 0.45;
-  transform: translate3d(3px, -5px, 0) rotate(7deg);
-}
-
-/* Peel stage 2: mid blend */
-.sticker-frames--peel-2 .sticker-frame--slight {
-  opacity: 0.35;
-  transform: translate3d(3px, -5px, 0) rotate(8deg);
-}
-
-.sticker-frames--peel-2 .sticker-frame--mid-a {
+.sticker-peel-residue {
+  filter: brightness(0) invert(0.72);
   opacity: 0.55;
-  transform: translate3d(4px, -6px, 0) rotate(10deg);
 }
 
-.sticker-frames--peel-2 .sticker-frame--mid-b {
-  opacity: 0.65;
-  transform: translate3d(4px, -7px, 0) rotate(12deg);
+.sticker-peel-front,
+.sticker-peel-shade,
+.sticker-peel-flap,
+.sticker-peel-back-wrap {
+  position: absolute;
+  inset: 0;
 }
 
-.sticker-frames--peel-2 .sticker-frame--peeled {
-  opacity: 0.4;
-  transform: translate3d(5px, -8px, 0) rotate(14deg);
+.sticker-peel-front {
+  z-index: 1;
 }
 
-/* Peel stage 3: full peel */
-.sticker-frames--peel-3 .sticker-frame--peeled {
-  opacity: 1;
-  transform: translate3d(6px, -10px, 0) rotate(16deg);
-  filter: drop-shadow(0 8px 10px rgba(40, 28, 10, 0.18));
+.sticker-peel-shade {
+  z-index: 2;
+  pointer-events: none;
 }
 
-.sticker-frames--peel-3 .sticker-frame--mid-b {
-  opacity: 0.25;
-  transform: translate3d(5px, -9px, 0) rotate(14deg);
+.sticker-peel-flap {
+  visibility: hidden;
+  overflow: visible;
 }
 
-.sticker-note-cell--gone .sticker-frames {
-  opacity: 0;
-  transition: opacity 0.12s ease;
+.sticker-peel-back-wrap {
+  transform-origin: 0 0;
 }
 
-.sticker-note-cell--gone .sticker-pad-glue {
-  opacity: 0.55;
+.sticker-peel-back {
+  filter: brightness(0) invert(0.94);
+}
+
+.sticker-peel-crease {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  -webkit-mask-image: var(--sticker);
+  mask-image: var(--sticker);
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  mask-position: center;
 }
 
 .sticker-layer {
@@ -222,17 +176,17 @@
   overflow: visible;
 }
 
-/* Match pad cell size (~70px on the 268px note) so peel/drag don't grow */
 .sticker-placed {
   position: absolute;
   width: 70px;
   height: 70px;
   pointer-events: none;
   filter: drop-shadow(0 3px 5px rgba(40, 28, 10, 0.18));
-  animation: sticker-settle 0.38s cubic-bezier(0.22, 1.2, 0.36, 1) both;
+  animation: sticker-settle 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.sticker-placed img {
+.sticker-placed img,
+.sticker-drag img {
   width: 100%;
   height: 100%;
   object-fit: contain;
@@ -243,12 +197,10 @@
 
 @keyframes sticker-settle {
   from {
-    opacity: 0.55;
-    filter: drop-shadow(0 10px 14px rgba(40, 28, 10, 0.22));
+    opacity: 0.7;
   }
   to {
     opacity: 1;
-    filter: drop-shadow(0 3px 5px rgba(40, 28, 10, 0.18));
   }
 }
 
@@ -257,19 +209,8 @@
   z-index: 200;
   width: 70px;
   height: 70px;
-  transform: translate(-50%, -50%);
   pointer-events: none;
   filter: drop-shadow(0 8px 12px rgba(40, 28, 10, 0.22));
-  transition: transform 0.12s ease, filter 0.2s ease;
-}
-
-.sticker-drag--ready {
-  transform: translate(-50%, -50%) rotate(-8deg);
-}
-
-.sticker-drag .sticker-frames {
-  width: 100%;
-  height: 100%;
 }
 
 @media (max-width: 768px) {
@@ -278,12 +219,6 @@
     right: 150px;
     width: 196px;
     padding: 16px 14px 14px;
-  }
-
-  .sticker-drag,
-  .sticker-placed {
-    width: 50px;
-    height: 50px;
   }
 
   .sticker-note-reset-label {
