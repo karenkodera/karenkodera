@@ -209,7 +209,8 @@
   width: 70px;
   height: 70px;
   pointer-events: none;
-  filter: drop-shadow(0 8px 12px rgba(40, 28, 10, 0.22));
+  filter: none;
+  box-shadow: none;
 }
 
 @media (max-width: 768px) {

@@ -50,6 +50,9 @@ function easeOut(t) {
   return 1 - (1 - t) ** 3;
 }
 
+// Survives a remount so grabbing the next sticker cannot wipe the ones already down.
+let rememberedStickers = [];
+
 function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeEnd }) {
   const peelRef = useRef(null);
   const frontRef = useRef(null);
@@ -227,9 +230,9 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
     };
 
     const onUp = (e) => {
-      window.removeEventListener('pointermove', onMove);
-      window.removeEventListener('pointerup', onUp);
-      window.removeEventListener('pointercancel', onUp);
+      window.removeEventListener('pointermove', onMove, true);
+      window.removeEventListener('pointerup', onUp, true);
+      window.removeEventListener('pointercancel', onUp, true);
       if (frame) cancelAnimationFrame(frame);
       if (pending) applyMove(pending);
       rustle.stop();
@@ -252,9 +255,9 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
       setCursorVariant?.('default');
     };
 
-    window.addEventListener('pointermove', onMove);
-    window.addEventListener('pointerup', onUp);
-    window.addEventListener('pointercancel', onUp);
+    window.addEventListener('pointermove', onMove, true);
+    window.addEventListener('pointerup', onUp, true);
+    window.addEventListener('pointercancel', onUp, true);
   };
 
   return (
@@ -337,6 +340,8 @@ function PlacedSticker({ item, rootRef, sessionRef, setCursorVariant, onMove }) 
         transform: `translate(-50%, -50%) rotate(${item.rotate}deg)`,
         filter: 'none',
         boxShadow: 'none',
+        pointerEvents: item.held ? 'none' : 'auto',
+        zIndex: item.held ? 5 : 1,
       }}
       onPointerDown={onPointerDown}
       onMouseEnter={() => {
@@ -355,19 +360,20 @@ const StickerNote = ({ setCursorVariant }) => {
   const rootRef = useRef(null);
   const noteRef = useRef(null);
   const sessionRef = useRef(null);
-  const placedRef = useRef([]);
-  const [placed, setPlaced] = useState([]);
-  const [ghost, setGhost] = useState(null);
+  const carryKeyRef = useRef(null);
+  const placedRef = useRef(rememberedStickers);
+  const [placed, setPlaced] = useState(rememberedStickers);
 
   const commitPlaced = (next) => {
+    rememberedStickers = next;
     placedRef.current = next;
     setPlaced(next);
   };
 
   const resetStickers = () => {
     sessionRef.current = null;
+    carryKeyRef.current = null;
     commitPlaced([]);
-    setGhost(null);
   };
 
   const toLocalPoint = (clientX, clientY) => {
@@ -398,16 +404,6 @@ const StickerNote = ({ setCursorVariant }) => {
         ))}
       </div>
 
-      {ghost && (
-        <div
-          className="sticker-drag sticker-drag--ready"
-          style={{ left: ghost.x, top: ghost.y, width: ghost.size, height: ghost.size, transform: `translate(-50%, -50%) rotate(${ghost.rot}deg)` }}
-          aria-hidden
-        >
-          <img src={ghost.src} alt="" draggable={false} />
-        </div>
-      )}
-
       <aside className="sticker-note" ref={noteRef} aria-label="Sticker pad">
         <div className="sticker-note-grid" role="group" aria-label="Choose a sticker">
           {STICKERS.map((sticker) => (
@@ -418,22 +414,40 @@ const StickerNote = ({ setCursorVariant }) => {
               sessionRef={sessionRef}
               onFreeMove={(info) => {
                 if (sessionRef.current !== sticker.id) return;
-                setGhost(info);
-              }}
-              onFreeEnd={(info) => {
-                setGhost(null);
                 const local = toLocalPoint(info.x, info.y);
-                commitPlaced([
-                  ...placedRef.current,
-                  {
-                    key: `${info.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-                    src: info.src,
-                    x: local.x,
-                    y: local.y,
-                    rotate: info.rot,
-                    size: info.size,
-                  },
-                ]);
+                const existing = carryKeyRef.current;
+                if (!existing) {
+                  const key = `${info.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+                  carryKeyRef.current = key;
+                  commitPlaced([
+                    ...placedRef.current,
+                    {
+                      key,
+                      src: info.src,
+                      x: local.x,
+                      y: local.y,
+                      rotate: info.rot,
+                      size: info.size,
+                      held: true,
+                    },
+                  ]);
+                  return;
+                }
+                commitPlaced(
+                  placedRef.current.map((item) =>
+                    item.key === existing ? { ...item, x: local.x, y: local.y } : item
+                  )
+                );
+              }}
+              onFreeEnd={() => {
+                const key = carryKeyRef.current;
+                carryKeyRef.current = null;
+                if (!key) return;
+                commitPlaced(
+                  placedRef.current.map((item) =>
+                    item.key === key ? { ...item, held: false } : item
+                  )
+                );
               }}
             />
           ))}

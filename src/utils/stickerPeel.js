@@ -196,12 +196,7 @@ export function paintPeel(els, { bb, corner, dir, amount }) {
   flap.style.webkitClipPath = flapPath;
   flap.style.visibility = 'visible';
 
-  const reach = maxPeelLength(bb, size);
-  const k = Math.min(1, amount / Math.max(1, reach));
-  const shadow = 1 + k * 3;
-  const blur = 1.2 + k * k * 6;
-  const alpha = 0.22 - k * 0.08;
-  shade.style.filter = `drop-shadow(${(normal[0] * shadow).toFixed(1)}px ${(normal[1] * shadow + 1).toFixed(1)}px ${blur.toFixed(1)}px rgba(40, 28, 10, ${alpha.toFixed(3)}))`;
+  shade.style.filter = 'none';
 
   const matrix = reflectionMatrix(fold, normal);
   backWrap.style.transform = matrix;
