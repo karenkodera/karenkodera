@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import {
   HOVER_PEEL,
   PRESS_PEEL,
@@ -50,7 +50,7 @@ function easeOut(t) {
   return 1 - (1 - t) ** 3;
 }
 
-function PadSticker({ sticker, setCursorVariant, onFreeMove, onFreeEnd }) {
+function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeEnd }) {
   const peelRef = useRef(null);
   const frontRef = useRef(null);
   const flapRef = useRef(null);
@@ -122,6 +122,7 @@ function PadSticker({ sticker, setCursorVariant, onFreeMove, onFreeEnd }) {
   };
 
   const onPointerEnter = (event) => {
+    if (sessionRef.current) return;
     if (event.pointerType !== 'mouse' || event.currentTarget.hasPointerCapture?.(event.pointerId)) return;
     aimAt(event.clientX, event.clientY);
     const box = peelRef.current;
@@ -132,15 +133,18 @@ function PadSticker({ sticker, setCursorVariant, onFreeMove, onFreeEnd }) {
   };
 
   const onPointerLeave = (event) => {
+    if (sessionRef.current) return;
     if (event.currentTarget.hasPointerCapture?.(event.pointerId)) return;
     animateAmount(0, 320);
     setCursorVariant?.('default');
   };
 
   const onPointerDown = (event) => {
+    if (sessionRef.current) return;
     if (event.button != null && event.button !== 0) return;
     event.preventDefault();
     event.currentTarget.setPointerCapture?.(event.pointerId);
+    sessionRef.current = sticker.id;
     setCursorVariant?.('hover');
 
     const box = peelRef.current;
@@ -223,12 +227,16 @@ function PadSticker({ sticker, setCursorVariant, onFreeMove, onFreeEnd }) {
     };
 
     const onUp = (e) => {
-      event.currentTarget.removeEventListener('pointermove', onMove);
-      event.currentTarget.removeEventListener('pointerup', onUp);
-      event.currentTarget.removeEventListener('pointercancel', onUp);
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
       if (frame) cancelAnimationFrame(frame);
       if (pending) applyMove(pending);
       rustle.stop();
+      sessionRef.current = null;
+      if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId);
+      }
       if (freed) {
         onFreeEnd?.({
           id: sticker.id,
@@ -244,9 +252,9 @@ function PadSticker({ sticker, setCursorVariant, onFreeMove, onFreeEnd }) {
       setCursorVariant?.('default');
     };
 
-    event.currentTarget.addEventListener('pointermove', onMove);
-    event.currentTarget.addEventListener('pointerup', onUp);
-    event.currentTarget.addEventListener('pointercancel', onUp);
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
   };
 
   return (
@@ -281,9 +289,9 @@ function PadSticker({ sticker, setCursorVariant, onFreeMove, onFreeEnd }) {
 }
 
 const StickerNote = ({ setCursorVariant }) => {
-  const noteId = useId();
   const rootRef = useRef(null);
   const noteRef = useRef(null);
+  const sessionRef = useRef(null);
   const [placed, setPlaced] = useState([]);
   const [ghost, setGhost] = useState(null);
 
@@ -342,17 +350,18 @@ const StickerNote = ({ setCursorVariant }) => {
         </div>
       )}
 
-      <aside className="sticker-note" ref={noteRef} aria-label="Sticker pad" aria-labelledby={noteId}>
-        <p className="sticker-note-title" id={noteId}>
-          peel to decorate
-        </p>
+      <aside className="sticker-note" ref={noteRef} aria-label="Sticker pad">
         <div className="sticker-note-grid" role="group" aria-label="Choose a sticker">
           {STICKERS.map((sticker) => (
             <PadSticker
               key={sticker.id}
               sticker={sticker}
               setCursorVariant={setCursorVariant}
-              onFreeMove={(info) => setGhost(info)}
+              sessionRef={sessionRef}
+              onFreeMove={(info) => {
+                if (sessionRef.current !== sticker.id) return;
+                setGhost(info);
+              }}
               onFreeEnd={(info) => {
                 setGhost(null);
                 if (overNote(info.x, info.y)) return;
