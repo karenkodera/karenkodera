@@ -288,15 +288,85 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
   );
 }
 
+function PlacedSticker({ item, rootRef, sessionRef, setCursorVariant, onMove }) {
+  const onPointerDown = (event) => {
+    if (sessionRef.current) return;
+    if (event.button != null && event.button !== 0) return;
+    event.preventDefault();
+    event.stopPropagation();
+    sessionRef.current = item.key;
+    setCursorVariant?.('hover');
+
+    const root = rootRef.current;
+    const rect = root?.getBoundingClientRect();
+    const originX = rect ? event.clientX - rect.left : event.clientX;
+    const originY = rect ? event.clientY - rect.top : event.clientY;
+    const grabX = originX - item.x;
+    const grabY = originY - item.y;
+
+    const move = (e) => {
+      const box = rootRef.current?.getBoundingClientRect();
+      if (!box) return;
+      onMove(item.key, {
+        x: e.clientX - box.left - grabX,
+        y: e.clientY - box.top - grabY,
+      });
+    };
+
+    const up = () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', up);
+      window.removeEventListener('pointercancel', up);
+      sessionRef.current = null;
+      setCursorVariant?.('default');
+    };
+
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', up);
+    window.addEventListener('pointercancel', up);
+  };
+
+  return (
+    <div
+      className="sticker-placed"
+      style={{
+        left: item.x,
+        top: item.y,
+        width: item.size,
+        height: item.size,
+        transform: `translate(-50%, -50%) rotate(${item.rotate}deg)`,
+        filter: 'none',
+        boxShadow: 'none',
+      }}
+      onPointerDown={onPointerDown}
+      onMouseEnter={() => {
+        if (!sessionRef.current) setCursorVariant?.('hover');
+      }}
+      onMouseLeave={() => {
+        if (!sessionRef.current) setCursorVariant?.('default');
+      }}
+    >
+      <img src={item.src} alt="" draggable={false} />
+    </div>
+  );
+}
+
 const StickerNote = ({ setCursorVariant }) => {
   const rootRef = useRef(null);
   const noteRef = useRef(null);
   const sessionRef = useRef(null);
+  const placedRef = useRef([]);
   const [placed, setPlaced] = useState([]);
   const [ghost, setGhost] = useState(null);
 
+  const commitPlaced = (next) => {
+    placedRef.current = next;
+    setPlaced(next);
+  };
+
   const resetStickers = () => {
-    setPlaced([]);
+    sessionRef.current = null;
+    commitPlaced([]);
     setGhost(null);
   };
 
@@ -307,36 +377,24 @@ const StickerNote = ({ setCursorVariant }) => {
     return { x: clientX - rect.left, y: clientY - rect.top };
   };
 
-  const overNote = (clientX, clientY) => {
-    const note = noteRef.current;
-    if (!note) return false;
-    const rect = note.getBoundingClientRect();
-    const pad = 12;
-    return (
-      clientX >= rect.left - pad &&
-      clientX <= rect.right + pad &&
-      clientY >= rect.top - pad &&
-      clientY <= rect.bottom + pad
-    );
-  };
-
   return (
     <div className="sticker-note-root" ref={rootRef}>
-      <div className="sticker-layer" aria-hidden>
+      <div className="sticker-layer">
         {placed.map((item) => (
-          <div
+          <PlacedSticker
             key={item.key}
-            className="sticker-placed"
-            style={{
-              left: item.x,
-              top: item.y,
-              width: item.size,
-              height: item.size,
-              transform: `translate(-50%, -50%) rotate(${item.rotate}deg)`,
+            item={item}
+            rootRef={rootRef}
+            sessionRef={sessionRef}
+            setCursorVariant={setCursorVariant}
+            onMove={(key, pos) => {
+              commitPlaced(
+                placedRef.current.map((sticker) =>
+                  sticker.key === key ? { ...sticker, ...pos } : sticker
+                )
+              );
             }}
-          >
-            <img src={item.src} alt="" draggable={false} />
-          </div>
+          />
         ))}
       </div>
 
@@ -364,10 +422,9 @@ const StickerNote = ({ setCursorVariant }) => {
               }}
               onFreeEnd={(info) => {
                 setGhost(null);
-                if (overNote(info.x, info.y)) return;
                 const local = toLocalPoint(info.x, info.y);
-                setPlaced((prev) => [
-                  ...prev,
+                commitPlaced([
+                  ...placedRef.current,
                   {
                     key: `${info.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
                     src: info.src,

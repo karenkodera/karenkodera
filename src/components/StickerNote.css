@@ -169,8 +169,10 @@
   position: absolute;
   width: 70px;
   height: 70px;
-  pointer-events: none;
+  pointer-events: auto;
+  cursor: none;
   filter: none;
+  box-shadow: none;
   animation: sticker-settle 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
@@ -182,6 +184,14 @@
   display: block;
   user-select: none;
   -webkit-user-drag: none;
+  filter: none;
+  box-shadow: none;
+}
+
+.sticker-placed,
+.sticker-placed img {
+  filter: none;
+  box-shadow: none;
 }
 
 @keyframes sticker-settle {
