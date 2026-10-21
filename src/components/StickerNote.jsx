@@ -146,7 +146,14 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
     if (sessionRef.current) return;
     if (event.button != null && event.button !== 0) return;
     event.preventDefault();
-    event.currentTarget.setPointerCapture?.(event.pointerId);
+    // React nulls currentTarget after the handler returns; keep our own handles.
+    const target = event.currentTarget;
+    const pointerId = event.pointerId;
+    try {
+      target.setPointerCapture?.(pointerId);
+    } catch {
+      /* capture is a nicety, not required */
+    }
     sessionRef.current = sticker.id;
     setCursorVariant?.('hover');
 
@@ -234,12 +241,20 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
       window.removeEventListener('pointerup', onUp, true);
       window.removeEventListener('pointercancel', onUp, true);
       if (frame) cancelAnimationFrame(frame);
-      if (pending) applyMove(pending);
-      rustle.stop();
-      sessionRef.current = null;
-      if (event.currentTarget.hasPointerCapture?.(event.pointerId)) {
-        event.currentTarget.releasePointerCapture(event.pointerId);
+      try {
+        if (pending) applyMove(pending);
+      } catch {
+        /* never let a last move block the drop */
       }
+      rustle.stop();
+      try {
+        if (target.hasPointerCapture?.(pointerId)) {
+          target.releasePointerCapture(pointerId);
+        }
+      } catch {
+        /* pointer may already be gone */
+      }
+      sessionRef.current = null;
       if (freed) {
         onFreeEnd?.({
           id: sticker.id,
@@ -300,10 +315,12 @@ function PlacedSticker({ item, rootRef, sessionRef, setCursorVariant, onMove }) 
     sessionRef.current = item.key;
     setCursorVariant?.('hover');
 
+    const startX = event.clientX;
+    const startY = event.clientY;
     const root = rootRef.current;
     const rect = root?.getBoundingClientRect();
-    const originX = rect ? event.clientX - rect.left : event.clientX;
-    const originY = rect ? event.clientY - rect.top : event.clientY;
+    const originX = rect ? startX - rect.left : startX;
+    const originY = rect ? startY - rect.top : startY;
     const grabX = originX - item.x;
     const grabY = originY - item.y;
 
@@ -416,7 +433,9 @@ const StickerNote = ({ setCursorVariant }) => {
                 if (sessionRef.current !== sticker.id) return;
                 const local = toLocalPoint(info.x, info.y);
                 const existing = carryKeyRef.current;
-                if (!existing) {
+                const stillHeld =
+                  existing && placedRef.current.some((item) => item.key === existing && item.held);
+                if (!stillHeld) {
                   const key = `${info.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
                   carryKeyRef.current = key;
                   commitPlaced([
@@ -440,13 +459,10 @@ const StickerNote = ({ setCursorVariant }) => {
                 );
               }}
               onFreeEnd={() => {
-                const key = carryKeyRef.current;
                 carryKeyRef.current = null;
-                if (!key) return;
+                // Settle anything still flagged as held so it sticks and becomes grabbable.
                 commitPlaced(
-                  placedRef.current.map((item) =>
-                    item.key === key ? { ...item, held: false } : item
-                  )
+                  placedRef.current.map((item) => (item.held ? { ...item, held: false } : item))
                 );
               }}
             />
