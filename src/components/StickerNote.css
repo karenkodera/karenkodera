@@ -157,10 +157,11 @@
   mask-position: center;
 }
 
+/* Above the note (z 6) so a peeled sticker rides over the pad, not under it. */
 .sticker-layer {
   position: absolute;
   inset: 0;
-  z-index: 4;
+  z-index: 8;
   pointer-events: none;
   overflow: visible;
 }
