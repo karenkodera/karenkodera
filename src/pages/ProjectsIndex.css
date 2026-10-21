@@ -138,7 +138,7 @@
 }
 
 .play-row-item .play-card-content--cover-only:hover {
-  border-color: transparent;
+  border-color: #191919;
   background: #fafafa;
 }
 

@@ -252,7 +252,6 @@ function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false })
 const Play = ({ setCursorVariant }) => {
   const navigate = useNavigate();
   const [activeProject, setActiveProject] = useState(null);
-  const [hoveredId, setHoveredId] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -275,28 +274,19 @@ const Play = ({ setCursorVariant }) => {
       <div className="play-stage">
         <h1 className="play-stage-title">projects</h1>
         <div className="play-row" aria-label="Play projects">
-          {PLAY_PROJECTS.map((project, index) => {
-            const isHovered = hoveredId === project.id;
-            return (
+          {PLAY_PROJECTS.map((project, index) => (
               <motion.div
                 key={project.id}
                 className="play-row-item"
                 initial={{ opacity: 0, y: 20 }}
-                animate={{
-                  opacity: 1,
-                  y: isHovered ? -14 : 0,
-                  scale: isHovered ? 1.06 : 1,
-                  zIndex: isHovered ? 5 : 1,
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  ease: [0.25, 0.1, 0.25, 1],
+                  delay: index * 0.06,
                 }}
-                transition={{ type: 'spring', stiffness: 380, damping: 28 }}
-                onMouseEnter={() => {
-                  setHoveredId(project.id);
-                  setCursorVariant?.('project');
-                }}
-                onMouseLeave={() => {
-                  setHoveredId(null);
-                  setCursorVariant?.('default');
-                }}
+                onMouseEnter={() => setCursorVariant?.('project')}
+                onMouseLeave={() => setCursorVariant?.('default')}
               >
                 <PlayCard
                   project={project}
@@ -306,8 +296,7 @@ const Play = ({ setCursorVariant }) => {
                   stacked
                 />
               </motion.div>
-            );
-          })}
+          ))}
         </div>
       </div>
 
