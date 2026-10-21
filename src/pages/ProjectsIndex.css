@@ -95,16 +95,18 @@
   color: #191919;
 }
 
+/* Half-size play cards: cap the row at 50% and center it */
 .play-row {
   position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: stretch;
-  gap: clamp(14px, 1.8vw, 28px);
-  width: 100%;
+  justify-content: center;
+  gap: clamp(10px, 1.2vw, 18px);
+  width: 50%;
+  max-width: 50%;
   padding: 0;
-  margin: 0;
+  margin: 0 auto;
   box-sizing: border-box;
 }
 
@@ -164,6 +166,8 @@
   }
 
   .play-row {
-    gap: 12px;
+    gap: 8px;
+    width: 70%;
+    max-width: 70%;
   }
 }
