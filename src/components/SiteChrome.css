@@ -121,27 +121,25 @@
   right: 40px;
   z-index: 10000;
   display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 2px;
+  flex-direction: row;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  gap: 0;
   margin: 0;
   padding: 0;
   pointer-events: none;
   text-align: right;
+  white-space: nowrap;
   color: #191919;
   font-family: 'Skiper Display', 'Inter Tight', system-ui, sans-serif;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: -0.02em;
   line-height: 1.15;
   user-select: none;
 }
 
-.site-chrome-clock-place {
-  font-size: 0.8rem;
-}
-
 .site-chrome-clock-time {
-  font-size: 0.8rem;
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1;
 }
@@ -166,11 +164,6 @@ html[data-intro='1'] .site-chrome-clock {
   .site-chrome-clock {
     top: 16px;
     right: 16px;
-    font-size: 0.7rem;
-  }
-
-  .site-chrome-clock-place,
-  .site-chrome-clock-time {
-    font-size: 0.7rem;
+    font-size: 0.68rem;
   }
 }
