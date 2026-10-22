@@ -34,7 +34,9 @@ function buildWorkStream() {
 }
 
 const WORK_STREAM = buildWorkStream();
-const INTRO_SESSION_KEY = 'karenkodera-intro-done';
+
+/** Survives SPA remounts; resets on full page load so the intro plays again. */
+let introSeenThisLoad = false;
 
 const Home = ({ setCursorVariant }) => {
   const navigate = useNavigate();
@@ -42,21 +44,10 @@ const Home = ({ setCursorVariant }) => {
   const scrollerRef = useRef(null);
   const [protectedPath, setProtectedPath] = useState(null);
   const [scrollEdge, setScrollEdge] = useState('start'); // start | middle | end
-  const [introDone, setIntroDone] = useState(() => {
-    if (typeof window === 'undefined') return true;
-    try {
-      return sessionStorage.getItem(INTRO_SESSION_KEY) === '1';
-    } catch {
-      return false;
-    }
-  });
+  const [introDone, setIntroDone] = useState(() => introSeenThisLoad);
 
   const handleIntroComplete = useCallback(() => {
-    try {
-      sessionStorage.setItem(INTRO_SESSION_KEY, '1');
-    } catch {
-      /* ignore */
-    }
+    introSeenThisLoad = true;
     setIntroDone(true);
   }, []);
 
