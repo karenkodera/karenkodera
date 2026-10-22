@@ -1,6 +1,7 @@
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CONTACT_LINKS, RESUME_URL } from './Hero';
+import SiteClock from './SiteClock';
 import './SiteChrome.css';
 
 const NAV_ITEMS = [
@@ -94,6 +95,8 @@ const SiteChrome = ({ setCursorVariant }) => {
           </a>
         ))}
       </div>
+
+      <SiteClock />
     </>,
     document.body
   );

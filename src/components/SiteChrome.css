@@ -115,8 +115,40 @@
   opacity: 1;
 }
 
+.site-chrome-clock {
+  position: fixed;
+  top: 28px;
+  right: 40px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+  text-align: right;
+  color: #191919;
+  font-family: 'Skiper Display', 'Inter Tight', system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  user-select: none;
+}
+
+.site-chrome-clock-place {
+  font-size: 0.8rem;
+}
+
+.site-chrome-clock-time {
+  font-size: 0.8rem;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
 html[data-intro='1'] .site-chrome-nav,
-html[data-intro='1'] .site-chrome-contacts {
+html[data-intro='1'] .site-chrome-contacts,
+html[data-intro='1'] .site-chrome-clock {
   opacity: 0;
   pointer-events: none;
 }
@@ -129,5 +161,16 @@ html[data-intro='1'] .site-chrome-contacts {
   .site-chrome-contacts {
     left: 16px;
     bottom: 18px;
+  }
+
+  .site-chrome-clock {
+    top: 16px;
+    right: 16px;
+    font-size: 0.7rem;
+  }
+
+  .site-chrome-clock-place,
+  .site-chrome-clock-time {
+    font-size: 0.7rem;
   }
 }
