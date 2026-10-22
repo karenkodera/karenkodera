@@ -7,7 +7,8 @@ import './IntroSplash.css';
 const ROLL_SPEED = 0.05;
 const ROLL_DURATION = 2.8;
 const HOLD_MS = 700;
-const EXIT_MS = 1100;
+const CURVE_DEPTH = 300;
+const EASE = [0.76, 0, 0.24, 1];
 
 function RollingWord({ text }) {
   const chars = Array.from(text);
@@ -33,54 +34,77 @@ function RollingWord({ text }) {
 }
 
 /**
- * Full-screen name intro (huyml-style reveal), using the rolling letter scramble
- * instead of a character pushing the panel away.
+ * Full-screen name intro with Skiper8 / Dennis Snellenberg–style
+ * curved SVG exit (bend + elastic slide up).
  */
 const IntroSplash = ({ onComplete }) => {
   const reduceMotion = useReducedMotion();
-  const [phase, setPhase] = useState('enter'); // enter | exit | done
+  const [show, setShow] = useState(true);
+  const [dimension, setDimension] = useState({ width: 0, height: 0 });
 
   useEffect(() => {
-    if (phase !== 'enter') return undefined;
+    const measure = () => {
+      setDimension({ width: window.innerWidth, height: window.innerHeight });
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    return () => window.removeEventListener('resize', measure);
+  }, []);
 
+  useEffect(() => {
+    if (!show) return undefined;
     const rollMs = reduceMotion ? 200 : (ROLL_DURATION + 0.35) * 1000;
-    const t = window.setTimeout(() => setPhase('exit'), rollMs + HOLD_MS);
+    const t = window.setTimeout(() => setShow(false), rollMs + HOLD_MS);
     return () => window.clearTimeout(t);
-  }, [phase, reduceMotion]);
+  }, [show, reduceMotion]);
 
   useEffect(() => {
-    if (phase !== 'exit') return undefined;
-    const t = window.setTimeout(() => {
-      setPhase('done');
-      onComplete?.();
-    }, reduceMotion ? 200 : EXIT_MS);
-    return () => window.clearTimeout(t);
-  }, [phase, reduceMotion, onComplete]);
-
-  useEffect(() => {
-    if (phase === 'done') return undefined;
+    if (!show) return undefined;
     const prev = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
     return () => {
       document.body.style.overflow = prev;
     };
-  }, [phase]);
+  }, [show]);
 
-  if (phase === 'done') return null;
+  const { width, height } = dimension;
+  const initialPath = `M0 0 L${width} 0 L${width} ${height} Q${width / 2} ${height + CURVE_DEPTH} 0 ${height} L0 0`;
+  const targetPath = `M0 0 L${width} 0 L${width} ${height} Q${width / 2} ${height} 0 ${height} L0 0`;
+
+  const slideUp = {
+    initial: { top: 0 },
+    exit: reduceMotion
+      ? { top: '-100vh', transition: { duration: 0.2 } }
+      : {
+          top: '-100vh',
+          transition: { duration: 0.8, ease: EASE, delay: 0.2 },
+        },
+  };
+
+  const curve = {
+    initial: {
+      d: initialPath,
+      transition: { duration: reduceMotion ? 0.2 : 0.7, ease: EASE },
+    },
+    exit: {
+      d: targetPath,
+      transition: {
+        duration: reduceMotion ? 0.2 : 0.7,
+        ease: EASE,
+        delay: reduceMotion ? 0 : 0.3,
+      },
+    },
+  };
 
   return (
-    <AnimatePresence>
-      {phase !== 'done' && (
+    <AnimatePresence mode="wait" onExitComplete={() => onComplete?.()}>
+      {show && (
         <motion.div
           className="intro-splash"
           role="presentation"
-          aria-hidden={phase === 'exit'}
-          initial={{ y: 0 }}
-          animate={phase === 'exit' ? { y: '-105%' } : { y: 0 }}
-          transition={{
-            duration: reduceMotion ? 0.2 : EXIT_MS / 1000,
-            ease: [0.65, 0, 0.35, 1],
-          }}
+          variants={slideUp}
+          initial="initial"
+          exit="exit"
         >
           <div className="intro-splash-panel">
             <h1 className="intro-splash-title">
@@ -88,6 +112,17 @@ const IntroSplash = ({ onComplete }) => {
               <RollingWord text="KODERA" />
             </h1>
           </div>
+
+          {width > 0 && (
+            <svg
+              className="intro-splash-curve"
+              viewBox={`0 0 ${width} ${height + CURVE_DEPTH}`}
+              preserveAspectRatio="none"
+              style={{ height: `calc(100% + ${CURVE_DEPTH}px)` }}
+            >
+              <motion.path variants={curve} initial="initial" exit="exit" />
+            </svg>
+          )}
         </motion.div>
       )}
     </AnimatePresence>

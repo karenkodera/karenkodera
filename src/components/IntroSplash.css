@@ -1,26 +1,48 @@
 .intro-splash {
   position: fixed;
   inset: 0;
+  top: 0;
   z-index: 4000;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
   pointer-events: auto;
-  will-change: transform;
+  will-change: top;
+  overflow: visible;
+  background-color: #252423;
 }
 
 .intro-splash-panel {
-  position: absolute;
-  inset: 0;
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  height: 100%;
   background-color: #252423;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
   background-size: 16px 16px;
   background-position: center top;
+}
+
+.intro-splash-curve {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 0;
+  overflow: visible;
+}
+
+.intro-splash-curve path {
+  fill: #252423;
 }
 
 .intro-splash-title {
@@ -36,7 +58,6 @@
   line-height: 0.9;
   letter-spacing: -0.02em;
   text-transform: uppercase;
-  /* Warm ivory — bright against charcoal, matches site light ground */
   color: #f3f1eb;
 }
 
