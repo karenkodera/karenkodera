@@ -445,34 +445,7 @@
   background: #fafafa;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.04);
-  overflow: hidden;
-}
-
-.about-stickers-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 10px;
-  width: 100%;
-  height: 100%;
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-}
-
-.about-stickers-row::-webkit-scrollbar {
-  height: 0;
-}
-
-.about-sticker-thumb {
-  flex: 0 0 auto;
-  width: 58px;
-  height: 58px;
-  object-fit: contain;
-  display: block;
-  user-select: none;
-  pointer-events: none;
+  overflow: visible;
 }
 
 /* Square photo fills the card height; width grows with it */
@@ -667,6 +640,7 @@
 
   .about-stickers-box {
     height: 84px;
+    overflow: visible;
   }
 
   .about-page--slide .about-photo-wrap {

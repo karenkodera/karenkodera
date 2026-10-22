@@ -1,48 +1,20 @@
-.sticker-note-root {
-  position: absolute;
-  inset: 0;
-  z-index: 5;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.sticker-note {
-  position: absolute;
-  top: 96px;
-  right: 48px;
-  z-index: 6;
-  width: 268px;
-  padding: 18px 18px 16px;
-  background: #fffef8;
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  border-radius: 2px;
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.8) inset,
-    0 12px 32px rgba(0, 0, 0, 0.11),
-    0 2px 6px rgba(0, 0, 0, 0.06);
-  transform: rotate(2.5deg);
-  pointer-events: auto;
-  overflow: visible;
-}
-
-.sticker-note::before {
-  content: '';
-  position: absolute;
-  top: -12px;
-  left: 50%;
-  width: 78px;
-  height: 22px;
-  transform: translateX(-50%) rotate(-2deg);
-  background: rgba(255, 255, 255, 0.42);
-  border: 1px solid rgba(180, 180, 180, 0.35);
-  border-radius: 2px;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-}
-
-.sticker-note-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+/* Horizontal peel tray inside about stickers box */
+.sticker-tray-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
   gap: 10px;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: visible;
+  scrollbar-width: none;
+  pointer-events: auto;
+}
+
+.sticker-tray-row::-webkit-scrollbar {
+  height: 0;
 }
 
 .sticker-note-cell {
@@ -50,6 +22,9 @@
   border: none;
   background: transparent;
   border-radius: 0;
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
   aspect-ratio: 1;
   padding: 2px;
   margin: 0;
@@ -71,6 +46,10 @@
 .sticker-note-cell--reset {
   background: transparent;
   border: none;
+  width: auto;
+  min-width: 52px;
+  height: 58px;
+  padding: 0 8px;
 }
 
 .sticker-note-cell--reset:hover .sticker-note-reset-label,
@@ -157,8 +136,8 @@
   mask-position: center;
 }
 
-/* Above the note (z 6) so a peeled sticker rides over the pad, not under it. */
-.sticker-layer {
+/* Placed stickers over the about slide */
+.home-slide-about > .sticker-layer {
   position: absolute;
   inset: 0;
   z-index: 8;
@@ -215,11 +194,13 @@
 }
 
 @media (max-width: 768px) {
-  .sticker-note {
-    top: 72px;
-    right: 16px;
-    width: 196px;
-    padding: 16px 14px 14px;
+  .sticker-note-cell {
+    width: 48px;
+    height: 48px;
+  }
+
+  .sticker-note-cell--reset {
+    height: 48px;
   }
 
   .sticker-note-reset-label {

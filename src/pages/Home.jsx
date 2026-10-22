@@ -5,7 +5,7 @@ import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
-import { STICKERS } from '../components/StickerNote';
+import StickerNote from '../components/StickerNote';
 import { WORK_PROJECTS } from '../data/workProjects';
 import { scrollHomeTo } from '../utils/scrollHome';
 import './About.css';
@@ -323,18 +323,8 @@ const Home = ({ setCursorVariant }) => {
                   </div>
                 </div>
 
-                <div className="about-stickers-box" aria-label="Stickers">
-                  <div className="about-stickers-row">
-                    {STICKERS.map((sticker) => (
-                      <img
-                        key={sticker.id}
-                        src={sticker.src}
-                        alt={sticker.label}
-                        className="about-sticker-thumb"
-                        draggable={false}
-                      />
-                    ))}
-                  </div>
+                <div className="about-stickers-box">
+                  <StickerNote setCursorVariant={setCursorVariant} />
                 </div>
               </div>
 

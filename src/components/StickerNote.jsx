@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import {
   HOVER_PEEL,
   PRESS_PEEL,
@@ -11,8 +12,6 @@ import {
 } from '../utils/stickerPeel';
 import { playPeelSnap, startPeelRustle } from '../utils/peelSound';
 import './StickerNote.css';
-
-const NOTE_TILT = (2.5 * Math.PI) / 180;
 
 export const STICKERS = [
   { id: 'japan', label: 'Japan flag' },
@@ -30,20 +29,10 @@ export const STICKERS = [
 
 function clientToLocal(el, clientX, clientY) {
   const rect = el.getBoundingClientRect();
-  const dx = clientX - (rect.left + rect.width / 2);
-  const dy = clientY - (rect.top + rect.height / 2);
-  const c = Math.cos(-NOTE_TILT);
-  const s = Math.sin(-NOTE_TILT);
   return [
-    el.offsetWidth / 2 + dx * c - dy * s,
-    el.offsetHeight / 2 + dx * s + dy * c,
+    clientX - rect.left,
+    clientY - rect.top,
   ];
-}
-
-function screenDeltaToLocal(dx, dy) {
-  const c = Math.cos(-NOTE_TILT);
-  const s = Math.sin(-NOTE_TILT);
-  return [dx * c - dy * s, dx * s + dy * c];
 }
 
 function easeOut(t) {
@@ -146,7 +135,6 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
     if (sessionRef.current) return;
     if (event.button != null && event.button !== 0) return;
     event.preventDefault();
-    // React nulls currentTarget after the handler returns; keep our own handles.
     const target = event.currentTarget;
     const pointerId = event.pointerId;
     try {
@@ -162,7 +150,7 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
     aimAt(event.clientX, event.clientY);
     cancelAnimationFrame(model.raf);
 
-    const size = box?.offsetWidth || 70;
+    const size = box?.offsetWidth || 58;
     const reach = maxPeelLength(model.bb, size);
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const rustle = startPeelRustle();
@@ -213,7 +201,8 @@ function PadSticker({ sticker, setCursorVariant, sessionRef, onFreeMove, onFreeE
         });
         return;
       }
-      const [ldx, ldy] = screenDeltaToLocal(e.clientX - origin.x, e.clientY - origin.y);
+      const ldx = e.clientX - origin.x;
+      const ldy = e.clientY - origin.y;
       const vx = model.dir[0] * model.dragBase + ldx;
       const vy = model.dir[1] * model.dragBase + ldy;
       const amount = Math.max(0, Math.hypot(vx, vy));
@@ -373,13 +362,20 @@ function PlacedSticker({ item, rootRef, sessionRef, setCursorVariant, onMove }) 
   );
 }
 
+/** Horizontal peel tray + placed-sticker layer on the about slide. */
 const StickerNote = ({ setCursorVariant }) => {
   const rootRef = useRef(null);
-  const noteRef = useRef(null);
   const sessionRef = useRef(null);
   const carryKeyRef = useRef(null);
   const placedRef = useRef(rememberedStickers);
   const [placed, setPlaced] = useState(rememberedStickers);
+  const [layerHost, setLayerHost] = useState(null);
+
+  useEffect(() => {
+    const host = document.getElementById('about');
+    rootRef.current = host;
+    setLayerHost(host);
+  }, []);
 
   const commitPlaced = (next) => {
     rememberedStickers = next;
@@ -400,8 +396,67 @@ const StickerNote = ({ setCursorVariant }) => {
     return { x: clientX - rect.left, y: clientY - rect.top };
   };
 
-  return (
-    <div className="sticker-note-root" ref={rootRef}>
+  const tray = (
+    <div className="sticker-tray-row" role="group" aria-label="Choose a sticker">
+      {STICKERS.map((sticker) => (
+        <PadSticker
+          key={sticker.id}
+          sticker={sticker}
+          setCursorVariant={setCursorVariant}
+          sessionRef={sessionRef}
+          onFreeMove={(info) => {
+            if (sessionRef.current !== sticker.id) return;
+            const local = toLocalPoint(info.x, info.y);
+            const existing = carryKeyRef.current;
+            const stillHeld =
+              existing && placedRef.current.some((item) => item.key === existing && item.held);
+            if (!stillHeld) {
+              const key = `${info.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+              carryKeyRef.current = key;
+              commitPlaced([
+                ...placedRef.current,
+                {
+                  key,
+                  src: info.src,
+                  x: local.x,
+                  y: local.y,
+                  rotate: info.rot,
+                  size: info.size,
+                  held: true,
+                },
+              ]);
+              return;
+            }
+            commitPlaced(
+              placedRef.current.map((item) =>
+                item.key === existing ? { ...item, x: local.x, y: local.y } : item
+              )
+            );
+          }}
+          onFreeEnd={() => {
+            carryKeyRef.current = null;
+            commitPlaced(
+              placedRef.current.map((item) => (item.held ? { ...item, held: false } : item))
+            );
+          }}
+        />
+      ))}
+      <button
+        type="button"
+        className="sticker-note-cell sticker-note-cell--reset"
+        aria-label="Reset stickers"
+        onClick={resetStickers}
+        onMouseEnter={() => setCursorVariant?.('hover')}
+        onMouseLeave={() => setCursorVariant?.('default')}
+      >
+        <span className="sticker-note-reset-label">reset</span>
+      </button>
+    </div>
+  );
+
+  const layer =
+    layerHost &&
+    createPortal(
       <div className="sticker-layer">
         {placed.map((item) => (
           <PlacedSticker
@@ -419,67 +474,15 @@ const StickerNote = ({ setCursorVariant }) => {
             }}
           />
         ))}
-      </div>
+      </div>,
+      layerHost
+    );
 
-      <aside className="sticker-note" ref={noteRef} aria-label="Sticker pad">
-        <div className="sticker-note-grid" role="group" aria-label="Choose a sticker">
-          {STICKERS.map((sticker) => (
-            <PadSticker
-              key={sticker.id}
-              sticker={sticker}
-              setCursorVariant={setCursorVariant}
-              sessionRef={sessionRef}
-              onFreeMove={(info) => {
-                if (sessionRef.current !== sticker.id) return;
-                const local = toLocalPoint(info.x, info.y);
-                const existing = carryKeyRef.current;
-                const stillHeld =
-                  existing && placedRef.current.some((item) => item.key === existing && item.held);
-                if (!stillHeld) {
-                  const key = `${info.id}-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-                  carryKeyRef.current = key;
-                  commitPlaced([
-                    ...placedRef.current,
-                    {
-                      key,
-                      src: info.src,
-                      x: local.x,
-                      y: local.y,
-                      rotate: info.rot,
-                      size: info.size,
-                      held: true,
-                    },
-                  ]);
-                  return;
-                }
-                commitPlaced(
-                  placedRef.current.map((item) =>
-                    item.key === existing ? { ...item, x: local.x, y: local.y } : item
-                  )
-                );
-              }}
-              onFreeEnd={() => {
-                carryKeyRef.current = null;
-                // Settle anything still flagged as held so it sticks and becomes grabbable.
-                commitPlaced(
-                  placedRef.current.map((item) => (item.held ? { ...item, held: false } : item))
-                );
-              }}
-            />
-          ))}
-          <button
-            type="button"
-            className="sticker-note-cell sticker-note-cell--reset"
-            aria-label="Reset stickers"
-            onClick={resetStickers}
-            onMouseEnter={() => setCursorVariant?.('hover')}
-            onMouseLeave={() => setCursorVariant?.('default')}
-          >
-            <span className="sticker-note-reset-label">reset</span>
-          </button>
-        </div>
-      </aside>
-    </div>
+  return (
+    <>
+      {layer}
+      {tray}
+    </>
   );
 };
 
