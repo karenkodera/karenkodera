@@ -252,7 +252,6 @@ const Home = ({ setCursorVariant }) => {
       <div className="home-scroller" id="home-scroller" ref={scrollerRef}>
         <section className="home-slide home-slide-hero" id="home">
           <Hero setCursorVariant={setCursorVariant} />
-          <StickerNote setCursorVariant={setCursorVariant} />
         </section>
 
         {WORK_STREAM.map((item, index) => (
@@ -271,6 +270,7 @@ const Home = ({ setCursorVariant }) => {
         ))}
 
         <section className="home-slide home-slide-about" id="about">
+          <StickerNote setCursorVariant={setCursorVariant} />
           <div className="about-page about-page--slide">
             <div className="about-page-cards">
               <div className="about-bio-section">

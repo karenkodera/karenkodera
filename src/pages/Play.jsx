@@ -1,10 +1,12 @@
-import { useEffect, useCallback, useState } from 'react';
+import { useEffect, useCallback, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { RESUME_URL } from '../components/Hero';
 import './Play.css';
 import './ProjectsIndex.css';
 import './Home.css';
+
+const isVideoSrc = (src) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(src || '');
 
 const PLAY_PROJECTS = [
   {
@@ -52,10 +54,22 @@ const PLAY_PROJECTS = [
     modalBody: 'WEIGHT OF A HEART: 2024',
     slides: ['/play/weight-of-a-heart/cover.png'],
   },
+  {
+    id: 'sewing-clothes',
+    title: 'Sewing my climbing closet from scratch',
+    subtitle: "Learning how to use my mother's sewing machine in my free time!",
+    cover: '/play/sewing-clothes/video.mov',
+    coverPortrait: true,
+    coverVideo: true,
+    modalTitle: 'Sewing my climbing closet from scratch',
+    modalBody: "Learning how to use my mother's sewing machine in my free time!",
+    slides: ['/play/sewing-clothes/video.mov'],
+  },
 ];
 
 function PlayModal({ project, onClose, setCursorVariant }) {
   const [slideIndex, setSlideIndex] = useState(0);
+  const videoRef = useRef(null);
   const slides = project?.slides ?? [];
   const currentSrc = slides[slideIndex];
 
@@ -85,6 +99,18 @@ function PlayModal({ project, onClose, setCursorVariant }) {
       window.removeEventListener('keydown', onKey);
     };
   }, [project, onClose, goPrev, goNext]);
+
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!el || !isVideoSrc(currentSrc)) return undefined;
+    el.muted = true;
+    const tryPlay = () => {
+      el.play().catch(() => {});
+    };
+    tryPlay();
+    el.addEventListener('canplay', tryPlay);
+    return () => el.removeEventListener('canplay', tryPlay);
+  }, [currentSrc, project?.id, slideIndex]);
 
   if (!project || !currentSrc) return null;
 
@@ -134,16 +160,34 @@ function PlayModal({ project, onClose, setCursorVariant }) {
 
           <div className="play-modal-media">
             <AnimatePresence mode="wait">
-              <motion.img
-                key={`${project.id}-${slideIndex}`}
-                src={currentSrc}
-                alt=""
-                className="play-modal-image"
-                initial={{ opacity: 0, x: 12 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -12 }}
-                transition={{ duration: 0.2 }}
-              />
+              {isVideoSrc(currentSrc) ? (
+                <motion.video
+                  key={`${project.id}-${slideIndex}`}
+                  ref={videoRef}
+                  src={currentSrc}
+                  className="play-modal-image play-modal-video"
+                  controls
+                  playsInline
+                  autoPlay
+                  muted
+                  loop
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -12 }}
+                  transition={{ duration: 0.2 }}
+                />
+              ) : (
+                <motion.img
+                  key={`${project.id}-${slideIndex}`}
+                  src={currentSrc}
+                  alt=""
+                  className="play-modal-image"
+                  initial={{ opacity: 0, x: 12 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -12 }}
+                  transition={{ duration: 0.2 }}
+                />
+              )}
             </AnimatePresence>
           </div>
 
@@ -206,17 +250,11 @@ function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false })
         className="play-card-link"
         onClick={() => onOpen(project)}
         aria-label={`${project.title}. ${project.subtitle}`}
-        onMouseEnter={() => {
-          setIsHovered(true);
-          if (!stacked) setCursorVariant?.('project');
-        }}
-        onMouseLeave={() => {
-          setIsHovered(false);
-          if (!stacked) setCursorVariant?.('default');
-        }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
       >
         <motion.div
-          className="play-card-content play-card-content--cover-only"
+          className={`play-card-content play-card-content--cover-only${isHovered ? ' is-hovered' : ''}`}
           animate={
             stacked
               ? undefined
@@ -231,18 +269,30 @@ function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false })
             <div
               className={`play-card-image-wrap${project.coverPortrait ? ' play-card-image-wrap--portrait' : ''}`}
             >
-              <img
-                src={project.cover}
-                alt=""
-                className={[
-                  'play-card-image',
-                  project.coverZoom ? 'play-card-image--zoom' : '',
-                  project.coverFocus ? `play-card-image--focus-${project.coverFocus}` : '',
-                ]
-                  .filter(Boolean)
-                  .join(' ')}
-                loading="lazy"
-              />
+              {project.coverVideo || isVideoSrc(project.cover) ? (
+                <video
+                  src={project.cover}
+                  className="play-card-image"
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                />
+              ) : (
+                <img
+                  src={project.cover}
+                  alt=""
+                  className={[
+                    'play-card-image',
+                    project.coverZoom ? 'play-card-image--zoom' : '',
+                    project.coverFocus ? `play-card-image--focus-${project.coverFocus}` : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  loading="lazy"
+                />
+              )}
             </div>
           </div>
         </motion.div>
@@ -316,8 +366,6 @@ const Play = ({ setCursorVariant }) => {
                   ease: [0.25, 0.1, 0.25, 1],
                   delay: index * 0.06,
                 }}
-                onMouseEnter={() => setCursorVariant?.('project')}
-                onMouseLeave={() => setCursorVariant?.('default')}
               >
                 <PlayCard
                   project={project}

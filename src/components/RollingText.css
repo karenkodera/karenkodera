@@ -1,0 +1,51 @@
+.rolling-text {
+  display: inline-flex;
+  align-items: flex-start;
+  white-space: nowrap;
+}
+
+.rolling-char {
+  position: relative;
+  display: inline-block;
+  overflow: clip;
+  height: 1em;
+  line-height: 1;
+  vertical-align: top;
+  flex: 0 0 auto;
+  /* Allow flex parents to honor the fixed height instead of content size */
+  min-height: 0;
+  min-width: 0;
+}
+
+.rolling-char--space {
+  width: 0.28em;
+  overflow: visible;
+}
+
+.rolling-char-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  will-change: transform;
+}
+
+.rolling-char-item {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  height: 1em;
+  line-height: 1;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

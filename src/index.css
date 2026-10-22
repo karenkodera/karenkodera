@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@800&family=Inter:wght@400;500;600;700&family=Press+Start+2P&display=swap');
 
+/* Skiper UI homepage “un-common” display face */
+@font-face {
+  font-family: 'Skiper Display';
+  src: url('/fonts/skiper-display.woff') format('woff');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 * {
   margin: 0;
   padding: 0;

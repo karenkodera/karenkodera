@@ -8,8 +8,8 @@
 
 .sticker-note {
   position: absolute;
-  top: 174px;
-  right: 158px;
+  top: 96px;
+  right: 48px;
   z-index: 6;
   width: 268px;
   padding: 18px 18px 16px;
@@ -216,8 +216,8 @@
 
 @media (max-width: 768px) {
   .sticker-note {
-    top: 166px;
-    right: 150px;
+    top: 72px;
+    right: 16px;
     width: 196px;
     padding: 16px 14px 14px;
   }

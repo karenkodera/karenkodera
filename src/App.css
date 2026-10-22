@@ -48,16 +48,16 @@ body {
   background: transparent;
 }
 
-/* Page background (animejs.com toolbox / site charcoal) */
+/* Gray page background behind Work / Play / About */
 .site-gray-bg {
   position: fixed;
   inset: 0;
   z-index: 0;
   pointer-events: none;
-  background-color: #252423;
+  background-color: #f3f1eb;
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.028) 1px, transparent 1px);
   background-size: 16px 16px;
   background-position: center top;
 }
