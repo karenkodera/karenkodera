@@ -7,6 +7,13 @@
   position: relative;
 }
 
+.home--intro .home-section-nav,
+.home--intro .home-contact-links,
+.home--intro .home-scroll-ruler {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .home-hero-chrome {
   opacity: 1;
   pointer-events: none;

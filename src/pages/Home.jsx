@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate, Navigate } from 'react-router-dom';
-import Hero, { CONTACT_LINKS, RESUME_URL } from '../components/Hero';
+import { CONTACT_LINKS, RESUME_URL } from '../components/Hero';
+import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
@@ -44,6 +45,28 @@ const Home = ({ setCursorVariant }) => {
   const scrollerRef = useRef(null);
   const [protectedPath, setProtectedPath] = useState(null);
   const [scrollEdge, setScrollEdge] = useState('start'); // start | middle | end
+  const [introDone, setIntroDone] = useState(() => {
+    if (typeof window === 'undefined') return true;
+    return Boolean(window.location.hash);
+  });
+
+  const handleIntroComplete = useCallback(() => {
+    setIntroDone(true);
+  }, []);
+
+  useEffect(() => {
+    if (introDone) {
+      setCursorVariant?.('default');
+      document.documentElement.removeAttribute('data-intro');
+      return undefined;
+    }
+    setCursorVariant?.('intro');
+    document.documentElement.setAttribute('data-intro', '1');
+    return () => {
+      setCursorVariant?.('default');
+      document.documentElement.removeAttribute('data-intro');
+    };
+  }, [introDone, setCursorVariant]);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -68,6 +91,7 @@ const Home = ({ setCursorVariant }) => {
 
     const onWheel = (e) => {
       if (
+        !introDone ||
         document.querySelector('.play-modal-overlay') ||
         document.querySelector('.password-gate')
       ) {
@@ -86,6 +110,7 @@ const Home = ({ setCursorVariant }) => {
 
     const onKeyDown = (e) => {
       if (
+        !introDone ||
         document.querySelector('.play-modal-overlay') ||
         document.querySelector('.password-gate')
       ) {
@@ -121,7 +146,7 @@ const Home = ({ setCursorVariant }) => {
       window.removeEventListener('keydown', onKeyDown);
       if (rafId) cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [introDone]);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
@@ -165,10 +190,9 @@ const Home = ({ setCursorVariant }) => {
   };
 
   const goHome = () => {
-    const scroller = scrollerRef.current;
-    if (scroller) scroller.scrollTo({ left: 0, behavior: 'smooth' });
+    scrollHomeTo('work');
     if (window.history.replaceState) {
-      window.history.replaceState(null, '', '/');
+      window.history.replaceState(null, '', '/#work');
     }
   };
 
@@ -184,7 +208,9 @@ const Home = ({ setCursorVariant }) => {
   };
 
   return (
-    <div className="home home--horizontal">
+    <div className={`home home--horizontal${introDone ? '' : ' home--intro'}`}>
+      {!introDone && <IntroSplash onComplete={handleIntroComplete} />}
+
       <nav className="home-section-nav" aria-label="Sections">
         {NAV_SECTIONS.map((item) => (
           <button
@@ -230,7 +256,7 @@ const Home = ({ setCursorVariant }) => {
       </div>
 
       <div
-        className={`home-hero-chrome${scrollEdge === 'middle' ? ' home-hero-chrome--hidden' : ''}`}
+        className={`home-hero-chrome${scrollEdge === 'middle' || !introDone ? ' home-hero-chrome--hidden' : ''}`}
       >
         {scrollEdge === 'end' ? (
           <button
@@ -240,7 +266,7 @@ const Home = ({ setCursorVariant }) => {
             onMouseEnter={() => setCursorVariant?.('hover')}
             onMouseLeave={() => setCursorVariant?.('default')}
           >
-            click to go back to home
+            click to go back to work
           </button>
         ) : (
           <p className="home-scroll-hint" aria-hidden="true">
@@ -250,10 +276,6 @@ const Home = ({ setCursorVariant }) => {
       </div>
 
       <div className="home-scroller" id="home-scroller" ref={scrollerRef}>
-        <section className="home-slide home-slide-hero" id="home">
-          <Hero setCursorVariant={setCursorVariant} />
-        </section>
-
         {WORK_STREAM.map((item, index) => (
           <section
             key={item.key}

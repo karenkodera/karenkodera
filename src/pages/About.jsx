@@ -1,14 +1,9 @@
 import { motion } from 'framer-motion';
-import Hero from '../components/Hero';
 import './About.css';
 
 const About = ({ setCursorVariant }) => {
-  const handleMouseEnter = () => setCursorVariant('hover');
-  const handleMouseLeave = () => setCursorVariant('default');
-
   return (
     <>
-      <Hero setCursorVariant={setCursorVariant} />
       <div className="about-page" id="aboutme">
       <motion.section
         className="about-bio-section"

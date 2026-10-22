@@ -1,0 +1,39 @@
+.site-logo {
+  position: fixed;
+  top: 28px;
+  left: 40px;
+  z-index: 4100;
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  font-family: 'Skiper Display', 'Inter Tight', system-ui, sans-serif;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #191919;
+  cursor: none;
+  user-select: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.site-logo:hover {
+  opacity: 0.7;
+}
+
+/* Hidden during intro splash */
+html[data-intro='1'] .site-logo {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .site-logo {
+    top: 18px;
+    left: 16px;
+    font-size: 1.15rem;
+  }
+}

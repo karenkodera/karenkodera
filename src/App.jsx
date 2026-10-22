@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
+import SiteLogo from './components/SiteLogo';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
 import Home, { AboutRedirect } from './pages/Home';
 import Work from './pages/Work';
@@ -67,6 +68,7 @@ function AppContent() {
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
       {showGrayBackground && <div className="site-gray-bg" aria-hidden />}
+      <SiteLogo setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
       <main className={isHome ? undefined : 'main--scrollable'}>
         <Routes>

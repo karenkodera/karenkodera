@@ -88,6 +88,12 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
   const isTextVariant = cursorVariant === 'text';
   const isNavDotVariant = cursorVariant === 'navDot';
   const isRulerVariant = cursorVariant === 'ruler';
+  const isIntroVariant = cursorVariant === 'intro';
+  const cursorDotColor = isIntroVariant
+    ? '#f3f1eb'
+    : isRulerVariant
+      ? '#ffffff'
+      : 'var(--text-color)';
 
   // When in navDot mode, cursor snaps fully to the dot position
   const getDotCursorPosition = () => {
@@ -129,7 +135,7 @@ const CustomCursor = ({ cursorVariant, hoveredElement }) => {
           mass: isNavDotVariant ? 0.6 : 0.8,
         }}
         style={{
-          backgroundColor: isRulerVariant ? '#ffffff' : 'var(--text-color)',
+          backgroundColor: cursorDotColor,
           borderRadius: '50%',
           boxShadow: isRulerVariant ? '0 0 0 1px rgba(0,0,0,0.12)' : 'none',
         }}
