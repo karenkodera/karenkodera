@@ -190,7 +190,7 @@ const Home = ({ setCursorVariant }) => {
   };
 
   const goHome = () => {
-    scrollHomeTo('work');
+    scrollerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
     if (window.history.replaceState) {
       window.history.replaceState(null, '', '/#work');
     }
@@ -266,7 +266,7 @@ const Home = ({ setCursorVariant }) => {
             onMouseEnter={() => setCursorVariant?.('hover')}
             onMouseLeave={() => setCursorVariant?.('default')}
           >
-            click to go back to work
+            click to go back
           </button>
         ) : (
           <p className="home-scroll-hint" aria-hidden="true">

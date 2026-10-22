@@ -17,7 +17,7 @@ const Footer = ({ setCursorVariant }) => {
         <div className="footer-row">
           <div className="footer-links">
             <motion.a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/karenkodera/"
               target="_blank"
               rel="noopener noreferrer"
               className="footer-link"
@@ -35,7 +35,7 @@ const Footer = ({ setCursorVariant }) => {
               onMouseLeave={handleMouseLeave}
               whileHover={{ y: -2 }}
             >
-              Email
+              karen@kodera.us
               <span className="external-icon">↗</span>
             </motion.a>
           </div>
