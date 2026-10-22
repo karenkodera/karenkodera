@@ -1,14 +1,18 @@
 ---
-description: When the user wants to save changes, create a commit and push to remote
+description: Always commit and push to live after finishing work
 alwaysApply: true
 ---
 
-# Save Changes: Commit and Push
+# Always Push to Live
 
-When the user asks to save changes (e.g. "save my changes", "save this", "save and push"):
+After finishing a set of code changes (or when the user asks to save / push / go live):
 
 1. Stage all modified and new files: `git add -A` (or stage specific files if that's clearly intended).
 2. Create a commit with a clear, concise message describing the changes.
 3. Push to the remote: `git push` (or `git push origin <branch>` if a branch is specified).
 
-Do not ask for permission before pushing; the user has requested this as their default save workflow.
+Do this **every time** work is complete — do not wait for an explicit "save" or "push" request.
+
+Do not ask for permission before pushing; the user has requested this as their default workflow.
+
+Skip only when there are no changes to commit, or when the user explicitly asks not to push.

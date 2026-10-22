@@ -14,7 +14,7 @@ import './StickerNote.css';
 
 const NOTE_TILT = (2.5 * Math.PI) / 180;
 
-const STICKERS = [
+export const STICKERS = [
   { id: 'japan', label: 'Japan flag' },
   { id: 'sushi', label: 'Salmon nigiri' },
   { id: 'sewing', label: 'Sewing machine' },

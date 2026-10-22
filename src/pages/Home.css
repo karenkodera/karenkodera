@@ -246,6 +246,9 @@
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-x;
+  /* Breathing room before the first work card */
+  padding-left: clamp(72px, 16vw, 220px);
+  box-sizing: border-box;
 }
 
 .home-scroller::-webkit-scrollbar {
@@ -360,13 +363,13 @@
   width: auto;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
+  align-items: stretch;
+  gap: 12px;
   box-sizing: border-box;
 }
 
 .about-page--slide .about-hi {
-  margin: 0 0 12px;
+  margin: 0;
   font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
   font-size: clamp(1.75rem, 3vw, 2.6rem);
   font-weight: 700;
@@ -380,21 +383,21 @@
 .about-page-cards {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
-  align-items: end;
+  align-items: stretch;
   gap: 14px;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-.about-page--slide .about-bio-section {
-  margin: 0;
-  min-width: 0;
-  min-height: 0;
+/* Bio + stickers column: combined height matches experience card */
+.about-bio-column {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  height: auto;
+  gap: 14px;
+  min-width: 0;
+  min-height: 0;
+  height: 100%;
 }
 
 .about-page--slide .about-details-card {
@@ -412,6 +415,7 @@
   height: auto;
   min-height: 0;
   overflow: visible;
+  align-self: stretch;
 }
 
 .about-page--slide .about-bio-layout {
@@ -422,12 +426,53 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  flex: 0 0 auto;
-  height: auto;
+  flex: 1 1 auto;
   min-height: 0;
   background: #fafafa;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+.about-stickers-box {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 0;
+  height: 92px;
+  padding: 14px 18px;
+  box-sizing: border-box;
+  background: #fafafa;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.about-stickers-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  width: 100%;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.about-stickers-row::-webkit-scrollbar {
+  height: 0;
+}
+
+.about-sticker-thumb {
+  flex: 0 0 auto;
+  width: 58px;
+  height: 58px;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+  pointer-events: none;
 }
 
 /* Square photo fills the card height; width grows with it */
@@ -565,6 +610,10 @@
     padding: 24px var(--home-inset) 48px;
   }
 
+  .home-scroller {
+    padding-left: clamp(28px, 10vw, 72px);
+  }
+
   .home-slide-card {
     width: min(92vw, 520px);
     padding: 80px 12px 32px 8px;
@@ -595,7 +644,7 @@
     width: 100%;
   }
 
-  .about-page--slide .about-bio-section,
+  .about-bio-column,
   .about-page--slide .about-details-card {
     flex: none;
     width: 100%;
@@ -604,11 +653,20 @@
     min-height: 0;
   }
 
+  .about-bio-column {
+    gap: 14px;
+  }
+
   .about-page--slide .about-bio-layout {
     display: flex;
     flex-direction: column;
     height: auto;
     min-height: 0;
+    flex: none;
+  }
+
+  .about-stickers-box {
+    height: 84px;
   }
 
   .about-page--slide .about-photo-wrap {

@@ -5,7 +5,7 @@ import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
-import StickerNote from '../components/StickerNote';
+import { STICKERS } from '../components/StickerNote';
 import { WORK_PROJECTS } from '../data/workProjects';
 import { scrollHomeTo } from '../utils/scrollHome';
 import './About.css';
@@ -292,11 +292,10 @@ const Home = ({ setCursorVariant }) => {
         ))}
 
         <section className="home-slide home-slide-about" id="about">
-          <StickerNote setCursorVariant={setCursorVariant} />
           <div className="about-page about-page--slide">
+            <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
             <div className="about-page-cards">
-              <div className="about-bio-section">
-                <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
+              <div className="about-bio-column">
                 <div className="about-bio-layout">
                   <div className="about-photo-wrap" aria-hidden="true">
                     <img
@@ -321,6 +320,20 @@ const Home = ({ setCursorVariant }) => {
                       </a>
                       .
                     </p>
+                  </div>
+                </div>
+
+                <div className="about-stickers-box" aria-label="Stickers">
+                  <div className="about-stickers-row">
+                    {STICKERS.map((sticker) => (
+                      <img
+                        key={sticker.id}
+                        src={sticker.src}
+                        alt={sticker.label}
+                        className="about-sticker-thumb"
+                        draggable={false}
+                      />
+                    ))}
                   </div>
                 </div>
               </div>
