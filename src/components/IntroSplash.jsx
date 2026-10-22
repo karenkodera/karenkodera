@@ -8,7 +8,7 @@ import './IntroSplash.css';
 
 const ROLL_SPEED = 0.05;
 const ROLL_DURATION = 2.8;
-const HOLD_MS = 2800;
+const HOLD_MS = 350;
 const CURVE_DEPTH = 300;
 const EASE = [0.76, 0, 0.24, 1];
 const STICKER_TRAIL = STICKERS.map((s) => s.src);
@@ -84,24 +84,24 @@ const IntroSplash = ({ onComplete }) => {
   const slideUp = {
     initial: { top: 0 },
     exit: reduceMotion
-      ? { top: '-100vh', transition: { duration: 0.15 } }
+      ? { top: '-100vh', transition: { duration: 0.2 } }
       : {
           top: '-100vh',
-          transition: { duration: 0.28, ease: EASE, delay: 0 },
+          transition: { duration: 0.8, ease: EASE, delay: 0.2 },
         },
   };
 
   const curve = {
     initial: {
       d: initialPath,
-      transition: { duration: reduceMotion ? 0.15 : 0.25, ease: EASE },
+      transition: { duration: reduceMotion ? 0.2 : 0.7, ease: EASE },
     },
     exit: {
       d: targetPath,
       transition: {
-        duration: reduceMotion ? 0.15 : 0.25,
+        duration: reduceMotion ? 0.2 : 0.7,
         ease: EASE,
-        delay: reduceMotion ? 0 : 0.05,
+        delay: reduceMotion ? 0 : 0.3,
       },
     },
   };
