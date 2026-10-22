@@ -136,7 +136,8 @@
   mask-position: center;
 }
 
-/* Placed stickers over the about slide */
+/* Placed stickers over the about page */
+.about-route > .sticker-layer,
 .home-slide-about > .sticker-layer {
   position: absolute;
   inset: 0;

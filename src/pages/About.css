@@ -1,16 +1,5 @@
-.about-page {
-  min-height: 100vh;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 24px 40px 80px;
-  background: transparent;
-  position: relative;
-}
-
-.about-page > *:not(.dotted-grid-bg) {
-  position: relative;
-  z-index: 1;
-}
+/* Standalone /about uses .about-route + .about-page--slide from Home.css.
+   Keep experience/education type styles below for the details card. */
 
 .about-hero {
   text-align: center;

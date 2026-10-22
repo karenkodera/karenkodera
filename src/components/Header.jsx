@@ -1,7 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useCallback } from 'react';
-import { scrollHomeTo } from '../utils/scrollHome';
 import './Header.css';
 
 const RESUME_URL = 'https://drive.google.com/file/d/1hH56x_vKd1yI-vyyi-ExBk-bYQnbQq60/view?usp=sharing';
@@ -45,23 +44,15 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
   const handleOtherMouseLeave = () => setCursorVariant('default');
 
   const navItems = [
-    { id: 'work', label: 'work' },
-    { id: 'play', label: 'play' },
-    { id: 'about', label: 'about' },
+    { id: 'work', label: 'work', path: '/' },
+    { id: 'play', label: 'play', path: '/play' },
+    { id: 'about', label: 'about', path: '/about' },
   ];
 
-  const hash = location.hash.replace('#', '');
-  const activeIndex = navItems.findIndex((item) => item.id === hash);
+  const activeIndex = navItems.findIndex((item) => item.path === location.pathname);
 
-  const handleNavClick = (id) => {
-    if (location.pathname !== '/') {
-      navigate(`/#${id}`);
-      return;
-    }
-    scrollHomeTo(id);
-    if (window.history.replaceState) {
-      window.history.replaceState(null, '', `/#${id}`);
-    }
+  const handleNavClick = (path) => {
+    navigate(path);
   };
 
   return (
@@ -76,7 +67,7 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
           className={`site-nav-link${activeIndex === index ? ' active' : ''}`}
           onMouseEnter={() => handleNavMouseEnter(index)}
           onMouseLeave={handleNavMouseLeave}
-          onClick={() => handleNavClick(item.id)}
+          onClick={() => handleNavClick(item.path)}
         >
           <AnimatePresence mode="wait">
             {(activeIndex === index && hoveredIndex !== index) || hoveredIndex === index ? (

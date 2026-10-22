@@ -3,9 +3,10 @@ import { useState, useEffect, useCallback } from 'react';
 import CustomCursor from './components/CustomCursor';
 import SiteLogo from './components/SiteLogo';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
-import Home, { AboutRedirect } from './pages/Home';
+import Home from './pages/Home';
 import Work from './pages/Work';
 import Play from './pages/Play';
+import About from './pages/About';
 import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
@@ -63,7 +64,10 @@ function AppContent() {
 
   const isHome = location.pathname === '/';
   const showGrayBackground =
-    isHome || location.pathname === '/work' || location.pathname === '/play';
+    isHome ||
+    location.pathname === '/work' ||
+    location.pathname === '/play' ||
+    location.pathname === '/about';
 
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
@@ -79,7 +83,7 @@ function AppContent() {
           <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
           <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
           <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
-          <Route path="/about" element={<AboutRedirect />} />
+          <Route path="/about" element={<About setCursorVariant={setCursorVariant} />} />
         </Routes>
       </main>
     </div>

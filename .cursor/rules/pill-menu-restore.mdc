@@ -10,5 +10,4 @@ The black pill menu at the top (`src/components/Header.jsx` + `Header.css`) was 
 When asked to bring the menu back:
 - Re-render `<Header setCursorVariant={...} handleCursorChange={...} />` in `App.jsx`
 - Style: fixed centered black pill, white text, items `work | play | about | resume`
-- On the horizontal home page, work/play/about should call `scrollHomeTo(id)` from `src/utils/scrollHome.js` (not separate routes)
-- `/play` and `/about` still redirect to `/#play` and `/#about`
+- Routes: `work` → `/`, `play` → `/play`, `about` → `/about` (no hash scrolling)

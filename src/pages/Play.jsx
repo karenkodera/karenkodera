@@ -315,7 +315,7 @@ const Play = ({ setCursorVariant }) => {
         <button
           type="button"
           className="home-section-btn"
-          onClick={() => navigate('/#work')}
+          onClick={() => navigate('/')}
           onMouseEnter={() => setCursorVariant?.('hover')}
           onMouseLeave={() => setCursorVariant?.('default')}
         >
@@ -334,7 +334,7 @@ const Play = ({ setCursorVariant }) => {
         <button
           type="button"
           className="home-section-btn"
-          onClick={() => navigate('/#about')}
+          onClick={() => navigate('/about')}
           onMouseEnter={() => setCursorVariant?.('hover')}
           onMouseLeave={() => setCursorVariant?.('default')}
         >

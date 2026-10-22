@@ -8,6 +8,11 @@ const homeHref = import.meta.env.BASE_URL || '/';
 const SiteLogo = ({ setCursorVariant }) => {
   const handleClick = (e) => {
     e.preventDefault();
+    try {
+      sessionStorage.removeItem('karenkodera-intro-done');
+    } catch {
+      /* ignore */
+    }
     window.location.assign(homeHref);
   };
 

@@ -1,20 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate, Navigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { CONTACT_LINKS, RESUME_URL } from '../components/Hero';
 import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
-import StickerNote from '../components/StickerNote';
 import { WORK_PROJECTS } from '../data/workProjects';
-import { scrollHomeTo } from '../utils/scrollHome';
-import './About.css';
 import './Home.css';
 
 const NAV_SECTIONS = [
-  { id: 'work', label: 'work', type: 'scroll', target: 'work' },
+  { id: 'work', label: 'work', type: 'home' },
   { id: 'play', label: 'play', type: 'route', path: '/play' },
-  { id: 'about', label: 'about', type: 'scroll', target: 'about' },
+  { id: 'about', label: 'about', type: 'route', path: '/about' },
 ];
 
 function buildWorkStream() {
@@ -31,13 +28,13 @@ function buildWorkStream() {
       kind: 'work',
       key: project.id,
       project,
-      anchor: workIdx === 0 ? 'work' : undefined,
       float,
     };
   });
 }
 
 const WORK_STREAM = buildWorkStream();
+const INTRO_SESSION_KEY = 'karenkodera-intro-done';
 
 const Home = ({ setCursorVariant }) => {
   const navigate = useNavigate();
@@ -47,10 +44,19 @@ const Home = ({ setCursorVariant }) => {
   const [scrollEdge, setScrollEdge] = useState('start'); // start | middle | end
   const [introDone, setIntroDone] = useState(() => {
     if (typeof window === 'undefined') return true;
-    return Boolean(window.location.hash);
+    try {
+      return sessionStorage.getItem(INTRO_SESSION_KEY) === '1';
+    } catch {
+      return false;
+    }
   });
 
   const handleIntroComplete = useCallback(() => {
+    try {
+      sessionStorage.setItem(INTRO_SESSION_KEY, '1');
+    } catch {
+      /* ignore */
+    }
     setIntroDone(true);
   }, []);
 
@@ -170,14 +176,24 @@ const Home = ({ setCursorVariant }) => {
     };
   }, []);
 
+  // Legacy hashes: /#about → /about, /#play → /play, /#work → /
   useEffect(() => {
     const hash = location.hash.replace('#', '');
-    if (!hash) {
-      scrollerRef.current?.scrollTo({ left: 0 });
+    if (hash === 'about') {
+      navigate('/about', { replace: true });
       return;
     }
-    requestAnimationFrame(() => scrollHomeTo(hash));
-  }, [location.hash]);
+    if (hash === 'play') {
+      navigate('/play', { replace: true });
+      return;
+    }
+    if (hash === 'work' || hash) {
+      if (window.history.replaceState) {
+        window.history.replaceState(null, '', '/');
+      }
+    }
+    scrollerRef.current?.scrollTo({ left: 0 });
+  }, [location.hash, navigate]);
 
   const handleProtectedClick = (path) => {
     setProtectedPath(path);
@@ -192,7 +208,7 @@ const Home = ({ setCursorVariant }) => {
   const goHome = () => {
     scrollerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
     if (window.history.replaceState) {
-      window.history.replaceState(null, '', '/#work');
+      window.history.replaceState(null, '', '/');
     }
   };
 
@@ -201,10 +217,7 @@ const Home = ({ setCursorVariant }) => {
       navigate(item.path);
       return;
     }
-    scrollHomeTo(item.target);
-    if (window.history.replaceState) {
-      window.history.replaceState(null, '', `/#${item.target}`);
-    }
+    goHome();
   };
 
   return (
@@ -233,7 +246,9 @@ const Home = ({ setCursorVariant }) => {
           onMouseLeave={() => setCursorVariant?.('default')}
         >
           resume
-          <span className="home-section-btn-arrow" aria-hidden>↗</span>
+          <span className="home-section-btn-arrow" aria-hidden>
+            ↗
+          </span>
         </a>
       </nav>
 
@@ -250,7 +265,9 @@ const Home = ({ setCursorVariant }) => {
             onMouseLeave={() => setCursorVariant?.('default')}
           >
             {link.label}
-            <span className="home-contact-link-arrow" aria-hidden>↗</span>
+            <span className="home-contact-link-arrow" aria-hidden>
+              ↗
+            </span>
           </a>
         ))}
       </div>
@@ -280,7 +297,6 @@ const Home = ({ setCursorVariant }) => {
           <section
             key={item.key}
             className={`home-slide home-slide-card home-slide-${item.kind} ${item.float || ''}`}
-            id={item.anchor}
           >
             <ProjectCard
               project={item.project}
@@ -290,82 +306,6 @@ const Home = ({ setCursorVariant }) => {
             />
           </section>
         ))}
-
-        <section className="home-slide home-slide-about" id="about">
-          <div className="about-page about-page--slide">
-            <div className="about-page-cards">
-              <div className="about-bio-column">
-                <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
-                <div className="about-bio-stack">
-                  <div className="about-bio-layout">
-                    <div className="about-photo-wrap" aria-hidden="true">
-                      <img
-                        src="/about-photo.png"
-                        alt=""
-                        className="about-photo"
-                        loading="eager"
-                      />
-                    </div>
-                    <div className="about-bio-content">
-                      <p className="about-bio">
-                        I&apos;ve always loved creating, starting in high school with choreographing dances to designing buildings for my architecture degree. When I discovered product design, I fell in love with its iterative nature and human impact. Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers buy groceries online daily. When I&apos;m not designing, I&apos;m climbing! Check out{' '}
-                        <a
-                          href="https://www.instagram.com/karebiner"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="about-bio-link"
-                          onMouseEnter={() => setCursorVariant?.('hover')}
-                          onMouseLeave={() => setCursorVariant?.('default')}
-                        >
-                          @karebiner
-                        </a>
-                        .
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="about-stickers-box">
-                    <StickerNote setCursorVariant={setCursorVariant} />
-                  </div>
-                </div>
-              </div>
-
-              <div className="about-details-card">
-                <section className="about-experience-section">
-                  <h2 className="about-section-label">EXPERIENCE</h2>
-                  <div className="about-experience-list">
-                    <div className="about-experience-item">
-                      <div className="about-experience-role">Product Design</div>
-                      <div className="about-experience-company">Kroger</div>
-                      <div className="about-experience-date">2024 – now</div>
-                    </div>
-                    <div className="about-experience-item">
-                      <div className="about-experience-role">Product Design</div>
-                      <div className="about-experience-company">Dick&apos;s Sporting Goods</div>
-                      <div className="about-experience-date">2023</div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="about-education-section">
-                  <h2 className="about-section-label">EDUCATION</h2>
-                  <div className="about-education-list">
-                    <div className="about-education-item">
-                      <div className="about-education-degree">M.S. Engineering Design Innovation</div>
-                      <div className="about-education-school">Northwestern University</div>
-                      <div className="about-education-date">2023 – 2025</div>
-                    </div>
-                    <div className="about-education-item">
-                      <div className="about-education-degree">B.S. Architecture</div>
-                      <div className="about-education-school">Georgia Institute of Technology</div>
-                      <div className="about-education-date">2018 – 2023</div>
-                    </div>
-                  </div>
-                </section>
-              </div>
-            </div>
-          </div>
-        </section>
       </div>
 
       <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
@@ -379,9 +319,5 @@ const Home = ({ setCursorVariant }) => {
     </div>
   );
 };
-
-export function AboutRedirect() {
-  return <Navigate to="/#about" replace />;
-}
 
 export default Home;
