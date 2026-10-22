@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RollingChar } from './RollingText';
 import ImageCursorTrail from './ImageCursorTrail';
@@ -38,12 +39,20 @@ function RollingWord({ text }) {
 
 /**
  * Full-screen name intro with Skiper8 curved exit and
- * Skiper18 sticker cursor trail.
+ * Skiper18 sticker cursor trail. Portaled to body so it isn't
+ * trapped by page-transition transforms.
  */
 const IntroSplash = ({ onComplete }) => {
   const reduceMotion = useReducedMotion();
   const [show, setShow] = useState(true);
   const [dimension, setDimension] = useState({ width: 0, height: 0 });
+  const finishedRef = useRef(false);
+
+  const finish = () => {
+    if (finishedRef.current) return;
+    finishedRef.current = true;
+    onComplete?.();
+  };
 
   useEffect(() => {
     const measure = () => {
@@ -61,12 +70,21 @@ const IntroSplash = ({ onComplete }) => {
     });
   }, []);
 
+  // Single timer — do not restart when reduceMotion hydrates
   useEffect(() => {
-    if (!show) return undefined;
-    const rollMs = reduceMotion ? 200 : (ROLL_DURATION + 0.35) * 1000;
+    const prefersReduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const rollMs = prefersReduce ? 200 : (ROLL_DURATION + 0.35) * 1000;
     const t = window.setTimeout(() => setShow(false), rollMs + HOLD_MS);
-    return () => window.clearTimeout(t);
-  }, [show, reduceMotion]);
+    // Hard failsafe if exit animation never completes
+    const failsafe = window.setTimeout(finish, rollMs + HOLD_MS + 2000);
+    return () => {
+      window.clearTimeout(t);
+      window.clearTimeout(failsafe);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- run once on mount
+  }, []);
 
   useEffect(() => {
     if (!show) return undefined;
@@ -113,8 +131,10 @@ const IntroSplash = ({ onComplete }) => {
     </h1>
   );
 
-  return (
-    <AnimatePresence mode="wait" onExitComplete={() => onComplete?.()}>
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
+    <AnimatePresence mode="wait" onExitComplete={finish}>
       {show && (
         <motion.div
           className="intro-splash"
@@ -151,7 +171,8 @@ const IntroSplash = ({ onComplete }) => {
           )}
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 };
 

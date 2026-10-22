@@ -12,12 +12,7 @@
   pointer-events: none;
 }
 
-/* Fixed chrome stays put during page transitions; hide during intro */
-html[data-intro='1'] .home-section-nav,
-html[data-intro='1'] .home-contact-links {
-  opacity: 0;
-  pointer-events: none;
-}
+/* Legacy home chrome selectors — active chrome uses .site-chrome-* */
 
 .home-hero-chrome {
   opacity: 1;

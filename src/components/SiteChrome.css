@@ -1,0 +1,133 @@
+/* Fixed outside page transitions via portal to document.body */
+.site-chrome-nav {
+  position: fixed;
+  top: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+  padding: 6px 8px;
+  background: #191919;
+  border-radius: 999px;
+  box-shadow: none;
+  pointer-events: auto;
+}
+
+.site-chrome-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  padding: 7px 14px;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 1.25;
+  color: #ffffff;
+  text-decoration: none;
+  cursor: none;
+  text-align: left;
+  border-radius: 999px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.site-chrome-btn:hover,
+.site-chrome-btn:focus-visible {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.12);
+  outline: none;
+}
+
+.site-chrome-btn--resume {
+  background: #ffffff;
+  color: #191919;
+  margin-left: 4px;
+}
+
+.site-chrome-btn--resume:hover,
+.site-chrome-btn--resume:focus-visible {
+  background: #ffffff;
+  color: #191919;
+  opacity: 0.92;
+}
+
+.site-chrome-btn-arrow {
+  font-size: 0.7rem;
+  opacity: 0.75;
+  line-height: 1;
+}
+
+.site-chrome-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
+.site-chrome-contacts {
+  position: fixed;
+  left: 40px;
+  bottom: 28px;
+  z-index: 10000;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  pointer-events: auto;
+}
+
+.site-chrome-contact {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #191919;
+  text-decoration: none;
+  cursor: none;
+  transition: color 0.2s ease;
+}
+
+.site-chrome-contact:hover {
+  color: #555;
+}
+
+.site-chrome-contact-arrow {
+  font-size: 0.7rem;
+  opacity: 0.7;
+  line-height: 1;
+}
+
+.site-chrome-contact:hover .site-chrome-contact-arrow {
+  opacity: 1;
+}
+
+html[data-intro='1'] .site-chrome-nav,
+html[data-intro='1'] .site-chrome-contacts {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .site-chrome-nav {
+    top: 16px;
+  }
+
+  .site-chrome-contacts {
+    left: 16px;
+    bottom: 18px;
+  }
+}

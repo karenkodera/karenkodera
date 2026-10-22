@@ -1,9 +1,11 @@
+import { createPortal } from 'react-dom';
 import './SiteLogo.css';
 
 const homeHref = import.meta.env.BASE_URL || '/';
 
 /**
  * Top-left KK mark — full reload to home so the intro plays again.
+ * Portaled to body so page transitions never move it.
  */
 const SiteLogo = ({ setCursorVariant }) => {
   const handleClick = (e) => {
@@ -11,7 +13,9 @@ const SiteLogo = ({ setCursorVariant }) => {
     window.location.assign(homeHref);
   };
 
-  return (
+  if (typeof document === 'undefined') return null;
+
+  return createPortal(
     <a
       href={homeHref}
       className="site-logo"
@@ -25,7 +29,8 @@ const SiteLogo = ({ setCursorVariant }) => {
       }
     >
       KK
-    </a>
+    </a>,
+    document.body
   );
 };
 
