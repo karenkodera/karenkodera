@@ -1,18 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CONTACT_LINKS, RESUME_URL } from '../components/Hero';
 import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
 import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
 import { WORK_PROJECTS } from '../data/workProjects';
 import './Home.css';
-
-const NAV_SECTIONS = [
-  { id: 'work', label: 'work', type: 'home' },
-  { id: 'play', label: 'play', type: 'route', path: '/play' },
-  { id: 'about', label: 'about', type: 'route', path: '/about' },
-];
 
 function buildWorkStream() {
   return WORK_PROJECTS.map((project, workIdx) => {
@@ -203,67 +196,9 @@ const Home = ({ setCursorVariant }) => {
     }
   };
 
-  const handleNav = (item) => {
-    if (item.type === 'route') {
-      navigate(item.path);
-      return;
-    }
-    goHome();
-  };
-
   return (
     <div className={`home home--horizontal${introDone ? '' : ' home--intro'}`}>
       {!introDone && <IntroSplash onComplete={handleIntroComplete} />}
-
-      <nav className="home-section-nav" aria-label="Sections">
-        {NAV_SECTIONS.map((item) => (
-          <button
-            key={item.id}
-            type="button"
-            className="home-section-btn"
-            aria-current={item.id === 'work' ? 'page' : undefined}
-            onClick={() => handleNav(item)}
-            onMouseEnter={() => setCursorVariant?.('hover')}
-            onMouseLeave={() => setCursorVariant?.('default')}
-          >
-            {item.id === 'work' && <span className="home-section-dot" aria-hidden />}
-            {item.label}
-          </button>
-        ))}
-        <a
-          href={RESUME_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="home-section-btn home-section-btn--resume"
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          resume
-          <span className="home-section-btn-arrow" aria-hidden>
-            ↗
-          </span>
-        </a>
-      </nav>
-
-      <div className="home-contact-links" aria-label="Contact links">
-        {CONTACT_LINKS.map((link) => (
-          <a
-            key={link.label}
-            href={link.href}
-            {...(link.external
-              ? { target: '_blank', rel: 'noopener noreferrer' }
-              : {})}
-            className="home-contact-link"
-            onMouseEnter={() => setCursorVariant?.('hover')}
-            onMouseLeave={() => setCursorVariant?.('default')}
-          >
-            {link.label}
-            <span className="home-contact-link-arrow" aria-hidden>
-              ↗
-            </span>
-          </a>
-        ))}
-      </div>
 
       <div
         className={`home-hero-chrome${scrollEdge === 'middle' || !introDone ? ' home-hero-chrome--hidden' : ''}`}

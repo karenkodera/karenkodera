@@ -7,9 +7,14 @@
   position: relative;
 }
 
-.home--intro .home-section-nav,
-.home--intro .home-contact-links,
 .home--intro .home-scroll-ruler {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Fixed chrome stays put during page transitions; hide during intro */
+html[data-intro='1'] .home-section-nav,
+html[data-intro='1'] .home-contact-links {
   opacity: 0;
   pointer-events: none;
 }
@@ -35,7 +40,7 @@
   top: 28px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 130;
+  z-index: 4200;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -185,10 +190,11 @@
 
 /* Bottom-left contacts — LinkedIn + Email side by side */
 .home-contact-links {
+  --home-inset: 40px;
   position: fixed;
   left: var(--home-inset);
   bottom: 28px;
-  z-index: 120;
+  z-index: 4200;
   display: flex;
   flex-direction: row;
   align-items: center;

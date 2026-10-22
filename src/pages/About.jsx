@@ -1,63 +1,15 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { RESUME_URL } from '../components/Hero';
 import StickerNote from '../components/StickerNote';
 import './About.css';
 import './Home.css';
 
 const About = ({ setCursorVariant }) => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="about-route" id="about">
-      <nav className="home-section-nav" aria-label="Sections">
-        <button
-          type="button"
-          className="home-section-btn"
-          onClick={() => navigate('/')}
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          work
-        </button>
-        <button
-          type="button"
-          className="home-section-btn"
-          onClick={() => navigate('/play')}
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          play
-        </button>
-        <button
-          type="button"
-          className="home-section-btn"
-          aria-current="page"
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          <span className="home-section-dot" aria-hidden />
-          about
-        </button>
-        <a
-          href={RESUME_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="home-section-btn home-section-btn--resume"
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          resume
-          <span className="home-section-btn-arrow" aria-hidden>
-            ↗
-          </span>
-        </a>
-      </nav>
-
       <div className="about-page about-page--slide">
         <div className="about-page-cards">
           <div className="about-bio-column">

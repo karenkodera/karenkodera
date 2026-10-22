@@ -3,6 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SiteLogo from './components/SiteLogo';
+import SiteChrome from './components/SiteChrome';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
 import Home from './pages/Home';
 import Work from './pages/Work';
@@ -76,6 +77,7 @@ function AppContent() {
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
       {showGrayBackground && <div className="site-gray-bg" aria-hidden />}
       <SiteLogo setCursorVariant={setCursorVariant} />
+      <SiteChrome setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
       <main className={isHome ? 'main--home' : 'main--scrollable'}>
         <AnimatePresence mode="wait" initial={false}>

@@ -1,10 +1,7 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { RESUME_URL } from '../components/Hero';
 import './Play.css';
 import './ProjectsIndex.css';
-import './Home.css';
 
 const isVideoSrc = (src) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(src || '');
 
@@ -293,7 +290,6 @@ function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false })
 }
 
 const Play = ({ setCursorVariant }) => {
-  const navigate = useNavigate();
   const [activeProject, setActiveProject] = useState(null);
 
   useEffect(() => {
@@ -302,48 +298,6 @@ const Play = ({ setCursorVariant }) => {
 
   return (
     <div className="projects-index play-page">
-      <nav className="home-section-nav" aria-label="Sections">
-        <button
-          type="button"
-          className="home-section-btn"
-          onClick={() => navigate('/')}
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          work
-        </button>
-        <button
-          type="button"
-          className="home-section-btn"
-          aria-current="page"
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          <span className="home-section-dot" aria-hidden />
-          play
-        </button>
-        <button
-          type="button"
-          className="home-section-btn"
-          onClick={() => navigate('/about')}
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          about
-        </button>
-        <a
-          href={RESUME_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="home-section-btn home-section-btn--resume"
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          resume
-          <span className="home-section-btn-arrow" aria-hidden>↗</span>
-        </a>
-      </nav>
-
       <div className="play-stage">
         <div className="play-row" aria-label="Play projects">
           {PLAY_PROJECTS.map((project, index) => (
