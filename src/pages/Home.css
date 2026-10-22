@@ -90,6 +90,14 @@
   line-height: 1;
 }
 
+.home-section-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  flex-shrink: 0;
+}
+
 .home-top-links {
   position: fixed;
   top: 24px;

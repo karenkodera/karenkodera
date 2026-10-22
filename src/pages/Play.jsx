@@ -1,8 +1,10 @@
 import { useEffect, useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import { RESUME_URL } from '../components/Hero';
 import './Play.css';
 import './ProjectsIndex.css';
+import './Home.css';
 
 const PLAY_PROJECTS = [
   {
@@ -259,20 +261,49 @@ const Play = ({ setCursorVariant }) => {
 
   return (
     <div className="projects-index play-page">
-      <header className="projects-index-header">
+      <nav className="home-section-nav" aria-label="Sections">
         <button
           type="button"
-          className="projects-index-back"
-          onClick={() => navigate('/')}
+          className="home-section-btn"
+          onClick={() => navigate('/#work')}
           onMouseEnter={() => setCursorVariant?.('hover')}
           onMouseLeave={() => setCursorVariant?.('default')}
         >
-          ← back
+          work
         </button>
-      </header>
+        <button
+          type="button"
+          className="home-section-btn"
+          aria-current="page"
+          onMouseEnter={() => setCursorVariant?.('hover')}
+          onMouseLeave={() => setCursorVariant?.('default')}
+        >
+          <span className="home-section-dot" aria-hidden />
+          play
+        </button>
+        <button
+          type="button"
+          className="home-section-btn"
+          onClick={() => navigate('/#about')}
+          onMouseEnter={() => setCursorVariant?.('hover')}
+          onMouseLeave={() => setCursorVariant?.('default')}
+        >
+          about
+        </button>
+        <a
+          href={RESUME_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="home-section-btn home-section-btn--resume"
+          onMouseEnter={() => setCursorVariant?.('hover')}
+          onMouseLeave={() => setCursorVariant?.('default')}
+        >
+          resume
+          <span className="home-section-btn-arrow" aria-hidden>↗</span>
+        </a>
+      </nav>
 
       <div className="play-stage">
-        <h1 className="play-stage-title">projects</h1>
         <div className="play-row" aria-label="Play projects">
           {PLAY_PROJECTS.map((project, index) => (
               <motion.div
