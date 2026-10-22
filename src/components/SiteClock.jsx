@@ -35,9 +35,6 @@ const SiteClock = () => {
   return (
     <div className="site-chrome-clock" aria-live="polite" aria-atomic="true">
       <span className="site-chrome-clock-place">NEW YORK, NY</span>
-      <span className="site-chrome-clock-sep" aria-hidden>
-        {' '}
-      </span>
       <span className="site-chrome-clock-time">{time}</span>
     </div>
   );
