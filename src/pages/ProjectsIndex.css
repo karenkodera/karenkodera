@@ -24,12 +24,12 @@
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.25;
-  color: #191919;
+  color: #f6f4f2;
   cursor: none;
 }
 
 .projects-index-back:hover {
-  color: #444;
+  color: rgba(246, 244, 242, 0.7);
 }
 
 .projects-index-title {
@@ -39,7 +39,7 @@
   font-weight: 700;
   letter-spacing: -0.03em;
   line-height: 1.1;
-  color: #191919;
+  color: #f6f4f2;
 }
 
 .projects-index-grid {
@@ -95,7 +95,7 @@
   color: #191919;
 }
 
-/* Half-size play cards: cap the row at 50% and center it */
+/* Play cards: centered row */
 .play-row {
   position: relative;
   display: flex;
@@ -103,8 +103,8 @@
   align-items: center;
   justify-content: center;
   gap: clamp(10px, 1.2vw, 18px);
-  width: 50%;
-  max-width: 50%;
+  width: min(72%, 960px);
+  max-width: 960px;
   padding: 0;
   margin: 0 auto;
   box-sizing: border-box;
@@ -133,7 +133,7 @@
 .play-row-item .play-card-content--cover-only {
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
   background: #fafafa;
-  border-radius: 14px;
+  border-radius: 0;
   overflow: hidden;
 }
 
@@ -143,7 +143,14 @@
 }
 
 .play-row-item .play-card-content--cover-only .play-card-image-wrap {
-  border-radius: 12px;
+  border-radius: 0;
+}
+
+.play-page .play-card-content,
+.play-page .play-card-inner,
+.play-page .play-card-image-wrap,
+.play-page .play-card-content--cover-only .play-card-image-wrap {
+  border-radius: 0;
 }
 
 @media (max-width: 768px) {
@@ -167,7 +174,7 @@
 
   .play-row {
     gap: 8px;
-    width: 70%;
-    max-width: 70%;
+    width: min(92%, 560px);
+    max-width: 560px;
   }
 }

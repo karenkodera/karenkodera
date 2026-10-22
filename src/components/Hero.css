@@ -39,7 +39,7 @@
   margin: 0;
   letter-spacing: -0.035em;
   text-transform: uppercase;
-  color: #191919 !important;
+  color: #f6f4f2 !important;
   opacity: 1 !important;
   visibility: visible !important;
   max-width: 100%;
@@ -56,7 +56,7 @@
   font-style: normal;
   line-height: 1.35;
   letter-spacing: -0.02em;
-  color: #191919;
+  color: #f6f4f2;
   max-width: none;
   width: max-content;
   white-space: nowrap;

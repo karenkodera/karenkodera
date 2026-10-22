@@ -118,13 +118,13 @@
   font-size: 0.8rem;
   font-weight: 600;
   line-height: 1.25;
-  color: #191919;
+  color: #f6f4f2;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .home-top-link:hover {
-  color: #444444;
+  color: rgba(246, 244, 242, 0.7);
 }
 
 .home-top-link-arrow {
@@ -157,13 +157,15 @@
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #191919;
+  color: #f6f4f2;
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
   cursor: none;
   border-radius: 999px;
-  transition: background-color 0.2s ease;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .home-scroll-hint--action {
@@ -173,6 +175,7 @@
 .home-scroll-hint--action:hover,
 .home-scroll-hint--action:focus-visible {
   background-color: #ffffff;
+  color: #191919;
   outline: none;
 }
 
@@ -203,13 +206,13 @@
   font-weight: 600;
   line-height: 1.25;
   letter-spacing: 0;
-  color: #191919;
+  color: #f6f4f2;
   text-decoration: none;
   transition: color 0.2s ease;
 }
 
 .home-contact-link:hover {
-  color: #444444;
+  color: rgba(246, 244, 242, 0.7);
 }
 
 .home-contact-link-arrow {
@@ -364,7 +367,7 @@
   font-weight: 700;
   letter-spacing: -0.035em;
   line-height: 1.05;
-  color: #191919;
+  color: #f6f4f2;
   max-width: 100%;
   white-space: nowrap;
 }

@@ -1,73 +1,73 @@
-import { useEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import './ScrollRuler.css';
 
-const TICK_COUNT = 56;
-const TICKS = Array.from({ length: TICK_COUNT }, (_, i) => ({
-  key: i,
-  major: i % 5 === 0,
-}));
-
 /**
- * Bottom-center ruler pill: ticks slide with scroll.
- * At the start/end of the page, ticks run out past the center mark
- * so the empty side makes the boundary obvious.
+ * Bottom-center progress bar inspired by animejs.com:
+ * fixed tick track + red cursor that moves with scroll.
+ * Placement/width stay as karenkodera’s (centered, min(220px, 46vw)).
  */
 const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
-  const [trackX, setTrackX] = useState(0);
-  const pillRef = useRef(null);
+  const [progress, setProgress] = useState(0);
   const trackRef = useRef(null);
   const draggingRef = useRef(false);
-  const lastXRef = useRef(0);
 
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return undefined;
+  useLayoutEffect(() => {
+    let cancelled = false;
+    let scroller = null;
+    let raf = 0;
 
     const sync = () => {
+      if (!scroller) return;
       const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-      const progress = maxScroll > 0 ? scroller.scrollLeft / maxScroll : 0;
-      const pill = pillRef.current;
-      const track = trackRef.current;
-      if (!pill || !track) return;
-
-      const half = pill.clientWidth / 2;
-      const strip = track.scrollWidth;
-      // p=0 → first tick under center (empty to the left)
-      // p=1 → last tick under center (empty to the right)
-      setTrackX(half - progress * strip);
+      setProgress(maxScroll > 0 ? scroller.scrollLeft / maxScroll : 0);
     };
 
-    sync();
-    scroller.addEventListener('scroll', sync, { passive: true });
-    window.addEventListener('resize', sync);
+    const attach = () => {
+      if (cancelled) return;
+      scroller = scrollerRef.current;
+      if (!scroller) {
+        raf = requestAnimationFrame(attach);
+        return;
+      }
+      sync();
+      scroller.addEventListener('scroll', sync, { passive: true });
+      window.addEventListener('resize', sync);
+    };
+
+    attach();
+
     return () => {
-      scroller.removeEventListener('scroll', sync);
+      cancelled = true;
+      cancelAnimationFrame(raf);
+      if (scroller) scroller.removeEventListener('scroll', sync);
       window.removeEventListener('resize', sync);
     };
   }, [scrollerRef]);
 
+  const seekToClientX = (clientX) => {
+    const scroller = scrollerRef.current;
+    const track = trackRef.current;
+    if (!scroller || !track) return;
+
+    const rect = track.getBoundingClientRect();
+    const width = Math.max(1, rect.width);
+    const next = Math.max(0, Math.min(1, (clientX - rect.left) / width));
+    const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    scroller.scrollLeft = next * maxScroll;
+    setProgress(next);
+  };
+
   const onPointerDown = (e) => {
     if (e.button != null && e.button !== 0) return;
     draggingRef.current = true;
-    lastXRef.current = e.clientX;
     e.currentTarget.setPointerCapture(e.pointerId);
+    seekToClientX(e.clientX);
     setCursorVariant?.('ruler');
   };
 
   const onPointerMove = (e) => {
     if (!draggingRef.current) return;
-    const scroller = scrollerRef.current;
-    const pill = pillRef.current;
-    const track = trackRef.current;
-    if (!scroller || !pill || !track) return;
-
-    const dx = e.clientX - lastXRef.current;
-    lastXRef.current = e.clientX;
-
-    const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-    const travel = Math.max(1, track.scrollWidth);
-    const next = scroller.scrollLeft - dx * (maxScroll / travel);
-    scroller.scrollLeft = Math.max(0, Math.min(maxScroll, next));
+    seekToClientX(e.clientX);
   };
 
   const onPointerUp = (e) => {
@@ -81,12 +81,14 @@ const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
 
   return (
     <div
-      ref={pillRef}
       className="home-scroll-ruler"
       role="scrollbar"
       aria-orientation="horizontal"
       aria-label="Scroll ruler"
       aria-controls="home-scroller"
+      aria-valuemin={0}
+      aria-valuemax={100}
+      aria-valuenow={Math.round(progress * 100)}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
@@ -96,20 +98,12 @@ const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
         if (!draggingRef.current) setCursorVariant?.('default');
       }}
     >
-      <div
-        ref={trackRef}
-        className="home-scroll-ruler-track"
-        style={{ transform: `translate3d(${trackX}px, 0, 0)` }}
-        aria-hidden
-      >
-        {TICKS.map((tick) => (
-          <span
-            key={tick.key}
-            className={`home-scroll-ruler-tick${tick.major ? ' home-scroll-ruler-tick--major' : ''}`}
-          />
-        ))}
+      <div ref={trackRef} className="home-scroll-ruler-track" aria-hidden>
+        <span
+          className="home-scroll-ruler-mark"
+          style={{ left: `${progress * 100}%` }}
+        />
       </div>
-      <span className="home-scroll-ruler-mark" aria-hidden />
     </div>
   );
 };

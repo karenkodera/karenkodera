@@ -249,8 +249,6 @@ const Home = ({ setCursorVariant }) => {
         )}
       </div>
 
-      <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
-
       <div className="home-scroller" id="home-scroller" ref={scrollerRef}>
         <section className="home-slide home-slide-hero" id="home">
           <Hero setCursorVariant={setCursorVariant} />
@@ -342,6 +340,8 @@ const Home = ({ setCursorVariant }) => {
           </div>
         </section>
       </div>
+
+      <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
 
       <PasswordGate
         password="karenkodera"

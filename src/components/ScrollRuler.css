@@ -1,3 +1,4 @@
+/* Anime.js–style progress card; keep karenkodera placement + width */
 .home-scroll-ruler {
   position: fixed;
   left: 50%;
@@ -6,54 +7,45 @@
   z-index: 125;
   width: min(220px, 46vw);
   height: 40px;
-  border-radius: 999px;
-  background: #191919;
-  overflow: hidden;
+  border-radius: 12px;
+  background: #302e2d;
+  overflow: visible;
   touch-action: none;
   user-select: none;
   cursor: none;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  box-shadow: none;
   pointer-events: auto;
 }
 
 .home-scroll-ruler-track {
   position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end;
-  padding: 0 0 10px;
-  gap: 6px;
-  will-change: transform;
+  top: 50%;
+  left: 16px;
+  right: 16px;
+  height: 12px;
+  transform: translateY(-50%);
+  background-image: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0.15) 1px,
+    transparent 1px
+  );
+  background-size: 5px 8px;
+  background-repeat: repeat;
+  background-position: left center;
   pointer-events: none;
-}
-
-.home-scroll-ruler-tick {
-  flex: 0 0 1px;
-  width: 1px;
-  height: 7px;
-  background: rgba(255, 255, 255, 0.32);
-  border-radius: 1px;
-}
-
-.home-scroll-ruler-tick--major {
-  height: 14px;
-  background: rgba(255, 255, 255, 0.78);
 }
 
 .home-scroll-ruler-mark {
   position: absolute;
-  left: 50%;
-  top: 7px;
-  bottom: 7px;
-  width: 2px;
-  border-radius: 1px;
-  background: #ffffff;
-  transform: translateX(-50%);
+  top: 50%;
+  width: 3px;
+  height: 16px;
+  border-radius: 3px;
+  background: #ff4b4b;
+  transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 1;
+  will-change: left;
 }
 
 @media (max-width: 768px) {
@@ -61,5 +53,10 @@
     bottom: 18px;
     width: min(180px, 56vw);
     height: 36px;
+  }
+
+  .home-scroll-ruler-track {
+    left: 12px;
+    right: 12px;
   }
 }
