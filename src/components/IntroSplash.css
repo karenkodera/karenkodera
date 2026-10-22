@@ -31,6 +31,18 @@
   background-position: center top;
 }
 
+.intro-splash-trail,
+.intro-splash-title-wrap {
+  width: 100%;
+  height: 100%;
+}
+
+.intro-splash-title-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .intro-splash-curve {
   position: absolute;
   top: 0;

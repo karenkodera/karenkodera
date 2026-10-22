@@ -1,14 +1,17 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { RollingChar } from './RollingText';
+import ImageCursorTrail from './ImageCursorTrail';
+import { STICKERS } from './StickerNote';
 import './RollingText.css';
 import './IntroSplash.css';
 
 const ROLL_SPEED = 0.05;
 const ROLL_DURATION = 2.8;
-const HOLD_MS = 700;
+const HOLD_MS = 2800;
 const CURVE_DEPTH = 300;
 const EASE = [0.76, 0, 0.24, 1];
+const STICKER_TRAIL = STICKERS.map((s) => s.src);
 
 function RollingWord({ text }) {
   const chars = Array.from(text);
@@ -34,8 +37,8 @@ function RollingWord({ text }) {
 }
 
 /**
- * Full-screen name intro with Skiper8 / Dennis Snellenberg–style
- * curved SVG exit (bend + elastic slide up).
+ * Full-screen name intro with Skiper8 curved exit and
+ * Skiper18 sticker cursor trail.
  */
 const IntroSplash = ({ onComplete }) => {
   const reduceMotion = useReducedMotion();
@@ -49,6 +52,13 @@ const IntroSplash = ({ onComplete }) => {
     measure();
     window.addEventListener('resize', measure);
     return () => window.removeEventListener('resize', measure);
+  }, []);
+
+  useEffect(() => {
+    STICKER_TRAIL.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
   }, []);
 
   useEffect(() => {
@@ -96,6 +106,13 @@ const IntroSplash = ({ onComplete }) => {
     },
   };
 
+  const title = (
+    <h1 className="intro-splash-title">
+      <RollingWord text="KAREN" />
+      <RollingWord text="KODERA" />
+    </h1>
+  );
+
   return (
     <AnimatePresence mode="wait" onExitComplete={() => onComplete?.()}>
       {show && (
@@ -107,10 +124,19 @@ const IntroSplash = ({ onComplete }) => {
           exit="exit"
         >
           <div className="intro-splash-panel">
-            <h1 className="intro-splash-title">
-              <RollingWord text="KAREN" />
-              <RollingWord text="KODERA" />
-            </h1>
+            {reduceMotion ? (
+              <div className="intro-splash-title-wrap">{title}</div>
+            ) : (
+              <ImageCursorTrail
+                items={STICKER_TRAIL}
+                maxNumberOfImages={8}
+                distance={20}
+                fadeAnimation={false}
+                className="intro-splash-trail"
+              >
+                {title}
+              </ImageCursorTrail>
+            )}
           </div>
 
           {width > 0 && (

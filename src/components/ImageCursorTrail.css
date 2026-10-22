@@ -1,0 +1,51 @@
+.image-cursor-trail {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image-cursor-trail-content {
+  position: relative;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.image-cursor-trail-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  width: min(42vw, 280px);
+  height: auto;
+  max-height: min(42vw, 280px);
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0) rotate(var(--trail-rot, 0deg));
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
+  will-change: transform, opacity;
+}
+
+.image-cursor-trail-img[data-status='active'] {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1) rotate(var(--trail-rot, 0deg));
+  transition:
+    transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@media (max-width: 768px) {
+  .image-cursor-trail-img {
+    width: min(48vw, 200px);
+    max-height: min(48vw, 200px);
+  }
+}
