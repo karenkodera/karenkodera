@@ -360,11 +360,11 @@
   max-width: min(1100px, calc(100vw - 80px));
   margin: 0 auto;
   padding: 0;
-  width: auto;
+  width: max-content;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
+  gap: 0;
   box-sizing: border-box;
 }
 
@@ -378,26 +378,41 @@
   color: #191919;
   max-width: 100%;
   white-space: nowrap;
+  flex: 0 0 auto;
 }
 
 .about-page-cards {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(240px, 300px);
-  align-items: stretch;
+  grid-template-columns: max-content minmax(240px, 300px);
+  align-items: end;
+  justify-content: start;
   gap: 14px;
-  width: 100%;
+  width: max-content;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-/* Bio + stickers column: combined height matches experience card */
+/* Bio + stickers hug content; bottoms align with experience card */
 .about-bio-column {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  align-items: flex-start;
+  gap: 12px;
+  width: max-content;
+  max-width: 100%;
   min-width: 0;
   min-height: 0;
-  height: 100%;
+  height: auto;
+}
+
+.about-bio-stack {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 14px;
+  width: max-content;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .about-page--slide .about-details-card {
@@ -415,19 +430,21 @@
   height: auto;
   min-height: 0;
   overflow: visible;
-  align-self: stretch;
+  align-self: end;
 }
 
 .about-page--slide .about-bio-layout {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto minmax(0, 36ch);
   align-items: stretch;
-  gap: 20px;
-  padding: 20px;
-  width: 100%;
+  column-gap: 16px;
+  padding: 16px 18px;
+  width: max-content;
   max-width: 100%;
   box-sizing: border-box;
-  flex: 1 1 auto;
+  flex: 0 0 auto;
   min-height: 0;
+  height: auto;
   background: #fafafa;
   border-radius: 16px;
   border: 1px solid rgba(0, 0, 0, 0.04);
@@ -437,7 +454,9 @@
   flex: 0 0 auto;
   display: flex;
   align-items: center;
-  width: 100%;
+  align-self: stretch;
+  width: auto;
+  min-width: 0;
   min-height: 0;
   height: 92px;
   padding: 14px 18px;
@@ -448,14 +467,13 @@
   overflow: visible;
 }
 
-/* Square photo fills the card height; width grows with it */
+/* Square photo: row height from text, width from aspect-ratio */
 .about-page--slide .about-photo-wrap {
   position: relative;
-  flex: 0 0 auto;
-  align-self: stretch;
-  width: auto !important;
-  height: auto !important;
-  min-height: 240px;
+  height: 100%;
+  width: auto;
+  min-height: 0;
+  min-width: 0;
   max-width: none;
   max-height: none;
   aspect-ratio: 1;
@@ -474,15 +492,13 @@
 }
 
 .about-page--slide .about-bio-content {
-  flex: 1 1 auto;
-  width: auto;
+  width: min(36ch, 340px);
   min-width: 0;
-  max-width: 420px;
+  max-width: 340px;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-self: stretch;
   overflow: visible;
 }
 
@@ -614,6 +630,7 @@
   .about-page-cards {
     display: flex;
     flex-direction: column;
+    align-items: stretch;
     width: 100%;
   }
 
@@ -624,33 +641,42 @@
     max-width: none;
     height: auto;
     min-height: 0;
+    align-self: stretch;
   }
 
   .about-bio-column {
-    gap: 14px;
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .about-bio-stack {
+    width: 100%;
+    gap: 12px;
   }
 
   .about-page--slide .about-bio-layout {
     display: flex;
     flex-direction: column;
+    width: 100%;
     height: auto;
     min-height: 0;
     flex: none;
   }
 
   .about-stickers-box {
+    width: 100%;
     height: 84px;
     overflow: visible;
   }
 
   .about-page--slide .about-photo-wrap {
-    width: min(100%, 280px) !important;
-    height: auto !important;
+    width: min(100%, 200px);
+    height: auto;
     min-height: 0;
-    max-width: 280px;
+    max-width: 200px;
     max-height: none;
     aspect-ratio: 1;
-    align-self: center;
+    align-self: flex-start;
   }
 
   .about-page--slide .about-hi {
@@ -658,7 +684,6 @@
   }
 
   .about-page--slide .about-bio-content {
-    flex: none;
     width: 100%;
     max-width: none;
     height: auto;

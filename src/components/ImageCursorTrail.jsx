@@ -22,7 +22,7 @@ const ImageCursorTrail = ({
   const stateRef = useRef({
     globalIndex: 0,
     last: { x: 0, y: 0 },
-    z: 1,
+    z: 2,
     fadeTimers: new Map(),
   });
 
@@ -45,7 +45,7 @@ const ImageCursorTrail = ({
 
     image.style.left = `${x - rect.left}px`;
     image.style.top = `${y - rect.top}px`;
-    if (state.z > 40) state.z = 1;
+    if (state.z > 40) state.z = 2;
     image.style.zIndex = String(state.z);
     state.z += 1;
     image.style.setProperty('--trail-rot', `${(Math.random() - 0.5) * 30}deg`);
