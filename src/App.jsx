@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SiteLogo from './components/SiteLogo';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
@@ -12,6 +13,8 @@ import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
 import './App.css';
+
+const PAGE_EASE = [0.76, 0, 0.24, 1];
 
 const THEME_STORAGE_KEY = 'karenkodera-theme';
 
@@ -74,17 +77,28 @@ function AppContent() {
       {showGrayBackground && <div className="site-gray-bg" aria-hidden />}
       <SiteLogo setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
-      <main className={isHome ? undefined : 'main--scrollable'}>
-        <Routes>
-          <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
-          <Route path="/work" element={<Work setCursorVariant={setCursorVariant} />} />
-          <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
-          <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
-          <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
-          <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
-          <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
-          <Route path="/about" element={<About setCursorVariant={setCursorVariant} />} />
-        </Routes>
+      <main className={isHome ? 'main--home' : 'main--scrollable'}>
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            className={`page-transition${isHome ? ' page-transition--home' : ''}`}
+            initial={{ y: '40%', opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: '-40%', opacity: 0 }}
+            transition={{ duration: 0.52, ease: PAGE_EASE }}
+          >
+            <Routes location={location}>
+              <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
+              <Route path="/work" element={<Work setCursorVariant={setCursorVariant} />} />
+              <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
+              <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
+              <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
+              <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
+              <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
+              <Route path="/about" element={<About setCursorVariant={setCursorVariant} />} />
+            </Routes>
+          </motion.div>
+        </AnimatePresence>
       </main>
     </div>
   );

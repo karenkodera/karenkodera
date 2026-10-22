@@ -131,15 +131,16 @@
 }
 
 .play-row-item .play-card-content--cover-only {
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.1);
-  background: #fafafa;
+  box-shadow: none;
+  background: transparent;
+  border: none;
   border-radius: 0;
   overflow: hidden;
 }
 
 .play-row-item .play-card-content--cover-only:hover {
-  border-color: #191919;
-  background: #fafafa;
+  border: none;
+  background: transparent;
 }
 
 .play-row-item .play-card-content--cover-only .play-card-image-wrap {

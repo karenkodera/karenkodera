@@ -253,17 +253,8 @@ function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false })
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
       >
-        <motion.div
+        <div
           className={`play-card-content play-card-content--cover-only${isHovered ? ' is-hovered' : ''}`}
-          animate={
-            stacked
-              ? undefined
-              : {
-                  padding: isHovered ? 6 : 0,
-                  margin: isHovered ? -6 : 0,
-                }
-          }
-          transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         >
           <div className="play-card-inner play-card-inner--cover-only">
             <div
@@ -295,7 +286,7 @@ function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false })
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
       </button>
     </motion.div>
   );

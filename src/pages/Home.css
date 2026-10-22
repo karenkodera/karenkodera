@@ -246,8 +246,9 @@
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-x;
-  /* Breathing room before the first work card */
+  /* Breathing room before the first card and after the last */
   padding-left: clamp(72px, 16vw, 220px);
+  padding-right: clamp(120px, 28vw, 360px);
   box-sizing: border-box;
 }
 
@@ -616,6 +617,7 @@
 
   .home-scroller {
     padding-left: clamp(28px, 10vw, 72px);
+    padding-right: clamp(64px, 22vw, 160px);
   }
 
   .home-slide-card {

@@ -49,15 +49,14 @@
   flex-direction: column;
   min-width: 0;
   border-radius: 16px;
-  border: 2px solid transparent;
+  border: none;
   background: #fafafa;
   overflow: hidden;
   cursor: none;
-  transition: border-color 0.2s ease;
 }
 
 .play-card-content:hover {
-  border-color: #191919;
+  border: none;
 }
 
 .play-card-inner {
@@ -79,8 +78,8 @@
 }
 
 .play-card-content--cover-only:hover {
-  border-color: #191919;
-  background: #fafafa;
+  border: none;
+  background: transparent;
 }
 
 .home-slide-play .play-card-image-wrap,
@@ -123,20 +122,20 @@
   transform: scale(1.55);
 }
 
-/* Slight zoom on play-card hover */
+/* Zoom on play-card hover */
 .play-card-link:hover .play-card-image,
 .play-card-content.is-hovered .play-card-image {
-  transform: scale(1.06);
+  transform: scale(1.14);
 }
 
 .play-card-link:hover .play-card-image--zoom,
 .play-card-content.is-hovered .play-card-image--zoom {
-  transform: scale(1.5);
+  transform: scale(1.68);
 }
 
 .play-card-link:hover .play-card-image--zoom.play-card-image--focus-bl,
 .play-card-content.is-hovered .play-card-image--zoom.play-card-image--focus-bl {
-  transform: scale(1.65);
+  transform: scale(1.82);
 }
 
 .play-card-text {

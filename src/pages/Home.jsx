@@ -230,10 +230,12 @@ const Home = ({ setCursorVariant }) => {
             key={item.id}
             type="button"
             className="home-section-btn"
+            aria-current={item.id === 'work' ? 'page' : undefined}
             onClick={() => handleNav(item)}
             onMouseEnter={() => setCursorVariant?.('hover')}
             onMouseLeave={() => setCursorVariant?.('default')}
           >
+            {item.id === 'work' && <span className="home-section-dot" aria-hidden />}
             {item.label}
           </button>
         ))}
