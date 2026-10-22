@@ -21,9 +21,9 @@
   top: 0;
   left: 0;
   z-index: 1;
-  width: min(42vw, 280px);
+  width: min(31.5vw, 210px);
   height: auto;
-  max-height: min(42vw, 280px);
+  max-height: min(31.5vw, 210px);
   object-fit: contain;
   pointer-events: none;
   user-select: none;
@@ -45,7 +45,7 @@
 
 @media (max-width: 768px) {
   .image-cursor-trail-img {
-    width: min(48vw, 200px);
-    max-height: min(48vw, 200px);
+    width: min(36vw, 150px);
+    max-height: min(36vw, 150px);
   }
 }

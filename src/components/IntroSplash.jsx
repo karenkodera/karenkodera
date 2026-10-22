@@ -84,24 +84,24 @@ const IntroSplash = ({ onComplete }) => {
   const slideUp = {
     initial: { top: 0 },
     exit: reduceMotion
-      ? { top: '-100vh', transition: { duration: 0.2 } }
+      ? { top: '-100vh', transition: { duration: 0.15 } }
       : {
           top: '-100vh',
-          transition: { duration: 0.8, ease: EASE, delay: 0.2 },
+          transition: { duration: 0.28, ease: EASE, delay: 0 },
         },
   };
 
   const curve = {
     initial: {
       d: initialPath,
-      transition: { duration: reduceMotion ? 0.2 : 0.7, ease: EASE },
+      transition: { duration: reduceMotion ? 0.15 : 0.25, ease: EASE },
     },
     exit: {
       d: targetPath,
       transition: {
-        duration: reduceMotion ? 0.2 : 0.7,
+        duration: reduceMotion ? 0.15 : 0.25,
         ease: EASE,
-        delay: reduceMotion ? 0 : 0.3,
+        delay: reduceMotion ? 0 : 0.05,
       },
     },
   };
