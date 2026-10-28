@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCards, Pagination } from 'swiper/modules';
 import 'swiper/css';
@@ -17,145 +17,109 @@ const isVideoSrc = (src) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(src || '');
  */
 const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
   const draggedRef = useRef(false);
-  const [swiper, setSwiper] = useState(null);
-
-  const goPrev = () => {
-    if (!swiper) return;
-    if (swiper.isBeginning) swiper.slideTo(projects.length - 1);
-    else swiper.slidePrev();
-  };
-
-  const goNext = () => {
-    if (!swiper) return;
-    if (swiper.isEnd) swiper.slideTo(0);
-    else swiper.slideNext();
-  };
 
   return (
     <div className="play-swipe">
-      <div className="play-swipe-stage">
-        <button
-          type="button"
-          className="play-swipe-arrow play-swipe-arrow--prev"
-          aria-label="Previous project"
-          onClick={goPrev}
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          ←
-        </button>
-
-        <Swiper
-          className="play-swipe-swiper"
-          modules={[EffectCards, Pagination]}
-          effect="cards"
-          grabCursor
-          rewind
-          nested={false}
-          simulateTouch
-          allowTouchMove
-          touchStartPreventDefault={false}
-          threshold={0}
-          shortSwipes
-          longSwipesRatio={0.12}
-          longSwipesMs={180}
-          followFinger
-          resistanceRatio={0.35}
-          speed={380}
-          cardsEffect={{
-            slideShadows: true,
-            rotate: true,
-            perSlideRotate: 2,
-            perSlideOffset: 8,
-          }}
-          pagination={{
-            el: '.play-swipe-dots',
-            clickable: true,
-            bulletClass: 'play-swipe-dot',
-            bulletActiveClass: 'play-swipe-dot--active',
-          }}
-          onSwiper={setSwiper}
-          onTouchStart={() => {
-            draggedRef.current = false;
-          }}
-          onSliderMove={() => {
-            draggedRef.current = true;
-          }}
-          onClick={(s) => {
-            if (draggedRef.current || !s.allowClick) return;
-            const project = projects[s.realIndex];
-            if (project) onOpen?.(project);
-          }}
-        >
-          {projects.map((project) => (
-            <SwiperSlide key={project.id} className="play-swipe-slide">
-              <div
-                className="play-swipe-card"
-                role="button"
-                tabIndex={0}
-                aria-label={`${project.title}. ${project.subtitle}`}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    onOpen?.(project);
-                  }
-                }}
-                onMouseEnter={() => setCursorVariant?.('hover')}
-                onMouseLeave={() => setCursorVariant?.('default')}
-              >
-                {project.coverVideo || isVideoSrc(project.cover) ? (
-                  <video
-                    src={project.cover}
-                    className={[
-                      'play-swipe-media',
-                      project.coverZoom ? 'play-swipe-media--zoom' : '',
-                      project.coverFocus ? `play-swipe-media--focus-${project.coverFocus}` : '',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    muted
-                    loop
-                    playsInline
-                    autoPlay
-                    preload="metadata"
-                    draggable={false}
-                  />
-                ) : (
-                  <img
-                    src={project.cover}
-                    alt=""
-                    className={[
-                      'play-swipe-media',
-                      project.coverZoom ? 'play-swipe-media--zoom' : '',
-                      project.coverFocus ? `play-swipe-media--focus-${project.coverFocus}` : '',
-                    ]
-                      .filter(Boolean)
-                      .join(' ')}
-                    draggable={false}
-                  />
-                )}
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
-
-        <button
-          type="button"
-          className="play-swipe-arrow play-swipe-arrow--next"
-          aria-label="Next project"
-          onClick={goNext}
-          onMouseEnter={() => setCursorVariant?.('hover')}
-          onMouseLeave={() => setCursorVariant?.('default')}
-        >
-          →
-        </button>
-      </div>
+      <Swiper
+        className="play-swipe-swiper"
+        modules={[EffectCards, Pagination]}
+        effect="cards"
+        grabCursor
+        rewind
+        nested={false}
+        simulateTouch
+        allowTouchMove
+        touchStartPreventDefault={false}
+        threshold={0}
+        shortSwipes
+        longSwipesRatio={0.12}
+        longSwipesMs={180}
+        followFinger
+        resistanceRatio={0.35}
+        speed={380}
+        cardsEffect={{
+          slideShadows: true,
+          rotate: true,
+          perSlideRotate: 2,
+          perSlideOffset: 8,
+        }}
+        pagination={{
+          el: '.play-swipe-dots',
+          clickable: true,
+          bulletClass: 'play-swipe-dot',
+          bulletActiveClass: 'play-swipe-dot--active',
+        }}
+        onTouchStart={() => {
+          draggedRef.current = false;
+        }}
+        onSliderMove={() => {
+          draggedRef.current = true;
+        }}
+        onClick={(s) => {
+          if (draggedRef.current || !s.allowClick) return;
+          const project = projects[s.realIndex];
+          if (project) onOpen?.(project);
+        }}
+      >
+        {projects.map((project) => (
+          <SwiperSlide key={project.id} className="play-swipe-slide">
+            <div
+              className="play-swipe-card"
+              role="button"
+              tabIndex={0}
+              aria-label={`${project.title}. ${project.subtitle}`}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  onOpen?.(project);
+                }
+              }}
+              onMouseEnter={() => setCursorVariant?.('hover')}
+              onMouseLeave={() => setCursorVariant?.('default')}
+            >
+              {project.coverVideo || isVideoSrc(project.cover) ? (
+                <video
+                  src={project.cover}
+                  className={[
+                    'play-swipe-media',
+                    project.coverZoom ? 'play-swipe-media--zoom' : '',
+                    project.coverFocus ? `play-swipe-media--focus-${project.coverFocus}` : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  muted
+                  loop
+                  playsInline
+                  autoPlay
+                  preload="metadata"
+                  draggable={false}
+                />
+              ) : (
+                <img
+                  src={project.cover}
+                  alt=""
+                  className={[
+                    'play-swipe-media',
+                    project.coverZoom ? 'play-swipe-media--zoom' : '',
+                    project.coverFocus ? `play-swipe-media--focus-${project.coverFocus}` : '',
+                  ]
+                    .filter(Boolean)
+                    .join(' ')}
+                  draggable={false}
+                />
+              )}
+            </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
       <div
         className="play-swipe-dots"
         role="tablist"
         aria-label="Play projects"
       />
+
+      <p className="play-swipe-note">I love to design in my free time too...</p>
     </div>
   );
 };

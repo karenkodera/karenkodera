@@ -9,15 +9,6 @@
   margin: 0 auto;
 }
 
-.play-swipe-stage {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: clamp(12px, 2.5vw, 28px);
-  width: 100%;
-}
-
 .play-swipe-swiper {
   width: min(72vw, 300px);
   height: min(96vw, 420px);
@@ -45,7 +36,6 @@
   overflow: hidden;
   border-radius: 18px;
   outline: none;
-  /* Let Swiper own the drag; don't create a nested button hit-target fight */
   user-select: none;
   -webkit-user-select: none;
 }
@@ -68,33 +58,6 @@
 .play-swipe-media--zoom.play-swipe-media--focus-bl {
   transform: scale(1.55);
   transform-origin: 32% 78%;
-}
-
-.play-swipe-arrow {
-  appearance: none;
-  flex-shrink: 0;
-  width: 36px;
-  height: 36px;
-  margin: 0;
-  padding: 0;
-  border: 1px solid rgba(25, 25, 25, 0.18);
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.72);
-  color: #191919;
-  font-size: 0.95rem;
-  line-height: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: none;
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease;
-}
-
-.play-swipe-arrow:hover {
-  background: #ffffff;
-  border-color: rgba(25, 25, 25, 0.4);
 }
 
 /* Skiper47-style pagination under the stack */
@@ -133,13 +96,21 @@
   transform: scale(1.2);
 }
 
+.play-swipe-note {
+  margin: -8px 0 0;
+  max-width: min(72vw, 360px);
+  text-align: center;
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  color: rgba(25, 25, 25, 0.62);
+}
+
 @media (max-width: 768px) {
   .play-swipe {
     gap: 22px;
-  }
-
-  .play-swipe-stage {
-    gap: 10px;
   }
 
   .play-swipe-swiper {
@@ -147,9 +118,8 @@
     height: min(88vw, 340px);
   }
 
-  .play-swipe-arrow {
-    width: 32px;
-    height: 32px;
+  .play-swipe-note {
+    margin-top: -4px;
     font-size: 0.85rem;
   }
 }
