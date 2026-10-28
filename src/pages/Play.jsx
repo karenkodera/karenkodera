@@ -1,5 +1,6 @@
 import { useEffect, useCallback, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import PlaySwipeCarousel from '../components/PlaySwipeCarousel';
 import './Play.css';
 import './ProjectsIndex.css';
 
@@ -224,71 +225,6 @@ function PlayModal({ project, onClose, setCursorVariant }) {
   );
 }
 
-function PlayCard({ project, index, setCursorVariant, onOpen, stacked = false }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <motion.div
-      className={`play-card${stacked ? ' play-card--stacked' : ''}`}
-      initial={stacked ? false : { opacity: 0, y: 24 }}
-      animate={stacked ? undefined : { opacity: 1, y: 0 }}
-      transition={
-        stacked
-          ? undefined
-          : {
-              duration: 0.4,
-              ease: [0.25, 0.1, 0.25, 1],
-              delay: index * 0.06,
-            }
-      }
-    >
-      <button
-        type="button"
-        className="play-card-link"
-        onClick={() => onOpen(project)}
-        aria-label={`${project.title}. ${project.subtitle}`}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div
-          className={`play-card-content play-card-content--cover-only${isHovered ? ' is-hovered' : ''}`}
-        >
-          <div className="play-card-inner play-card-inner--cover-only">
-            <div
-              className={`play-card-image-wrap${project.coverPortrait ? ' play-card-image-wrap--portrait' : ''}`}
-            >
-              {project.coverVideo || isVideoSrc(project.cover) ? (
-                <video
-                  src={project.cover}
-                  className="play-card-image"
-                  muted
-                  loop
-                  playsInline
-                  autoPlay
-                  preload="metadata"
-                />
-              ) : (
-                <img
-                  src={project.cover}
-                  alt=""
-                  className={[
-                    'play-card-image',
-                    project.coverZoom ? 'play-card-image--zoom' : '',
-                    project.coverFocus ? `play-card-image--focus-${project.coverFocus}` : '',
-                  ]
-                    .filter(Boolean)
-                    .join(' ')}
-                  loading="lazy"
-                />
-              )}
-            </div>
-          </div>
-        </div>
-      </button>
-    </motion.div>
-  );
-}
-
 const Play = ({ setCursorVariant }) => {
   const [activeProject, setActiveProject] = useState(null);
 
@@ -299,29 +235,11 @@ const Play = ({ setCursorVariant }) => {
   return (
     <div className="projects-index play-page">
       <div className="play-stage">
-        <div className="play-row" aria-label="Play projects">
-          {PLAY_PROJECTS.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="play-row-item"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  ease: [0.25, 0.1, 0.25, 1],
-                  delay: index * 0.06,
-                }}
-              >
-                <PlayCard
-                  project={project}
-                  index={index}
-                  setCursorVariant={setCursorVariant}
-                  onOpen={setActiveProject}
-                  stacked
-                />
-              </motion.div>
-          ))}
-        </div>
+        <PlaySwipeCarousel
+          projects={PLAY_PROJECTS}
+          onOpen={setActiveProject}
+          setCursorVariant={setCursorVariant}
+        />
       </div>
 
       <AnimatePresence>
@@ -337,5 +255,5 @@ const Play = ({ setCursorVariant }) => {
   );
 };
 
-export { PLAY_PROJECTS, PlayModal, PlayCard };
+export { PLAY_PROJECTS, PlayModal };
 export default Play;
