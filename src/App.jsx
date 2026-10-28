@@ -13,6 +13,7 @@ import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
+import { SECTION_PATHS, useSectionPager } from './hooks/useSectionPager';
 import './App.css';
 
 const PAGE_EASE = [0.76, 0, 0.24, 1];
@@ -51,15 +52,19 @@ function AppContent() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const isTabPage = SECTION_PATHS.includes(location.pathname);
+
   useEffect(() => {
-    const lock = location.pathname === '/';
+    const lock = isTabPage;
     document.documentElement.style.overflow = lock ? 'hidden' : '';
     document.body.style.overflow = lock ? 'hidden' : 'auto';
     return () => {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
     };
-  }, [location.pathname]);
+  }, [isTabPage]);
+
+  useSectionPager();
 
   const handleCursorChange = useCallback((variant, element = null) => {
     setCursorVariant(variant);
@@ -79,11 +84,11 @@ function AppContent() {
       <SiteLogo setCursorVariant={setCursorVariant} />
       <SiteChrome setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
-      <main className={isHome ? 'main--home' : 'main--scrollable'}>
+      <main className={isTabPage ? 'main--home' : 'main--scrollable'}>
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
             key={location.pathname}
-            className={`page-transition${isHome ? ' page-transition--home' : ''}`}
+            className={`page-transition${isTabPage ? ' page-transition--home' : ''}`}
             initial={{ y: '40%', opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: '-40%', opacity: 0 }}

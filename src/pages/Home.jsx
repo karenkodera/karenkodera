@@ -88,14 +88,24 @@ const Home = ({ setCursorVariant }) => {
         return;
       }
 
-      let delta = e.deltaY + e.deltaX;
-      if (delta === 0) return;
+      let dx = e.deltaX;
+      let dy = e.deltaY;
+      if (e.deltaMode === 1) {
+        dx *= 16;
+        dy *= 16;
+      } else if (e.deltaMode === 2) {
+        dx *= window.innerWidth;
+        dy *= window.innerHeight;
+      }
 
-      if (e.deltaMode === 1) delta *= 16;
-      else if (e.deltaMode === 2) delta *= window.innerWidth;
+      // Vertical intent is handled by the section pager (work → play → about).
+      // Only drive the work strip on horizontal (or clearly sideways) input.
+      const horizontal = Math.abs(dx) >= Math.abs(dy);
+      if (!horizontal) return;
+      if (dx === 0) return;
 
       e.preventDefault();
-      queueHorizontal(delta);
+      queueHorizontal(dx);
     };
 
     const onKeyDown = (e) => {
@@ -112,10 +122,10 @@ const Home = ({ setCursorVariant }) => {
       }
 
       const page = Math.max(240, Math.floor(window.innerWidth * 0.55));
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === 'PageDown') {
+      if (e.key === 'ArrowRight') {
         e.preventDefault();
         queueHorizontal(page);
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp' || e.key === 'PageUp') {
+      } else if (e.key === 'ArrowLeft') {
         e.preventDefault();
         queueHorizontal(-page);
       } else if (e.key === 'Home') {
