@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
 import DesktopVideoWithToolbar from '../components/DesktopVideoWithToolbar';
 import { get_case_study_for_path } from '../data/caseStudies';
+import { useCaseStudyScrollSpy } from '../hooks/useCaseStudyScrollSpy';
 import './Thesis.css';
 
 function VideoInPhone({ src, subtitle, ariaLabel }) {
@@ -133,56 +134,13 @@ const HSA_FSA_NAV_SECTIONS = [
   { label: 'Learnings', id: 'learnings' },
 ];
 
-const SCROLL_SPY_TOP_OFFSET = 160;
-
 const HsaFsa = ({ setCursorVariant }) => {
-  const [activeSectionId, setActiveSectionId] = useState(null);
+  const { activeSectionId, scrollToSection } = useCaseStudyScrollSpy(
+    HSA_FSA_NAV_SECTIONS.map((s) => s.id)
+  );
 
   const handleMouseEnter = () => setCursorVariant('hover');
   const handleMouseLeave = () => setCursorVariant('default');
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const sectionIds = HSA_FSA_NAV_SECTIONS.map((s) => s.id);
-    const updateActiveSection = () => {
-      const trigger = SCROLL_SPY_TOP_OFFSET;
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const { top, bottom } = el.getBoundingClientRect();
-        if (top <= trigger && bottom >= trigger) {
-          setActiveSectionId(id);
-          return;
-        }
-      }
-      // No section contains the trigger (e.g. between sections): use the last section whose top is above the trigger
-      for (let i = sectionIds.length - 1; i >= 0; i--) {
-        const el = document.getElementById(sectionIds[i]);
-        if (!el) continue;
-        const { top } = el.getBoundingClientRect();
-        if (top <= trigger) {
-          setActiveSectionId(sectionIds[i]);
-          return;
-        }
-      }
-      setActiveSectionId(sectionIds[0]);
-    };
-    updateActiveSection();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    return () => window.removeEventListener('scroll', updateActiveSection);
-  }, []);
-
-  const scrollToSection = (id) => {
-    if (id === 'context') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   return (
     <div className="thesis-page">

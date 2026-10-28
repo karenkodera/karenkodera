@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
 import DesktopVideoWithToolbar from '../components/DesktopVideoWithToolbar';
 import { get_case_study_for_path } from '../data/caseStudies';
+import { useCaseStudyScrollSpy } from '../hooks/useCaseStudyScrollSpy';
 import './Thesis.css';
 
 // Local images saved from https://karenkodera.com/thesis (same order as on the page)
@@ -50,45 +50,13 @@ const THESIS_NAV_SECTIONS = [
   { label: 'Conclusion', id: 'final-outcome' },
 ];
 
-const SCROLL_SPY_TOP_OFFSET = 160;
-
 const Thesis = ({ setCursorVariant }) => {
-  const [activeSectionId, setActiveSectionId] = useState(null);
+  const { activeSectionId, scrollToSection } = useCaseStudyScrollSpy(
+    THESIS_NAV_SECTIONS.map((s) => s.id)
+  );
 
   const handleMouseEnter = () => setCursorVariant('hover');
   const handleMouseLeave = () => setCursorVariant('default');
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const sectionIds = THESIS_NAV_SECTIONS.map((s) => s.id);
-
-    const updateActiveSection = () => {
-      let bestId = null;
-      let bestTop = -Infinity;
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const top = el.getBoundingClientRect().top;
-        if (top <= SCROLL_SPY_TOP_OFFSET && top > bestTop) {
-          bestTop = top;
-          bestId = id;
-        }
-      }
-      setActiveSectionId(bestId ?? sectionIds[0]);
-    };
-
-    updateActiveSection();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    return () => window.removeEventListener('scroll', updateActiveSection);
-  }, []);
-
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   return (
     <div className="thesis-page">

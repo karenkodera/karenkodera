@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
 import { get_case_study_for_path } from '../data/caseStudies';
+import { useCaseStudyScrollSpy } from '../hooks/useCaseStudyScrollSpy';
 import './Thesis.css';
 
 function VideoInZebraDevice({ src, ariaLabel }) {
@@ -126,47 +127,13 @@ const KROGER_NAV_SECTIONS = [
   { label: 'Learnings', id: 'conclusion' },
 ];
 
-const SCROLL_SPY_TOP_OFFSET = 160;
-
 const Kroger = ({ setCursorVariant }) => {
-  const [activeSectionId, setActiveSectionId] = useState(null);
+  const { activeSectionId, scrollToSection } = useCaseStudyScrollSpy(
+    KROGER_NAV_SECTIONS.map((s) => s.id)
+  );
 
   const handleMouseEnter = () => setCursorVariant('hover');
   const handleMouseLeave = () => setCursorVariant('default');
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
-  useEffect(() => {
-    const sectionIds = KROGER_NAV_SECTIONS.map((s) => s.id);
-    const updateActiveSection = () => {
-      const trigger = SCROLL_SPY_TOP_OFFSET;
-      for (const id of sectionIds) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-        const { top, bottom } = el.getBoundingClientRect();
-        if (top <= trigger && bottom >= trigger) {
-          setActiveSectionId(id);
-          return;
-        }
-      }
-      const first = document.getElementById(sectionIds[0]);
-      if (first && first.getBoundingClientRect().bottom < trigger) {
-        setActiveSectionId(sectionIds[sectionIds.length - 1]);
-      } else {
-        setActiveSectionId(sectionIds[0]);
-      }
-    };
-    updateActiveSection();
-    window.addEventListener('scroll', updateActiveSection, { passive: true });
-    return () => window.removeEventListener('scroll', updateActiveSection);
-  }, []);
-
-  const scrollToSection = (id) => {
-    const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  };
 
   return (
     <div className="thesis-page">

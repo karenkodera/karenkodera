@@ -13,31 +13,51 @@ import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
+import { WORK_PROJECT_PATHS } from './data/workProjects';
 import { SECTION_PATHS, pageDirRef, useSectionPager } from './hooks/useSectionPager';
 import './App.css';
 
 const PAGE_EASE = [0.76, 0, 0.24, 1];
 
+/**
+ * kind:
+ * - section: vertical page between work/about/play
+ * - project-in: work (etc) stays put/fades; case study scrolls up into view
+ * - project-out: case study scrolls down away; destination fades in
+ * - fade: everything else
+ */
 const pageVariants = {
-  enter: (dir) => ({
-    y: dir > 0 ? '40%' : '-40%',
-    opacity: 0,
-  }),
+  enter: (ctx) => {
+    const kind = ctx?.kind ?? 'fade';
+    const dir = ctx?.dir ?? 1;
+    if (kind === 'section') {
+      return { y: dir > 0 ? '40%' : '-40%', opacity: 0 };
+    }
+    if (kind === 'project-in') {
+      return { y: '55%', opacity: 1 };
+    }
+    return { opacity: 0, y: 0 };
+  },
   center: {
     y: 0,
     opacity: 1,
   },
-  exit: (dir) => ({
-    y: dir > 0 ? '-40%' : '40%',
-    opacity: 0,
-  }),
-};
-
-/** Soft fade for work cards ↔ case studies (vertical slide is for section tabs only). */
-const projectFadeVariants = {
-  enter: { opacity: 0 },
-  center: { opacity: 1 },
-  exit: { opacity: 0 },
+  exit: (ctx) => {
+    const kind = ctx?.kind ?? 'fade';
+    const dir = ctx?.dir ?? 1;
+    if (kind === 'section') {
+      return { y: dir > 0 ? '-40%' : '40%', opacity: 0 };
+    }
+    if (kind === 'project-in') {
+      // Leaving work: fade only — don't scroll the home page away
+      return { opacity: 0, y: 0 };
+    }
+    if (kind === 'project-out') {
+      // Leaving case study: scroll it back down
+      return { y: '55%', opacity: 1 };
+    }
+    return { opacity: 0, y: 0 };
+  },
 };
 
 const THEME_STORAGE_KEY = 'karenkodera-theme';
@@ -46,12 +66,25 @@ function getInitialTheme() {
   return 'light';
 }
 
+function transitionKind(fromPath, toPath) {
+  const fromSection = SECTION_PATHS.includes(fromPath);
+  const toSection = SECTION_PATHS.includes(toPath);
+  const fromProject = WORK_PROJECT_PATHS.includes(fromPath);
+  const toProject = WORK_PROJECT_PATHS.includes(toPath);
+
+  if (fromSection && toSection) return 'section';
+  if (toProject) return 'project-in';
+  if (fromProject) return 'project-out';
+  return 'fade';
+}
+
 function AppContent() {
   const location = useLocation();
   const [cursorVariant, setCursorVariant] = useState('default');
   const [hoveredElement, setHoveredElement] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
+  const prevPathRef = useRef(location.pathname);
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -75,9 +108,11 @@ function AppContent() {
   }, []);
 
   const isTabPage = SECTION_PATHS.includes(location.pathname);
-  const prevPathRef = useRef(location.pathname);
-  const sectionSlide =
-    SECTION_PATHS.includes(prevPathRef.current) && SECTION_PATHS.includes(location.pathname);
+  const kind = transitionKind(prevPathRef.current, location.pathname);
+  const transitionCustom = {
+    kind,
+    dir: location.state?.pageDir ?? pageDirRef.current,
+  };
 
   useEffect(() => {
     prevPathRef.current = location.pathname;
@@ -107,6 +142,8 @@ function AppContent() {
     location.pathname === '/play' ||
     location.pathname === '/about';
 
+  const transitionDuration = kind === 'section' ? 0.52 : kind === 'project-in' || kind === 'project-out' ? 0.58 : 0.28;
+
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
       {showGrayBackground && <div className="site-gray-bg" aria-hidden />}
@@ -119,20 +156,16 @@ function AppContent() {
         but the work page never unmounts (cards look like they don't link).
       */}
       <main className="main-shell">
-        <AnimatePresence mode="wait" initial={false} custom={pageDirRef.current}>
+        <AnimatePresence mode="wait" initial={false} custom={transitionCustom}>
           <motion.div
             key={location.pathname}
             className={`page-transition${isTabPage ? ' page-transition--home' : ' page-transition--scroll'}`}
-            custom={location.state?.pageDir ?? pageDirRef.current}
-            variants={sectionSlide ? pageVariants : projectFadeVariants}
+            custom={transitionCustom}
+            variants={pageVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={
-              sectionSlide
-                ? { duration: 0.52, ease: PAGE_EASE }
-                : { duration: 0.28, ease: PAGE_EASE }
-            }
+            transition={{ duration: transitionDuration, ease: PAGE_EASE }}
           >
             <Routes location={location}>
               <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
