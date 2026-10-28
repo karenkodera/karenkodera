@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection, { ControlledVideoInDevice } from '../components/CaseStudySection';
+import ProjectTitle from '../components/ProjectTitle';
 import { get_case_study_for_path } from '../data/caseStudies';
 import auditDiagramImg from '../assets/dsg/dsg-audit-diagram.png';
 import stakeholderNeedsImg from '../assets/dsg/dsg-stakeholder-needs.png';
@@ -89,14 +90,18 @@ const DicksSportingGoods = ({ setCursorVariant }) => {
         <article className="thesis-article">
           <motion.section
             className="thesis-hero"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.45 }}
           >
-            <h1 className="thesis-section-label thesis-hero-title">DICK&apos;s Sporting Goods</h1>
-            <p className="thesis-tagline">
-              Saving time for store associates through rethinking DICK&apos;s fulfillment audit process.
-            </p>
+            <p className="thesis-section-label thesis-hero-brand">DICK&apos;s Sporting Goods</p>
+            <ProjectTitle
+              projectId="work-dsg"
+              as="h1"
+              className="thesis-tagline thesis-hero-title"
+            >
+              Streamlining Audit Checks
+            </ProjectTitle>
             <div className="thesis-hero-image-wrap">
               <img
                 src="https://framerusercontent.com/images/tQwaUHTuNBtjPuTDXDbT0SsxXf8.jpg"

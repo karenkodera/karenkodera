@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
-import { AnimatePresence, motion } from 'framer-motion';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { AnimatePresence, LayoutGroup, motion } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SiteLogo from './components/SiteLogo';
 import SiteChrome from './components/SiteChrome';
@@ -13,6 +13,7 @@ import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
+import { WORK_PROJECT_PATHS } from './data/workProjects';
 import { SECTION_PATHS, pageDirRef, useSectionPager } from './hooks/useSectionPager';
 import './App.css';
 
@@ -32,6 +33,17 @@ const pageVariants = {
     opacity: 0,
   }),
 };
+
+/** Keep pages opaque so shared titles can morph; only the leaving page soft-fades. */
+const projectPageVariants = {
+  enter: { opacity: 1 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
+};
+
+function isProjectPath(pathname) {
+  return WORK_PROJECT_PATHS.includes(pathname);
+}
 
 const THEME_STORAGE_KEY = 'karenkodera-theme';
 
@@ -68,6 +80,13 @@ function AppContent() {
   }, []);
 
   const isTabPage = SECTION_PATHS.includes(location.pathname);
+  const prevPathRef = useRef(location.pathname);
+  const projectTransition =
+    isProjectPath(location.pathname) || isProjectPath(prevPathRef.current);
+
+  useEffect(() => {
+    prevPathRef.current = location.pathname;
+  }, [location.pathname]);
 
   useEffect(() => {
     const lock = isTabPage;
@@ -91,7 +110,8 @@ function AppContent() {
     isHome ||
     location.pathname === '/work' ||
     location.pathname === '/play' ||
-    location.pathname === '/about';
+    location.pathname === '/about' ||
+    isProjectPath(location.pathname);
 
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
@@ -100,29 +120,39 @@ function AppContent() {
       <SiteChrome setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
       <main className={isTabPage ? 'main--home' : 'main--scrollable'}>
-        <AnimatePresence mode="wait" initial={false} custom={pageDirRef.current}>
-          <motion.div
-            key={location.pathname}
-            className={`page-transition${isTabPage ? ' page-transition--home' : ''}`}
-            custom={location.state?.pageDir ?? pageDirRef.current}
-            variants={pageVariants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            transition={{ duration: 0.52, ease: PAGE_EASE }}
+        <LayoutGroup>
+          <AnimatePresence
+            mode={projectTransition ? 'popLayout' : 'wait'}
+            initial={false}
+            custom={pageDirRef.current}
           >
-            <Routes location={location}>
-              <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
-              <Route path="/work" element={<Work setCursorVariant={setCursorVariant} />} />
-              <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
-              <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
-              <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
-              <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
-              <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
-              <Route path="/about" element={<About setCursorVariant={setCursorVariant} />} />
-            </Routes>
-          </motion.div>
-        </AnimatePresence>
+            <motion.div
+              key={location.pathname}
+              className={`page-transition${isTabPage ? ' page-transition--home' : ''}`}
+              custom={location.state?.pageDir ?? pageDirRef.current}
+              variants={projectTransition ? projectPageVariants : pageVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={
+                projectTransition
+                  ? { duration: 0.42, ease: PAGE_EASE }
+                  : { duration: 0.52, ease: PAGE_EASE }
+              }
+            >
+              <Routes location={location}>
+                <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
+                <Route path="/work" element={<Work setCursorVariant={setCursorVariant} />} />
+                <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
+                <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
+                <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
+                <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
+                <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
+                <Route path="/about" element={<About setCursorVariant={setCursorVariant} />} />
+              </Routes>
+            </motion.div>
+          </AnimatePresence>
+        </LayoutGroup>
       </main>
     </div>
   );

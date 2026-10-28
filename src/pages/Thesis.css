@@ -215,8 +215,12 @@
   margin-bottom: 16px;
 }
 
-.thesis-hero-title {
+.thesis-hero-brand {
   margin-bottom: 8px;
+}
+
+.thesis-hero-title {
+  margin-bottom: 12px;
 }
 
 .thesis-tagline {
@@ -226,6 +230,11 @@
   line-height: 1.3;
   color: var(--text-color);
   margin-bottom: 12px;
+}
+
+/* Shared layout title: keep case-study headline readable over the gray work bg */
+.thesis-hero-title.thesis-tagline {
+  display: block;
 }
 
 .thesis-hero-meta-row {
