@@ -415,28 +415,28 @@ const HsaFsa = ({ setCursorVariant }) => {
           >
             <span className="thesis-section-label">BUSINESS GOALS</span>
             <h2 className="thesis-section-heading thesis-section-intro-heading">
-              This feature was shipped in 2026. The team is predicting that this feature will:
+              This feature was shipped in 2026.
             </h2>
             <div className="thesis-prediction-boxes">
-              <div className="thesis-context-stat-box" aria-label="Prediction">
+              <div className="thesis-context-stat-box" aria-label="Outcome">
                 <span className="thesis-context-stat-box-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
                 </span>
-                <p className="thesis-context-stat-box-text">Improve customer satisfaction by reducing friction in purchasing eligible items</p>
+                <p className="thesis-context-stat-box-text">Improved customer satisfaction by reducing friction in purchasing eligible items</p>
               </div>
-              <div className="thesis-context-stat-box" aria-label="Prediction">
+              <div className="thesis-context-stat-box" aria-label="Outcome">
                 <span className="thesis-context-stat-box-icon thesis-context-stat-box-icon-trending" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="3 17 9 11 13 15 21 7" />
                     <polyline points="18 10 21 7 21 10" />
                   </svg>
                 </span>
-                <p className="thesis-context-stat-box-text">Drive $71M in incremental sales over four years</p>
+                <p className="thesis-context-stat-box-text">Drove $71M in incremental sales over four years</p>
               </div>
-              <div className="thesis-context-stat-box" aria-label="Prediction">
+              <div className="thesis-context-stat-box" aria-label="Outcome">
                 <span className="thesis-context-stat-box-icon" aria-hidden="true">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <rect x="1" y="4" width="22" height="16" rx="2" ry="2" />
