@@ -1,0 +1,50 @@
+.bounce-curtain {
+  position: fixed;
+  inset: 0;
+  top: 0;
+  z-index: 3500;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
+  pointer-events: auto;
+  will-change: top;
+  overflow: visible;
+}
+
+.bounce-curtain-panel {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bounce-curtain--tan .bounce-curtain-panel {
+  background-color: #f3f1eb;
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.028) 1px, transparent 1px);
+  background-size: 16px 16px;
+  background-position: center top;
+}
+
+.bounce-curtain--white .bounce-curtain-panel {
+  background-color: #ffffff;
+}
+
+.bounce-curtain-curve {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  pointer-events: none;
+  z-index: 1;
+  overflow: visible;
+}
+
+.bounce-curtain--tan .bounce-curtain-curve path {
+  fill: #f3f1eb;
+}
+
+.bounce-curtain--white .bounce-curtain-curve path {
+  fill: #ffffff;
+}

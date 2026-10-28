@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SiteLogo from './components/SiteLogo';
 import SiteChrome from './components/SiteChrome';
+import BounceCurtain from './components/BounceCurtain';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
 import Home from './pages/Home';
 import Work from './pages/Work';
@@ -22,8 +23,7 @@ const PAGE_EASE = [0.76, 0, 0.24, 1];
 /**
  * kind:
  * - section: vertical page between work/about/play
- * - project-in: work (etc) stays put/fades; case study scrolls up into view
- * - project-out: case study scrolls down away; destination fades in
+ * - project-in / project-out: Skiper8 bounce curtain (tan↔white); pages swap under it
  * - fade: everything else
  */
 const pageVariants = {
@@ -33,8 +33,9 @@ const pageVariants = {
     if (kind === 'section') {
       return { y: dir > 0 ? '40%' : '-40%', opacity: 0 };
     }
-    if (kind === 'project-in') {
-      return { y: '55%', opacity: 1 };
+    // Project transitions: content is ready under the bounce curtain
+    if (kind === 'project-in' || kind === 'project-out') {
+      return { opacity: 1, y: 0 };
     }
     return { opacity: 0, y: 0 };
   },
@@ -48,13 +49,8 @@ const pageVariants = {
     if (kind === 'section') {
       return { y: dir > 0 ? '-40%' : '40%', opacity: 0 };
     }
-    if (kind === 'project-in') {
-      // Leaving work: fade only — don't scroll the home page away
-      return { opacity: 0, y: 0 };
-    }
-    if (kind === 'project-out') {
-      // Leaving case study: scroll it back down
-      return { y: '55%', opacity: 1 };
+    if (kind === 'project-in' || kind === 'project-out') {
+      return { opacity: 1, y: 0 };
     }
     return { opacity: 0, y: 0 };
   },
@@ -73,8 +69,10 @@ function transitionKind(fromPath, toPath) {
   const toProject = WORK_PROJECT_PATHS.includes(toPath);
 
   if (fromSection && toSection) return 'section';
-  if (toProject) return 'project-in';
-  if (fromProject) return 'project-out';
+  // Work (section) → case study: tan grid bounces away
+  if (fromSection && toProject) return 'project-in';
+  // Case study → work: white bounces away
+  if (fromProject && toSection) return 'project-out';
   return 'fade';
 }
 
@@ -84,7 +82,25 @@ function AppContent() {
   const [hoveredElement, setHoveredElement] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
   const [theme, setTheme] = useState(getInitialTheme);
-  const prevPathRef = useRef(location.pathname);
+  const [curtain, setCurtain] = useState(null); // { tone, key } | null
+  // path tracked so we can derive kind synchronously on the navigating render
+  const [navMeta, setNavMeta] = useState(() => ({
+    path: location.pathname,
+    kind: 'fade',
+    dir: 1,
+  }));
+
+  // Adjust transition meta during render when the route changes (covers first paint)
+  if (navMeta.path !== location.pathname) {
+    const nextKind = transitionKind(navMeta.path, location.pathname);
+    const nextDir = location.state?.pageDir ?? pageDirRef.current;
+    setNavMeta({ path: location.pathname, kind: nextKind, dir: nextDir });
+    if (nextKind === 'project-in') {
+      setCurtain({ tone: 'tan', key: location.key });
+    } else if (nextKind === 'project-out') {
+      setCurtain({ tone: 'white', key: location.key });
+    }
+  }
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -108,15 +124,12 @@ function AppContent() {
   }, []);
 
   const isTabPage = SECTION_PATHS.includes(location.pathname);
-  const kind = transitionKind(prevPathRef.current, location.pathname);
-  const transitionCustom = {
-    kind,
-    dir: location.state?.pageDir ?? pageDirRef.current,
-  };
+  const kind = navMeta.kind;
+  const transitionCustom = { kind: navMeta.kind, dir: navMeta.dir };
 
-  useEffect(() => {
-    prevPathRef.current = location.pathname;
-  }, [location.pathname]);
+  const clearCurtain = useCallback(() => {
+    setCurtain(null);
+  }, []);
 
   useEffect(() => {
     const lock = isTabPage;
@@ -142,7 +155,8 @@ function AppContent() {
     location.pathname === '/play' ||
     location.pathname === '/about';
 
-  const transitionDuration = kind === 'section' ? 0.52 : kind === 'project-in' || kind === 'project-out' ? 0.58 : 0.28;
+  const transitionDuration =
+    kind === 'section' ? 0.52 : kind === 'project-in' || kind === 'project-out' ? 0.01 : 0.28;
 
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>
@@ -150,6 +164,13 @@ function AppContent() {
       <SiteLogo setCursorVariant={setCursorVariant} />
       <SiteChrome setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
+      {curtain && (
+        <BounceCurtain
+          tone={curtain.tone}
+          animKey={curtain.key}
+          onComplete={clearCurtain}
+        />
+      )}
       {/*
         Keep <main> class stable across routes. Swapping main--home / main--scrollable
         during AnimatePresence interrupts the exit animation, so the URL updates
