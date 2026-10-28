@@ -20,6 +20,11 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
 
   return (
     <div className="play-swipe">
+      <p className="play-swipe-note">
+        I love to design in my free time too. Click and drag to flip through my
+        fun projects.
+      </p>
+
       <Swiper
         className="play-swipe-swiper"
         modules={[EffectCards, Pagination]}
@@ -118,8 +123,6 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
         role="tablist"
         aria-label="Play projects"
       />
-
-      <p className="play-swipe-note">I love to design in my free time too...</p>
     </div>
   );
 };

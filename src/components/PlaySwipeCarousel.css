@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 28px;
+  gap: 36px;
   width: 100%;
   max-width: 100%;
   margin: 0 auto;
@@ -97,20 +97,20 @@
 }
 
 .play-swipe-note {
-  margin: -8px 0 0;
-  max-width: min(72vw, 360px);
+  margin: 0;
+  max-width: min(78vw, 420px);
   text-align: center;
-  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  font-family: 'Skiper Display', 'Inter Tight', system-ui, sans-serif;
   font-size: 0.9rem;
   font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.4;
-  color: rgba(25, 25, 25, 0.62);
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  color: rgba(25, 25, 25, 0.72);
 }
 
 @media (max-width: 768px) {
   .play-swipe {
-    gap: 22px;
+    gap: 28px;
   }
 
   .play-swipe-swiper {
@@ -119,7 +119,7 @@
   }
 
   .play-swipe-note {
-    margin-top: -4px;
     font-size: 0.85rem;
+    max-width: min(86vw, 360px);
   }
 }
