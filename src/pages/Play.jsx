@@ -70,13 +70,16 @@ function PlayModal({ project, onClose, setCursorVariant }) {
   const videoRef = useRef(null);
   const slides = project?.slides ?? [];
   const currentSrc = slides[slideIndex];
+  const multi = slides.length > 1;
+  const canPrev = multi && slideIndex > 0;
+  const canNext = multi && slideIndex < slides.length - 1;
 
   const goPrev = useCallback(() => {
-    setSlideIndex((i) => (i <= 0 ? slides.length - 1 : i - 1));
-  }, [slides.length]);
+    setSlideIndex((i) => (i <= 0 ? i : i - 1));
+  }, []);
 
   const goNext = useCallback(() => {
-    setSlideIndex((i) => (i >= slides.length - 1 ? 0 : i + 1));
+    setSlideIndex((i) => (i >= slides.length - 1 ? i : i + 1));
   }, [slides.length]);
 
   useEffect(() => {
@@ -87,8 +90,8 @@ function PlayModal({ project, onClose, setCursorVariant }) {
     if (!project) return undefined;
     const onKey = (e) => {
       if (e.key === 'Escape') onClose();
-      if (e.key === 'ArrowLeft') goPrev();
-      if (e.key === 'ArrowRight') goNext();
+      if (e.key === 'ArrowLeft' && canPrev) goPrev();
+      if (e.key === 'ArrowRight' && canNext) goNext();
     };
     document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', onKey);
@@ -96,7 +99,7 @@ function PlayModal({ project, onClose, setCursorVariant }) {
       document.body.style.overflow = '';
       window.removeEventListener('keydown', onKey);
     };
-  }, [project, onClose, goPrev, goNext]);
+  }, [project, onClose, goPrev, goNext, canPrev, canNext]);
 
   useEffect(() => {
     const el = videoRef.current;
@@ -123,7 +126,7 @@ function PlayModal({ project, onClose, setCursorVariant }) {
       role="presentation"
     >
       <motion.div
-        className="play-modal"
+        className={`play-modal${multi ? '' : ' play-modal--single'}`}
         role="dialog"
         aria-modal="true"
         aria-label={project.modalTitle || project.title}
@@ -145,16 +148,22 @@ function PlayModal({ project, onClose, setCursorVariant }) {
         </button>
 
         <div className="play-modal-image-row">
-          <button
-            type="button"
-            className="play-modal-nav play-modal-nav-prev"
-            onClick={goPrev}
-            aria-label="Previous image"
-            onMouseEnter={() => setCursorVariant?.('hover')}
-            onMouseLeave={() => setCursorVariant?.('default')}
-          >
-            ←
-          </button>
+          {multi ? (
+            <button
+              type="button"
+              className="play-modal-nav play-modal-nav-prev"
+              onClick={goPrev}
+              aria-label="Previous image"
+              disabled={!canPrev}
+              hidden={!canPrev}
+              onMouseEnter={() => setCursorVariant?.('hover')}
+              onMouseLeave={() => setCursorVariant?.('default')}
+            >
+              ←
+            </button>
+          ) : (
+            <span className="play-modal-nav-spacer" aria-hidden />
+          )}
 
           <div className="play-modal-media">
             <AnimatePresence mode="wait">
@@ -189,32 +198,40 @@ function PlayModal({ project, onClose, setCursorVariant }) {
             </AnimatePresence>
           </div>
 
-          <button
-            type="button"
-            className="play-modal-nav play-modal-nav-next"
-            onClick={goNext}
-            aria-label="Next image"
-            onMouseEnter={() => setCursorVariant?.('hover')}
-            onMouseLeave={() => setCursorVariant?.('default')}
-          >
-            →
-          </button>
+          {multi ? (
+            <button
+              type="button"
+              className="play-modal-nav play-modal-nav-next"
+              onClick={goNext}
+              aria-label="Next image"
+              disabled={!canNext}
+              hidden={!canNext}
+              onMouseEnter={() => setCursorVariant?.('hover')}
+              onMouseLeave={() => setCursorVariant?.('default')}
+            >
+              →
+            </button>
+          ) : (
+            <span className="play-modal-nav-spacer" aria-hidden />
+          )}
         </div>
 
         <div className="play-modal-footer">
-          <div className="play-modal-dots" role="tablist" aria-label="Slides">
-            {slides.map((src, i) => (
-              <button
-                key={src}
-                type="button"
-                role="tab"
-                aria-selected={i === slideIndex}
-                className={`play-modal-dot${i === slideIndex ? ' active' : ''}`}
-                onClick={() => setSlideIndex(i)}
-                aria-label={`Go to slide ${i + 1}`}
-              />
-            ))}
-          </div>
+          {multi && (
+            <div className="play-modal-dots" role="tablist" aria-label="Slides">
+              {slides.map((src, i) => (
+                <button
+                  key={src}
+                  type="button"
+                  role="tab"
+                  aria-selected={i === slideIndex}
+                  className={`play-modal-dot${i === slideIndex ? ' active' : ''}`}
+                  onClick={() => setSlideIndex(i)}
+                  aria-label={`Go to slide ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
           <div className="play-modal-copy">
             <h2 className="play-modal-title">{project.modalTitle}</h2>
             <p className="play-modal-body">{project.modalBody}</p>

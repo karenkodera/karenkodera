@@ -9,15 +9,25 @@
   margin: 0 auto;
 }
 
+.play-swipe-stage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2.5vw, 28px);
+  width: 100%;
+}
+
 .play-swipe-swiper {
   width: min(72vw, 300px);
   height: min(96vw, 420px);
   padding-bottom: 0 !important;
   touch-action: none;
+  border-radius: 18px;
 }
 
 .play-swipe-slide {
-  border-radius: 0;
+  border-radius: 18px;
   overflow: hidden;
   background: #fafafa;
 }
@@ -33,6 +43,7 @@
   background: transparent;
   cursor: none;
   overflow: hidden;
+  border-radius: 18px;
 }
 
 .play-swipe-media {
@@ -43,7 +54,6 @@
   pointer-events: none;
   user-select: none;
   -webkit-user-drag: none;
-  transition: transform 0.45s ease;
 }
 
 .play-swipe-media--zoom {
@@ -56,16 +66,31 @@
   transform-origin: 32% 78%;
 }
 
-.play-swipe-card:hover .play-swipe-media {
-  transform: scale(1.14);
+.play-swipe-arrow {
+  appearance: none;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(25, 25, 25, 0.18);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.72);
+  color: #191919;
+  font-size: 0.95rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: none;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
 }
 
-.play-swipe-card:hover .play-swipe-media--zoom {
-  transform: scale(1.68);
-}
-
-.play-swipe-card:hover .play-swipe-media--zoom.play-swipe-media--focus-bl {
-  transform: scale(1.82);
+.play-swipe-arrow:hover {
+  background: #ffffff;
+  border-color: rgba(25, 25, 25, 0.4);
 }
 
 /* Skiper47-style pagination under the stack */
@@ -104,25 +129,23 @@
   transform: scale(1.2);
 }
 
-.play-swipe-caption {
-  margin: 0;
-  max-width: min(72vw, 320px);
-  text-align: center;
-  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
-  font-size: 0.85rem;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.3;
-  color: #191919;
-}
-
 @media (max-width: 768px) {
   .play-swipe {
     gap: 22px;
   }
 
+  .play-swipe-stage {
+    gap: 10px;
+  }
+
   .play-swipe-swiper {
-    width: min(68vw, 260px);
-    height: min(90vw, 360px);
+    width: min(62vw, 240px);
+    height: min(88vw, 340px);
+  }
+
+  .play-swipe-arrow {
+    width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
   }
 }
