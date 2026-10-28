@@ -100,10 +100,10 @@
   margin: 0;
   max-width: min(78vw, 420px);
   text-align: center;
-  font-family: 'Skiper Display', 'Inter Tight', system-ui, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
   font-size: 0.9rem;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.01em;
   line-height: 1.45;
   color: rgba(25, 25, 25, 0.72);
 }
