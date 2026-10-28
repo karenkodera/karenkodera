@@ -62,21 +62,11 @@ body {
   background-position: center top;
 }
 
-main {
+main,
+.main-shell {
   position: relative;
   z-index: 1;
   height: 100%;
-  overflow: hidden;
-}
-
-.main--home {
-  height: 100%;
-  overflow: hidden;
-}
-
-.main--scrollable {
-  height: 100%;
-  min-height: 100%;
   overflow: hidden;
 }
 
@@ -90,7 +80,7 @@ main {
   height: 100%;
 }
 
-.main--scrollable .page-transition {
+.page-transition--scroll {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;

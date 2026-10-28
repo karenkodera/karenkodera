@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
 import SiteLogo from './components/SiteLogo';
@@ -32,6 +32,13 @@ const pageVariants = {
     y: dir > 0 ? '-40%' : '40%',
     opacity: 0,
   }),
+};
+
+/** Soft fade for work cards ↔ case studies (vertical slide is for section tabs only). */
+const projectFadeVariants = {
+  enter: { opacity: 0 },
+  center: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
 const THEME_STORAGE_KEY = 'karenkodera-theme';
@@ -69,6 +76,13 @@ function AppContent() {
   }, []);
 
   const isTabPage = SECTION_PATHS.includes(location.pathname);
+  const prevPathRef = useRef(location.pathname);
+  const sectionSlide =
+    SECTION_PATHS.includes(prevPathRef.current) && SECTION_PATHS.includes(location.pathname);
+
+  useEffect(() => {
+    prevPathRef.current = location.pathname;
+  }, [location.pathname]);
 
   useEffect(() => {
     const lock = isTabPage;
@@ -101,17 +115,26 @@ function AppContent() {
       <SiteLogo setCursorVariant={setCursorVariant} />
       <SiteChrome setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
-      <main className={isTabPage ? 'main--home' : 'main--scrollable'}>
+      {/*
+        Keep <main> class stable across routes. Swapping main--home / main--scrollable
+        during AnimatePresence interrupts the exit animation, so the URL updates
+        but the work page never unmounts (cards look like they don't link).
+      */}
+      <main className="main-shell">
         <AnimatePresence mode="wait" initial={false} custom={pageDirRef.current}>
           <motion.div
             key={location.pathname}
-            className={`page-transition${isTabPage ? ' page-transition--home' : ''}`}
+            className={`page-transition${isTabPage ? ' page-transition--home' : ' page-transition--scroll'}`}
             custom={location.state?.pageDir ?? pageDirRef.current}
-            variants={pageVariants}
+            variants={sectionSlide ? pageVariants : projectFadeVariants}
             initial="enter"
             animate="center"
             exit="exit"
-            transition={{ duration: 0.52, ease: PAGE_EASE }}
+            transition={
+              sectionSlide
+                ? { duration: 0.52, ease: PAGE_EASE }
+                : { duration: 0.28, ease: PAGE_EASE }
+            }
           >
             <Routes location={location}>
               <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
