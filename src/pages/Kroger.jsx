@@ -388,30 +388,30 @@ const Kroger = ({ setCursorVariant }) => {
           />
 
         </article>
-      </div>
 
-      <footer className="thesis-case-nav" aria-label="Other case studies">
-        <div className="footer-content thesis-case-nav-inner">
-          <Link to="/thesis" className="thesis-case-nav-link thesis-case-nav-prev" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <div className="thesis-case-nav-content">
-              <span className="thesis-case-nav-arrow" aria-hidden>←</span>
-              <span className="thesis-case-nav-label">Previous case study</span>
-            </div>
-            {get_case_study_for_path('/thesis') && (
-              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/thesis').subtitle}</span>
-            )}
-          </Link>
-          <Link to="/dsg" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-            <div className="thesis-case-nav-content">
-              <span className="thesis-case-nav-label">Next case study</span>
-              <span className="thesis-case-nav-arrow" aria-hidden>→</span>
-            </div>
-            {get_case_study_for_path('/dsg') && (
-              <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/dsg').subtitle}</span>
-            )}
-          </Link>
-        </div>
-      </footer>
+        <footer className="thesis-case-nav" aria-label="Other case studies">
+          <div className="footer-content thesis-case-nav-inner">
+            <Link to="/thesis" className="thesis-case-nav-link thesis-case-nav-prev" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <div className="thesis-case-nav-content">
+                <span className="thesis-case-nav-arrow" aria-hidden>←</span>
+                <span className="thesis-case-nav-label">Previous case study</span>
+              </div>
+              {get_case_study_for_path('/thesis') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/thesis').subtitle}</span>
+              )}
+            </Link>
+            <Link to="/dsg" className="thesis-case-nav-link thesis-case-nav-next" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
+              <div className="thesis-case-nav-content">
+                <span className="thesis-case-nav-label">Next case study</span>
+                <span className="thesis-case-nav-arrow" aria-hidden>→</span>
+              </div>
+              {get_case_study_for_path('/dsg') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/dsg').subtitle}</span>
+              )}
+            </Link>
+          </div>
+        </footer>
+      </div>
     </div>
   );
 };
