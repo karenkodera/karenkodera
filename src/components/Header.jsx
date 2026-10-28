@@ -45,8 +45,8 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
 
   const navItems = [
     { id: 'work', label: 'work', path: '/' },
-    { id: 'play', label: 'play', path: '/play' },
     { id: 'about', label: 'about', path: '/about' },
+    { id: 'play', label: 'play', path: '/play' },
   ];
 
   const activeIndex = navItems.findIndex((item) => item.path === location.pathname);

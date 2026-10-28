@@ -98,7 +98,7 @@ const Home = ({ setCursorVariant }) => {
         dy *= window.innerHeight;
       }
 
-      // Vertical intent is handled by the section pager (work → play → about).
+      // Vertical intent is handled by the section pager (work → about → play).
       // Only drive the work strip on horizontal (or clearly sideways) input.
       const horizontal = Math.abs(dx) >= Math.abs(dy);
       if (!horizontal) return;

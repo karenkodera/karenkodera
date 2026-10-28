@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export const SECTION_PATHS = ['/', '/play', '/about'];
+export const SECTION_PATHS = ['/', '/about', '/play'];
 
 /** Shared with App page transition — set before navigate so exit/enter match. */
 export const pageDirRef = { current: 1 };
@@ -38,7 +38,7 @@ export function navigateSection(navigate, path, dir) {
 }
 
 /**
- * Discrete vertical section paging: work → play → about → work.
+ * Discrete vertical section paging: work → about → play → work.
  * Accumulates wheel/touch delta with rubber-band tension, then navigates
  * once the threshold is crossed (same route transition as the pill tabs).
  */
