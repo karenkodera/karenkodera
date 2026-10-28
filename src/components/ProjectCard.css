@@ -55,6 +55,28 @@
   display: block;
 }
 
+.project-lock-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: rgba(25, 25, 25, 0.82);
+  color: #ffffff;
+  pointer-events: none;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.project-lock-icon {
+  display: block;
+  flex-shrink: 0;
+}
+
 /* Work in progress: grayed-out image and text, badge overlay */
 .project-card-wip .project-image {
   filter: grayscale(0.85);

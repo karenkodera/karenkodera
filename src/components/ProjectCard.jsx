@@ -54,6 +54,11 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
       <CardWrapper
         {...cardProps}
         className="project-card-link"
+        aria-label={
+          requiresPassword
+            ? `${project.title} (password protected)`
+            : undefined
+        }
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -74,6 +79,24 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
                 className="project-image"
                 loading="lazy"
               />
+              {requiresPassword && (
+                <div className="project-lock-badge" aria-hidden="true" title="Password protected">
+                  <svg
+                    className="project-lock-icon"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.25"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                  </svg>
+                </div>
+              )}
               {isWip && (
                 <div className="project-wip-badge" aria-hidden="true">
                   <svg className="project-wip-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
