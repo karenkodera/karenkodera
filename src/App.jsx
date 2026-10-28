@@ -13,7 +13,6 @@ import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
-import { WORK_PROJECT_PATHS } from './data/workProjects';
 import { SECTION_PATHS, pageDirRef, useSectionPager } from './hooks/useSectionPager';
 import './App.css';
 
@@ -106,8 +105,7 @@ function AppContent() {
     isHome ||
     location.pathname === '/work' ||
     location.pathname === '/play' ||
-    location.pathname === '/about' ||
-    WORK_PROJECT_PATHS.includes(location.pathname);
+    location.pathname === '/about';
 
   return (
     <div className={`app${showGrayBackground ? ' app--gray' : ''}`}>

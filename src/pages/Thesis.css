@@ -1,59 +1,41 @@
 .thesis-page {
-  min-height: 100vh;
-  padding-top: 100px;
+  min-height: 100%;
+  padding-top: 88px;
   display: flex;
   flex-wrap: wrap;
+  align-items: flex-start;
   width: 100%;
+  background: #ffffff;
 }
 
-/* Wrapper reserves space so main content doesn’t overlap nav */
+/*
+  Sticky side nav — must be sticky (not fixed) because case studies scroll
+  inside .page-transition--scroll, and transforms on that ancestor break fixed.
+*/
 .thesis-nav-wrap {
   flex: 0 0 200px;
   width: 200px;
   margin-top: 0;
+  position: sticky;
+  top: 88px;
   align-self: flex-start;
+  z-index: 10;
+  max-height: calc(100vh - 96px);
+  overflow-y: auto;
 }
 
-/* Left nav: fixed so it stays visible while scrolling (sticky was broken by body overflow) */
 .thesis-nav {
-  position: fixed;
-  top: 100px;
-  left: 0;
-  width: 200px;
-  padding: 24px 16px 24px 24px;
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  padding: 0 16px 24px 24px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  z-index: 10;
-}
-
-.thesis-nav-back {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 8px 14px;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--bg-color);
-  background: var(--text-color);
-  border-radius: 50px;
-  text-decoration: none;
-  transition: color 0.2s ease, background 0.2s ease;
-  flex-shrink: 0;
-  width: fit-content;
-  box-sizing: border-box;
-}
-
-.thesis-nav-back:hover {
-  color: var(--text-color);
-  background: var(--hover-bg);
-}
-
-.thesis-nav-back-arrow {
-  flex-shrink: 0;
-  line-height: 1;
+  gap: 8px;
+  max-height: none;
+  overflow: visible;
+  z-index: auto;
 }
 
 .thesis-nav-list {
@@ -111,7 +93,7 @@
 }
 
 .thesis-section {
-  scroll-margin-top: 120px;
+  scroll-margin-top: 100px;
   margin-bottom: 60px;
 }
 

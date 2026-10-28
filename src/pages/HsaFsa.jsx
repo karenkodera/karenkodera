@@ -188,25 +188,21 @@ const HsaFsa = ({ setCursorVariant }) => {
     <div className="thesis-page">
       <div className="thesis-nav-wrap">
         <nav className="thesis-nav" aria-label="Case study sections">
-          <Link to="/" className="thesis-nav-back" onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-          <span className="thesis-nav-back-arrow" aria-hidden>←</span>
-          back to home
-        </Link>
-        <ul className="thesis-nav-list">
-          {HSA_FSA_NAV_SECTIONS.map(({ label, id }) => (
-            <li key={id} className="thesis-nav-item">
-              <button
-                type="button"
-                className={`thesis-nav-link${activeSectionId === id ? ' thesis-nav-link-active' : ''}`}
-                onClick={() => scrollToSection(id)}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-              >
-                {label}
-              </button>
-            </li>
-          ))}
-        </ul>
+          <ul className="thesis-nav-list">
+            {HSA_FSA_NAV_SECTIONS.map(({ label, id }) => (
+              <li key={id} className="thesis-nav-item">
+                <button
+                  type="button"
+                  className={`thesis-nav-link${activeSectionId === id ? ' thesis-nav-link-active' : ''}`}
+                  onClick={() => scrollToSection(id)}
+                  onMouseEnter={handleMouseEnter}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  {label}
+                </button>
+              </li>
+            ))}
+          </ul>
         </nav>
       </div>
 
