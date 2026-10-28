@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
-import ProjectTitle from './ProjectTitle';
 import './ProjectCard.css';
 
 const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => {
@@ -109,9 +108,7 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
             </div>
             
             <div className="project-info">
-              <ProjectTitle projectId={project.id} as="h3" className="project-title">
-                {project.title}
-              </ProjectTitle>
+              <h3 className="project-title">{project.title}</h3>
               <div className="project-meta">
                 <p className="project-subtitle">{project.subtitle}</p>
                 <span className="project-tag">{project.tags.slice(0, 2).join(' ')}</span>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
 import DesktopVideoWithToolbar from '../components/DesktopVideoWithToolbar';
-import ProjectTitle from '../components/ProjectTitle';
 import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
@@ -126,18 +125,14 @@ const Thesis = ({ setCursorVariant }) => {
         <article className="thesis-article">
           <motion.section
             className="thesis-hero"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.45 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <p className="thesis-section-label thesis-hero-brand">Bridg</p>
-            <ProjectTitle
-              projectId="work-thesis"
-              as="h1"
-              className="thesis-tagline thesis-hero-title"
-            >
-              Minimizing Overproduction in Fashion Retail
-            </ProjectTitle>
+            <h1 className="thesis-section-label thesis-hero-title">Bridg</h1>
+            <p className="thesis-tagline">
+              A feedback service to help retail brands reduce overproduction.
+            </p>
             <div className="thesis-hero-image-wrap thesis-hero-desktop-video-wrap">
               <DesktopVideoWithToolbar
                 src="/thesis/bridg%20home%20.mp4"

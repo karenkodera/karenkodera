@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import CaseStudySection from '../components/CaseStudySection';
-import ProjectTitle from '../components/ProjectTitle';
 import { get_case_study_for_path } from '../data/caseStudies';
 import './Thesis.css';
 
@@ -199,18 +198,14 @@ const Kroger = ({ setCursorVariant }) => {
         <article className="thesis-article thesis-article-kroger">
           <motion.section
             className="thesis-hero"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.45 }}
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
           >
-            <p className="thesis-section-label thesis-hero-brand">Kroger</p>
-            <ProjectTitle
-              projectId="work-kroger"
-              as="h1"
-              className="thesis-tagline thesis-hero-title"
-            >
-              Reducing Paper in Grocery Delivery
-            </ProjectTitle>
+            <h1 className="thesis-section-label thesis-hero-title">Kroger</h1>
+            <p className="thesis-tagline">
+              Reducing paper in grocery delivery through digitizing driver experience with creation of Offline Mode.
+            </p>
             <div className="thesis-hero-image-wrap">
               <img
                 src="https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg"
