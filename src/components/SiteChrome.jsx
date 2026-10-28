@@ -2,6 +2,7 @@ import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CONTACT_LINKS, RESUME_URL } from './Hero';
 import SiteClock from './SiteClock';
+import { navigateSection, sectionDirection } from '../hooks/useSectionPager';
 import './SiteChrome.css';
 
 const NAV_ITEMS = [
@@ -30,18 +31,16 @@ const SiteChrome = ({ setCursorVariant }) => {
           : null;
 
   const handleNav = (item) => {
-    if (item.id === 'work') {
-      if (location.pathname === '/') {
-        document.querySelector('.home-scroller')?.scrollTo({ left: 0, behavior: 'smooth' });
-        if (window.history.replaceState) {
-          window.history.replaceState(null, '', '/');
-        }
-      } else {
-        navigate('/');
+    if (item.id === 'work' && location.pathname === '/') {
+      document.querySelector('.home-scroller')?.scrollTo({ left: 0, behavior: 'smooth' });
+      if (window.history.replaceState) {
+        window.history.replaceState(null, '', '/');
       }
       return;
     }
-    navigate(item.path);
+    if (item.path === location.pathname) return;
+    const dir = sectionDirection(location.pathname, item.path);
+    navigateSection(navigate, item.path, dir);
   };
 
   return createPortal(

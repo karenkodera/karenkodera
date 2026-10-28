@@ -13,10 +13,25 @@ import Thesis from './pages/Thesis';
 import Kroger from './pages/Kroger';
 import HsaFsa from './pages/HsaFsa';
 import DicksSportingGoods from './pages/DicksSportingGoods';
-import { SECTION_PATHS, useSectionPager } from './hooks/useSectionPager';
+import { SECTION_PATHS, pageDirRef, useSectionPager } from './hooks/useSectionPager';
 import './App.css';
 
 const PAGE_EASE = [0.76, 0, 0.24, 1];
+
+const pageVariants = {
+  enter: (dir) => ({
+    y: dir > 0 ? '40%' : '-40%',
+    opacity: 0,
+  }),
+  center: {
+    y: 0,
+    opacity: 1,
+  },
+  exit: (dir) => ({
+    y: dir > 0 ? '-40%' : '40%',
+    opacity: 0,
+  }),
+};
 
 const THEME_STORAGE_KEY = 'karenkodera-theme';
 
@@ -85,13 +100,15 @@ function AppContent() {
       <SiteChrome setCursorVariant={setCursorVariant} />
       {!isMobile && <CustomCursor cursorVariant={cursorVariant} hoveredElement={hoveredElement} />}
       <main className={isTabPage ? 'main--home' : 'main--scrollable'}>
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="wait" initial={false} custom={pageDirRef.current}>
           <motion.div
             key={location.pathname}
             className={`page-transition${isTabPage ? ' page-transition--home' : ''}`}
-            initial={{ y: '40%', opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: '-40%', opacity: 0 }}
+            custom={location.state?.pageDir ?? pageDirRef.current}
+            variants={pageVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
             transition={{ duration: 0.52, ease: PAGE_EASE }}
           >
             <Routes location={location}>

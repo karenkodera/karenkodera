@@ -3,8 +3,10 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 export const SECTION_PATHS = ['/', '/play', '/about'];
 
+/** Shared with App page transition — set before navigate so exit/enter match. */
+export const pageDirRef = { current: 1 };
+
 const THRESHOLD = 90;
-const RESISTANCE = 0.35;
 const LOCK_MS = 580;
 const DECAY = 0.86;
 
@@ -15,8 +17,28 @@ function isBlocked() {
   return false;
 }
 
+export function sectionIndex(pathname) {
+  return SECTION_PATHS.indexOf(pathname);
+}
+
+/** Shortest wrap direction: 1 = forward (down), -1 = back (up). */
+export function sectionDirection(fromPath, toPath) {
+  const from = sectionIndex(fromPath);
+  const to = sectionIndex(toPath);
+  if (from < 0 || to < 0 || from === to) return 1;
+  const n = SECTION_PATHS.length;
+  const forward = (to - from + n) % n;
+  const backward = (from - to + n) % n;
+  return forward <= backward ? 1 : -1;
+}
+
+export function navigateSection(navigate, path, dir) {
+  pageDirRef.current = dir;
+  navigate(path, { state: { pageDir: dir } });
+}
+
 /**
- * Discrete vertical section paging: work → play → about.
+ * Discrete vertical section paging: work → play → about → work.
  * Accumulates wheel/touch delta with rubber-band tension, then navigates
  * once the threshold is crossed (same route transition as the pill tabs).
  */
@@ -29,10 +51,9 @@ export function useSectionPager() {
   const decayRafRef = useRef(0);
 
   useEffect(() => {
-    const index = SECTION_PATHS.indexOf(location.pathname);
+    const index = sectionIndex(location.pathname);
     if (index < 0) return undefined;
 
-    // Reset tension when the section changes
     accumRef.current = 0;
 
     const lock = () => {
@@ -43,22 +64,17 @@ export function useSectionPager() {
 
     const go = (dir) => {
       if (isLocked() || isBlocked()) return;
-      const next = index + dir;
-      if (next < 0 || next >= SECTION_PATHS.length) return;
+      const n = SECTION_PATHS.length;
+      const next = (index + dir + n) % n;
       lock();
       accumRef.current = 0;
-      navigate(SECTION_PATHS[next]);
+      navigateSection(navigate, SECTION_PATHS[next], dir);
     };
 
     const applyDelta = (rawDelta) => {
       if (!rawDelta || isLocked() || isBlocked()) return;
 
-      let delta = rawDelta;
-      const atStart = index === 0 && delta < 0;
-      const atEnd = index === SECTION_PATHS.length - 1 && delta > 0;
-      if (atStart || atEnd) delta *= RESISTANCE;
-
-      accumRef.current += delta;
+      accumRef.current += rawDelta;
 
       if (accumRef.current >= THRESHOLD) go(1);
       else if (accumRef.current <= -THRESHOLD) go(-1);
@@ -95,7 +111,6 @@ export function useSectionPager() {
         dy *= window.innerHeight;
       }
 
-      // Horizontal intent belongs to the work strip
       if (Math.abs(dx) > Math.abs(dy)) return;
       if (Math.abs(dy) < 1) return;
 
@@ -121,7 +136,7 @@ export function useSectionPager() {
     const onTouchStart = (e) => {
       if (isBlocked() || e.touches.length !== 1) return;
       const t = e.touches[0];
-      touchStartRef.current = { x: t.clientX, y: t.clientY, t: performance.now() };
+      touchStartRef.current = { x: t.clientX, y: t.clientY };
     };
 
     const onTouchEnd = (e) => {
