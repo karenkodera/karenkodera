@@ -11,10 +11,25 @@ const isVideoSrc = (src) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(src || '');
 /**
  * Skiper48-style card swipe stack for play projects,
  * with Skiper47-style pagination dots underneath.
+ *
+ * Note: Swiper's cards effect + loop is buggy with < ~7–8 slides
+ * (gets stuck mid-deck). Use rewind instead so 4 projects wrap cleanly.
  */
 const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
   const draggedRef = useRef(false);
   const [swiper, setSwiper] = useState(null);
+
+  const goPrev = () => {
+    if (!swiper) return;
+    if (swiper.isBeginning) swiper.slideTo(projects.length - 1);
+    else swiper.slidePrev();
+  };
+
+  const goNext = () => {
+    if (!swiper) return;
+    if (swiper.isEnd) swiper.slideTo(0);
+    else swiper.slideNext();
+  };
 
   return (
     <div className="play-swipe">
@@ -23,7 +38,7 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
           type="button"
           className="play-swipe-arrow play-swipe-arrow--prev"
           aria-label="Previous project"
-          onClick={() => swiper?.slidePrev()}
+          onClick={goPrev}
           onMouseEnter={() => setCursorVariant?.('hover')}
           onMouseLeave={() => setCursorVariant?.('default')}
         >
@@ -35,7 +50,7 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
           modules={[EffectCards, Pagination]}
           effect="cards"
           grabCursor
-          loop={projects.length > 2}
+          rewind
           centeredSlides
           spaceBetween={40}
           threshold={1}
@@ -117,7 +132,7 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
           type="button"
           className="play-swipe-arrow play-swipe-arrow--next"
           aria-label="Next project"
-          onClick={() => swiper?.slideNext()}
+          onClick={goNext}
           onMouseEnter={() => setCursorVariant?.('hover')}
           onMouseLeave={() => setCursorVariant?.('default')}
         >
