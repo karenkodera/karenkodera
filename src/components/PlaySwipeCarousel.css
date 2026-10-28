@@ -44,6 +44,10 @@
   cursor: none;
   overflow: hidden;
   border-radius: 18px;
+  outline: none;
+  /* Let Swiper own the drag; don't create a nested button hit-target fight */
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .play-swipe-media {

@@ -12,8 +12,8 @@ const isVideoSrc = (src) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(src || '');
  * Skiper48-style card swipe stack for play projects,
  * with Skiper47-style pagination dots underneath.
  *
- * Note: Swiper's cards effect + loop is buggy with < ~7–8 slides
- * (gets stuck mid-deck). Use rewind instead so 4 projects wrap cleanly.
+ * Cards + loop is buggy with few slides, so we rewind at the ends.
+ * Card content is a div (not a <button>) so pointer drags aren't stolen.
  */
 const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
   const draggedRef = useRef(false);
@@ -51,15 +51,17 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
           effect="cards"
           grabCursor
           rewind
-          centeredSlides
-          spaceBetween={40}
-          threshold={1}
+          nested={false}
+          simulateTouch
+          allowTouchMove
+          touchStartPreventDefault={false}
+          threshold={0}
           shortSwipes
-          longSwipesRatio={0.15}
-          longSwipesMs={200}
+          longSwipesRatio={0.12}
+          longSwipesMs={180}
           followFinger
-          resistanceRatio={0.45}
-          speed={420}
+          resistanceRatio={0.35}
+          speed={380}
           cardsEffect={{
             slideShadows: true,
             rotate: true,
@@ -79,16 +81,24 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
           onSliderMove={() => {
             draggedRef.current = true;
           }}
+          onClick={(s) => {
+            if (draggedRef.current || !s.allowClick) return;
+            const project = projects[s.realIndex];
+            if (project) onOpen?.(project);
+          }}
         >
           {projects.map((project) => (
             <SwiperSlide key={project.id} className="play-swipe-slide">
-              <button
-                type="button"
+              <div
                 className="play-swipe-card"
+                role="button"
+                tabIndex={0}
                 aria-label={`${project.title}. ${project.subtitle}`}
-                onClick={() => {
-                  if (draggedRef.current) return;
-                  onOpen?.(project);
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    onOpen?.(project);
+                  }
                 }}
                 onMouseEnter={() => setCursorVariant?.('hover')}
                 onMouseLeave={() => setCursorVariant?.('default')}
@@ -108,6 +118,7 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
                     playsInline
                     autoPlay
                     preload="metadata"
+                    draggable={false}
                   />
                 ) : (
                   <img
@@ -123,7 +134,7 @@ const PlaySwipeCarousel = ({ projects, onOpen, setCursorVariant }) => {
                     draggable={false}
                   />
                 )}
-              </button>
+              </div>
             </SwiperSlide>
           ))}
         </Swiper>

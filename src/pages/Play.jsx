@@ -8,19 +8,16 @@ const isVideoSrc = (src) => /\.(mp4|webm|mov|ogg)(\?|$)/i.test(src || '');
 
 const PLAY_PROJECTS = [
   {
-    id: 'grand-piano',
-    title: 'Grand Piano',
-    subtitle: 'A 2-player working floor piano that leads players through songs with light-up keys.',
-    cover: '/play/grand-piano/demo.png',
+    id: 'weight-of-a-heart',
+    title: 'WEIGHT OF A HEART',
+    subtitle: '2024',
+    cover: '/play/weight-of-a-heart/cover.png',
     coverPortrait: true,
-    modalTitle: 'Grand Piano',
-    modalBody:
-      'A 2-player working floor piano that leads players through songs with light-up keys.',
-    slides: [
-      '/play/grand-piano/demo.png',
-      '/play/grand-piano/cover.png',
-      '/play/grand-piano/build.png',
-    ],
+    coverZoom: true,
+    coverFocus: 'bl',
+    modalTitle: 'WEIGHT OF A HEART: 2024',
+    modalBody: 'WEIGHT OF A HEART: 2024',
+    slides: ['/play/weight-of-a-heart/cover.png'],
   },
   {
     id: 'carrot',
@@ -41,16 +38,19 @@ const PLAY_PROJECTS = [
     ],
   },
   {
-    id: 'weight-of-a-heart',
-    title: 'WEIGHT OF A HEART',
-    subtitle: '2024',
-    cover: '/play/weight-of-a-heart/cover.png',
+    id: 'grand-piano',
+    title: 'Grand Piano',
+    subtitle: 'A 2-player working floor piano that leads players through songs with light-up keys.',
+    cover: '/play/grand-piano/demo.png',
     coverPortrait: true,
-    coverZoom: true,
-    coverFocus: 'bl',
-    modalTitle: 'WEIGHT OF A HEART: 2024',
-    modalBody: 'WEIGHT OF A HEART: 2024',
-    slides: ['/play/weight-of-a-heart/cover.png'],
+    modalTitle: 'Grand Piano',
+    modalBody:
+      'A 2-player working floor piano that leads players through songs with light-up keys.',
+    slides: [
+      '/play/grand-piano/demo.png',
+      '/play/grand-piano/cover.png',
+      '/play/grand-piano/build.png',
+    ],
   },
   {
     id: 'sewing-clothes',
@@ -67,12 +67,14 @@ const PLAY_PROJECTS = [
 
 function PlayModal({ project, onClose, setCursorVariant }) {
   const [slideIndex, setSlideIndex] = useState(0);
+  const [mediaReady, setMediaReady] = useState(false);
   const videoRef = useRef(null);
   const slides = project?.slides ?? [];
   const currentSrc = slides[slideIndex];
   const multi = slides.length > 1;
   const canPrev = multi && slideIndex > 0;
   const canNext = multi && slideIndex < slides.length - 1;
+  const isVideo = isVideoSrc(currentSrc);
 
   const goPrev = useCallback(() => {
     setSlideIndex((i) => (i <= 0 ? i : i - 1));
@@ -85,6 +87,10 @@ function PlayModal({ project, onClose, setCursorVariant }) {
   useEffect(() => {
     setSlideIndex(0);
   }, [project?.id]);
+
+  useEffect(() => {
+    setMediaReady(false);
+  }, [currentSrc, project?.id, slideIndex]);
 
   useEffect(() => {
     if (!project) return undefined;
@@ -103,15 +109,21 @@ function PlayModal({ project, onClose, setCursorVariant }) {
 
   useEffect(() => {
     const el = videoRef.current;
-    if (!el || !isVideoSrc(currentSrc)) return undefined;
+    if (!el || !isVideo) return undefined;
     el.muted = true;
+    const markReady = () => setMediaReady(true);
     const tryPlay = () => {
       el.play().catch(() => {});
     };
+    if (el.readyState >= 2) markReady();
     tryPlay();
+    el.addEventListener('loadeddata', markReady);
     el.addEventListener('canplay', tryPlay);
-    return () => el.removeEventListener('canplay', tryPlay);
-  }, [currentSrc, project?.id, slideIndex]);
+    return () => {
+      el.removeEventListener('loadeddata', markReady);
+      el.removeEventListener('canplay', tryPlay);
+    };
+  }, [currentSrc, project?.id, slideIndex, isVideo]);
 
   if (!project || !currentSrc) return null;
 
@@ -126,7 +138,7 @@ function PlayModal({ project, onClose, setCursorVariant }) {
       role="presentation"
     >
       <motion.div
-        className={`play-modal${multi ? '' : ' play-modal--single'}`}
+        className="play-modal"
         role="dialog"
         aria-modal="true"
         aria-label={project.modalTitle || project.title}
@@ -148,72 +160,66 @@ function PlayModal({ project, onClose, setCursorVariant }) {
         </button>
 
         <div className="play-modal-image-row">
-          {multi ? (
-            <button
-              type="button"
-              className="play-modal-nav play-modal-nav-prev"
-              onClick={goPrev}
-              aria-label="Previous image"
-              disabled={!canPrev}
-              hidden={!canPrev}
-              onMouseEnter={() => setCursorVariant?.('hover')}
-              onMouseLeave={() => setCursorVariant?.('default')}
-            >
-              ←
-            </button>
-          ) : (
-            <span className="play-modal-nav-spacer" aria-hidden />
-          )}
+          <button
+            type="button"
+            className="play-modal-nav play-modal-nav-prev"
+            onClick={goPrev}
+            aria-label="Previous image"
+            disabled={!canPrev}
+            aria-hidden={!canPrev}
+            tabIndex={canPrev ? 0 : -1}
+            onMouseEnter={() => setCursorVariant?.('hover')}
+            onMouseLeave={() => setCursorVariant?.('default')}
+          >
+            ←
+          </button>
 
-          <div className="play-modal-media">
-            <AnimatePresence mode="wait">
-              {isVideoSrc(currentSrc) ? (
-                <motion.video
-                  key={`${project.id}-${slideIndex}`}
-                  ref={videoRef}
-                  src={currentSrc}
-                  className="play-modal-image play-modal-video"
-                  controls
-                  playsInline
-                  autoPlay
-                  muted
-                  loop
-                  initial={{ opacity: 0, x: 12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -12 }}
-                  transition={{ duration: 0.2 }}
-                />
-              ) : (
-                <motion.img
-                  key={`${project.id}-${slideIndex}`}
-                  src={currentSrc}
-                  alt=""
-                  className="play-modal-image"
-                  initial={{ opacity: 0, x: 12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -12 }}
-                  transition={{ duration: 0.2 }}
-                />
-              )}
-            </AnimatePresence>
+          <div className={`play-modal-media${mediaReady ? ' play-modal-media--ready' : ''}`}>
+            {!mediaReady && (
+              <div className="play-modal-loader" aria-hidden>
+                <span className="play-modal-spinner" />
+              </div>
+            )}
+
+            {isVideo ? (
+              <video
+                key={`${project.id}-${slideIndex}`}
+                ref={videoRef}
+                src={currentSrc}
+                className="play-modal-image play-modal-video"
+                controls
+                playsInline
+                autoPlay
+                muted
+                loop
+                onLoadedData={() => setMediaReady(true)}
+                onError={() => setMediaReady(true)}
+              />
+            ) : (
+              <img
+                key={`${project.id}-${slideIndex}`}
+                src={currentSrc}
+                alt=""
+                className="play-modal-image"
+                onLoad={() => setMediaReady(true)}
+                onError={() => setMediaReady(true)}
+              />
+            )}
           </div>
 
-          {multi ? (
-            <button
-              type="button"
-              className="play-modal-nav play-modal-nav-next"
-              onClick={goNext}
-              aria-label="Next image"
-              disabled={!canNext}
-              hidden={!canNext}
-              onMouseEnter={() => setCursorVariant?.('hover')}
-              onMouseLeave={() => setCursorVariant?.('default')}
-            >
-              →
-            </button>
-          ) : (
-            <span className="play-modal-nav-spacer" aria-hidden />
-          )}
+          <button
+            type="button"
+            className="play-modal-nav play-modal-nav-next"
+            onClick={goNext}
+            aria-label="Next image"
+            disabled={!canNext}
+            aria-hidden={!canNext}
+            tabIndex={canNext ? 0 : -1}
+            onMouseEnter={() => setCursorVariant?.('hover')}
+            onMouseLeave={() => setCursorVariant?.('default')}
+          >
+            →
+          </button>
         </div>
 
         <div className="play-modal-footer">
