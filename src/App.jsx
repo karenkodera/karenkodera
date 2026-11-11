@@ -22,7 +22,7 @@ const PAGE_EASE = [0.76, 0, 0.24, 1];
 
 /**
  * kind:
- * - section: vertical page between work/about/play
+ * - section: vertical page between about/work/play
  * - project-in / project-out: Skiper8 bounce curtain (tan↔white); pages swap under it
  * - fade: everything else
  */

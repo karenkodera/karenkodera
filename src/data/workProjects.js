@@ -5,7 +5,6 @@ export const WORK_PROJECTS = [
     subtitle: 'Kroger Product Design',
     image: '/hsafsa/cover.png',
     link: '/hsa-fsa',
-    requiresPassword: true,
     tags: ['Shipped', '2026'],
     year: '2026',
   },

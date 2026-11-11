@@ -6,8 +6,8 @@ import { navigateSection, sectionDirection } from '../hooks/useSectionPager';
 import './SiteChrome.css';
 
 const NAV_ITEMS = [
-  { id: 'work', label: 'work', path: '/' },
   { id: 'about', label: 'about', path: '/about' },
+  { id: 'work', label: 'work', path: '/' },
   { id: 'play', label: 'play', path: '/play' },
 ];
 

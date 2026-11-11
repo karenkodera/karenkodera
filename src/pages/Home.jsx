@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
-import PasswordGate from '../components/PasswordGate';
 import ScrollRuler from '../components/ScrollRuler';
 import { WORK_PROJECTS } from '../data/workProjects';
 import './Home.css';
@@ -35,7 +34,6 @@ const Home = ({ setCursorVariant }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const scrollerRef = useRef(null);
-  const [protectedPath, setProtectedPath] = useState(null);
   const [scrollEdge, setScrollEdge] = useState('start'); // start | middle | end
   const [introDone, setIntroDone] = useState(() => introSeenThisLoad);
 
@@ -98,7 +96,7 @@ const Home = ({ setCursorVariant }) => {
         dy *= window.innerHeight;
       }
 
-      // Vertical intent is handled by the section pager (work → about → play).
+      // Vertical intent is handled by the section pager (about → work → play).
       // Only drive the work strip on horizontal (or clearly sideways) input.
       const horizontal = Math.abs(dx) >= Math.abs(dy);
       if (!horizontal) return;
@@ -189,16 +187,6 @@ const Home = ({ setCursorVariant }) => {
     scrollerRef.current?.scrollTo({ left: 0 });
   }, [location.hash, navigate]);
 
-  const handleProtectedClick = (path) => {
-    setProtectedPath(path);
-  };
-
-  const handlePasswordSuccess = () => {
-    const path = protectedPath;
-    setProtectedPath(null);
-    if (path) navigate(path);
-  };
-
   const goHome = () => {
     scrollerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
     if (window.history.replaceState) {
@@ -240,20 +228,12 @@ const Home = ({ setCursorVariant }) => {
               project={item.project}
               index={index}
               setCursorVariant={setCursorVariant}
-              onProtectedClick={handleProtectedClick}
             />
           </section>
         ))}
       </div>
 
       <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
-
-      <PasswordGate
-        password="karenkodera"
-        isOpen={Boolean(protectedPath)}
-        onClose={() => setProtectedPath(null)}
-        onSuccess={handlePasswordSuccess}
-      />
     </div>
   );
 };

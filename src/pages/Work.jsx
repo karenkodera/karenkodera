@@ -1,13 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ProjectCard from '../components/ProjectCard';
-import PasswordGate from '../components/PasswordGate';
 import { WORK_PROJECTS } from '../data/workProjects';
 import './ProjectsIndex.css';
 
 const Work = ({ setCursorVariant }) => {
   const navigate = useNavigate();
-  const [protectedPath, setProtectedPath] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -35,21 +33,9 @@ const Work = ({ setCursorVariant }) => {
             project={project}
             index={index}
             setCursorVariant={setCursorVariant}
-            onProtectedClick={setProtectedPath}
           />
         ))}
       </div>
-
-      <PasswordGate
-        password="karenkodera"
-        isOpen={Boolean(protectedPath)}
-        onClose={() => setProtectedPath(null)}
-        onSuccess={() => {
-          const path = protectedPath;
-          setProtectedPath(null);
-          if (path) navigate(path);
-        }}
-      />
     </div>
   );
 };
