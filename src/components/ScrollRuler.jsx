@@ -4,6 +4,8 @@ import { createPortal } from 'react-dom';
 import {
   SECTION_PATHS,
   sectionDirection,
+  sectionIndex,
+  sectionTensionRef,
   navigateSection,
 } from '../hooks/useSectionPager';
 import './ScrollRuler.css';
@@ -12,21 +14,34 @@ function workScroller() {
   return document.getElementById('home-scroller');
 }
 
+function workScrollT() {
+  const scroller = workScroller();
+  if (!scroller) return 0;
+  const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+  return maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
+}
+
+/**
+ * About → work → play as one vertical journey on the ruler.
+ * Wheel tension on about/play nudges the mark before the page flips.
+ */
 function readProgress(pathname) {
-  if (pathname === '/') return 0;
-  if (pathname === '/play') return 1;
+  const i = sectionIndex(pathname);
+  if (i < 0) return 0;
+  const n = SECTION_PATHS.length - 1;
+  const step = 1 / n;
+  const tension = sectionTensionRef.current;
+
   if (pathname === '/work') {
-    const scroller = workScroller();
-    if (!scroller) return 0;
-    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-    return maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
+    const t = workScrollT();
+    return Math.max(0, Math.min(1, (i + t) / n + tension * step * 0.45));
   }
-  return 0;
+
+  return Math.max(0, Math.min(1, i / n + tension * step));
 }
 
 /**
  * Side progress bar for section pages.
- * About / play show section position; work tracks the project scroller.
  */
 const ScrollRuler = ({ setCursorVariant }) => {
   const location = useLocation();
@@ -42,10 +57,17 @@ const ScrollRuler = ({ setCursorVariant }) => {
     let cancelled = false;
     let scroller = null;
     let raf = 0;
+    let pollRaf = 0;
 
     const sync = () => {
       if (cancelled) return;
       setProgress(readProgress(location.pathname));
+    };
+
+    const poll = () => {
+      if (cancelled) return;
+      sync();
+      pollRaf = requestAnimationFrame(poll);
     };
 
     const attachWork = () => {
@@ -55,17 +77,18 @@ const ScrollRuler = ({ setCursorVariant }) => {
         raf = requestAnimationFrame(attachWork);
         return;
       }
-      sync();
       scroller.addEventListener('scroll', sync, { passive: true });
     };
 
     sync();
     attachWork();
+    pollRaf = requestAnimationFrame(poll);
     window.addEventListener('resize', sync);
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
+      cancelAnimationFrame(pollRaf);
       if (scroller) scroller.removeEventListener('scroll', sync);
       window.removeEventListener('resize', sync);
     };
@@ -80,17 +103,25 @@ const ScrollRuler = ({ setCursorVariant }) => {
     const next = Math.max(0, Math.min(1, (clientY - rect.top) / height));
     setProgress(next);
 
-    if (location.pathname === '/work') {
+    const n = SECTION_PATHS.length - 1;
+    const rawIndex = next * n;
+    const targetIndex = Math.round(rawIndex);
+    const targetPath = SECTION_PATHS[targetIndex];
+
+    if (targetPath === '/work') {
+      if (location.pathname !== '/work') {
+        const dir = sectionDirection(location.pathname, '/work');
+        navigateSection(navigate, '/work', dir);
+      }
       const scroller = workScroller();
       if (scroller) {
+        const local = Math.max(0, Math.min(1, rawIndex - 1));
         const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-        scroller.scrollTop = next * maxScroll;
+        scroller.scrollTop = local * maxScroll;
       }
       return;
     }
 
-    const targetIndex = Math.round(next * (SECTION_PATHS.length - 1));
-    const targetPath = SECTION_PATHS[targetIndex];
     if (!targetPath || targetPath === location.pathname) return;
     const dir = sectionDirection(location.pathname, targetPath);
     navigateSection(navigate, targetPath, dir);

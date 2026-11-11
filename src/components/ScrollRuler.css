@@ -49,6 +49,7 @@
   pointer-events: none;
   z-index: 1;
   will-change: top;
+  transition: top 0.12s linear;
 }
 
 html[data-intro='1'] .home-scroll-ruler {

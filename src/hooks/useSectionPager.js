@@ -6,10 +6,17 @@ export const SECTION_PATHS = ['/', '/work', '/play'];
 /** Shared with App page transition — set before navigate so exit/enter match. */
 export const pageDirRef = { current: 1 };
 
+/** -1..1 wheel/touch tension toward prev/next section (drives the side ruler). */
+export const sectionTensionRef = { current: 0 };
+
 const THRESHOLD = 90;
 const LOCK_MS = 580;
 const DECAY = 0.86;
 const WORK_PATH = '/work';
+
+function syncTension(accum) {
+  sectionTensionRef.current = Math.max(-1, Math.min(1, accum / THRESHOLD));
+}
 
 function isBlocked() {
   if (document.documentElement.getAttribute('data-intro') === '1') return true;
@@ -69,6 +76,7 @@ export function useSectionPager() {
     if (index < 0) return undefined;
 
     accumRef.current = 0;
+    syncTension(0);
 
     const lock = () => {
       lockUntilRef.current = performance.now() + LOCK_MS;
@@ -82,6 +90,7 @@ export function useSectionPager() {
       const next = (index + dir + n) % n;
       lock();
       accumRef.current = 0;
+      syncTension(0);
       navigateSection(navigate, SECTION_PATHS[next], dir);
     };
 
@@ -89,6 +98,7 @@ export function useSectionPager() {
       if (!rawDelta || isLocked() || isBlocked()) return;
 
       accumRef.current += rawDelta;
+      syncTension(accumRef.current);
 
       if (accumRef.current >= THRESHOLD) go(1);
       else if (accumRef.current <= -THRESHOLD) go(-1);
@@ -100,13 +110,16 @@ export function useSectionPager() {
         decayRafRef.current = 0;
         if (isLocked() || Math.abs(accumRef.current) < 1) {
           accumRef.current = 0;
+          syncTension(0);
           return;
         }
         accumRef.current *= DECAY;
+        syncTension(accumRef.current);
         if (Math.abs(accumRef.current) >= 1) {
           decayRafRef.current = requestAnimationFrame(tick);
         } else {
           accumRef.current = 0;
+          syncTension(0);
         }
       };
       decayRafRef.current = requestAnimationFrame(tick);
@@ -130,6 +143,7 @@ export function useSectionPager() {
 
       if (location.pathname === WORK_PATH && workScrollerBlocksPaging(dy)) {
         accumRef.current = 0;
+        syncTension(0);
         return;
       }
 

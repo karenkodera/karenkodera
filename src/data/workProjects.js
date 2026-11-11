@@ -9,15 +9,6 @@ export const WORK_PROJECTS = [
     year: '2026',
   },
   {
-    id: 'work-kroger-ad',
-    title: 'A Kroger Ad',
-    subtitle: 'Kroger Product Design',
-    image: '/kroger/ad-coming-soon.svg',
-    comingSoon: true,
-    tags: ['Coming soon'],
-    year: '2026',
-  },
-  {
     id: 'work-thesis',
     title: 'Minimizing Overproduction in Fashion Retail',
     subtitle: "Northwestern Design Master's Thesis",
@@ -34,6 +25,15 @@ export const WORK_PROJECTS = [
     link: '/dsg',
     tags: ['Handed off', '2023'],
     year: '2023',
+  },
+  {
+    id: 'work-kroger-ad',
+    title: 'One Ad',
+    subtitle: 'Kroger Product Design',
+    image: '/kroger/ad-coming-soon.svg',
+    comingSoon: true,
+    tags: ['Coming soon'],
+    year: '2026',
   },
 ];
 
