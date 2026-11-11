@@ -145,6 +145,10 @@
   bottom: 28px;
   z-index: 110;
   transform: translateX(-50%);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
   margin: 0;
   padding: 6px 14px;
   font-family: 'Inter', system-ui, sans-serif;
@@ -156,6 +160,35 @@
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
+  animation: about-scroll-nudge 1.6s ease-in-out infinite;
+}
+
+.about-scroll-hint-label {
+  line-height: 1.2;
+}
+
+.about-scroll-hint-arrow {
+  display: block;
+  font-size: 0.9rem;
+  line-height: 1;
+  letter-spacing: 0;
+  opacity: 0.85;
+}
+
+@keyframes about-scroll-nudge {
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+  50% {
+    transform: translateX(-50%) translateY(8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-scroll-hint {
+    animation: none;
+  }
 }
 
 /* Bottom-left contacts — LinkedIn + Email side by side */
