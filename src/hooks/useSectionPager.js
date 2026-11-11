@@ -1,56 +1,25 @@
-import { useEffect, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-/** Work page (bio + projects) ↔ play. */
+/** Work page (bio + projects) and play are separate — no scroll-between. */
 export const SECTION_PATHS = ['/', '/play'];
 
 /** Shared with App page transition — set before navigate so exit/enter match. */
 export const pageDirRef = { current: 1 };
 
-/** -1..1 wheel/touch tension toward prev/next section (drives the side ruler). */
+/** Kept for the side ruler; always 0 now that pages don't wheel-page. */
 export const sectionTensionRef = { current: 0 };
-
-const THRESHOLD = 90;
-const LOCK_MS = 580;
-const DECAY = 0.86;
-const HOME_PATH = '/';
-
-function syncTension(accum) {
-  sectionTensionRef.current = Math.max(-1, Math.min(1, accum / THRESHOLD));
-}
-
-function isBlocked() {
-  if (document.documentElement.getAttribute('data-intro') === '1') return true;
-  if (document.querySelector('.play-modal-overlay')) return true;
-  if (document.querySelector('.password-gate')) return true;
-  return false;
-}
-
-/** On the landing scroller, only page to play/about when at an edge. */
-function homeScrollerBlocksPaging(dy) {
-  const scroller = document.getElementById('home-scroller');
-  if (!scroller) return false;
-  const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-  if (max <= 1) return false;
-  const top = scroller.scrollTop;
-  if (dy > 0 && top < max - 2) return true;
-  if (dy < 0 && top > 2) return true;
-  return false;
-}
 
 export function sectionIndex(pathname) {
   return SECTION_PATHS.indexOf(pathname);
 }
 
-/** Shortest wrap direction: 1 = forward (down), -1 = back (up). */
+/** Direction for nav transitions: 1 = forward (down), -1 = back (up). */
 export function sectionDirection(fromPath, toPath) {
   const from = sectionIndex(fromPath);
   const to = sectionIndex(toPath);
   if (from < 0 || to < 0 || from === to) return 1;
-  const n = SECTION_PATHS.length;
-  const forward = (to - from + n) % n;
-  const backward = (from - to + n) % n;
-  return forward <= backward ? 1 : -1;
+  return to > from ? 1 : -1;
 }
 
 export function navigateSection(navigate, path, dir) {
@@ -59,148 +28,13 @@ export function navigateSection(navigate, path, dir) {
 }
 
 /**
- * Discrete vertical section paging: landing ↔ play.
- * Accumulates wheel/touch delta with rubber-band tension, then navigates
- * once the threshold is crossed. On `/`, inner scrolling wins until an edge.
+ * Work and play are separate pages — no wheel/touch paging between them.
+ * Nav pills still use navigateSection.
  */
 export function useSectionPager() {
-  const navigate = useNavigate();
   const location = useLocation();
-  const accumRef = useRef(0);
-  const lockUntilRef = useRef(0);
-  const touchStartRef = useRef(null);
-  const decayRafRef = useRef(0);
 
   useEffect(() => {
-    const index = sectionIndex(location.pathname);
-    if (index < 0) return undefined;
-
-    accumRef.current = 0;
-    syncTension(0);
-
-    const lock = () => {
-      lockUntilRef.current = performance.now() + LOCK_MS;
-    };
-
-    const isLocked = () => performance.now() < lockUntilRef.current;
-
-    const go = (dir) => {
-      if (isLocked() || isBlocked()) return;
-      const n = SECTION_PATHS.length;
-      const next = (index + dir + n) % n;
-      lock();
-      accumRef.current = 0;
-      syncTension(0);
-      navigateSection(navigate, SECTION_PATHS[next], dir);
-    };
-
-    const applyDelta = (rawDelta) => {
-      if (!rawDelta || isLocked() || isBlocked()) return;
-
-      accumRef.current += rawDelta;
-      syncTension(accumRef.current);
-
-      if (accumRef.current >= THRESHOLD) go(1);
-      else if (accumRef.current <= -THRESHOLD) go(-1);
-    };
-
-    const startDecay = () => {
-      if (decayRafRef.current) return;
-      const tick = () => {
-        decayRafRef.current = 0;
-        if (isLocked() || Math.abs(accumRef.current) < 1) {
-          accumRef.current = 0;
-          syncTension(0);
-          return;
-        }
-        accumRef.current *= DECAY;
-        syncTension(accumRef.current);
-        if (Math.abs(accumRef.current) >= 1) {
-          decayRafRef.current = requestAnimationFrame(tick);
-        } else {
-          accumRef.current = 0;
-          syncTension(0);
-        }
-      };
-      decayRafRef.current = requestAnimationFrame(tick);
-    };
-
-    const onWheel = (e) => {
-      if (isBlocked()) return;
-
-      let dx = e.deltaX;
-      let dy = e.deltaY;
-      if (e.deltaMode === 1) {
-        dx *= 16;
-        dy *= 16;
-      } else if (e.deltaMode === 2) {
-        dx *= window.innerWidth;
-        dy *= window.innerHeight;
-      }
-
-      if (Math.abs(dx) > Math.abs(dy)) return;
-      if (Math.abs(dy) < 1) return;
-
-      if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(dy)) {
-        accumRef.current = 0;
-        syncTension(0);
-        return;
-      }
-
-      e.preventDefault();
-      applyDelta(dy);
-      startDecay();
-    };
-
-    const onKeyDown = (e) => {
-      if (isBlocked() || isLocked()) return;
-      const tag = e.target?.tagName;
-      if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target?.isContentEditable) return;
-
-      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(1)) return;
-        e.preventDefault();
-        go(1);
-      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(-1)) return;
-        e.preventDefault();
-        go(-1);
-      }
-    };
-
-    const onTouchStart = (e) => {
-      if (isBlocked() || e.touches.length !== 1) return;
-      const t = e.touches[0];
-      touchStartRef.current = { x: t.clientX, y: t.clientY };
-    };
-
-    const onTouchEnd = (e) => {
-      const start = touchStartRef.current;
-      touchStartRef.current = null;
-      if (!start || isBlocked() || isLocked()) return;
-      const t = e.changedTouches[0];
-      if (!t) return;
-      const dx = t.clientX - start.x;
-      const dy = t.clientY - start.y;
-      if (Math.abs(dy) < 56 || Math.abs(dy) < Math.abs(dx) * 1.15) return;
-      const dir = dy > 0 ? -1 : 1;
-      if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(dir > 0 ? 1 : -1)) {
-        return;
-      }
-      go(dir);
-    };
-
-    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
-
-    return () => {
-      window.removeEventListener('wheel', onWheel, { capture: true });
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('touchstart', onTouchStart);
-      window.removeEventListener('touchend', onTouchEnd);
-      if (decayRafRef.current) cancelAnimationFrame(decayRafRef.current);
-    };
-  }, [location.pathname, navigate]);
+    sectionTensionRef.current = 0;
+  }, [location.pathname]);
 }

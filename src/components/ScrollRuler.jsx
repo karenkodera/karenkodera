@@ -1,12 +1,7 @@
 import { useLayoutEffect, useRef, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { createPortal } from 'react-dom';
-import {
-  SECTION_PATHS,
-  sectionDirection,
-  sectionTensionRef,
-  navigateSection,
-} from '../hooks/useSectionPager';
+import { SECTION_PATHS } from '../hooks/useSectionPager';
 import './ScrollRuler.css';
 
 function homeScroller() {
@@ -20,28 +15,15 @@ function homeScrollT() {
   return maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
 }
 
-/**
- * Landing scroll fills most of the ruler; play sits at the bottom.
- * Wheel tension toward play nudges the mark at the end of the landing page.
- */
 function readProgress(pathname) {
-  const tension = sectionTensionRef.current;
-
-  if (pathname === '/play') {
-    return Math.max(0, Math.min(1, 1 + tension * 0.08));
-  }
-
-  if (pathname === '/') {
-    const t = homeScrollT();
-    return Math.max(0, Math.min(1, t * 0.92 + Math.max(0, tension) * 0.08));
-  }
-
+  if (pathname === '/play') return 1;
+  if (pathname === '/') return homeScrollT();
   return 0;
 }
 
+/** Side progress bar — stays on the current page (work and play are separate). */
 const ScrollRuler = ({ setCursorVariant }) => {
   const location = useLocation();
-  const navigate = useNavigate();
   const [progress, setProgress] = useState(() => readProgress(location.pathname));
   const trackRef = useRef(null);
   const draggingRef = useRef(false);
@@ -53,17 +35,10 @@ const ScrollRuler = ({ setCursorVariant }) => {
     let cancelled = false;
     let scroller = null;
     let raf = 0;
-    let pollRaf = 0;
 
     const sync = () => {
       if (cancelled) return;
       setProgress(readProgress(location.pathname));
-    };
-
-    const poll = () => {
-      if (cancelled) return;
-      sync();
-      pollRaf = requestAnimationFrame(poll);
     };
 
     const attachHome = () => {
@@ -73,55 +48,40 @@ const ScrollRuler = ({ setCursorVariant }) => {
         raf = requestAnimationFrame(attachHome);
         return;
       }
+      sync();
       scroller.addEventListener('scroll', sync, { passive: true });
     };
 
     sync();
     attachHome();
-    pollRaf = requestAnimationFrame(poll);
     window.addEventListener('resize', sync);
 
     return () => {
       cancelled = true;
       cancelAnimationFrame(raf);
-      cancelAnimationFrame(pollRaf);
       if (scroller) scroller.removeEventListener('scroll', sync);
       window.removeEventListener('resize', sync);
     };
   }, [location.pathname, visible]);
 
   const seekToClientY = (clientY) => {
+    if (location.pathname !== '/') return;
+
     const track = trackRef.current;
-    if (!track) return;
+    const scroller = homeScroller();
+    if (!track || !scroller) return;
 
     const rect = track.getBoundingClientRect();
     const height = Math.max(1, rect.height);
     const next = Math.max(0, Math.min(1, (clientY - rect.top) / height));
+    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    scroller.scrollTop = next * maxScroll;
     setProgress(next);
-
-    if (next >= 0.92) {
-      if (location.pathname !== '/play') {
-        const dir = sectionDirection(location.pathname, '/play');
-        navigateSection(navigate, '/play', dir);
-      }
-      return;
-    }
-
-    if (location.pathname !== '/') {
-      const dir = sectionDirection(location.pathname, '/');
-      navigateSection(navigate, '/', dir);
-    }
-
-    const scroller = homeScroller();
-    if (scroller) {
-      const local = Math.max(0, Math.min(1, next / 0.92));
-      const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-      scroller.scrollTop = local * maxScroll;
-    }
   };
 
   const onPointerDown = (e) => {
     if (e.button != null && e.button !== 0) return;
+    if (location.pathname !== '/') return;
     draggingRef.current = true;
     e.currentTarget.setPointerCapture(e.pointerId);
     seekToClientY(e.clientY);

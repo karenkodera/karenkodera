@@ -19,6 +19,8 @@
   align-items: stretch;
   gap: var(--landing-gap);
   width: min(1100px, 100%);
+  max-width: 100%;
+  margin: 0 auto;
   box-sizing: border-box;
   padding-top: 88px;
 }
@@ -37,7 +39,7 @@
   height: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   justify-content: flex-start;
   padding: 0;
   box-sizing: border-box;
@@ -242,7 +244,7 @@
   padding-top: 0;
   padding-bottom: clamp(88px, 14vh, 160px);
   padding-left: var(--home-inset);
-  padding-right: clamp(72px, 10vw, 120px);
+  padding-right: var(--home-inset);
   box-sizing: border-box;
 }
 
@@ -374,10 +376,10 @@
 .about-page.about-page--slide {
   min-height: 0;
   height: auto;
-  max-width: min(1100px, calc(100vw - 80px));
-  margin: 0 auto;
+  max-width: 100%;
+  margin: 0;
   padding: 0;
-  width: max-content;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -395,28 +397,28 @@
   line-height: 1.05;
   color: #191919;
   max-width: 100%;
-  white-space: nowrap;
+  white-space: normal;
   flex: 0 0 auto;
 }
 
 .about-page-cards {
   display: grid;
-  grid-template-columns: max-content minmax(240px, 300px);
-  align-items: end;
-  justify-content: start;
+  grid-template-columns: minmax(0, 1.4fr) minmax(240px, 0.75fr);
+  align-items: stretch;
+  justify-content: stretch;
   gap: 14px;
-  width: max-content;
+  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
 }
 
-/* Bio + stickers hug content; bottoms align with experience card */
+/* Bio + stickers fill the left column; bottoms align with experience card */
 .about-bio-column {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 12px;
-  width: max-content;
+  width: 100%;
   max-width: 100%;
   min-width: 0;
   min-height: 0;
@@ -428,13 +430,14 @@
   flex-direction: column;
   align-items: stretch;
   gap: 14px;
-  width: max-content;
+  width: 100%;
   max-width: 100%;
   min-width: 0;
+  flex: 1;
 }
 
 .about-page--slide .about-details-card {
-  width: auto;
+  width: 100%;
   margin: 0;
   box-sizing: border-box;
   padding: 20px;
@@ -448,19 +451,19 @@
   height: auto;
   min-height: 0;
   overflow: visible;
-  align-self: end;
+  align-self: stretch;
 }
 
 .about-page--slide .about-bio-layout {
   display: grid;
-  grid-template-columns: auto minmax(0, 36ch);
+  grid-template-columns: auto minmax(0, 1fr);
   align-items: stretch;
   column-gap: 16px;
   padding: 16px 18px;
-  width: max-content;
+  width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  flex: 0 0 auto;
+  flex: 1;
   min-height: 0;
   height: auto;
   background: #fafafa;
@@ -510,9 +513,9 @@
 }
 
 .about-page--slide .about-bio-content {
-  width: min(36ch, 340px);
+  width: 100%;
   min-width: 0;
-  max-width: 340px;
+  max-width: none;
   height: auto;
   display: flex;
   flex-direction: column;
@@ -613,7 +616,7 @@
     padding-top: 0;
     padding-bottom: 96px;
     padding-left: var(--home-inset);
-    padding-right: 56px;
+    padding-right: var(--home-inset);
   }
 
   .home-landing-stack {
@@ -653,8 +656,12 @@
   .about-page.about-page--slide {
     flex-direction: column;
     width: 100%;
-    max-width: 520px;
+    max-width: 100%;
     align-items: stretch;
+  }
+
+  .about-page-cards {
+    grid-template-columns: 1fr;
   }
 
   .about-page-cards {
