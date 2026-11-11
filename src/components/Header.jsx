@@ -45,7 +45,7 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
 
   const navItems = [
     { id: 'about', label: 'about', path: '/' },
-    { id: 'work', label: 'work', path: '/work' },
+    { id: 'work', label: 'work', path: '/', scrollTo: 'work' },
     { id: 'play', label: 'play', path: '/play' },
   ];
 

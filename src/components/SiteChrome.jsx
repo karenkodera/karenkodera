@@ -1,16 +1,30 @@
+import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CONTACT_LINKS, RESUME_URL } from './Hero';
 import SiteClock from './SiteClock';
 import ScrollRuler from './ScrollRuler';
-import { navigateSection, sectionDirection } from '../hooks/useSectionPager';
+import { navigateSection, pageDirRef, sectionDirection } from '../hooks/useSectionPager';
 import './SiteChrome.css';
 
 const NAV_ITEMS = [
-  { id: 'about', label: 'about', path: '/' },
-  { id: 'work', label: 'work', path: '/work' },
+  { id: 'about', label: 'about', path: '/', scrollTo: 'about' },
+  { id: 'work', label: 'work', path: '/', scrollTo: 'work' },
   { id: 'play', label: 'play', path: '/play' },
 ];
+
+function scrollLandingTo(scrollTo) {
+  const scroller = document.getElementById('home-scroller');
+  if (!scroller) return;
+  if (scrollTo === 'work') {
+    const work = document.getElementById('work');
+    if (work) {
+      scroller.scrollTo({ top: work.offsetTop, behavior: 'smooth' });
+      return;
+    }
+  }
+  scroller.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 /**
  * Pill nav + contacts — portaled to document.body so page transitions
@@ -19,26 +33,63 @@ const NAV_ITEMS = [
 const SiteChrome = ({ setCursorVariant }) => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [homeTab, setHomeTab] = useState('about');
+
+  useEffect(() => {
+    if (location.pathname !== '/') {
+      setHomeTab('about');
+      return undefined;
+    }
+
+    const scroller = document.getElementById('home-scroller');
+    if (!scroller) return undefined;
+
+    const update = () => {
+      const work = document.getElementById('work');
+      if (!work) {
+        setHomeTab('about');
+        return;
+      }
+      const threshold = work.offsetTop - scroller.clientHeight * 0.35;
+      setHomeTab(scroller.scrollTop >= threshold ? 'work' : 'about');
+    };
+
+    update();
+    scroller.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    return () => {
+      scroller.removeEventListener('scroll', update);
+      window.removeEventListener('resize', update);
+    };
+  }, [location.pathname]);
 
   if (typeof document === 'undefined') return null;
 
   const activeId =
     location.pathname === '/play'
       ? 'play'
-      : location.pathname === '/work'
-        ? 'work'
-        : location.pathname === '/' || location.pathname === '/about'
-          ? 'about'
-          : null;
+      : location.pathname === '/' || location.pathname === '/about' || location.pathname === '/work'
+        ? homeTab
+        : null;
 
   const handleNav = (item) => {
-    if (item.id === 'work' && location.pathname === '/work') {
-      document.querySelector('.home-scroller')?.scrollTo({ top: 0, behavior: 'smooth' });
+    if (item.path === '/play') {
+      if (location.pathname === '/play') return;
+      const dir = sectionDirection(location.pathname === '/work' ? '/' : location.pathname, '/play');
+      navigateSection(navigate, '/play', dir);
       return;
     }
-    if (item.path === location.pathname) return;
-    const dir = sectionDirection(location.pathname, item.path);
-    navigateSection(navigate, item.path, dir);
+
+    // about / work — same landing page
+    if (location.pathname === '/') {
+      scrollLandingTo(item.scrollTo);
+      return;
+    }
+
+    const from = location.pathname === '/work' ? '/' : location.pathname;
+    const dir = sectionDirection(from, '/');
+    pageDirRef.current = dir;
+    navigate('/', { state: { pageDir: dir, scrollTo: item.scrollTo } });
   };
 
   return createPortal(

@@ -7,6 +7,34 @@
   position: relative;
 }
 
+.home--intro .about-scroll-hint,
+.home--intro .home-work-section {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.home-work-section {
+  width: min(1100px, 100%);
+  padding-top: 48px;
+  padding-bottom: 24px;
+  box-sizing: border-box;
+}
+
+.about-route--in-scroller {
+  position: relative;
+  flex: 0 0 auto;
+  width: 100%;
+  min-height: 100%;
+  min-height: 100dvh;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 88px var(--home-inset) 96px;
+  box-sizing: border-box;
+}
+
 /* Legacy home chrome selectors — active chrome uses .site-chrome-* */
 
 .home-hero-chrome {
@@ -255,7 +283,7 @@
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;
-  padding-top: clamp(88px, 12vh, 140px);
+  padding-top: 0;
   padding-bottom: clamp(88px, 14vh, 160px);
   padding-left: var(--home-inset);
   padding-right: clamp(72px, 10vw, 120px);
@@ -362,7 +390,7 @@
   transform: translateY(16px);
 }
 
-.about-route {
+.about-route:not(.about-route--in-scroller) {
   position: relative;
   min-height: 100vh;
   min-height: 100dvh;
@@ -631,10 +659,18 @@
   }
 
   .home-scroller {
-    padding-top: 88px;
+    padding-top: 0;
     padding-bottom: 96px;
     padding-left: var(--home-inset);
     padding-right: 56px;
+  }
+
+  .about-route--in-scroller {
+    padding: 80px var(--home-inset) 72px;
+  }
+
+  .home-work-section {
+    padding-top: 24px;
   }
 
   .home-work-grid {

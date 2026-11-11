@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export const SECTION_PATHS = ['/', '/work', '/play'];
+/** Landing (about+work) ↔ play. Work is inlined under about on `/`. */
+export const SECTION_PATHS = ['/', '/play'];
 
 /** Shared with App page transition — set before navigate so exit/enter match. */
 export const pageDirRef = { current: 1 };
@@ -12,7 +13,7 @@ export const sectionTensionRef = { current: 0 };
 const THRESHOLD = 90;
 const LOCK_MS = 580;
 const DECAY = 0.86;
-const WORK_PATH = '/work';
+const HOME_PATH = '/';
 
 function syncTension(accum) {
   sectionTensionRef.current = Math.max(-1, Math.min(1, accum / THRESHOLD));
@@ -25,8 +26,8 @@ function isBlocked() {
   return false;
 }
 
-/** When work has its own vertical scroller, only page at the edges. */
-function workScrollerBlocksPaging(dy) {
+/** On the landing scroller, only page to play/about when at an edge. */
+function homeScrollerBlocksPaging(dy) {
   const scroller = document.getElementById('home-scroller');
   if (!scroller) return false;
   const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
@@ -58,10 +59,9 @@ export function navigateSection(navigate, path, dir) {
 }
 
 /**
- * Discrete vertical section paging: about → work → play → about.
+ * Discrete vertical section paging: landing ↔ play.
  * Accumulates wheel/touch delta with rubber-band tension, then navigates
- * once the threshold is crossed (same route transition as the pill tabs).
- * On /work, inner vertical scrolling wins until the scroller hits an edge.
+ * once the threshold is crossed. On `/`, inner scrolling wins until an edge.
  */
 export function useSectionPager() {
   const navigate = useNavigate();
@@ -141,7 +141,7 @@ export function useSectionPager() {
       if (Math.abs(dx) > Math.abs(dy)) return;
       if (Math.abs(dy) < 1) return;
 
-      if (location.pathname === WORK_PATH && workScrollerBlocksPaging(dy)) {
+      if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(dy)) {
         accumRef.current = 0;
         syncTension(0);
         return;
@@ -158,11 +158,11 @@ export function useSectionPager() {
       if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target?.isContentEditable) return;
 
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
-        if (location.pathname === WORK_PATH && workScrollerBlocksPaging(1)) return;
+        if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(1)) return;
         e.preventDefault();
         go(1);
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-        if (location.pathname === WORK_PATH && workScrollerBlocksPaging(-1)) return;
+        if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(-1)) return;
         e.preventDefault();
         go(-1);
       }
@@ -184,7 +184,7 @@ export function useSectionPager() {
       const dy = t.clientY - start.y;
       if (Math.abs(dy) < 56 || Math.abs(dy) < Math.abs(dx) * 1.15) return;
       const dir = dy > 0 ? -1 : 1;
-      if (location.pathname === WORK_PATH && workScrollerBlocksPaging(dir > 0 ? 1 : -1)) {
+      if (location.pathname === HOME_PATH && homeScrollerBlocksPaging(dir > 0 ? 1 : -1)) {
         return;
       }
       go(dir);

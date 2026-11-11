@@ -4,45 +4,41 @@ import { createPortal } from 'react-dom';
 import {
   SECTION_PATHS,
   sectionDirection,
-  sectionIndex,
   sectionTensionRef,
   navigateSection,
 } from '../hooks/useSectionPager';
 import './ScrollRuler.css';
 
-function workScroller() {
+function homeScroller() {
   return document.getElementById('home-scroller');
 }
 
-function workScrollT() {
-  const scroller = workScroller();
+function homeScrollT() {
+  const scroller = homeScroller();
   if (!scroller) return 0;
   const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
   return maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
 }
 
 /**
- * About → work → play as one vertical journey on the ruler.
- * Wheel tension on about/play nudges the mark before the page flips.
+ * Landing scroll fills most of the ruler; play sits at the bottom.
+ * Wheel tension toward play nudges the mark at the end of the landing page.
  */
 function readProgress(pathname) {
-  const i = sectionIndex(pathname);
-  if (i < 0) return 0;
-  const n = SECTION_PATHS.length - 1;
-  const step = 1 / n;
   const tension = sectionTensionRef.current;
 
-  if (pathname === '/work') {
-    const t = workScrollT();
-    return Math.max(0, Math.min(1, (i + t) / n + tension * step * 0.45));
+  if (pathname === '/play') {
+    return Math.max(0, Math.min(1, 1 + tension * 0.08));
   }
 
-  return Math.max(0, Math.min(1, i / n + tension * step));
+  if (pathname === '/') {
+    const t = homeScrollT();
+    return Math.max(0, Math.min(1, t * 0.92 + Math.max(0, tension) * 0.08));
+  }
+
+  return 0;
 }
 
-/**
- * Side progress bar for section pages.
- */
 const ScrollRuler = ({ setCursorVariant }) => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -70,18 +66,18 @@ const ScrollRuler = ({ setCursorVariant }) => {
       pollRaf = requestAnimationFrame(poll);
     };
 
-    const attachWork = () => {
-      if (cancelled || location.pathname !== '/work') return;
-      scroller = workScroller();
+    const attachHome = () => {
+      if (cancelled || location.pathname !== '/') return;
+      scroller = homeScroller();
       if (!scroller) {
-        raf = requestAnimationFrame(attachWork);
+        raf = requestAnimationFrame(attachHome);
         return;
       }
       scroller.addEventListener('scroll', sync, { passive: true });
     };
 
     sync();
-    attachWork();
+    attachHome();
     pollRaf = requestAnimationFrame(poll);
     window.addEventListener('resize', sync);
 
@@ -103,28 +99,25 @@ const ScrollRuler = ({ setCursorVariant }) => {
     const next = Math.max(0, Math.min(1, (clientY - rect.top) / height));
     setProgress(next);
 
-    const n = SECTION_PATHS.length - 1;
-    const rawIndex = next * n;
-    const targetIndex = Math.round(rawIndex);
-    const targetPath = SECTION_PATHS[targetIndex];
-
-    if (targetPath === '/work') {
-      if (location.pathname !== '/work') {
-        const dir = sectionDirection(location.pathname, '/work');
-        navigateSection(navigate, '/work', dir);
-      }
-      const scroller = workScroller();
-      if (scroller) {
-        const local = Math.max(0, Math.min(1, rawIndex - 1));
-        const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-        scroller.scrollTop = local * maxScroll;
+    if (next >= 0.92) {
+      if (location.pathname !== '/play') {
+        const dir = sectionDirection(location.pathname, '/play');
+        navigateSection(navigate, '/play', dir);
       }
       return;
     }
 
-    if (!targetPath || targetPath === location.pathname) return;
-    const dir = sectionDirection(location.pathname, targetPath);
-    navigateSection(navigate, targetPath, dir);
+    if (location.pathname !== '/') {
+      const dir = sectionDirection(location.pathname, '/');
+      navigateSection(navigate, '/', dir);
+    }
+
+    const scroller = homeScroller();
+    if (scroller) {
+      const local = Math.max(0, Math.min(1, next / 0.92));
+      const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+      scroller.scrollTop = local * maxScroll;
+    }
   };
 
   const onPointerDown = (e) => {

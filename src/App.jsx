@@ -6,7 +6,6 @@ import SiteLogo from './components/SiteLogo';
 import SiteChrome from './components/SiteChrome';
 import BounceCurtain from './components/BounceCurtain';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
-import Home from './pages/Home';
 import Play from './pages/Play';
 import About from './pages/About';
 import Thesis from './pages/Thesis';
@@ -21,7 +20,7 @@ const PAGE_EASE = [0.76, 0, 0.24, 1];
 
 /**
  * kind:
- * - section: vertical page between about/work/play
+ * - section: vertical page between landing (about+work) / play
  * - project-in / project-out: Skiper8 bounce curtain (tan↔white); pages swap under it
  * - fade: everything else
  */
@@ -61,16 +60,23 @@ function getInitialTheme() {
   return 'light';
 }
 
+function normalizeSectionPath(path) {
+  if (path === '/work' || path === '/about') return '/';
+  return path;
+}
+
 function transitionKind(fromPath, toPath) {
-  const fromSection = SECTION_PATHS.includes(fromPath);
-  const toSection = SECTION_PATHS.includes(toPath);
+  const from = normalizeSectionPath(fromPath);
+  const to = normalizeSectionPath(toPath);
+  const fromSection = SECTION_PATHS.includes(from);
+  const toSection = SECTION_PATHS.includes(to);
   const fromProject = WORK_PROJECT_PATHS.includes(fromPath);
   const toProject = WORK_PROJECT_PATHS.includes(toPath);
 
   if (fromSection && toSection) return 'section';
-  // Work (section) → case study: tan grid bounces away
+  // Landing → case study: tan grid bounces away
   if (fromSection && toProject) return 'project-in';
-  // Case study → work: white bounces away
+  // Case study → landing: white bounces away
   if (fromProject && toSection) return 'project-out';
   return 'fade';
 }
@@ -122,9 +128,9 @@ function AppContent() {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  const isTabPage = SECTION_PATHS.includes(location.pathname);
   const kind = navMeta.kind;
   const transitionCustom = { kind: navMeta.kind, dir: navMeta.dir };
+  const isTabPage = SECTION_PATHS.includes(normalizeSectionPath(location.pathname));
 
   const clearCurtain = useCallback(() => {
     setCurtain(null);
@@ -141,11 +147,6 @@ function AppContent() {
   }, [isTabPage]);
 
   useSectionPager();
-
-  const handleCursorChange = useCallback((variant, element = null) => {
-    setCursorVariant(variant);
-    setHoveredElement(element);
-  }, []);
 
   const showGrayBackground =
     location.pathname === '/' ||
@@ -189,7 +190,7 @@ function AppContent() {
             <Routes location={location}>
               <Route path="/" element={<About setCursorVariant={setCursorVariant} />} />
               <Route path="/about" element={<Navigate to="/" replace />} />
-              <Route path="/work" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
+              <Route path="/work" element={<Navigate to="/" replace state={{ scrollTo: 'work' }} />} />
               <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
               <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
               <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
