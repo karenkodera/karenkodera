@@ -661,14 +661,11 @@
   }
 
   .about-page-cards {
-    grid-template-columns: 1fr;
-  }
-
-  .about-page-cards {
     display: flex;
     flex-direction: column;
     align-items: stretch;
     width: 100%;
+    grid-template-columns: 1fr;
   }
 
   .about-bio-column,
