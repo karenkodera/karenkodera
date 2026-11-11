@@ -34,9 +34,15 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
   const cardProps = project.link ? { to: project.link } : {};
 
   const isWip = project.workInProgress === true;
+  const isComingSoon = project.comingSoon === true;
+  const isMuted = isWip || isComingSoon;
   const requiresPassword = project.requiresPassword === true;
 
   const handleClick = (event) => {
+    if (isComingSoon) {
+      event.preventDefault();
+      return;
+    }
     if (requiresPassword && onProtectedClick && project.link) {
       event.preventDefault();
       onProtectedClick(project.link);
@@ -45,7 +51,7 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
 
   return (
     <motion.div
-      className={`project-card${isWip ? ' project-card-wip' : ''}`}
+      className={`project-card${isMuted ? ' project-card-wip' : ''}`}
       variants={cardVariants}
       initial="hidden"
       animate="visible"
@@ -54,9 +60,11 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
         {...cardProps}
         className="project-card-link"
         aria-label={
-          requiresPassword
-            ? `${project.title} (password protected)`
-            : undefined
+          isComingSoon
+            ? `${project.title} (coming soon)`
+            : requiresPassword
+              ? `${project.title} (password protected)`
+              : undefined
         }
         onClick={handleClick}
         onMouseEnter={handleMouseEnter}
@@ -65,8 +73,8 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
         <motion.div
           className="project-card-content"
           animate={{
-            padding: isHovered ? 8 : 0,
-            margin: isHovered ? -8 : 0,
+            padding: isHovered && !isComingSoon ? 8 : 0,
+            margin: isHovered && !isComingSoon ? -8 : 0,
           }}
           transition={{ type: 'spring', stiffness: 400, damping: 25 }}
         >
@@ -96,7 +104,12 @@ const ProjectCard = ({ project, index, setCursorVariant, onProtectedClick }) => 
                   </svg>
                 </div>
               )}
-              {isWip && (
+              {isComingSoon && (
+                <div className="project-wip-badge" aria-hidden="true">
+                  <span>Coming soon</span>
+                </div>
+              )}
+              {isWip && !isComingSoon && (
                 <div className="project-wip-badge" aria-hidden="true">
                   <svg className="project-wip-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />

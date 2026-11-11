@@ -52,17 +52,6 @@ const PLAY_PROJECTS = [
       '/play/grand-piano/build.png',
     ],
   },
-  {
-    id: 'sewing-clothes',
-    title: 'Sewing my climbing closet from scratch',
-    subtitle: "Learning how to use my mother's sewing machine in my free time!",
-    cover: '/play/sewing-clothes/video.mov',
-    coverPortrait: true,
-    coverVideo: true,
-    modalTitle: 'Sewing my climbing closet from scratch',
-    modalBody: "Learning how to use my mother's sewing machine in my free time!",
-    slides: ['/play/sewing-clothes/video.mov'],
-  },
 ];
 
 function PlayModal({ project, onClose, setCursorVariant }) {

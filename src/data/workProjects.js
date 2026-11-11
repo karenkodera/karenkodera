@@ -9,6 +9,15 @@ export const WORK_PROJECTS = [
     year: '2026',
   },
   {
+    id: 'work-kroger-ad',
+    title: 'A Kroger Ad',
+    subtitle: 'Kroger Product Design',
+    image: '/kroger/ad-coming-soon.svg',
+    comingSoon: true,
+    tags: ['Coming soon'],
+    year: '2026',
+  },
+  {
     id: 'work-thesis',
     title: 'Minimizing Overproduction in Fashion Retail',
     subtitle: "Northwestern Design Master's Thesis",
@@ -28,4 +37,4 @@ export const WORK_PROJECTS = [
   },
 ];
 
-export const WORK_PROJECT_PATHS = WORK_PROJECTS.map((p) => p.link);
+export const WORK_PROJECT_PATHS = WORK_PROJECTS.map((p) => p.link).filter(Boolean);
