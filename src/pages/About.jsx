@@ -105,6 +105,12 @@ const About = ({ setCursorVariant }) => {
           </div>
         </div>
       </div>
+
+      {introDone && (
+        <p className="about-scroll-hint" aria-hidden="true">
+          scroll down
+        </p>
+      )}
     </div>
   );
 };

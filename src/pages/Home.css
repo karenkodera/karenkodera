@@ -139,22 +139,14 @@
   opacity: 1;
 }
 
-.home-scroll-hint {
-  position: fixed;
-  left: auto;
-  right: 28px;
-  bottom: auto;
-  top: calc(50% + min(110px, 23vh) + 28px);
+.about-scroll-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 28px;
   z-index: 110;
-  transform: none;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
+  transform: translateX(-50%);
   margin: 0;
   padding: 6px 14px;
-  border: none;
-  background: transparent;
   font-family: 'Inter', system-ui, sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
@@ -164,24 +156,6 @@
   white-space: nowrap;
   pointer-events: none;
   user-select: none;
-  cursor: none;
-  border-radius: 999px;
-  transition: background-color 0.2s ease;
-}
-
-.home-scroll-hint:not(.home-scroll-hint--action) {
-  writing-mode: vertical-rl;
-  text-orientation: mixed;
-}
-
-.home-scroll-hint--action {
-  pointer-events: auto;
-}
-
-.home-scroll-hint--action:hover,
-.home-scroll-hint--action:focus-visible {
-  background-color: #ffffff;
-  outline: none;
 }
 
 /* Bottom-left contacts — LinkedIn + Email side by side */
@@ -248,9 +222,8 @@
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   touch-action: pan-y;
-  /* Breathing room above the first card and below the last */
-  padding-top: clamp(88px, 14vh, 160px);
-  padding-bottom: clamp(120px, 22vh, 280px);
+  padding-top: clamp(88px, 12vh, 140px);
+  padding-bottom: clamp(88px, 14vh, 160px);
   padding-left: var(--home-inset);
   padding-right: clamp(72px, 10vw, 120px);
   box-sizing: border-box;
@@ -258,6 +231,23 @@
 
 .home-scroller::-webkit-scrollbar {
   width: 0;
+}
+
+.home-work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px 24px;
+  width: min(1100px, 100%);
+  box-sizing: border-box;
+}
+
+.home-work-cell {
+  min-width: 0;
+}
+
+.home-work-cell .project-card {
+  width: 100%;
+  height: auto;
 }
 
 .home-slide {
@@ -593,12 +583,8 @@
     left: auto;
   }
 
-  .home-scroll-hint {
-    right: 14px;
-    top: calc(50% + min(90px, 20vh) + 24px);
-    left: auto;
-    bottom: auto;
-    transform: none;
+  .about-scroll-hint {
+    bottom: 18px;
     font-size: 0.65rem;
   }
 
@@ -613,21 +599,20 @@
 
   .home-scroller {
     padding-top: 88px;
-    padding-bottom: 120px;
+    padding-bottom: 96px;
     padding-left: var(--home-inset);
     padding-right: 56px;
+  }
+
+  .home-work-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 100%;
   }
 
   .home-slide-card {
     width: min(92vw, 520px);
     padding: 20px 8px;
-  }
-
-  .home-slide-card.float-up .project-card,
-  .home-slide-card.float-mid-up .project-card,
-  .home-slide-card.float-down .project-card,
-  .home-slide-card.float-mid-down .project-card {
-    transform: none;
   }
 
   .home-slide-card.home-slide-play {
