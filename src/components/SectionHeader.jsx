@@ -6,8 +6,8 @@ import './SectionHeader.css';
 
 
 const navItems = [
-  { path: '/about', label: 'about' },
-  { path: '/', label: 'work' },
+  { path: '/', label: 'about' },
+  { path: '/work', label: 'work' },
   { path: '/play', label: 'play' },
 ];
 

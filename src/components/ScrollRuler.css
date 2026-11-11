@@ -1,12 +1,14 @@
-/* Anime.js–style progress card; keep karenkodera placement + width */
+/* Vertical progress card on the right edge of work */
 .home-scroll-ruler {
   position: fixed;
-  left: 50%;
-  bottom: 28px;
-  transform: translateX(-50%);
+  top: 50%;
+  right: 28px;
+  left: auto;
+  bottom: auto;
+  transform: translateY(-50%);
   z-index: 125;
-  width: min(220px, 46vw);
-  height: 40px;
+  width: 40px;
+  height: min(220px, 46vh);
   border-radius: 12px;
   background: #302e2d;
   overflow: visible;
@@ -19,44 +21,45 @@
 
 .home-scroll-ruler-track {
   position: absolute;
-  top: 50%;
-  left: 16px;
-  right: 16px;
-  height: 12px;
-  transform: translateY(-50%);
+  left: 50%;
+  top: 16px;
+  bottom: 16px;
+  width: 12px;
+  transform: translateX(-50%);
   background-image: linear-gradient(
-    to right,
+    to bottom,
     rgba(255, 255, 255, 0.15) 1px,
     transparent 1px
   );
-  background-size: 5px 8px;
+  background-size: 8px 5px;
   background-repeat: repeat;
-  background-position: left center;
+  background-position: center top;
   pointer-events: none;
 }
 
 .home-scroll-ruler-mark {
   position: absolute;
-  top: 50%;
-  width: 3px;
-  height: 16px;
+  left: 50%;
+  top: 0;
+  width: 16px;
+  height: 3px;
   border-radius: 3px;
   background: #ffffff;
   transform: translate(-50%, -50%);
   pointer-events: none;
   z-index: 1;
-  will-change: left;
+  will-change: top;
 }
 
 @media (max-width: 768px) {
   .home-scroll-ruler {
-    bottom: 18px;
-    width: min(180px, 56vw);
-    height: 36px;
+    right: 14px;
+    width: 36px;
+    height: min(180px, 40vh);
   }
 
   .home-scroll-ruler-track {
-    left: 12px;
-    right: 12px;
+    top: 12px;
+    bottom: 12px;
   }
 }

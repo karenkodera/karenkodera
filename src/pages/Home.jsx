@@ -1,6 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import IntroSplash from '../components/IntroSplash';
 import ProjectCard from '../components/ProjectCard';
 import ScrollRuler from '../components/ScrollRuler';
 import { WORK_PROJECTS } from '../data/workProjects';
@@ -27,88 +26,18 @@ function buildWorkStream() {
 
 const WORK_STREAM = buildWorkStream();
 
-/** Survives SPA remounts; resets on full page load so the intro plays again. */
-let introSeenThisLoad = false;
-
 const Home = ({ setCursorVariant }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const scrollerRef = useRef(null);
   const [scrollEdge, setScrollEdge] = useState('start'); // start | middle | end
-  const [introDone, setIntroDone] = useState(() => introSeenThisLoad);
-
-  const handleIntroComplete = useCallback(() => {
-    introSeenThisLoad = true;
-    setIntroDone(true);
-  }, []);
-
-  useEffect(() => {
-    if (introDone) {
-      setCursorVariant?.('default');
-      document.documentElement.removeAttribute('data-intro');
-      return undefined;
-    }
-    setCursorVariant?.('intro');
-    document.documentElement.setAttribute('data-intro', '1');
-    return () => {
-      setCursorVariant?.('default');
-      document.documentElement.removeAttribute('data-intro');
-    };
-  }, [introDone, setCursorVariant]);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return undefined;
 
-    let rafId = 0;
-    let pendingDelta = 0;
-
-    const flush = () => {
-      rafId = 0;
-      if (pendingDelta === 0) return;
-      const next = scroller.scrollLeft + pendingDelta;
-      pendingDelta = 0;
-      scroller.scrollLeft = next;
-    };
-
-    const queueHorizontal = (delta) => {
-      if (!delta) return;
-      pendingDelta += delta;
-      if (!rafId) rafId = requestAnimationFrame(flush);
-    };
-
-    const onWheel = (e) => {
-      if (
-        !introDone ||
-        document.querySelector('.play-modal-overlay') ||
-        document.querySelector('.password-gate')
-      ) {
-        return;
-      }
-
-      let dx = e.deltaX;
-      let dy = e.deltaY;
-      if (e.deltaMode === 1) {
-        dx *= 16;
-        dy *= 16;
-      } else if (e.deltaMode === 2) {
-        dx *= window.innerWidth;
-        dy *= window.innerHeight;
-      }
-
-      // Vertical intent is handled by the section pager (about → work → play).
-      // Only drive the work strip on horizontal (or clearly sideways) input.
-      const horizontal = Math.abs(dx) >= Math.abs(dy);
-      if (!horizontal) return;
-      if (dx === 0) return;
-
-      e.preventDefault();
-      queueHorizontal(dx);
-    };
-
     const onKeyDown = (e) => {
       if (
-        !introDone ||
         document.querySelector('.play-modal-overlay') ||
         document.querySelector('.password-gate')
       ) {
@@ -119,43 +48,41 @@ const Home = ({ setCursorVariant }) => {
         return;
       }
 
-      const page = Math.max(240, Math.floor(window.innerWidth * 0.55));
-      if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        queueHorizontal(page);
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        queueHorizontal(-page);
+      const page = Math.max(240, Math.floor(window.innerHeight * 0.55));
+      if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+        if (scroller.scrollTop < max - 2) {
+          e.preventDefault();
+          scroller.scrollTop = Math.min(max, scroller.scrollTop + page);
+        }
+      } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (scroller.scrollTop > 2) {
+          e.preventDefault();
+          scroller.scrollTop = Math.max(0, scroller.scrollTop - page);
+        }
       } else if (e.key === 'Home') {
         e.preventDefault();
-        scroller.scrollLeft = 0;
+        scroller.scrollTop = 0;
       } else if (e.key === 'End') {
         e.preventDefault();
-        scroller.scrollLeft = scroller.scrollWidth;
+        scroller.scrollTop = scroller.scrollHeight;
       }
     };
 
-    scroller.addEventListener('wheel', onWheel, { passive: false });
-    window.addEventListener('wheel', onWheel, { passive: false, capture: true });
     window.addEventListener('keydown', onKeyDown);
-    return () => {
-      scroller.removeEventListener('wheel', onWheel);
-      window.removeEventListener('wheel', onWheel, { capture: true });
-      window.removeEventListener('keydown', onKeyDown);
-      if (rafId) cancelAnimationFrame(rafId);
-    };
-  }, [introDone]);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   useEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return undefined;
 
     const updateEdge = () => {
-      const max = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
-      const left = scroller.scrollLeft;
-      const edge = Math.min(window.innerWidth * 0.45, max * 0.35);
-      if (left < edge) setScrollEdge('start');
-      else if (left > max - edge) setScrollEdge('end');
+      const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+      const top = scroller.scrollTop;
+      const edge = Math.min(window.innerHeight * 0.35, max * 0.35);
+      if (top < edge) setScrollEdge('start');
+      else if (top > max - edge) setScrollEdge('end');
       else setScrollEdge('middle');
     };
 
@@ -168,11 +95,11 @@ const Home = ({ setCursorVariant }) => {
     };
   }, []);
 
-  // Legacy hashes: /#about → /about, /#play → /play, /#work → /
+  // Legacy hashes: /#about → /, /#play → /play, /#work → /work
   useEffect(() => {
     const hash = location.hash.replace('#', '');
     if (hash === 'about') {
-      navigate('/about', { replace: true });
+      navigate('/', { replace: true });
       return;
     }
     if (hash === 'play') {
@@ -181,31 +108,26 @@ const Home = ({ setCursorVariant }) => {
     }
     if (hash === 'work' || hash) {
       if (window.history.replaceState) {
-        window.history.replaceState(null, '', '/');
+        window.history.replaceState(null, '', '/work');
       }
     }
-    scrollerRef.current?.scrollTo({ left: 0 });
+    scrollerRef.current?.scrollTo({ top: 0 });
   }, [location.hash, navigate]);
 
-  const goHome = () => {
-    scrollerRef.current?.scrollTo({ left: 0, behavior: 'smooth' });
-    if (window.history.replaceState) {
-      window.history.replaceState(null, '', '/');
-    }
+  const goTop = () => {
+    scrollerRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
-    <div className={`home home--horizontal${introDone ? '' : ' home--intro'}`}>
-      {!introDone && <IntroSplash onComplete={handleIntroComplete} />}
-
+    <div className="home home--vertical">
       <div
-        className={`home-hero-chrome${scrollEdge === 'middle' || !introDone ? ' home-hero-chrome--hidden' : ''}`}
+        className={`home-hero-chrome${scrollEdge === 'middle' ? ' home-hero-chrome--hidden' : ''}`}
       >
         {scrollEdge === 'end' ? (
           <button
             type="button"
             className="home-scroll-hint home-scroll-hint--action"
-            onClick={goHome}
+            onClick={goTop}
             onMouseEnter={() => setCursorVariant?.('hover')}
             onMouseLeave={() => setCursorVariant?.('default')}
           >
@@ -213,7 +135,7 @@ const Home = ({ setCursorVariant }) => {
           </button>
         ) : (
           <p className="home-scroll-hint" aria-hidden="true">
-            scroll to side
+            scroll
           </p>
         )}
       </div>

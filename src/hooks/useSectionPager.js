@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-export const SECTION_PATHS = ['/about', '/', '/play'];
+export const SECTION_PATHS = ['/', '/work', '/play'];
 
 /** Shared with App page transition — set before navigate so exit/enter match. */
 export const pageDirRef = { current: 1 };
@@ -9,11 +9,24 @@ export const pageDirRef = { current: 1 };
 const THRESHOLD = 90;
 const LOCK_MS = 580;
 const DECAY = 0.86;
+const WORK_PATH = '/work';
 
 function isBlocked() {
   if (document.documentElement.getAttribute('data-intro') === '1') return true;
   if (document.querySelector('.play-modal-overlay')) return true;
   if (document.querySelector('.password-gate')) return true;
+  return false;
+}
+
+/** When work has its own vertical scroller, only page at the edges. */
+function workScrollerBlocksPaging(dy) {
+  const scroller = document.getElementById('home-scroller');
+  if (!scroller) return false;
+  const max = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+  if (max <= 1) return false;
+  const top = scroller.scrollTop;
+  if (dy > 0 && top < max - 2) return true;
+  if (dy < 0 && top > 2) return true;
   return false;
 }
 
@@ -41,6 +54,7 @@ export function navigateSection(navigate, path, dir) {
  * Discrete vertical section paging: about → work → play → about.
  * Accumulates wheel/touch delta with rubber-band tension, then navigates
  * once the threshold is crossed (same route transition as the pill tabs).
+ * On /work, inner vertical scrolling wins until the scroller hits an edge.
  */
 export function useSectionPager() {
   const navigate = useNavigate();
@@ -114,6 +128,11 @@ export function useSectionPager() {
       if (Math.abs(dx) > Math.abs(dy)) return;
       if (Math.abs(dy) < 1) return;
 
+      if (location.pathname === WORK_PATH && workScrollerBlocksPaging(dy)) {
+        accumRef.current = 0;
+        return;
+      }
+
       e.preventDefault();
       applyDelta(dy);
       startDecay();
@@ -125,9 +144,11 @@ export function useSectionPager() {
       if (tag === 'INPUT' || tag === 'TEXTAREA' || e.target?.isContentEditable) return;
 
       if (e.key === 'ArrowDown' || e.key === 'PageDown') {
+        if (location.pathname === WORK_PATH && workScrollerBlocksPaging(1)) return;
         e.preventDefault();
         go(1);
       } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+        if (location.pathname === WORK_PATH && workScrollerBlocksPaging(-1)) return;
         e.preventDefault();
         go(-1);
       }
@@ -148,7 +169,11 @@ export function useSectionPager() {
       const dx = t.clientX - start.x;
       const dy = t.clientY - start.y;
       if (Math.abs(dy) < 56 || Math.abs(dy) < Math.abs(dx) * 1.15) return;
-      go(dy > 0 ? -1 : 1);
+      const dir = dy > 0 ? -1 : 1;
+      if (location.pathname === WORK_PATH && workScrollerBlocksPaging(dir > 0 ? 1 : -1)) {
+        return;
+      }
+      go(dir);
     };
 
     window.addEventListener('wheel', onWheel, { passive: false, capture: true });

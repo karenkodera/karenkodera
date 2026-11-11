@@ -1,15 +1,42 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import IntroSplash from '../components/IntroSplash';
 import StickerNote from '../components/StickerNote';
 import './About.css';
 import './Home.css';
 
+/** Survives SPA remounts; resets on full page load so the intro plays again. */
+let introSeenThisLoad = false;
+
 const About = ({ setCursorVariant }) => {
+  const [introDone, setIntroDone] = useState(() => introSeenThisLoad);
+
+  const handleIntroComplete = useCallback(() => {
+    introSeenThisLoad = true;
+    setIntroDone(true);
+  }, []);
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
+  useEffect(() => {
+    if (introDone) {
+      setCursorVariant?.('default');
+      document.documentElement.removeAttribute('data-intro');
+      return undefined;
+    }
+    setCursorVariant?.('intro');
+    document.documentElement.setAttribute('data-intro', '1');
+    return () => {
+      setCursorVariant?.('default');
+      document.documentElement.removeAttribute('data-intro');
+    };
+  }, [introDone, setCursorVariant]);
+
   return (
-    <div className="about-route" id="about">
+    <div className={`about-route${introDone ? '' : ' about-route--intro'}`} id="about">
+      {!introDone && <IntroSplash onComplete={handleIntroComplete} />}
+
       <div className="about-page about-page--slide">
         <div className="about-page-cards">
           <div className="about-bio-column">
@@ -31,18 +58,6 @@ const About = ({ setCursorVariant }) => {
                     product design, I fell in love with its iterative nature and human impact.
                     Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers
                     buy groceries online daily. When I&apos;m not designing, I&apos;m climbing!
-                    Check out{' '}
-                    <a
-                      href="https://www.instagram.com/karebiner"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="about-bio-link"
-                      onMouseEnter={() => setCursorVariant?.('hover')}
-                      onMouseLeave={() => setCursorVariant?.('default')}
-                    >
-                      @karebiner
-                    </a>
-                    .
                   </p>
                 </div>
               </div>
@@ -59,7 +74,7 @@ const About = ({ setCursorVariant }) => {
               <div className="about-experience-list">
                 <div className="about-experience-item">
                   <div className="about-experience-role">Product Design</div>
-                  <div className="about-experience-company">Kroger · New York</div>
+                  <div className="about-experience-company">Kroger</div>
                   <div className="about-experience-date">2024 – now</div>
                 </div>
                 <div className="about-experience-item">

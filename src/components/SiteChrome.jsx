@@ -6,8 +6,8 @@ import { navigateSection, sectionDirection } from '../hooks/useSectionPager';
 import './SiteChrome.css';
 
 const NAV_ITEMS = [
-  { id: 'about', label: 'about', path: '/about' },
-  { id: 'work', label: 'work', path: '/' },
+  { id: 'about', label: 'about', path: '/' },
+  { id: 'work', label: 'work', path: '/work' },
   { id: 'play', label: 'play', path: '/play' },
 ];
 
@@ -24,18 +24,15 @@ const SiteChrome = ({ setCursorVariant }) => {
   const activeId =
     location.pathname === '/play'
       ? 'play'
-      : location.pathname === '/about'
-        ? 'about'
-        : location.pathname === '/' || location.pathname === '/work'
-          ? 'work'
+      : location.pathname === '/work'
+        ? 'work'
+        : location.pathname === '/' || location.pathname === '/about'
+          ? 'about'
           : null;
 
   const handleNav = (item) => {
-    if (item.id === 'work' && location.pathname === '/') {
-      document.querySelector('.home-scroller')?.scrollTo({ left: 0, behavior: 'smooth' });
-      if (window.history.replaceState) {
-        window.history.replaceState(null, '', '/');
-      }
+    if (item.id === 'work' && location.pathname === '/work') {
+      document.querySelector('.home-scroller')?.scrollTo({ top: 0, behavior: 'smooth' });
       return;
     }
     if (item.path === location.pathname) return;

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { useState, useEffect, useCallback } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from './components/CustomCursor';
@@ -7,7 +7,6 @@ import SiteChrome from './components/SiteChrome';
 import BounceCurtain from './components/BounceCurtain';
 // Pill menu (Header) temporarily removed — restore via .cursor/rules/pill-menu-restore.mdc
 import Home from './pages/Home';
-import Work from './pages/Work';
 import Play from './pages/Play';
 import About from './pages/About';
 import Thesis from './pages/Thesis';
@@ -148,9 +147,8 @@ function AppContent() {
     setHoveredElement(element);
   }, []);
 
-  const isHome = location.pathname === '/';
   const showGrayBackground =
-    isHome ||
+    location.pathname === '/' ||
     location.pathname === '/work' ||
     location.pathname === '/play' ||
     location.pathname === '/about';
@@ -189,14 +187,14 @@ function AppContent() {
             transition={{ duration: transitionDuration, ease: PAGE_EASE }}
           >
             <Routes location={location}>
-              <Route path="/" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
-              <Route path="/work" element={<Work setCursorVariant={setCursorVariant} />} />
+              <Route path="/" element={<About setCursorVariant={setCursorVariant} />} />
+              <Route path="/about" element={<Navigate to="/" replace />} />
+              <Route path="/work" element={<Home setCursorVariant={setCursorVariant} handleCursorChange={handleCursorChange} theme={theme} setTheme={setTheme} />} />
               <Route path="/play" element={<Play setCursorVariant={setCursorVariant} />} />
               <Route path="/thesis" element={<Thesis setCursorVariant={setCursorVariant} />} />
               <Route path="/kroger" element={<Kroger setCursorVariant={setCursorVariant} />} />
               <Route path="/hsa-fsa" element={<HsaFsa setCursorVariant={setCursorVariant} />} />
               <Route path="/dsg" element={<DicksSportingGoods setCursorVariant={setCursorVariant} />} />
-              <Route path="/about" element={<About setCursorVariant={setCursorVariant} />} />
             </Routes>
           </motion.div>
         </AnimatePresence>

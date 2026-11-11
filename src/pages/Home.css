@@ -1,15 +1,10 @@
-.home--horizontal {
+.home--vertical {
   --home-inset: 40px;
   height: 100vh;
   height: 100dvh;
   overflow: hidden;
   background: transparent;
   position: relative;
-}
-
-.home--intro .home-scroll-ruler {
-  opacity: 0;
-  pointer-events: none;
 }
 
 /* Legacy home chrome selectors — active chrome uses .site-chrome-* */
@@ -146,11 +141,12 @@
 
 .home-scroll-hint {
   position: fixed;
-  left: 50%;
-  right: auto;
-  bottom: 76px;
+  left: auto;
+  right: 28px;
+  bottom: auto;
+  top: calc(50% + min(110px, 23vh) + 28px);
   z-index: 110;
-  transform: translateX(-50%);
+  transform: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -171,6 +167,11 @@
   cursor: none;
   border-radius: 999px;
   transition: background-color 0.2s ease;
+}
+
+.home-scroll-hint:not(.home-scroll-hint--action) {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
 }
 
 .home-scroll-hint--action {
@@ -236,33 +237,35 @@
 
 .home-scroller {
   display: flex;
-  flex-direction: row;
-  align-items: stretch;
+  flex-direction: column;
+  align-items: center;
   height: 100%;
   width: 100%;
-  overflow-x: scroll;
-  overflow-y: hidden;
+  overflow-x: hidden;
+  overflow-y: scroll;
   scroll-snap-type: none;
   scroll-behavior: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  touch-action: pan-x;
-  /* Breathing room before the first card and after the last */
-  padding-left: clamp(72px, 16vw, 220px);
-  padding-right: clamp(120px, 28vw, 360px);
+  touch-action: pan-y;
+  /* Breathing room above the first card and below the last */
+  padding-top: clamp(88px, 14vh, 160px);
+  padding-bottom: clamp(120px, 22vh, 280px);
+  padding-left: var(--home-inset);
+  padding-right: clamp(72px, 10vw, 120px);
   box-sizing: border-box;
 }
 
 .home-scroller::-webkit-scrollbar {
-  height: 0;
+  width: 0;
 }
 
 .home-slide {
   flex: 0 0 auto;
-  height: 100%;
+  width: 100%;
   scroll-snap-align: none;
   display: flex;
-  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
 }
 
@@ -277,7 +280,8 @@
 
 .home-slide-card {
   width: min(640px, 82vw);
-  padding: 72px 28px 56px 20px;
+  max-width: 100%;
+  padding: 28px 20px;
   align-items: center;
 }
 
@@ -292,32 +296,22 @@
   height: auto;
 }
 
-/*
-  Float within the experience/education card vertical band only.
-  Details card is ~content-height; keep offsets modest (±36px).
-*/
+/* Alternate slight horizontal offsets in the vertical work stack */
 .home-slide-card.float-up,
-.home-slide-card.float-mid-up {
+.home-slide-card.float-mid-up,
+.home-slide-card.float-down,
+.home-slide-card.float-mid-down {
   align-items: center;
-  padding-top: 72px;
-  padding-bottom: 72px;
 }
 
 .home-slide-card.float-up .project-card,
 .home-slide-card.float-mid-up .project-card {
-  transform: translateY(-36px);
-}
-
-.home-slide-card.float-down,
-.home-slide-card.float-mid-down {
-  align-items: center;
-  padding-top: 72px;
-  padding-bottom: 72px;
+  transform: translateX(-28px);
 }
 
 .home-slide-card.float-down .project-card,
 .home-slide-card.float-mid-down .project-card {
-  transform: translateY(36px);
+  transform: translateX(28px);
 }
 
 /* Play: same centerline, ±16px — 32px apart vertically, not aligned */
@@ -583,7 +577,7 @@
 }
 
 @media (max-width: 768px) {
-  .home--horizontal {
+  .home--vertical {
     --home-inset: 16px;
   }
 
@@ -600,10 +594,11 @@
   }
 
   .home-scroll-hint {
-    left: 50%;
-    right: auto;
-    bottom: 62px;
-    transform: translateX(-50%);
+    right: 14px;
+    top: calc(50% + min(90px, 20vh) + 24px);
+    left: auto;
+    bottom: auto;
+    transform: none;
     font-size: 0.65rem;
   }
 
@@ -617,13 +612,22 @@
   }
 
   .home-scroller {
-    padding-left: clamp(28px, 10vw, 72px);
-    padding-right: clamp(64px, 22vw, 160px);
+    padding-top: 88px;
+    padding-bottom: 120px;
+    padding-left: var(--home-inset);
+    padding-right: 56px;
   }
 
   .home-slide-card {
     width: min(92vw, 520px);
-    padding: 80px 12px 32px 8px;
+    padding: 20px 8px;
+  }
+
+  .home-slide-card.float-up .project-card,
+  .home-slide-card.float-mid-up .project-card,
+  .home-slide-card.float-down .project-card,
+  .home-slide-card.float-mid-down .project-card {
+    transform: none;
   }
 
   .home-slide-card.home-slide-play {

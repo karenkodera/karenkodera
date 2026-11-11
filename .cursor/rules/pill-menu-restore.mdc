@@ -10,4 +10,4 @@ The black pill menu at the top (`src/components/Header.jsx` + `Header.css`) was 
 When asked to bring the menu back:
 - Re-render `<Header setCursorVariant={...} handleCursorChange={...} />` in `App.jsx`
 - Style: fixed centered black pill, white text, items `about | work | play | resume`
-- Routes: `about` → `/about`, `work` → `/`, `play` → `/play` (no hash scrolling)
+- Routes: `about` → `/`, `work` → `/work`, `play` → `/play` (no hash scrolling)
