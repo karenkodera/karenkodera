@@ -6,8 +6,7 @@ import './SectionHeader.css';
 
 
 const navItems = [
-  { path: '/', label: 'about' },
-  { path: '/', label: 'work', scrollTo: 'work' },
+  { path: '/', label: 'work' },
   { path: '/play', label: 'play' },
 ];
 

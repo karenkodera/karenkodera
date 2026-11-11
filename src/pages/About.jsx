@@ -15,7 +15,6 @@ const About = ({ setCursorVariant }) => {
   const navigate = useNavigate();
   const scrollerRef = useRef(null);
   const [introDone, setIntroDone] = useState(() => introSeenThisLoad);
-  const [showScrollHint, setShowScrollHint] = useState(true);
 
   const handleIntroComplete = useCallback(() => {
     introSeenThisLoad = true;
@@ -77,25 +76,7 @@ const About = ({ setCursorVariant }) => {
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
-  useEffect(() => {
-    const scroller = scrollerRef.current;
-    if (!scroller) return undefined;
-
-    const updateHint = () => {
-      const edge = Math.min(window.innerHeight * 0.4, 220);
-      setShowScrollHint(scroller.scrollTop < edge);
-    };
-
-    updateHint();
-    scroller.addEventListener('scroll', updateHint, { passive: true });
-    window.addEventListener('resize', updateHint);
-    return () => {
-      scroller.removeEventListener('scroll', updateHint);
-      window.removeEventListener('resize', updateHint);
-    };
-  }, []);
-
-  // Scroll to about/work anchors; legacy hashes
+  // Scroll to anchors; legacy hashes
   useEffect(() => {
     const scroller = scrollerRef.current;
     if (!scroller) return;
@@ -137,102 +118,95 @@ const About = ({ setCursorVariant }) => {
       {!introDone && <IntroSplash onComplete={handleIntroComplete} />}
 
       <div className="home-scroller" id="home-scroller" ref={scrollerRef}>
-        <section
-          className={`about-route about-route--in-scroller${introDone ? '' : ' about-route--intro'}`}
-          id="about"
-        >
-          <div className="about-page about-page--slide">
-            <div className="about-page-cards">
-              <div className="about-bio-column">
-                <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
-                <div className="about-bio-stack">
-                  <div className="about-bio-layout">
-                    <div className="about-photo-wrap" aria-hidden="true">
-                      <img
-                        src="/about-photo.png"
-                        alt=""
-                        className="about-photo"
-                        loading="eager"
-                      />
+        <div className="home-landing-stack">
+          <section
+            className={`about-route about-route--in-scroller${introDone ? '' : ' about-route--intro'}`}
+            id="about"
+          >
+            <div className="about-page about-page--slide">
+              <div className="about-page-cards">
+                <div className="about-bio-column">
+                  <h2 className="about-hi">Hello, I&apos;m Karen.</h2>
+                  <div className="about-bio-stack">
+                    <div className="about-bio-layout">
+                      <div className="about-photo-wrap" aria-hidden="true">
+                        <img
+                          src="/about-photo.png"
+                          alt=""
+                          className="about-photo"
+                          loading="eager"
+                        />
+                      </div>
+                      <div className="about-bio-content">
+                        <p className="about-bio">
+                          I&apos;ve always loved creating, starting in high school with choreographing
+                          dances to designing buildings for my architecture degree. When I discovered
+                          product design, I fell in love with its iterative nature and human impact.
+                          Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers
+                          buy groceries online daily. When I&apos;m not designing, I&apos;m climbing!
+                        </p>
+                      </div>
                     </div>
-                    <div className="about-bio-content">
-                      <p className="about-bio">
-                        I&apos;ve always loved creating, starting in high school with choreographing
-                        dances to designing buildings for my architecture degree. When I discovered
-                        product design, I fell in love with its iterative nature and human impact.
-                        Today, I design Kroger&apos;s ecommerce interface, to help 11 million shoppers
-                        buy groceries online daily. When I&apos;m not designing, I&apos;m climbing!
-                      </p>
-                    </div>
-                  </div>
 
-                  <div className="about-stickers-box">
-                    <StickerNote setCursorVariant={setCursorVariant} />
+                    <div className="about-stickers-box">
+                      <StickerNote setCursorVariant={setCursorVariant} />
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="about-details-card">
-                <section className="about-experience-section">
-                  <h2 className="about-section-label">EXPERIENCE</h2>
-                  <div className="about-experience-list">
-                    <div className="about-experience-item">
-                      <div className="about-experience-role">Product Design</div>
-                      <div className="about-experience-company">Kroger</div>
-                      <div className="about-experience-date">2024 – now</div>
-                    </div>
-                    <div className="about-experience-item">
-                      <div className="about-experience-role">Product Design</div>
-                      <div className="about-experience-company">Dick&apos;s Sporting Goods</div>
-                      <div className="about-experience-date">2023</div>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="about-education-section">
-                  <h2 className="about-section-label">EDUCATION</h2>
-                  <div className="about-education-list">
-                    <div className="about-education-item">
-                      <div className="about-education-degree">
-                        M.S. Engineering Design Innovation
+                <div className="about-details-card">
+                  <section className="about-experience-section">
+                    <h2 className="about-section-label">EXPERIENCE</h2>
+                    <div className="about-experience-list">
+                      <div className="about-experience-item">
+                        <div className="about-experience-role">Product Design</div>
+                        <div className="about-experience-company">Kroger</div>
+                        <div className="about-experience-date">2024 – now</div>
                       </div>
-                      <div className="about-education-school">Northwestern University</div>
-                      <div className="about-education-date">2023 – 2025</div>
+                      <div className="about-experience-item">
+                        <div className="about-experience-role">Product Design</div>
+                        <div className="about-experience-company">Dick&apos;s Sporting Goods</div>
+                        <div className="about-experience-date">2023</div>
+                      </div>
                     </div>
-                    <div className="about-education-item">
-                      <div className="about-education-degree">B.S. Architecture</div>
-                      <div className="about-education-school">Georgia Institute of Technology</div>
-                      <div className="about-education-date">2018 – 2023</div>
+                  </section>
+
+                  <section className="about-education-section">
+                    <h2 className="about-section-label">EDUCATION</h2>
+                    <div className="about-education-list">
+                      <div className="about-education-item">
+                        <div className="about-education-degree">
+                          M.S. Engineering Design Innovation
+                        </div>
+                        <div className="about-education-school">Northwestern University</div>
+                        <div className="about-education-date">2023 – 2025</div>
+                      </div>
+                      <div className="about-education-item">
+                        <div className="about-education-degree">B.S. Architecture</div>
+                        <div className="about-education-school">Georgia Institute of Technology</div>
+                        <div className="about-education-date">2018 – 2023</div>
+                      </div>
                     </div>
-                  </div>
-                </section>
+                  </section>
+                </div>
               </div>
             </div>
-          </div>
+          </section>
 
-          {introDone && showScrollHint && (
-            <p className="about-scroll-hint" aria-hidden="true">
-              <span className="about-scroll-hint-label">scroll down</span>
-              <span className="about-scroll-hint-arrow" aria-hidden>
-                ↓
-              </span>
-            </p>
-          )}
-        </section>
-
-        <section className="home-work-section" id="work">
-          <div className="home-work-grid">
-            {WORK_PROJECTS.map((project, index) => (
-              <div key={project.id} className="home-work-cell">
-                <ProjectCard
-                  project={project}
-                  index={index}
-                  setCursorVariant={setCursorVariant}
-                />
-              </div>
-            ))}
-          </div>
-        </section>
+          <section className="home-work-section" id="work">
+            <div className="home-work-grid">
+              {WORK_PROJECTS.map((project, index) => (
+                <div key={project.id} className="home-work-cell">
+                  <ProjectCard
+                    project={project}
+                    index={index}
+                    setCursorVariant={setCursorVariant}
+                  />
+                </div>
+              ))}
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );

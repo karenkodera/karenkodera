@@ -7,16 +7,25 @@
   position: relative;
 }
 
-.home--intro .about-scroll-hint,
-.home--intro .home-work-section {
+.home--intro .home-landing-stack {
   opacity: 0;
   pointer-events: none;
 }
 
-.home-work-section {
+.home-landing-stack {
+  --landing-gap: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--landing-gap);
   width: min(1100px, 100%);
-  padding-top: 48px;
-  padding-bottom: 24px;
+  box-sizing: border-box;
+  padding-top: 88px;
+}
+
+.home-work-section {
+  width: 100%;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -24,14 +33,13 @@
   position: relative;
   flex: 0 0 auto;
   width: 100%;
-  min-height: 100%;
-  min-height: 100dvh;
+  min-height: 0;
   height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: 88px var(--home-inset) 96px;
+  justify-content: flex-start;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -52,7 +60,7 @@
   pointer-events: auto;
 }
 
-/* Black pill nav — about | work | play + white resume */
+/* Black pill nav — work | play + white resume */
 .home-section-nav {
   position: fixed;
   top: 28px;
@@ -167,58 +175,6 @@
   opacity: 1;
 }
 
-.about-scroll-hint {
-  position: absolute;
-  left: 50%;
-  bottom: 28px;
-  z-index: 110;
-  transform: translateX(-50%);
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  margin: 0;
-  padding: 6px 14px;
-  font-family: 'Inter', system-ui, sans-serif;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: #191919;
-  white-space: nowrap;
-  pointer-events: none;
-  user-select: none;
-  animation: about-scroll-nudge 1.6s ease-in-out infinite;
-}
-
-.about-scroll-hint-label {
-  line-height: 1.2;
-}
-
-.about-scroll-hint-arrow {
-  display: block;
-  font-size: 0.9rem;
-  line-height: 1;
-  letter-spacing: 0;
-  opacity: 0.85;
-}
-
-@keyframes about-scroll-nudge {
-  0%,
-  100% {
-    transform: translateX(-50%) translateY(0);
-  }
-  50% {
-    transform: translateX(-50%) translateY(8px);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-scroll-hint {
-    animation: none;
-  }
-}
-
 /* Bottom-left contacts — LinkedIn + Email side by side */
 .home-contact-links {
   --home-inset: 40px;
@@ -297,8 +253,8 @@
 .home-work-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 28px 24px;
-  width: min(1100px, 100%);
+  gap: var(--landing-gap, 28px) 24px;
+  width: 100%;
   box-sizing: border-box;
 }
 
@@ -644,11 +600,6 @@
     left: auto;
   }
 
-  .about-scroll-hint {
-    bottom: 18px;
-    font-size: 0.65rem;
-  }
-
   .home-contact-links {
     left: var(--home-inset);
     bottom: 18px;
@@ -665,17 +616,14 @@
     padding-right: 56px;
   }
 
-  .about-route--in-scroller {
-    padding: 80px var(--home-inset) 72px;
-  }
-
-  .home-work-section {
-    padding-top: 24px;
+  .home-landing-stack {
+    --landing-gap: 20px;
+    padding-top: 80px;
   }
 
   .home-work-grid {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: var(--landing-gap, 20px);
     width: 100%;
   }
 

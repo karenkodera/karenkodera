@@ -44,8 +44,7 @@ const Header = ({ setCursorVariant, handleCursorChange }) => {
   const handleOtherMouseLeave = () => setCursorVariant('default');
 
   const navItems = [
-    { id: 'about', label: 'about', path: '/' },
-    { id: 'work', label: 'work', path: '/', scrollTo: 'work' },
+    { id: 'work', label: 'work', path: '/' },
     { id: 'play', label: 'play', path: '/play' },
   ];
 

@@ -1,7 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-/** Landing (about+work) ↔ play. Work is inlined under about on `/`. */
+/** Work page (bio + projects) ↔ play. */
 export const SECTION_PATHS = ['/', '/play'];
 
 /** Shared with App page transition — set before navigate so exit/enter match. */
