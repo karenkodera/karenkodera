@@ -1,9 +1,9 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useRef, useCallback } from 'react';
+import { RESUME_URL } from './Hero';
 import './Header.css';
 
-const RESUME_URL = 'https://drive.google.com/file/d/1hH56x_vKd1yI-vyyi-ExBk-bYQnbQq60/view?usp=sharing';
 
 const Header = ({ setCursorVariant, handleCursorChange }) => {
   const location = useLocation();
