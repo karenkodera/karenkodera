@@ -11,10 +11,6 @@ export const CASE_STUDIES_BY_PATH = {
     title: 'Unlocking HSA/FSA capabilities in Grocery Checkout',
     subtitle: 'Kroger Product Design',
   },
-  '/kroger': {
-    title: 'Reducing Paper in Grocery Delivery',
-    subtitle: 'Kroger Product Design Internship',
-  },
   '/dsg': {
     title: 'Streamlining Audit Checks',
     subtitle: "Dick's Sporting Goods Product Design Internship",

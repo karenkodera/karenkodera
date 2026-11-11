@@ -18,15 +18,6 @@ export const WORK_PROJECTS = [
     year: '2025',
   },
   {
-    id: 'work-kroger',
-    title: 'Reducing Paper in Grocery Delivery',
-    subtitle: 'Kroger Product Design Internship',
-    image: 'https://framerusercontent.com/images/Ke9J7fdcwS3xhhp9DwcHEG9cHk.jpg',
-    link: '/kroger',
-    tags: ['Handed off', '2024'],
-    year: '2024',
-  },
-  {
     id: 'work-dsg',
     title: 'Streamlining Audit Checks',
     subtitle: "Dick's Sporting Goods Product Design Internship",

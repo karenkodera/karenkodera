@@ -59,7 +59,7 @@ const About = ({ setCursorVariant }) => {
               <div className="about-experience-list">
                 <div className="about-experience-item">
                   <div className="about-experience-role">Product Design</div>
-                  <div className="about-experience-company">Kroger</div>
+                  <div className="about-experience-company">Kroger · New York</div>
                   <div className="about-experience-date">2024 – now</div>
                 </div>
                 <div className="about-experience-item">

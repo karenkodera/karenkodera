@@ -408,7 +408,7 @@ const Thesis = ({ setCursorVariant }) => {
               )}
             </Link>
             <Link
-              to="/kroger"
+              to="/dsg"
               className="thesis-case-nav-link thesis-case-nav-next"
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -417,8 +417,8 @@ const Thesis = ({ setCursorVariant }) => {
                 <span className="thesis-case-nav-label">Next case study</span>
                 <span className="thesis-case-nav-arrow" aria-hidden>→</span>
               </div>
-              {get_case_study_for_path('/kroger') && (
-                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/kroger').subtitle}</span>
+              {get_case_study_for_path('/dsg') && (
+                <span className="thesis-case-nav-meta-subtitle">{get_case_study_for_path('/dsg').subtitle}</span>
               )}
             </Link>
           </div>

@@ -434,7 +434,7 @@ const HsaFsa = ({ setCursorVariant }) => {
                     <polyline points="18 10 21 7 21 10" />
                   </svg>
                 </span>
-                <p className="thesis-context-stat-box-text">Drove $71M in incremental sales over four years</p>
+                <p className="thesis-context-stat-box-text">Projected $71M in incremental sales over four years</p>
               </div>
               <div className="thesis-context-stat-box" aria-label="Outcome">
                 <span className="thesis-context-stat-box-icon" aria-hidden="true">
