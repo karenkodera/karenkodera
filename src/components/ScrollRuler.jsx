@@ -1,39 +1,67 @@
 import { useLayoutEffect, useRef, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { createPortal } from 'react-dom';
+import {
+  SECTION_PATHS,
+  sectionDirection,
+  navigateSection,
+} from '../hooks/useSectionPager';
 import './ScrollRuler.css';
 
+function workScroller() {
+  return document.getElementById('home-scroller');
+}
+
+function readProgress(pathname) {
+  if (pathname === '/') return 0;
+  if (pathname === '/play') return 1;
+  if (pathname === '/work') {
+    const scroller = workScroller();
+    if (!scroller) return 0;
+    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+    return maxScroll > 0 ? scroller.scrollTop / maxScroll : 0;
+  }
+  return 0;
+}
+
 /**
- * Side progress bar for the vertical work scroller:
- * fixed tick track + cursor that moves with scroll.
+ * Side progress bar for section pages.
+ * About / play show section position; work tracks the project scroller.
  */
-const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
-  const [progress, setProgress] = useState(0);
+const ScrollRuler = ({ setCursorVariant }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [progress, setProgress] = useState(() => readProgress(location.pathname));
   const trackRef = useRef(null);
   const draggingRef = useRef(false);
+  const visible = SECTION_PATHS.includes(location.pathname);
 
   useLayoutEffect(() => {
+    if (!visible) return undefined;
+
     let cancelled = false;
     let scroller = null;
     let raf = 0;
 
     const sync = () => {
-      if (!scroller) return;
-      const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-      setProgress(maxScroll > 0 ? scroller.scrollTop / maxScroll : 0);
+      if (cancelled) return;
+      setProgress(readProgress(location.pathname));
     };
 
-    const attach = () => {
-      if (cancelled) return;
-      scroller = scrollerRef.current;
+    const attachWork = () => {
+      if (cancelled || location.pathname !== '/work') return;
+      scroller = workScroller();
       if (!scroller) {
-        raf = requestAnimationFrame(attach);
+        raf = requestAnimationFrame(attachWork);
         return;
       }
       sync();
       scroller.addEventListener('scroll', sync, { passive: true });
-      window.addEventListener('resize', sync);
     };
 
-    attach();
+    sync();
+    attachWork();
+    window.addEventListener('resize', sync);
 
     return () => {
       cancelled = true;
@@ -41,19 +69,31 @@ const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
       if (scroller) scroller.removeEventListener('scroll', sync);
       window.removeEventListener('resize', sync);
     };
-  }, [scrollerRef]);
+  }, [location.pathname, visible]);
 
   const seekToClientY = (clientY) => {
-    const scroller = scrollerRef.current;
     const track = trackRef.current;
-    if (!scroller || !track) return;
+    if (!track) return;
 
     const rect = track.getBoundingClientRect();
     const height = Math.max(1, rect.height);
     const next = Math.max(0, Math.min(1, (clientY - rect.top) / height));
-    const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
-    scroller.scrollTop = next * maxScroll;
     setProgress(next);
+
+    if (location.pathname === '/work') {
+      const scroller = workScroller();
+      if (scroller) {
+        const maxScroll = Math.max(0, scroller.scrollHeight - scroller.clientHeight);
+        scroller.scrollTop = next * maxScroll;
+      }
+      return;
+    }
+
+    const targetIndex = Math.round(next * (SECTION_PATHS.length - 1));
+    const targetPath = SECTION_PATHS[targetIndex];
+    if (!targetPath || targetPath === location.pathname) return;
+    const dir = sectionDirection(location.pathname, targetPath);
+    navigateSection(navigate, targetPath, dir);
   };
 
   const onPointerDown = (e) => {
@@ -78,13 +118,14 @@ const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
     }
   };
 
-  return (
+  if (typeof document === 'undefined' || !visible) return null;
+
+  return createPortal(
     <div
       className="home-scroll-ruler"
       role="scrollbar"
       aria-orientation="vertical"
       aria-label="Scroll ruler"
-      aria-controls="home-scroller"
       aria-valuemin={0}
       aria-valuemax={100}
       aria-valuenow={Math.round(progress * 100)}
@@ -103,7 +144,8 @@ const ScrollRuler = ({ scrollerRef, setCursorVariant }) => {
           style={{ top: `${progress * 100}%` }}
         />
       </div>
-    </div>
+    </div>,
+    document.body
   );
 };
 

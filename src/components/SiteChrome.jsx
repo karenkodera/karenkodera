@@ -2,6 +2,7 @@ import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { CONTACT_LINKS, RESUME_URL } from './Hero';
 import SiteClock from './SiteClock';
+import ScrollRuler from './ScrollRuler';
 import { navigateSection, sectionDirection } from '../hooks/useSectionPager';
 import './SiteChrome.css';
 
@@ -93,6 +94,7 @@ const SiteChrome = ({ setCursorVariant }) => {
       </div>
 
       <SiteClock />
+      <ScrollRuler setCursorVariant={setCursorVariant} />
     </>,
     document.body
   );

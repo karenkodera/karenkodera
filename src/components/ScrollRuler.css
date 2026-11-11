@@ -6,7 +6,7 @@
   left: auto;
   bottom: auto;
   transform: translateY(-50%);
-  z-index: 125;
+  z-index: 9990;
   width: 40px;
   height: min(220px, 46vh);
   border-radius: 12px;
@@ -49,6 +49,11 @@
   pointer-events: none;
   z-index: 1;
   will-change: top;
+}
+
+html[data-intro='1'] .home-scroll-ruler {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {

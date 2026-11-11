@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ProjectCard from '../components/ProjectCard';
-import ScrollRuler from '../components/ScrollRuler';
 import { WORK_PROJECTS } from '../data/workProjects';
 import './Home.css';
 
@@ -85,8 +84,6 @@ const Home = ({ setCursorVariant }) => {
           ))}
         </div>
       </div>
-
-      <ScrollRuler scrollerRef={scrollerRef} setCursorVariant={setCursorVariant} />
     </div>
   );
 };

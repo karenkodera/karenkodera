@@ -76,13 +76,14 @@
 
 .site-chrome-contacts {
   position: fixed;
-  left: 40px;
+  right: 40px;
+  left: auto;
   bottom: 28px;
   z-index: 10000;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 16px;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
   margin: 0;
   padding: 0;
   pointer-events: auto;
@@ -157,7 +158,8 @@ html[data-intro='1'] .site-chrome-clock {
   }
 
   .site-chrome-contacts {
-    left: 16px;
+    right: 16px;
+    left: auto;
     bottom: 18px;
   }
 
